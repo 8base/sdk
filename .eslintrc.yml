@@ -1,0 +1,97 @@
+extends: react-app
+rules:  
+  #styles
+  block-spacing: ['error']
+  array-bracket-spacing: ['warn', 'never']
+  comma-dangle: ['warn', {
+    arrays: 'always-multiline',
+    objects: 'always-multiline',
+    imports: 'always-multiline',
+    exports: 'always-multiline',
+    functions: 'always-multiline'
+  }]
+  comma-spacing: ['warn', { 'before': false, 'after': true }]
+  computed-property-spacing: ['warn']
+  indent: ['warn', 2, { 'SwitchCase': 1 }]
+  jsx-quotes: ['warn']
+  key-spacing: ['warn', { 'afterColon': true }]
+  keyword-spacing: ['warn', { 'before': true }]
+  no-multiple-empty-lines: ['warn', { 'max': 2, 'maxBOF': 0}]
+  object-curly-spacing: ['warn', 'always', { 'objectsInObjects': false }]
+  operator-assignment: ['error', 'always']
+  quotes: ['warn', 'single']
+  quote-props: ['warn', 'as-needed']
+  semi: ['warn', 'always']
+  semi-spacing: 'warn'
+  space-before-blocks: 'warn'
+  space-in-parens: ['warn', 'never']
+  space-infix-ops: 'warn'
+  space-unary-ops: 'warn'
+  arrow-spacing: 'warn'
+  template-curly-spacing: 'warn'
+  no-multi-spaces: 'warn'
+  no-trailing-spaces: 'warn'
+  eol-last:  ['warn', 'always']
+
+  #badcode
+  no-unused-vars: ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }]
+  no-multi-assign: 'error'
+  no-extra-semi: 'error'
+  semi-style: 'error'
+  no-unneeded-ternary: 'error'
+  callback-return: 'error'
+  import/no-duplicates: 'error'
+  no-useless-computed-key: 'error'
+  no-var: 'error'
+  init-declarations: ['error', 'always']
+  no-delete-var: 'error'
+  no-restricted-globals: ['error']
+  no-use-before-define: 'error'
+  dot-notation: 'warn'
+  no-alert: 'error'
+  max-len: ['warn', { 'code': 150, 'ignoreComments': true, 'ignoreStrings': true, 'ignoreTemplateLiterals': true }]
+
+  #es6
+  no-const-assign: 'error'
+  object-shorthand: 'error'
+  prefer-arrow-callback: 'error'
+  prefer-const: 'error'
+  prefer-destructuring: ['error', { 'object': true }]
+  prefer-numeric-literals: 'error'
+  prefer-rest-params: 'warn'
+  prefer-spread: 'warn'
+  prefer-template: 'warn'
+  rest-spread-spacing: ['error', 'never']
+
+  #react
+  react/forbid-foreign-prop-types: 'error'
+  react/no-children-prop: 'error'
+  react/jsx-curly-spacing: [1, {'when': 'always', 'children': true, 'allowMultiline': true, 'spacing': {'objectLiterals': 'never'}}]
+  react/no-danger: 'warn'
+  react/no-danger-with-children: 'error'
+  react/no-direct-mutation-state: 'error'
+  react/no-find-dom-node: 'error'
+  react/no-is-mounted: 'error'
+  react/no-redundant-should-component-update: 'warn'
+  react/no-string-refs: 'error'
+  react/no-unknown-property: 'error'
+  react/no-unused-prop-types: 'warn'
+  react/no-will-update-set-state: 'error'
+  react/prefer-es6-class: ['error', 'always']
+  react/require-render-return: 'error'
+  react/self-closing-comp: ['error', { 'component': true, 'html': true }]
+  react/style-prop-object: 'error'
+  react/void-dom-elements-no-children: 'error'
+  react/jsx-boolean-value: 'warn'
+  react/jsx-closing-tag-location: 'warn'
+  react/jsx-equals-spacing: [2, 'never']
+  react/jsx-indent: ['warn', 2]
+  react/jsx-key: 'error'
+  react/jsx-no-duplicate-props: 'error'
+  react/jsx-no-undef: ['warn', { allowGlobals: true }]
+  react/jsx-pascal-case: 'warn'
+  react/jsx-tag-spacing: ['warn', 'always' ]
+  react/jsx-uses-react: 'warn'
+  react/jsx-uses-vars: 'warn'
+  react/jsx-wrap-multilines: 'warn'
+  react/jsx-curly-brace-presence: ['warn', { 'props': 'never' }]
