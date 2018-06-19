@@ -3,7 +3,8 @@
   "scripts": {
     "eslint": "eslint .",
     "flow": "flow check",
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap",
+    "test": "./bin/test.sh"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
