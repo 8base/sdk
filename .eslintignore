@@ -2,3 +2,4 @@ node_modules
 coverage
 packages/*/build
 packages/*/es
+flow-typed
