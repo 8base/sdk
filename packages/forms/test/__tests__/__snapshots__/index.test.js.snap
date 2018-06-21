@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can pass table schema to multiple forms via schema context provider. 1`] = `
+Array [
+  <form
+    onSubmit={[Function]}
+  >
+    <input
+      name="field"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      value="caupones"
+    />
+  </form>,
+  <form
+    onSubmit={[Function]}
+  >
+    <input
+      name="field"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      value="tubiporous"
+    />
+  </form>,
+]
+`;
