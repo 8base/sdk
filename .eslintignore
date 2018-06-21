@@ -1,5 +1,6 @@
-node_modules
 coverage
+node_modules
 packages/*/build
 packages/*/es
 flow-typed
+packages/local-*

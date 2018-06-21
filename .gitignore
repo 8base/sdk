@@ -9,5 +9,6 @@ lerna-debug.log
 node_modules
 npm-debug.log
 package-lock.json
+packages/local-*
 yarn-error.log
 yerna.log
