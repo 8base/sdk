@@ -4,9 +4,15 @@
 [include]
 
 [libs]
+flow-typed/.*
+flow-typed/global.js
 
 [lints]
 
 [options]
+
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+
 
 [strict]
