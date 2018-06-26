@@ -26,7 +26,7 @@ class Form extends React.Component<FormProps> {
     const { prefillInitialValues, mutators, tableSchema, ...restProps } = this.props;
 
     const collectedProps = {
-      mutators: R.merge(arrayMutators),
+      mutators: R.merge(arrayMutators, mutators),
       tableSchema,
       ...restProps,
     };
