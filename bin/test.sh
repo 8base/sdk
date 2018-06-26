@@ -25,6 +25,7 @@ run_command()
 status=0
 
 (run_command "api-client" "test" "(cd ./packages/api-client && yarn test --verbose) ;") || status=1
+(run_command "create-apollo-client" "test" "(cd ./packages/create-apollo-client && yarn test --verbose) ;") || status=1
 (run_command "validator" "test" "(cd ./packages/validator && yarn test --verbose) ;") || status=1
 (run_command "forms" "test" "(cd ./packages/forms && yarn test --verbose) ;") || status=1
 
