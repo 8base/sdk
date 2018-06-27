@@ -26,8 +26,12 @@ type TableSchema = {
 
 type Schema = Array<TableSchema>;
 
-type SchemaContextValue = {
-  schema: Schema,
+type SchemaContextValue = Schema;
+
+type RenderableProps = {
+  component?: React$ComponentType<any>,
+  children?: ((props: Object) => React$Node) | React$Node,
+  render?: (props: Object) => React$Node
 };
 
 type FormContextValue = {|
@@ -36,8 +40,12 @@ type FormContextValue = {|
 
 type FormProps = {
   tableSchema: TableSchema,
-  prefillInitialValues?: boolean,
 } & FinalFormProps;
+
+type FieldsetProps = {
+  tableSchema: TableSchema,
+  children: React$Node,
+} & RenderableProps;
 
 type FieldProps = {
   fieldSchema: FieldSchema,
@@ -49,10 +57,12 @@ export type {
   FieldArrayProps,
   FieldProps,
   FieldSchema,
+  FieldsetProps,
   FieldType,
   FormContextValue,
   FormProps,
   Schema,
   SchemaContextValue,
   TableSchema,
+  RenderableProps,
 };

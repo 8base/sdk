@@ -1,57 +1,17 @@
 import React from 'react';
-import TestUtils from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
 
-import { Form, Field, FieldArray, SchemaContext } from '../../src';
+import { Form, Field, Fieldset, FieldArray, SchemaContext } from '../../src';
 
-it('As a developer, I can prefill implemented from with default values from table schema.', () => {
-  const tableSchema = {
-    name: 'tableSchema',
-    displayName: 'tableSchema',
-    isSystem: false,
-    fields: [{
-      name: 'field',
-      displayName: 'Text Required Unformatted Field',
-      description: null,
-      fieldType: 'TEXT',
-      fieldTypeAttributes: {
-        format: 'UNFORMATTED',
-        fieldSize: 100,
-      },
-      isList: false,
-      isRequired: true,
-      isUnique: false,
-      defaultValue: 'Default Value',
-      relation: null,
-    }],
-  };
-
-  const TestFieldComponent = jest.fn(() => null);
-
-  const form = renderer.create(
-    <Form onSubmit={ jest.fn() } tableSchema={ tableSchema } prefillInitialValues>
-      {
-        ({ handleSubmit }) => (
-          <form onSubmit={ handleSubmit }>
-            <Field fieldSchemaName={ tableSchema.fields[0].name } component={ TestFieldComponent } />
-          </form>
-        )
-      }
-    </Form>,
-  );
-
-  expect(TestFieldComponent).toHaveBeenCalledTimes(1);
-  expect(TestFieldComponent.mock.calls[0][0].input.value).toEqual('Default Value');
-});
-
-it('As a developer, I can get access to schema of the each field in the field component.', () => {
-  const tableSchema = {
-    name: 'tableSchema',
-    displayName: 'tableSchema',
-    isSystem: false,
-    fields: [{
-      name: 'field',
-      displayName: 'Text Required Unformatted Field',
+const TABLE_SCHEMA = {
+  id: 'TABLE_SCHEMA_ID',
+  name: 'tableSchema',
+  displayName: 'Table Schema',
+  isSystem: false,
+  fields: [
+    {
+      name: 'scalar',
+      displayName: 'Scalar',
       description: null,
       fieldType: 'TEXT',
       fieldTypeAttributes: {
@@ -61,148 +21,78 @@ it('As a developer, I can get access to schema of the each field in the field co
       isList: false,
       isRequired: false,
       isUnique: false,
-      defaultValue: 'Default Value',
+      defaultValue: 'Scalar Default Value',
       relation: null,
-    }],
-  };
-
-  const TestFieldComponent = jest.fn(() => null);
-
-  const form = renderer.create(
-    <Form onSubmit={ jest.fn() } tableSchema={ tableSchema }>
-      {
-        ({ handleSubmit }) => (
-          <form onSubmit={ handleSubmit }>
-            <Field fieldSchemaName={ tableSchema.fields[0].name } component={ TestFieldComponent } />
-          </form>
-        )
-      }
-    </Form>,
-  );
-
-  expect(TestFieldComponent).toHaveBeenCalledTimes(1);
-  expect(TestFieldComponent.mock.calls[0][0].fieldSchema).toEqual(tableSchema.fields[0]);
-});
-
-it('As a developer, I can get access to table schema from the render props.', () => {
-  const tableSchema = {
-    name: 'tableSchema',
-    displayName: 'tableSchema',
-    isSystem: false,
-    fields: [{
-      name: 'field',
-      displayName: 'Text Required Unformatted Field',
+    },
+    {
+      name: 'scalarList',
+      displayName: 'Scalar List',
       description: null,
       fieldType: 'TEXT',
       fieldTypeAttributes: {
         format: 'UNFORMATTED',
         fieldSize: 100,
-      },
-      isList: false,
-      isRequired: false,
-      isUnique: false,
-      defaultValue: 'Default Value',
-      relation: null,
-    }],
-  };
-
-  const TestFieldComponent = jest.fn(() => null);
-
-  const renderProp = jest.fn(({ handleSubmit }) => (
-    <form onSubmit={ handleSubmit }>
-      <Field fieldSchemaName={ tableSchema.fields[0].name } component={ TestFieldComponent } />
-    </form>
-  ));
-
-  const form = renderer.create(
-    <Form onSubmit={ jest.fn() } tableSchema={ tableSchema }>
-      { renderProp }
-    </Form>,
-  );
-
-  expect(renderProp).toHaveBeenCalledTimes(1);
-  expect(renderProp.mock.calls[0][0].tableSchema).toEqual(tableSchema);
-});
-
-it('As a developer, I can get access to validation errors from field components.', () => {
-  const TestFieldComponent = jest.fn(() => null);
-
-  const onSubmit = jest.fn();
-
-  const tableSchema = {
-    name: 'tableSchema',
-    displayName: 'tableSchema',
-    isSystem: false,
-    fields: [{
-      name: 'field',
-      displayName: 'Text Required Unformatted Field',
-      description: null,
-      fieldType: 'TEXT',
-      fieldTypeAttributes: {
-        format: 'UNFORMATTED',
-        fieldSize: 100,
-      },
-      isList: false,
-      isRequired: true,
-      isUnique: false,
-      defaultValue: null,
-      relation: null,
-    }, {
-      name: 'fieldArray',
-      displayName: 'List of Text Required Unformatted Fields',
-      description: null,
-      fieldType: 'TEXT',
-      fieldTypeAttributes: {
-        format: 'UNFORMATTED',
-        fieldSize: 2,
       },
       isList: true,
-      isRequired: true,
+      isRequired: false,
       isUnique: false,
-      defaultValue: null,
+      defaultValue: 'Scalar List Default Value 1',
       relation: null,
-    }],
-  };
+    },
+    {
+      name: 'relation',
+      displayName: 'Relation',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_1',
+        relationTableName: 'RELATION_TABLE_NAME_1',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'RELATION_TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+    {
+      name: 'relationList',
+      displayName: 'RelationList',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_2',
+        relationTableName: 'RELATION_TABLE_NAME_2',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'RELATION_TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+  ],
+};
 
-  const form = TestUtils.renderIntoDocument(
-    <Form onSubmit={ onSubmit } tableSchema={ tableSchema } initialValues={{ fieldArray: ['Award'] }}>
-      {
-        ({ handleSubmit }) => (
-          <form onSubmit={ handleSubmit }>
-            <Field fieldSchemaName={ tableSchema.fields[0].name } component={ TestFieldComponent } />
-            <FieldArray fieldSchemaName={ tableSchema.fields[1].name }>
-              {
-                ({ fields }) => (
-                  fields.map((name) => (
-                    <Field key={ name } fieldSchemaName={ tableSchema.fields[1].name } name={ name } component={ TestFieldComponent } />
-                  ))
-                )
-              }
-            </FieldArray>
-            <button type="onSubmit" />
-          </form>
-        )
-      }
-    </Form>,
-  );
-
-  submitForm(form);
-
-  expect(onSubmit).toHaveBeenCalledTimes(0);
-
-  expect(TestFieldComponent).toHaveBeenCalledTimes(6);
-  expect(TestFieldComponent.mock.calls[4][0].meta.error).toEqual('Value is required');
-  expect(TestFieldComponent.mock.calls[5][0].meta.error).toEqual('Maximum allowed field size is 2. It was exceeded.');
-});
-
-it('As a developer, I can pass table schema to multiple forms via schema context provider.', () => {
-  const schema = [{
-    name: 'tableSchema',
-    displayName: 'tableSchema',
-    isSystem: false,
-    fields: [{
-      name: 'field',
-      displayName: 'Text Required Unformatted Field',
+const RELATION_TABLE_SCHEMA = {
+  id: 'RELATION_TABLE_SCHEMA_ID',
+  name: 'relationTableSchema',
+  displayName: 'Relation Table Schema',
+  isSystem: false,
+  fields: [
+    {
+      name: 'scalar',
+      displayName: 'Scalar',
       description: null,
       fieldType: 'TEXT',
       fieldTypeAttributes: {
@@ -210,35 +100,218 @@ it('As a developer, I can pass table schema to multiple forms via schema context
         fieldSize: 100,
       },
       isList: false,
-      isRequired: true,
+      isRequired: false,
       isUnique: false,
-      defaultValue: null,
+      defaultValue: 'Scalar Default Value',
       relation: null,
+    },
+    {
+      name: 'scalarList',
+      displayName: 'Scalar List',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isList: true,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: 'Scalar List Default Value 1',
+      relation: null,
+    },
+    {
+      name: 'relation',
+      displayName: 'Relation',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_3',
+        relationTableName: 'RELATION_TABLE_NAME_1',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+    {
+      name: 'relationList',
+      displayName: 'RelationList',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_4',
+        relationTableName: 'RELATION_TABLE_NAME_2',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+  ],
+};
+
+let mockCreateValidate = null;
+
+jest.mock('@8base/validator', () => (...args) => mockCreateValidate(...args));
+
+describe('As a developer, while I implementet a form,', () => {
+  mockCreateValidate = jest.fn((fieldSchema) => () => fieldSchema.name);
+
+  const INITIAL_VALUES = {
+    scalar: 'Scalar Value',
+    scalarList: [
+      'Scalar List Value',
+    ],
+    relation: {
+      scalar: 'Relation Scalar Value',
+    },
+    relationList: [{
+      scalar: 'Relation List Scalar Value',
     }],
-  }];
+  };
+
+  const TestForm = jest.fn((props, renderProp) => renderProp(props));
+  const TestFieldset = jest.fn((props, renderProp) => renderProp(props));
+  const TestField = jest.fn((props) => <input { ...props.input } />);
 
   const form = renderer.create(
-    <SchemaContext.Provider value={{ schema }}>
-      <Form onSubmit={ jest.fn() } tableSchemaName="tableSchema" initialValues={{ field: 'caupones' }}>
+    <SchemaContext.Provider value={ [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }>
+      <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ jest.fn() }>
         {
-          ({ handleSubmit }) => (
+          (renderProps) => TestForm(renderProps, ({ handleSubmit }) => (
             <form onSubmit={ handleSubmit }>
-              <Field fieldSchemaName={ schema[0].fields[0].name } component="input" />
+              <Field name="scalar" component={ TestField } />
+              <FieldArray name="scalarList">
+                {
+                  ({ fields }) => (
+                    fields.map((name) => (
+                      <Field key={ name } name={ name }component={ TestField } />
+                    ))
+                  )
+                }
+              </FieldArray>
+              <Fieldset tableSchemaName="relationTableSchema">
+                {
+                  (renderProps) => TestFieldset(renderProps, () => (
+                    <Field name="relation.scalar" component={ TestField } />
+                  ))
+                }
+              </Fieldset>
+              <FieldArray name="relationList">
+                {
+                  ({ fields }) => (
+                    fields.map((name) => (
+                      <Fieldset tableSchemaName="relationTableSchema" key={ name }>
+                        {
+                          (renderProps) => TestFieldset(renderProps, () => (
+                            <Field name={ `${name}.scalar` } component={ TestField } />
+                          ))
+                        }
+                      </Fieldset>
+                    ))
+                  )
+                }
+              </FieldArray>
             </form>
-          )
-        }
-      </Form>
-      <Form onSubmit={ jest.fn() } tableSchemaName="tableSchema" initialValues={{ field: 'tubiporous' }}>
-        {
-          ({ handleSubmit }) => (
-            <form onSubmit={ handleSubmit }>
-              <Field fieldSchemaName={ schema[0].fields[0].name } component="input" />
-            </form>
-          )
+          ))
         }
       </Form>
     </SchemaContext.Provider>,
   );
 
-  expect(form.toJSON()).toMatchSnapshot();
+  it('Form should be rendered.', () => {
+    expect(form.toJSON()).toMatchSnapshot();
+    expect(TestForm).toHaveBeenCalledTimes(2);
+    expect(TestFieldset).toHaveBeenCalledTimes(4);
+    expect(TestField).toHaveBeenCalledTimes(8);
+    expect(mockCreateValidate).toHaveBeenCalledTimes(8);
+  });
+
+  it('I can get access to the table schema from the form.', () => {
+    expect(TestForm.mock.calls[0][0].tableSchema).toEqual(TABLE_SCHEMA);
+  });
+
+  it('I can get access to the table schema from the fieldset.', () => {
+    expect(TestFieldset.mock.calls[0][0].tableSchema).toEqual(RELATION_TABLE_SCHEMA);
+    expect(TestFieldset.mock.calls[1][0].tableSchema).toEqual(RELATION_TABLE_SCHEMA);
+  });
+
+  it('I can get access to the field schema from the scalar field.', () => {
+    expect(TestField.mock.calls[0][0].fieldSchema).toEqual(TABLE_SCHEMA.fields[0]);
+  });
+
+  it('I can get access to the field schema from the scalar list field.', () => {
+    expect(TestField.mock.calls[1][0].fieldSchema).toEqual(TABLE_SCHEMA.fields[1]);
+  });
+
+  it('I can get access to the field schema from the relation scalar field.', () => {
+    expect(TestField.mock.calls[2][0].fieldSchema).toEqual(RELATION_TABLE_SCHEMA.fields[0]);
+  });
+
+  it('I can get access to the field schema from the relation scalar list field.', () => {
+    expect(TestField.mock.calls[3][0].fieldSchema).toEqual(RELATION_TABLE_SCHEMA.fields[0]);
+  });
+
+  it('Initial value provides to the scalar field.', () => {
+    expect(TestField.mock.calls[0][0].meta.initial).toEqual(INITIAL_VALUES.scalar);
+  });
+
+  it('Initial value provides to the scalar list field.', () => {
+    expect(TestField.mock.calls[1][0].meta.initial).toEqual(INITIAL_VALUES.scalarList[0]);
+  });
+
+  it('Initial value provides to the relation scalar field.', () => {
+    expect(TestField.mock.calls[2][0].meta.initial).toEqual(INITIAL_VALUES.relation.scalar);
+  });
+
+  it('Initial value provides to the relation scalar list field.', () => {
+    expect(TestField.mock.calls[3][0].meta.initial).toEqual(INITIAL_VALUES.relationList[0].scalar);
+  });
+
+  it('Validate function for the scalar field should created by its schema.', () => {
+    expect(mockCreateValidate).toHaveBeenNthCalledWith(1, TABLE_SCHEMA.fields[0]);
+  });
+
+  it('Validate function for the scalar list field should created by its schema.', () => {
+    expect(mockCreateValidate).toHaveBeenNthCalledWith(2, TABLE_SCHEMA.fields[1]);
+  });
+
+  it('Validate function for the relation scalar field should created by its schema.', () => {
+    expect(mockCreateValidate).toHaveBeenNthCalledWith(3, RELATION_TABLE_SCHEMA.fields[0]);
+  });
+
+  it('Validate function for the relation scalar list field should created by its schema.', () => {
+    expect(mockCreateValidate).toHaveBeenNthCalledWith(4, RELATION_TABLE_SCHEMA.fields[0]);
+  });
+
+  it('I can access to the validatation error from the scalar field.', () => {
+    expect(TestField.mock.calls[4][0].meta.error).toEqual(TABLE_SCHEMA.fields[0].name);
+  });
+
+  it('I can access to the validatation error from the scalar list field.', () => {
+    expect(TestField.mock.calls[5][0].meta.error).toEqual(TABLE_SCHEMA.fields[1].name);
+  });
+
+  it('I can access to the validatation error from the relation scalar field.', () => {
+    expect(TestField.mock.calls[6][0].meta.error).toEqual(RELATION_TABLE_SCHEMA.fields[0].name);
+  });
+
+  it('I can access to the validatation error from the relation scalar list field.', () => {
+    expect(TestField.mock.calls[7][0].meta.error).toEqual(RELATION_TABLE_SCHEMA.fields[0].name);
+  });
 });

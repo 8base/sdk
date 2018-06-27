@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React from 'react';
 
 import { SchemaContext } from '../SchemaContext';
 import { getTableSchema } from './getTableSchema';
@@ -10,15 +10,15 @@ type TableSchemaConsumerProps = {
   tableSchemaName?: string,
 };
 
-const withTableSchema = (BaseComponent: React.ComponentType<*>) => {
-  class TableSchemaConsumer extends React.Component<TableSchemaConsumerProps> {
-    renderWithSchema = (context: ?SchemaContextValue) => {
+const withTableSchema = (BaseComponent: React$ComponentType<*>) => {
+  class TableSchemaConsumer extends React$Component<TableSchemaConsumerProps> {
+    renderWithSchema = (contextSchema: ?SchemaContextValue) => {
       const { tableSchemaName, ...restProps } = this.props;
 
       let rendered = null;
 
-      if (context && context.schema && tableSchemaName) {
-        const tableSchema: ?TableSchema = getTableSchema(context.schema, tableSchemaName);
+      if (contextSchema && tableSchemaName) {
+        const tableSchema: ?TableSchema = getTableSchema(contextSchema, tableSchemaName);
 
         if (tableSchema) {
           rendered = <BaseComponent { ...restProps } tableSchema={ tableSchema } />;

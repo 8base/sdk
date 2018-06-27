@@ -12,7 +12,7 @@ import type { FieldProps } from './types';
 /**
  * `Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props and some extra props for easy working with 8base API.
  * @prop {FieldSchema} [fieldSchema] - The 8base API field schema.
- * @prop {string} [fieldSchemaName] - The name of the 8base API field schema.
+ * @prop {string} [name] - The name of field, based on the 8base API table schema.
  */
 class Field extends React.Component<FieldProps> {
   collectProps = (): FinalFieldProps => R.pipe(
@@ -21,7 +21,7 @@ class Field extends React.Component<FieldProps> {
       R.dissoc ('fieldSchema'),
     ),
     R.assoc('validate', createValidate(this.props.fieldSchema)),
-    R.assoc('name', R.defaultTo(this.props.fieldSchema.name)(this.props.name)),
+    R.assoc('name', this.props.name || this.props.name || this.props.fieldSchema.name),
   )(this.props);
 
   render() {

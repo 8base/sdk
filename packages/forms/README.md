@@ -11,8 +11,10 @@
 -   [Field](#field)
     -   [Properties](#properties)
 -   [FieldArray](#fieldarray)
--   [Form](#form)
+-   [Fieldset](#fieldset)
     -   [Properties](#properties-1)
+-   [Form](#form)
+    -   [Properties](#properties-2)
 
 ### Field
 
@@ -23,13 +25,24 @@
 #### Properties
 
 -   `fieldSchema` **FieldSchema?** The 8base API field schema.
--   `fieldSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API field schema.
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of field, based on the 8base API table schema.
 
 ### FieldArray
 
 **Extends React.Component**
 
 `FieldArray` wrapper based on `FieldArray` from the [`react-final-form-arrays`](https://github.com/final-form/react-final-form-arrays). It accepts [`FieldArrayProps`](https://github.com/final-form/react-final-form-arrays#fieldarrayprops) props.
+
+### Fieldset
+
+**Extends React.Component**
+
+`Fieldset` passes relation table schema to the children fields.
+
+#### Properties
+
+-   `tableSchema` **TableSchema?** The 8base API table schema.
+-   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
 
 ### Form
 
@@ -41,7 +54,6 @@
 
 -   `tableSchema` **TableSchema?** The 8base API table schema.
 -   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
--   `prefillInitialValues` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If `true`, than prefill all form fields with default values from passed table schema.
 
 ## Examples
 
@@ -105,10 +117,10 @@ render(
   <Form tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <Field fieldSchemaName="firstName" component="input" />
-          <Field fieldSchemaName="lastName" component="input" />
-          <Field fieldSchemaName="age" component="input" />
+        <form onSubmit={ handleSubmit }>
+          <Field name="firstName" component="input" />
+          <Field name="lastName" component="input" />
+          <Field name="age" component="input" />
           <button type="submit">Create Client</button>
         </form>
       )
@@ -191,21 +203,21 @@ render(
   <Form tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <Field fieldSchemaName="firstName" component="input" />
-          <Field fieldSchemaName="lastName" component="input" />
-          <Field fieldSchemaName="age" component="input" />
-          <FieldArray fieldSchemaName="fieldArray">
+        <form onSubmit={ handleSubmit }>
+          <Field name="firstName" component="input" />
+          <Field name="lastName" component="input" />
+          <Field name="age" component="input" />
+          <FieldArray name="fieldArray">
             {
               ({ fields }) => (
                 <React.Fragment>
                   fields.map((name, index) => (
                     <React.Fragment>
-                      <Field key={ name } fieldSchemaName="fieldArray" name={ name } component="input" />
+                      <Field key={ name } name={ name } component="input" />
                       <button onClick={ () => props.fields.remove(index) }>Remove</button>
                     </React.Fragment>
                   ))
-                  <button onClick={fields.push('New Field Array Item')}>Add</button>
+                  <button onClick={ fields.push('New Field Array Item') }>Add</button>
                 </React.Fragment>
               )
             }
@@ -308,14 +320,14 @@ const SCHEMA = [{
 }];
 
 render(
-  <SchemaContext.Provider schema={{ schema: SCHEMA }}>
-    <Form tableSchemaName="client" onSubmit={onSubmitClient}>
+  <SchemaContext.Provider schema={SCHEMA}>
+    <Form tableSchemaName="client" onSubmit={ onSubmitClient }>
       {
         ({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Field fieldSchemaName="firstName" component="input" />
-            <Field fieldSchemaName="lastName" component="input" />
-            <Field fieldSchemaName="age" component="input" />
+          <form onSubmit={ handleSubmit }>
+            <Field name="firstName" component="input" />
+            <Field name="lastName" component="input" />
+            <Field name="age" component="input" />
             <button type="submit">Create Client</button>
           </form>
         )
@@ -324,10 +336,228 @@ render(
     <Form tableSchemaName="order" onSubmit={onSubmitOrder}>
       {
         ({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Field fieldSchemaName="name" component="input" />
-            <Field fieldSchemaName="deliveryDate" component="input" />
+          <form onSubmit={ handleSubmit }>
+            <Field name="name" component="input" />
+            <Field name="deliveryDate" component="input" />
             <button type="submit">Create Order</button>
+          </form>
+        )
+      }
+    </Form>
+  </SchemaContext.Provider>
+, document.getElementById('root'));
+```
+
+### Complex form
+
+```jsx
+import React from 'react';
+import { render } from 'react-dom';
+import { Form, Field, SchemaContext } from '@8base/forms';
+
+const SCHEMA = [{
+  id: 'TABLE_SCHEMA_ID',
+  name: 'tableSchema',
+  displayName: 'Table Schema',
+  isSystem: false,
+  fields: [
+    {
+      name: 'scalar',
+      displayName: 'Scalar',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: 'Scalar Default Value',
+      relation: null,
+    },
+    {
+      name: 'scalarList',
+      displayName: 'Scalar List',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isList: true,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: 'Scalar List Default Value 1',
+      relation: null,
+    },
+    {
+      name: 'relation',
+      displayName: 'Relation',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_1',
+        relationTableName: 'RELATION_TABLE_NAME_1',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'RELATION_TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+    {
+      name: 'relationList',
+      displayName: 'RelationList',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_2',
+        relationTableName: 'RELATION_TABLE_NAME_2',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'RELATION_TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+  ],
+}, {
+  id: 'RELATION_TABLE_SCHEMA_ID',
+  name: 'relationTableSchema',
+  displayName: 'Relation Table Schema',
+  isSystem: false,
+  fields: [
+    {
+      name: 'scalar',
+      displayName: 'Scalar',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: 'Scalar Default Value',
+      relation: null,
+    },
+    {
+      name: 'scalarList',
+      displayName: 'Scalar List',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isList: true,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: 'Scalar List Default Value 1',
+      relation: null,
+    },
+    {
+      name: 'relation',
+      displayName: 'Relation',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_3',
+        relationTableName: 'RELATION_TABLE_NAME_1',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+    {
+      name: 'relationList',
+      displayName: 'RelationList',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_4',
+        relationTableName: 'RELATION_TABLE_NAME_2',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
+        },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
+      },
+    },
+  ],
+}];
+
+const INITIAL_VALUES = {
+  scalar: 'Scalar Value',
+  scalarList: [
+    'Scalar List Value',
+  ],
+  relation: {
+    scalar: 'Relation Scalar Value',
+  },
+  relationList: [{
+    scalar: 'Relation List Scalar Value',
+  }],
+};
+
+render(
+  <SchemaContext.Provider value={ SCHEMA }>
+    <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ onSubmitForm }>
+      {
+        ({ handleSubmit }) => (
+          <form onSubmit={ handleSubmit }>
+            <Field name="scalar" component="input" />
+            <FieldArray name="scalarList">
+              {
+                ({ fields }) => (
+                  fields.map((name) => (
+                    <Field key={ name } name={ name } component="input" />
+                  ))
+                )
+              }
+            </FieldArray>
+            <Fieldset tableSchemaName="relationTableSchema">
+              <Field name="relation.scalar" component="input" />
+            </Fieldset>
+            <FieldArray name="relationList">
+              {
+                ({ fields }) => (
+                  fields.map((name) => (
+                    <Fieldset key={ name } tableSchemaName="relationTableSchema">
+                      <Field name={ `${name}.scalar` } component="input" />
+                    </Fieldset>
+                  ))
+                )
+              }
+            </FieldArray>
           </form>
         )
       }
