@@ -1,6 +1,8 @@
 extends: react-app
 rules:  
   #styles
+  brace-style: ['warn', '1tbs', { allowSingleLine: true }]
+  no-else-return: ['warn']
   block-spacing: ['error']
   array-bracket-spacing: ['warn', 'never']
   comma-dangle: ['warn', {

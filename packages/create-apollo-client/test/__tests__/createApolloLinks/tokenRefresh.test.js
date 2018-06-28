@@ -73,11 +73,9 @@ describe('As a Developer, I Can use 8base compability refresh token link', () =>
         uri,
         links: { auth: { enable: false }},
       });
-    }
-    catch (err) {
+    } catch (err) {
       error = err;
-    }
-    finally {
+    } finally {
       expect(error.message).toBe('Excepted a getAuthState callback');
     }
   });
