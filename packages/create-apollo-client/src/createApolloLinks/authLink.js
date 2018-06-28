@@ -8,8 +8,7 @@ import type { GetAuthStateParams } from '../types';
 const getAuthLink = ({ getAuthState }: GetAuthStateParams) => {
   if (getAuthState === undefined) {
     throw new Error('Excepted a getAuthState callback');
-  }
-  else {
+  } else {
     return new ApolloLink((operation, forward) => {
       const { idToken, organizationId, accountId } = getAuthState();
 

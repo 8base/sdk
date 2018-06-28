@@ -7,8 +7,7 @@ const getTokenRefreshLink =
 ({ onUpdateTokenFail, onUpdateTokenSuccess, getAuthState, onIdTokenExpired }: GetTokenRefreshLinkParams & GetAuthStateParams) => {
   if (getAuthState === undefined) {
     throw new Error('Excepted a getAuthState callback');
-  }
-  else {
+  } else {
     return new TokenRefreshLink({
       setRefreshTokenInput: () => {
         const { refreshToken, email } = getAuthState();
