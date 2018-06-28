@@ -12,7 +12,7 @@ type FieldSchemaConsumerProps = {
 };
 
 const withFieldSchema = (BaseComponent: React$ComponentType<*>) => {
-  class FieldSchemaConsumer extends React$Component<FieldSchemaConsumerProps> {
+  class FieldSchemaConsumer extends React.Component<FieldSchemaConsumerProps> {
     renderWithFormSchema = (context: ?FormContextValue) => {
       const { name, ...restProps } = this.props;
 

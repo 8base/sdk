@@ -21,7 +21,7 @@ class Field extends React.Component<FieldProps> {
       R.dissoc ('fieldSchema'),
     ),
     R.assoc('validate', createValidate(this.props.fieldSchema)),
-    R.assoc('name', this.props.name || this.props.name || this.props.fieldSchema.name),
+    R.assoc('name', this.props.name || this.props.fieldSchema.name),
   )(this.props);
 
   render() {

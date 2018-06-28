@@ -5,7 +5,7 @@
   "module": "es/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src -d es --ignore __tests__",
-    "docs": "NODE_ENV=test documentation readme src/Form.js src/Field.js src/FieldArray.js --section=API",
+    "docs": "NODE_ENV=test documentation readme src/Form.js src/Field.js src/FieldArray.js src/Fieldset.js --section=API",
     "postinstall": "yarn build",
     "test": "NPM_ENV=test jest",
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
@@ -21,7 +21,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-plugin-flow-react-proptypes": "^24.0.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",

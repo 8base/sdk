@@ -11,7 +11,7 @@ type TableSchemaConsumerProps = {
 };
 
 const withTableSchema = (BaseComponent: React$ComponentType<*>) => {
-  class TableSchemaConsumer extends React$Component<TableSchemaConsumerProps> {
+  class TableSchemaConsumer extends React.Component<TableSchemaConsumerProps> {
     renderWithSchema = (contextSchema: ?SchemaContextValue) => {
       const { tableSchemaName, ...restProps } = this.props;
 

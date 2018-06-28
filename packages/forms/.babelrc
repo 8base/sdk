@@ -3,5 +3,5 @@
     "react-app",
     "flow"
   ],
-  "plugins": ["flow-react-proptypes"]
+  "plugins": ["transform-flow-strip-types"]
 }
