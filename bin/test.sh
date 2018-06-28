@@ -28,5 +28,6 @@ status=0
 (run_command "create-apollo-client" "test" "(cd ./packages/create-apollo-client && yarn test --verbose) ;") || status=1
 (run_command "validator" "test" "(cd ./packages/validator && yarn test --verbose) ;") || status=1
 (run_command "forms" "test" "(cd ./packages/forms && yarn test --verbose) ;") || status=1
+(run_command "apollo-links" "test" "(cd ./packages/apollo-links && yarn test --verbose) ;") || status=1
 
 exit $status
