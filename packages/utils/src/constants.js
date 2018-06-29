@@ -1,0 +1,19 @@
+//@flow
+const FIELD_TYPE = {
+  NUMBER: 'NUMBER',
+  TEXT: 'TEXT',
+  DATE: 'DATE',
+  SWITCH: 'SWITCH',
+  FILE: 'FILE',
+  RELATION: 'RELATION',
+};
+
+const MUTATION_TYPE = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+};
+
+export {
+  FIELD_TYPE,
+  MUTATION_TYPE,
+};
