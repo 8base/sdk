@@ -19,8 +19,8 @@ Provider fetch interfaces fragments schema and create apollo client
 
 #### Properties
 
--   `children` **React$Node** Children of the provider
--   `uri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** children 8base endpoint
+-   `children` **(React$Node | [Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** Children of the provider. Could be either react node or function with loading state.
+-   `uri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Children 8base endpoint
 -   `getClient` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 8base endpoint
 
 ## Usage
@@ -37,6 +37,6 @@ Provider fetch interfaces fragments schema and create apollo client
     getClient={ getClient }
     uri={ uri }
   >
-    { children }
+    { ({ isLoading }) => children }
   </AsyncApolloProvider>
 ```

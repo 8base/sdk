@@ -12,15 +12,15 @@ type AsyncApolloProviderState = {
 }
 
 type AsyncApolloProviderProps = {
-  children: React$Node,
+  children: React$Node | ({ isLoading: boolean }) => React$Node,
   uri: string,
-  getClient: (schema?: ?Object) => ?ApolloClient
+  getClient: (schema?: ?Object) => ?ApolloClient,
 }
 
 /**
  * Provider fetch interfaces fragments schema and create apollo client
- * @property {React$Node} children Children of the provider
- * @property {string} uri children 8base endpoint
+ * @property {React$Node | Function} children Children of the provider. Could be either react node or function with loading state.
+ * @property {string} uri Children 8base endpoint
  * @property {Function} getClient 8base endpoint
  */
 class AsyncApolloProvider extends PureComponent<AsyncApolloProviderProps, AsyncApolloProviderState> {
@@ -40,14 +40,19 @@ class AsyncApolloProvider extends PureComponent<AsyncApolloProviderProps, AsyncA
     const { client } = this.state;
     const { children } = this.props;
     const isClientCreated = !R.isNil(client);
+    const isLoading = !isClientCreated;
+
+    const rendered = typeof children === 'function'
+      ? children({ isLoading })
+      : children;
 
     return isClientCreated
       ? (
         <ApolloProvider client={ client }>
-          { children }
+          { rendered }
         </ApolloProvider>
       )
-      : null;
+      : rendered;
   }
 }
 

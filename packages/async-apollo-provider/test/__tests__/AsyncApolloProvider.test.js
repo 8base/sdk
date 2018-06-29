@@ -32,4 +32,25 @@ describe('As a Developer, I can use Apollo Provider with fetching interfaces sch
     expect(getClient).toBeCalledWith(fetchedSchema);
     expect(testInstance.findByType(ApolloProvider).props.client).toBeInstanceOf(ApolloClient);
   });
+
+
+  it('should call pass isLoading as a children props', async () => {
+    const getClient: Function = jest.fn(() => new ApolloClient());
+    const childrenFunction = jest.fn((() => <div />));
+    const testRenderer = renderer.create(
+      <AsyncApolloProvider
+        getClient={ getClient }
+        uri={ uri }
+      >
+        { childrenFunction }
+      </AsyncApolloProvider>,
+    );
+    const testInstance = testRenderer.root;
+
+    expect(childrenFunction).toBeCalledWith({ isLoading: true });
+
+    await testInstance.instance.componentDidMount();
+
+    expect(childrenFunction).toBeCalledWith({ isLoading: false });
+  });
 });
