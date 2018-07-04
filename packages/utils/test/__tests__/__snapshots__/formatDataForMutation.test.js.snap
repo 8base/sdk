@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As developer, I can format for create mutation, Compelex data. 1`] = `
+Object {
+  "relation": Object {
+    "create": Object {
+      "scalar": "Relation Scalar Value",
+    },
+  },
+  "relationList": Object {
+    "create": Array [
+      Object {
+        "nestedRelation": Object {
+          "connect": "5b32159b66a450c047285628",
+        },
+        "nestedRelationList": Object {
+          "create": Array [
+            Object {
+              "scalar": "Relation List Nested Relation List Scalar Value",
+              "scalarList": Array [
+                "Relation List Nested Relation List Scalar List Value",
+              ],
+            },
+          ],
+        },
+        "scalar": "Relation List Scalar Value",
+        "scalarList": Array [
+          "Relation List Scalar List Value",
+        ],
+      },
+    ],
+  },
+  "scalar": "Scalar Value",
+  "scalarList": Array [
+    "Scalar List Value",
+  ],
+}
+`;
+
+exports[`As developer, I can format for update mutation, Compelex data. 1`] = `
+Object {
+  "relation": Object {
+    "create": Object {
+      "scalar": "Relation Scalar Value",
+    },
+  },
+  "relationList": Object {
+    "create": Array [
+      Object {
+        "nestedRelation": Object {
+          "reconnect": "5b32159b66a450c047285628",
+        },
+        "nestedRelationList": Object {
+          "create": Array [
+            Object {
+              "scalar": "Relation List Nested Relation List Scalar Value",
+              "scalarList": Array [
+                "Relation List Nested Relation List Scalar List Value",
+              ],
+            },
+          ],
+        },
+        "scalar": "Relation List Scalar Value",
+        "scalarList": Array [
+          "Relation List Scalar List Value",
+        ],
+      },
+    ],
+  },
+  "scalar": "Scalar Value",
+  "scalarList": Array [
+    "Scalar List Value",
+  ],
+}
+`;
