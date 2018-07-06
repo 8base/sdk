@@ -12,10 +12,14 @@ This client library is used by the other 8base service packages to make requests
     -   [Parameters](#parameters)
     -   [setIdToken](#setidtoken)
         -   [Parameters](#parameters-1)
-    -   [setAccountId](#setaccountid)
+    -   [setRefreshToken](#setrefreshtoken)
         -   [Parameters](#parameters-2)
-    -   [request](#request)
+    -   [setEmail](#setemail)
         -   [Parameters](#parameters-3)
+    -   [setAccountId](#setaccountid)
+        -   [Parameters](#parameters-4)
+    -   [request](#request)
+        -   [Parameters](#parameters-5)
 
 ### Client
 
@@ -33,6 +37,22 @@ Update id token.
 
 -   `idToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id token.
 
+#### setRefreshToken
+
+Update refresh token.
+
+##### Parameters
+
+-   `refreshToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The refresh token.
+
+#### setEmail
+
+Update user email.
+
+##### Parameters
+
+-   `email` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user email.
+
 #### setAccountId
 
 Update account identifier.
@@ -47,7 +67,7 @@ Send request to the API
 
 ##### Parameters
 
--   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GraphQL query.
+-   `query` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | DocumentNode)** GraphQL query.
 -   `variables` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The variables that will be used when executing the query.
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 

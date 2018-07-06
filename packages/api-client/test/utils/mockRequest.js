@@ -1,6 +1,6 @@
 import nock from 'nock';
 
-function mockRequest(endpoint, response = { data: {}}) {
+function mockRequest(endpoint, status = 200, response = { data: {}}) {
   let requestBody = null;
 
   return new Promise((resolve) => {
@@ -10,7 +10,7 @@ function mockRequest(endpoint, response = { data: {}}) {
 
         return true;
       })
-      .reply(200, function reply() {
+      .reply(status, function reply() {
         resolve({
           body: requestBody,
           headers: this.req.headers,

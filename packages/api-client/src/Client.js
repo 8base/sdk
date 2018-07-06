@@ -1,5 +1,40 @@
 // @flow
+import type { DocumentNode } from 'graphql';
+import gql from 'graphql-tag';
 import { GraphQLClient } from 'graphql-request';
+import errorCodes from '@8base/error-codes';
+import * as R from 'ramda';
+
+const USER_REFRESH_TOKEN_QUERY = gql`
+  mutation UserRefreshToken($refreshToken: String!, $email: String!) {
+    userRefreshToken(data: {
+      refreshToken: $refreshToken,
+      email: $email,
+    }) {
+      refreshToken
+      idToken
+    }
+  }
+`;
+
+const hasTokenExpiredErrorCode = R.any(
+  R.propEq('code', errorCodes.TokenExpiredErrorCode),
+);
+
+type GraphQLClientResponse = {
+  errors: Array<any>,
+  data: any,
+};
+
+type GraphQLClientRequest = {
+  query: DocumentNode,
+  variables: Object,
+};
+
+type GraphQLClientError = {
+  response: GraphQLClientResponse,
+  request: GraphQLClientRequest,
+};
 
 /**
  * Client provides methods to make requests to the API.
@@ -7,8 +42,11 @@ import { GraphQLClient } from 'graphql-request';
  */
 class Client {
   gqlc: GraphQLClient;
-  idToken: string;
+
   accountId: string;
+  email: string;
+  idToken: string;
+  refreshToken: string;
 
   constructor(endpoint: string) {
     this.gqlc = new GraphQLClient(endpoint);
@@ -24,6 +62,22 @@ class Client {
   }
 
   /**
+   * Update refresh token.
+   * @param refreshToken - The refresh token.
+   */
+  setRefreshToken(refreshToken: string) {
+    this.refreshToken = refreshToken;
+  }
+
+  /**
+   * Update user email.
+   * @param email - The user email.
+   */
+  setEmail(email: string) {
+    this.email = email;
+  }
+
+  /**
    * Update account identifier.
    * @param accountId - The account identifier.
    */
@@ -32,14 +86,36 @@ class Client {
     this.gqlc.setHeader('account-id', accountId);
   }
 
+  async tryToRefreshToken(err: GraphQLClientError) {
+    const { refreshToken, email } = this;
+
+    const { userRefreshToken } = await this.request(USER_REFRESH_TOKEN_QUERY, {
+      refreshToken,
+      email,
+    });
+
+    this.setRefreshToken(userRefreshToken.refreshToken);
+    this.setIdToken(userRefreshToken.idToken);
+
+    return this.request(err.request.query, err.request.variables);
+  }
+
+  handleRequestErrors = (err: GraphQLClientError) => {
+    if (hasTokenExpiredErrorCode(err.response.errors)) {
+      return this.tryToRefreshToken(err);
+    }
+
+    throw err;
+  };
+
   /**
    * Send request to the API
    * @param query - GraphQL query.
    * @param variables - The variables that will be used when executing the query.
    * @returns {Promise}
    */
-  request(query: string, variables: Object = {}) {
-    return this.gqlc.request(query, variables);
+  request(query: string | DocumentNode, variables: Object = {}) {
+    return this.gqlc.request(query, variables).catch(this.handleRequestErrors);
   }
 }
 
