@@ -7,7 +7,7 @@ import { GraphQLClient } from 'graphql-request';
  */
 class Client {
   gqlc: GraphQLClient;
-  token: string;
+  idToken: string;
   accountId: string;
 
   constructor(endpoint: string) {
@@ -15,12 +15,12 @@ class Client {
   }
 
   /**
-   * Update authorization token.
-   * @param token - The authorization token.
+   * Update id token.
+   * @param idToken - The id token.
    */
-  setToken(token: string) {
-    this.token = token;
-    this.gqlc.setHeader('Authorization', token);
+  setIdToken(idToken: string) {
+    this.idToken = idToken;
+    this.gqlc.setHeader('Authorization', idToken);
   }
 
   /**

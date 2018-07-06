@@ -10,7 +10,7 @@ This client library is used by the other 8base service packages to make requests
 
 -   [Client](#client)
     -   [Parameters](#parameters)
-    -   [setToken](#settoken)
+    -   [setIdToken](#setidtoken)
         -   [Parameters](#parameters-1)
     -   [setAccountId](#setaccountid)
         -   [Parameters](#parameters-2)
@@ -25,13 +25,13 @@ Client provides methods to make requests to the API.
 
 -   `endpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The endpoint which are using for make requests.
 
-#### setToken
+#### setIdToken
 
-Update authorization token.
+Update id token.
 
 ##### Parameters
 
--   `token` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The authorization token.
+-   `idToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id token.
 
 #### setAccountId
 

@@ -33,7 +33,7 @@ Object {
       "accountId",
     ],
     "authorization": Array [
-      "token",
+      "idToken",
     ],
     "connection": Array [
       "close",

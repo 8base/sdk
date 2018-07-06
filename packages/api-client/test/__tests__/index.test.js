@@ -30,7 +30,7 @@ it('As a developer, I can create client and send request with variables.', async
 it('As a developer, I can create client, set API credentials and send request.', async () => {
   const client = new Client('https://api.test.8base.com');
 
-  client.setToken('token');
+  client.setIdToken('idToken');
   client.setAccountId('accountId');
 
   await client.request('query { companyName }');
