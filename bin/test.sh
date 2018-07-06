@@ -25,10 +25,13 @@ run_command()
 status=0
 
 (run_command "api-client" "test" "(cd ./packages/api-client && yarn test --verbose) ;") || status=1
+(run_command "apollo-links" "test" "(cd ./packages/apollo-links && yarn test --verbose) ;") || status=1
 (run_command "apollo-provider" "test" "(cd ./packages/apollo-provider && yarn test --verbose) ;") || status=1
 (run_command "create-apollo-client" "test" "(cd ./packages/create-apollo-client && yarn test --verbose) ;") || status=1
-(run_command "validate" "test" "(cd ./packages/validate && yarn test --verbose) ;") || status=1
 (run_command "forms" "test" "(cd ./packages/forms && yarn test --verbose) ;") || status=1
-(run_command "apollo-links" "test" "(cd ./packages/apollo-links && yarn test --verbose) ;") || status=1
+(run_command "utils" "test" "(cd ./packages/utils && yarn test --verbose) ;") || status=1
+(run_command "validate" "test" "(cd ./packages/validate && yarn test --verbose) ;") || status=1
 
 exit $status
+
+
