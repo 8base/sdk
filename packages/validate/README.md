@@ -1,4 +1,4 @@
-# 8base validator
+# 8base Validate
 
 This library is used by the other 8base service packages to validate forms. You can also use it to make own form validation etc.
 

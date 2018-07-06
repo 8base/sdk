@@ -1,5 +1,5 @@
 {
-  "name": "@8base/api-lins",
+  "name": "@8base/apollo-links",
   "version": "1.0.0",
   "main": "es/index.js",
   "module": "es/index.js",

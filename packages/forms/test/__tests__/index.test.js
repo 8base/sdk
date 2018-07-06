@@ -167,7 +167,7 @@ const RELATION_TABLE_SCHEMA = {
 
 let mockCreateValidate = null;
 
-jest.mock('@8base/validator', () => (...args) => mockCreateValidate(...args));
+jest.mock('@8base/validate', () => (...args) => mockCreateValidate(...args));
 
 describe('As a developer, while I implementet a form,', () => {
   mockCreateValidate = jest.fn((fieldSchema) => () => fieldSchema.name);

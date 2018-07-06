@@ -1,12 +1,12 @@
 {
-  "name": "@8base/async-apollo-provider",
+  "name": "@8base/apollo-provider",
   "version": "1.0.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src -d es --ignore __tests__",
     "doc": "NODE_ENV=test documentation readme",
-    "docs": "yarn doc src/AsyncApolloProvider.js --section=AsyncApolloProvider",
+    "docs": "yarn doc src/ApolloProvider.js --section=ApolloProvider",
     "postinstall": "yarn build",
     "test": "NPM_ENV=test jest",
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"

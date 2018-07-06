@@ -1,17 +1,17 @@
 // @flow
 import React, { PureComponent } from 'react';
 import * as R from 'ramda';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as DefaultApolloProvider } from 'react-apollo';
 
 import { getFragmentsSchema } from './schemaLoader';
 
 type ApolloClient = *;
 
-type AsyncApolloProviderState = {
+type ApolloProviderState = {
   client: ?ApolloClient,
 }
 
-type AsyncApolloProviderProps = {
+type ApolloProviderProps = {
   children: React$Node | ({ isLoading: boolean }) => React$Node,
   uri: string,
   getClient: (schema?: ?Object) => ?ApolloClient,
@@ -23,7 +23,7 @@ type AsyncApolloProviderProps = {
  * @property {string} uri Children 8base endpoint
  * @property {Function} getClient 8base endpoint
  */
-class AsyncApolloProvider extends PureComponent<AsyncApolloProviderProps, AsyncApolloProviderState> {
+class ApolloProvider extends PureComponent<ApolloProviderProps, ApolloProviderState> {
   state = {
     client: null,
   };
@@ -48,13 +48,13 @@ class AsyncApolloProvider extends PureComponent<AsyncApolloProviderProps, AsyncA
 
     return isClientCreated
       ? (
-        <ApolloProvider client={ client }>
+        <DefaultApolloProvider client={ client }>
           { rendered }
-        </ApolloProvider>
+        </DefaultApolloProvider>
       )
       : rendered;
   }
 }
 
 
-export { AsyncApolloProvider };
+export { ApolloProvider };

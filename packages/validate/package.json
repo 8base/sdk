@@ -1,5 +1,5 @@
 {
-  "name": "@8base/validator",
+  "name": "@8base/validate",
   "version": "1.0.0",
   "main": "es/index.js",
   "module": "es/index.js",

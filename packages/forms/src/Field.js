@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Field as FinalField } from 'react-final-form';
 import { compose, setDisplayName } from 'recompose';
-import createValidate from '@8base/validator';
+import createValidate from '@8base/validate';
 import type { FieldProps as FinalFieldProps } from 'react-final-form';
 
 import { withFieldSchema } from './utils';
