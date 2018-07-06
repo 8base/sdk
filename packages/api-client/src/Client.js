@@ -9,7 +9,6 @@ class Client {
   gqlc: GraphQLClient;
   token: string;
   accountId: string;
-  organizationId: string;
 
   constructor(endpoint: string) {
     this.gqlc = new GraphQLClient(endpoint);
@@ -31,15 +30,6 @@ class Client {
   setAccountId(accountId: string) {
     this.accountId = accountId;
     this.gqlc.setHeader('account-id', accountId);
-  }
-
-  /**
-   * Update organization identifier.
-   * @param organizationId - The organization identifier.
-   */
-  setOrganizationId(organizationId: string) {
-    this.organizationId = organizationId;
-    this.gqlc.setHeader('organization-id', organizationId);
   }
 
   /**

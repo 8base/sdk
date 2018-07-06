@@ -32,7 +32,6 @@ it('As a developer, I can create client, set API credentials and send request.',
 
   client.setToken('token');
   client.setAccountId('accountId');
-  client.setOrganizationId('organizationId');
 
   await client.request('query { companyName }');
 

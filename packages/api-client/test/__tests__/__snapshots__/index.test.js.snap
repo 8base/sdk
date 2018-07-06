@@ -45,9 +45,6 @@ Object {
       "application/json",
     ],
     "host": "api.test.8base.com",
-    "organization-id": Array [
-      "organizationId",
-    ],
     "user-agent": Array [
       "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
     ],

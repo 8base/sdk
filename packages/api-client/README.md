@@ -14,10 +14,8 @@ This client library is used by the other 8base service packages to make requests
         -   [Parameters](#parameters-1)
     -   [setAccountId](#setaccountid)
         -   [Parameters](#parameters-2)
-    -   [setOrganizationId](#setorganizationid)
-        -   [Parameters](#parameters-3)
     -   [request](#request)
-        -   [Parameters](#parameters-4)
+        -   [Parameters](#parameters-3)
 
 ### Client
 
@@ -42,14 +40,6 @@ Update account identifier.
 ##### Parameters
 
 -   `accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The account identifier.
-
-#### setOrganizationId
-
-Update organization identifier.
-
-##### Parameters
-
--   `organizationId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The organization identifier.
 
 #### request
 
