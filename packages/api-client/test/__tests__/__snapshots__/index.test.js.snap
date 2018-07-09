@@ -33,7 +33,7 @@ Object {
       "accountId",
     ],
     "authorization": Array [
-      "token",
+      "idToken",
     ],
     "connection": Array [
       "close",
@@ -45,9 +45,6 @@ Object {
       "application/json",
     ],
     "host": "api.test.8base.com",
-    "organization-id": Array [
-      "organizationId",
-    ],
     "user-agent": Array [
       "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
     ],
@@ -101,6 +98,54 @@ Object {
     ],
     "content-length": Array [
       "326",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+  },
+}
+`;
+
+exports[`When client receive other errors, it should throw that error. 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    Object {
+      "code": "InvalidTokenError",
+    },
+  ],
+  "status": 502,
+}
+`;
+
+exports[`When client receive token expired error, it should refresh token and repeat my request. 1`] = `
+Object {
+  "body": Object {
+    "query": "query { companyName }",
+    "variables": Object {},
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "account-id": Array [
+      "accountId",
+    ],
+    "authorization": Array [
+      "newIdToken",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "48",
     ],
     "content-type": Array [
       "application/json",

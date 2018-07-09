@@ -1,13 +1,11 @@
 import gql from 'graphql-tag';
+import errorCodes from '@8base/error-codes';
+
 import { Client } from '../../src';
 
-let requestPromise = null;
-
-beforeEach(async () => {
-  requestPromise = mockRequest('https://api.test.8base.com');
-});
-
 it('As a developer, I can create client and send request.', async () => {
+  const requestPromise = mockRequest('https://api.test.8base.com');
+
   const client = new Client('https://api.test.8base.com');
 
   await client.request('query { companyName }');
@@ -18,6 +16,8 @@ it('As a developer, I can create client and send request.', async () => {
 });
 
 it('As a developer, I can create client and send request with variables.', async () => {
+  const requestPromise = mockRequest('https://api.test.8base.com');
+
   const client = new Client('https://api.test.8base.com');
 
   await client.request('query { companyName }', { variable: 2 });
@@ -28,11 +28,12 @@ it('As a developer, I can create client and send request with variables.', async
 });
 
 it('As a developer, I can create client, set API credentials and send request.', async () => {
+  const requestPromise = mockRequest('https://api.test.8base.com');
+
   const client = new Client('https://api.test.8base.com');
 
-  client.setToken('token');
+  client.setIdToken('idToken');
   client.setAccountId('accountId');
-  client.setOrganizationId('organizationId');
 
   await client.request('query { companyName }');
 
@@ -42,6 +43,8 @@ it('As a developer, I can create client, set API credentials and send request.',
 });
 
 it('As a developer, I can send queries with graphql tag.', async () => {
+  const requestPromise = mockRequest('https://api.test.8base.com');
+
   const client = new Client('https://api.test.8base.com');
 
   await client.request(gql`query { companyName }`);
@@ -49,4 +52,63 @@ it('As a developer, I can send queries with graphql tag.', async () => {
   const request = await requestPromise;
 
   expect(request).toMatchSnapshot();
+});
+
+it('When client receive token expired error, it should refresh token and repeat my request.', async () => {
+  mockRequest('https://api.test.8base.com', 502, {
+    errors: [{
+      code: errorCodes.TokenExpiredErrorCode,
+    }],
+    data: null,
+  });
+
+  mockRequest('https://api.test.8base.com', 200, {
+    data: {
+      userRefreshToken: {
+        refreshToken: 'newRefreshToken',
+        idToken: 'newIdToken',
+      },
+    },
+  });
+
+  const requestPromise = mockRequest('https://api.test.8base.com');
+
+  const client = new Client('https://api.test.8base.com');
+
+  client.setIdToken('idToken');
+  client.setAccountId('accountId');
+  client.setEmail('test@site.com');
+
+  await client.request('query { companyName }');
+
+  const request = await requestPromise;
+
+  expect(request).toMatchSnapshot();
+});
+
+it('When client receive other errors, it should throw that error.', async () => {
+  mockRequest('https://api.test.8base.com', 502, {
+    errors: [{
+      code: errorCodes.InvalidTokenErrorCode,
+    }],
+    data: null,
+  });
+
+  mockRequest('https://api.test.8base.com');
+
+  const client = new Client('https://api.test.8base.com');
+
+  client.setIdToken('idToken');
+  client.setAccountId('accountId');
+  client.setEmail('test@site.com');
+
+  let error = null;
+
+  try {
+    await client.request(gql`query { companyName }`);
+  } catch (err) {
+    error = err;
+  }
+
+  expect(error.response).toMatchSnapshot();
 });

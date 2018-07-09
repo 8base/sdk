@@ -23,7 +23,9 @@
     "nock": "^9.3.3"
   },
   "dependencies": {
-    "graphql-request": "^1.6.0"
+    "@8base/error-codes": "^1.0.5",
+    "graphql-request": "^1.6.0",
+    "ramda": "^0.25.0"
   },
   "jest": {
     "setupFiles": [

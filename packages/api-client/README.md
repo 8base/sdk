@@ -10,14 +10,16 @@ This client library is used by the other 8base service packages to make requests
 
 -   [Client](#client)
     -   [Parameters](#parameters)
-    -   [setToken](#settoken)
+    -   [setIdToken](#setidtoken)
         -   [Parameters](#parameters-1)
-    -   [setAccountId](#setaccountid)
+    -   [setRefreshToken](#setrefreshtoken)
         -   [Parameters](#parameters-2)
-    -   [setOrganizationId](#setorganizationid)
+    -   [setEmail](#setemail)
         -   [Parameters](#parameters-3)
-    -   [request](#request)
+    -   [setAccountId](#setaccountid)
         -   [Parameters](#parameters-4)
+    -   [request](#request)
+        -   [Parameters](#parameters-5)
 
 ### Client
 
@@ -27,13 +29,29 @@ Client provides methods to make requests to the API.
 
 -   `endpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The endpoint which are using for make requests.
 
-#### setToken
+#### setIdToken
 
-Update authorization token.
+Update id token.
 
 ##### Parameters
 
--   `token` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The authorization token.
+-   `idToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id token.
+
+#### setRefreshToken
+
+Update refresh token.
+
+##### Parameters
+
+-   `refreshToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The refresh token.
+
+#### setEmail
+
+Update user email.
+
+##### Parameters
+
+-   `email` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user email.
 
 #### setAccountId
 
@@ -43,21 +61,13 @@ Update account identifier.
 
 -   `accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The account identifier.
 
-#### setOrganizationId
-
-Update organization identifier.
-
-##### Parameters
-
--   `organizationId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The organization identifier.
-
 #### request
 
 Send request to the API
 
 ##### Parameters
 
--   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GraphQL query.
+-   `query` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | DocumentNode)** GraphQL query.
 -   `variables` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The variables that will be used when executing the query.
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
