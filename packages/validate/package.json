@@ -1,6 +1,6 @@
 {
-  "name": "@8base/validator",
-  "version": "1.0.0",
+  "name": "@8base/validate",
+  "version": "0.1.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {

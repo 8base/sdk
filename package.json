@@ -4,7 +4,8 @@
     "eslint": "eslint .",
     "flow": "flow check",
     "postinstall": "lerna bootstrap",
-    "test": "./bin/test.sh"
+    "test": "./bin/test.sh",
+    "bump": "lerna publish --skip-npm --skip-git"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

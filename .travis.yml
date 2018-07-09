@@ -1,9 +1,23 @@
 language: node_js
 node_js:
-  - 9
+- 9
+
+env:
+  global:
+    secure: p73+4zpF668lzAABDTC0TlAH72fgrZ+T+FnHw4/uDakM/kuUeDG6/98+Ta4ZplGDSOwi4jEslIgGlW3YXpOHRWdynvsLOy7CxjIDwKylr5NDNVReVk119fYuxe0kIMUts92SaB7DO91qiUJ4t58nzWqkohAXjWxNPCXfLovgatgKAd5nvuRADlm+gMo6hY0idqXGZrnbIpdUubcEjy/6iMoWzTz7GTeARKAd5Vsakb598v6zWv7DeCMEgksOtIHpMroCZnXe4dlfAT/Q/cdbeVHBlSeJLVzAspjz9Rg1ABLmVgr+YeW1CSCx2tqnkgOXKQDONoSy6LuwyDwggwD3voimeTyBRDAHMO0qcmvpkSjXo/Jn4dPOAUyGfTLJkdCofquja2XEMMRID6uS7fyBK+kUAWJT7v18v1htmrrV6pGqH6X1fH9rJbC6maGnOcNRg+/7vbmjRAI4xrL485cxYmsQG2V/KjwiVTNVgEHp3pDN53zD3qFvO8e1hXBoeHsDRHkngsKrFFdm4ISXppnVNwQ9nBbZhktK4LZ/1Lf82gSqUAhCMuBe2n6z+jGkqJArfoPW9bYOY0AHLxkLeDnf4jQ211XQjIyXQP5c2QOIvV3WQb/gH9Vr4gtJhht2hVAZziOOs5TfdXrN+MhpcEwni1HdGz737bmzL6Hf5fcGy5E=
+
 install:
 - yarn
+
 script:
 - yarn flow
 - yarn eslint
 - yarn test
+
+deploy:
+- provider: script
+  script: bin/publish.sh
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: false

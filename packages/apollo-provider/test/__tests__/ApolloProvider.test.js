@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as DefaultApolloProvider } from 'react-apollo';
 
-import { AsyncApolloProvider } from '../../src/AsyncApolloProvider';
+import { ApolloProvider } from '../../src';
 
 jest.mock('react-apollo');
 
@@ -21,16 +21,16 @@ describe('As a Developer, I can use Apollo Provider with fetching interfaces sch
   it('should fetch schema and pass create apollo client', async () => {
     const getClient: Function = jest.fn(() => new ApolloClient());
     const testRenderer = renderer.create(
-      <AsyncApolloProvider getClient={ getClient } uri={ uri }><span>children</span></AsyncApolloProvider>,
+      <ApolloProvider getClient={ getClient } uri={ uri }><span>children</span></ApolloProvider>,
     );
     const testInstance = testRenderer.root;
 
-    expect(testInstance.findAllByType(ApolloProvider)).toEqual([]);
+    expect(testInstance.findAllByType(DefaultApolloProvider)).toEqual([]);
 
     await testInstance.instance.componentDidMount();
 
     expect(getClient).toBeCalledWith(fetchedSchema);
-    expect(testInstance.findByType(ApolloProvider).props.client).toBeInstanceOf(ApolloClient);
+    expect(testInstance.findByType(DefaultApolloProvider).props.client).toBeInstanceOf(ApolloClient);
   });
 
 
@@ -38,12 +38,12 @@ describe('As a Developer, I can use Apollo Provider with fetching interfaces sch
     const getClient: Function = jest.fn(() => new ApolloClient());
     const childrenFunction = jest.fn((() => <div />));
     const testRenderer = renderer.create(
-      <AsyncApolloProvider
+      <ApolloProvider
         getClient={ getClient }
         uri={ uri }
       >
         { childrenFunction }
-      </AsyncApolloProvider>,
+      </ApolloProvider>,
     );
     const testInstance = testRenderer.root;
 
