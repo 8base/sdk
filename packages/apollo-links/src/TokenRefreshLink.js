@@ -69,8 +69,6 @@ class TokenRefreshLink extends ApolloLink {
 
           subscription = observable.subscribe(subscriber);
         }).catch((err) => {
-          console.log('_____', err instanceof RefreshTokenInvalidError);
-
           if (err instanceof RefreshTokenInvalidError) {
             this.handleAuthFailed(err);
           } else {

@@ -1,6 +1,6 @@
 // @flow
 
-import { TokenRefreshLink } from '@8base/sdk';
+import { TokenRefreshLink } from '@8base/apollo-links';
 import type { GetTokenRefreshLinkParams, GetAuthStateParams } from '../types';
 
 const getTokenRefreshLink =
@@ -9,16 +9,18 @@ const getTokenRefreshLink =
     throw new Error('Excepted a getAuthState callback');
   } else {
     return new TokenRefreshLink({
-      setRefreshTokenInput: () => {
+      getRefreshTokenParameters: () => {
         const { refreshToken, email } = getAuthState();
-        onIdTokenExpired && onIdTokenExpired();
 
         return { email, refreshToken };
       },
-      authReceived: ({ refreshToken, idToken }) => {
+      onIdTokenExpired: () => {
+        onIdTokenExpired && onIdTokenExpired();
+      },
+      onAuthSuccess: ({ refreshToken, idToken }) => {
         onUpdateTokenSuccess && onUpdateTokenSuccess({ refreshToken, idToken });
       },
-      authFailed: (error) => {
+      onAuthError: (error) => {
         onUpdateTokenFail && onUpdateTokenFail(error);
       },
     });
