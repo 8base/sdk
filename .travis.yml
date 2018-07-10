@@ -8,6 +8,7 @@ env:
 
 install:
 - yarn
+- yarn build-packages
 
 script:
 - yarn flow
