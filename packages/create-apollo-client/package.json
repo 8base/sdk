@@ -1,6 +1,6 @@
 {
   "name": "@8base/create-apollo-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
