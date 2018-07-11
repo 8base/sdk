@@ -85,14 +85,14 @@ const createApolloLinks = (config: CreateApolloLinksParams) => {
   }
 
   apolloLinks.push(
+    getAuthLink({ getAuthState }),
+  );
+
+  apolloLinks.push(
     getTokenRefreshLink({
       ...links.tokenRefresh,
       getAuthState,
     }),
-  );
-
-  apolloLinks.push(
-    getAuthLink({ getAuthState }),
   );
 
   if (isEnableLink('error')) {

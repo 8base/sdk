@@ -4,6 +4,10 @@ import * as R from 'ramda';
 import { ApolloLink } from 'apollo-link';
 import type { GetAuthStateParams } from '../types';
 
+const assocWhenNotEmpty = (key: string, value?: ?string) => R.cond([
+  [() => !R.isEmpty(value), R.assoc(key, value)],
+  [R.T, R.identity],
+]);
 
 const getAuthLink = ({ getAuthState }: GetAuthStateParams) => {
   if (getAuthState === undefined) {
@@ -14,9 +18,9 @@ const getAuthLink = ({ getAuthState }: GetAuthStateParams) => {
 
       operation.setContext(
         R.over(R.lensProp('headers'), R.pipe(
-          R.assoc('authorization', idToken),
-          R.assoc('organization-id', organizationId),
-          R.assoc('account-id', accountId),
+          assocWhenNotEmpty('authorization', idToken),
+          assocWhenNotEmpty('organization-id', organizationId),
+          assocWhenNotEmpty('account-id', accountId),
         )));
 
       return forward(operation);

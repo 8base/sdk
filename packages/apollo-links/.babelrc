@@ -2,5 +2,11 @@
   "presets": [
     "react-app",
     "flow"
+  ],
+
+  "plugins": [
+    ["babel-plugin-transform-builtin-extend", {
+        "globals": ["Error"]
+    }]
   ]
 }

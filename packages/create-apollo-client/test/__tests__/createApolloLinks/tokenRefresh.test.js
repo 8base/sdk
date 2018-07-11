@@ -1,23 +1,25 @@
 // @flow
 import { createApolloLinks } from '../../../src/createApolloLinks';
 
-jest.mock('@8base/sdk', () => {
+jest.mock('@8base/apollo-links', () => {
   const { ApolloLink } = require('apollo-link');
 
   class TokenRefreshMockLink extends ApolloLink {
     constructor(options: any) {
       super(options);
 
-      const { setRefreshTokenInput, authReceived, authFailed } = options;
+      const { getRefreshTokenParameters, onIdTokenExpired, onAuthSuccess, onAuthError } = options;
 
-      setRefreshTokenInput();
+      getRefreshTokenParameters();
 
-      authReceived({
+      onIdTokenExpired();
+
+      onAuthSuccess({
         idToken: 'id-token',
         refreshToken: 'refresh-token',
       });
 
-      authFailed({ message: 'error' });
+      onAuthError({ message: 'error' });
     }
   }
 

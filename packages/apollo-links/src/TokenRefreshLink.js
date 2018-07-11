@@ -26,6 +26,11 @@ const USER_REFRESH_TOKEN_QUERY = `
   }
 `;
 
+const removeAuthorizationHeader = R.over(
+  R.lensProp('headers'),
+  R.dissoc('authorization'),
+);
+
 /**
  * Token Refresh Link renew authentication token when it's expired.
  * @param {TokenRefreshLinkOptions} options - The token refresh link options.
@@ -127,13 +132,16 @@ class TokenRefreshLink extends ApolloLink {
   refreshToken (operation: Operation, forward: NextLink): Promise<void> {
     this.fetching = true;
 
+    const context = removeAuthorizationHeader(operation.getContext());
+    const mutate = (req: *) => forward(createOperation(context, req));
+
     return new Promise((resolve, reject) => {
       const refreshTokenParameters: RefreshTokenParameters = this.getRefreshTokenParameters();
 
-      forward(createOperation(operation.getContext(), ({
+      mutate({
         query: gql(USER_REFRESH_TOKEN_QUERY),
         variables: refreshTokenParameters,
-      }))).subscribe({
+      }).subscribe({
         error: reject,
         next: ({ data }) => {
           if (data === null || data.userRefreshToken === null) {
