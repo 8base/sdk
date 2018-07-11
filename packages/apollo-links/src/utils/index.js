@@ -8,3 +8,4 @@ export const hasTokenExpiredError = R.any(R.anyPass([
 ]));
 
 export const hasTokenInvalidError = R.any(R.propEq('code', errorCodes.InvalidTokenErrorCode));
+
