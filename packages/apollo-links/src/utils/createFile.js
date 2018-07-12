@@ -12,7 +12,8 @@ const FILE_CREATE_MUTATION = gql`
       uploadUrl
       fields
     }
-  }`;
+  }
+`;
 
 export type CreatedFile = {
   id: string,
@@ -46,6 +47,15 @@ type UploadFileOptions = {
   createdFile: CreatedFile,
 };
 
+type EventListener = (Event) => any;
+
+type XHREventListeners = {
+  onProgress?: EventListener,
+  onError?: EventListener,
+  onLoad?: EventListener,
+  onAbort?: EventListener,
+};
+
 const getFileNameToUpload = (file?: File, metaData?: FileMeta): string => {
   if (metaData && metaData.filename) {
     return metaData.filename;
@@ -66,9 +76,48 @@ const checkHasErrors: (response: FileCreateMutationResponse) => boolean = R.both
   ),
 );
 
-const uploadFile = ({ file, createdFile }: UploadFileOptions): Promise<*> => {
+const addEventListeners = (request: XMLHttpRequest, eventListeners: XHREventListeners) => {
+  if (eventListeners.onProgress) {
+    request.addEventListener('progress', eventListeners.onProgress);
+  }
+
+  if (eventListeners.onLoad) {
+    request.addEventListener('progress', eventListeners.onLoad);
+  }
+
+  if (eventListeners.onError) {
+    request.addEventListener('progress', eventListeners.onError);
+  }
+
+  if (eventListeners.onAbort) {
+    request.addEventListener('progress', eventListeners.onAbort);
+  }
+};
+
+const uploadFile = (
+  { file, createdFile }: UploadFileOptions,
+  eventListeners: XHREventListeners,
+  requestCallback?: (XMLHttpRequest) => any,
+): Promise<*> => new Promise((resolve, reject) => {
   const fields = createdFile.fields || {};
   const form: FormData = new FormData();
+  const request = new XMLHttpRequest();
+
+  if (requestCallback) {
+    requestCallback(request);
+  }
+
+  addEventListeners(request, eventListeners);
+
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      if (request.status === 200) {
+        resolve(request.response);
+      } else {
+        reject(request.status);
+      }
+    }
+  };
 
   Object
     .entries(fields)
@@ -80,11 +129,9 @@ const uploadFile = ({ file, createdFile }: UploadFileOptions): Promise<*> => {
 
   form.append('file', file);
 
-  return fetch(createdFile.uploadUrl, {
-    method: 'POST',
-    body: form,
-  });
-};
+  request.open('POST', createdFile.uploadUrl, true);
+  request.send(form);
+});
 
 /**
  * Function creates file relation in database
@@ -96,10 +143,15 @@ const uploadFile = ({ file, createdFile }: UploadFileOptions): Promise<*> => {
 export const createFile = (
   { file, fileMeta }: UploadFileLinkOptions,
   mutate: (any) => any,
+  eventListeners?: XHREventListeners = {},
+  requestCallback?: (XMLHttpRequest) => any,
 ): Promise<CreatedFile> => new Promise((resolve, reject) => {
   const filename = getFileNameToUpload(file, fileMeta);
 
+  // Don't delete query or mutation fields.
+  // They are both required for consistent work.
   mutate({
+    query: FILE_CREATE_MUTATION,
     mutation: FILE_CREATE_MUTATION,
     variables: {
       data: { ...fileMeta, filename },
@@ -113,7 +165,7 @@ export const createFile = (
         return reject(response);
       }
 
-      uploadFile({ file, createdFile })
+      uploadFile({ file, createdFile }, eventListeners, requestCallback)
         .then(() => resolve(createdFile))
         .catch((error: ?mixed) => reject(error));
     },

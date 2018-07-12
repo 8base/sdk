@@ -75,7 +75,6 @@ const findFilePathsDeep = (
         [...path, Number(currentFieldKey)] :
         [...path, currentFieldKey];
 
-
       if (depth > MAX_OBJECT_DEPTH) {
         return fileFieldPaths;
       }
@@ -186,9 +185,29 @@ export const dissocCreateFields = (fileFieldPaths: Array<Path>, variables: {}): 
   )(fileFieldPaths),
 )(variables);
 
+const forwardOperation = (operation: Operation, forward: NextLink, observer: *) => {
+  forward(operation).subscribe({
+    error: (...args) => {
+      observer.error(...args);
+    },
+    next: (...args) => {
+      observer.next(...args);
+    },
+    complete: (...args) => {
+      observer.complete(...args);
+    },
+  });
+};
+
 export const fileUploadLink: ApolloLink = new ApolloLink(
   (operation: Operation, forward: NextLink): Observable<FetchResult> => new Observable(observer => {
     const filePaths: Array<Path> = findFilePaths(operation.variables);
+
+    if (filePaths.length === 0) {
+      forwardOperation(operation, forward, observer);
+      return;
+    }
+
     const fileFieldPaths: Array<Path> = R.map(R.init, filePaths);
     const files: Array<File> = getFiles(filePaths, operation.variables);
     const mutate = (req: GraphQLRequest) => forward(createOperation(operation.getContext(), req));
@@ -201,17 +220,7 @@ export const fileUploadLink: ApolloLink = new ApolloLink(
         operation.variables = dissocCreateFields(fileFieldPaths, operation.variables);
       })
       .then(() => {
-        forward(operation).subscribe({
-          error: (...args) => {
-            observer.error(...args);
-          },
-          next: (...args) => {
-            observer.next(...args);
-          },
-          complete: (...args) => {
-            observer.complete(...args);
-          },
-        });
+        forwardOperation(operation, forward, observer);
       })
       .catch((...args) => {
         observer.error(...args);

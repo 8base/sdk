@@ -3,9 +3,34 @@
 import { Observable } from 'apollo-link';
 import { createFile } from '../../src/utils/createFile';
 
-const fetch = jest.fn(() => Promise.resolve());
+const XHRopen = jest.fn();
 
-global.fetch = fetch;
+const XHRsend = jest.fn();
+
+class XMLHttpRequest {
+  constructor() {
+    this.open = XHRopen;
+    this.send = XHRsend;
+
+    this.send.mockImplementation(() => {
+      this.readyState = 4;
+      this.status = 200;
+      this.onreadystatechange();
+    });
+  }
+
+  open: (any) => any;
+
+  send: (any) => any;
+
+  readyState: number;
+
+  status: number;
+
+  onreadystatechange: (any) => any;
+}
+
+global.XMLHttpRequest = XMLHttpRequest;
 
 describe(
   'As a developer i can use createFile utility to create file relation and upload file to server',
@@ -40,10 +65,8 @@ describe(
 
       await createFile({ file, fileMeta }, mutate);
 
-      expect(fetch).toHaveBeenCalledWith(uploadUrl, {
-        method: 'POST',
-        body: form,
-      });
+      expect(XHRopen).toHaveBeenCalledWith('POST', uploadUrl, true);
+      expect(XHRsend).toHaveBeenCalledWith(form);
     });
 
     it('resolves created file', async () => {
