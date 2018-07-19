@@ -1,4 +1,4 @@
-//@flow
+// @flow
 import {
   ApolloLink,
   Observable,
@@ -10,7 +10,11 @@ import {
 import gql from 'graphql-tag';
 import * as R from 'ramda';
 
-import type { TokenRefreshLinkOptions, RefreshTokenResult, RefreshTokenParameters } from './types';
+import type {
+  TokenRefreshLinkParameters,
+  RefreshTokenQueryInput,
+  RefreshTokenQueryResult,
+} from './types';
 import { RefreshTokenInvalidError } from './RefreshTokenInvalidError';
 import { hasTokenExpiredError, hasTokenInvalidError } from './utils';
 
@@ -26,11 +30,6 @@ const USER_REFRESH_TOKEN_QUERY = `
   }
 `;
 
-const removeAuthorizationHeader = R.over(
-  R.lensProp('headers'),
-  R.dissoc('authorization'),
-);
-
 /**
  * Token Refresh Link renew authentication token when it's expired.
  * @param {TokenRefreshLinkOptions} options - The token refresh link options.
@@ -39,13 +38,13 @@ const removeAuthorizationHeader = R.over(
  * @param {Function} [options.onAuthError] - The callback which called when attempt to refresh authentication is failed.
  * @param {Function} [options.onIdTokenExpired] - The callback which called when id token is expired.
  */
-class TokenRefreshLink extends ApolloLink {
+export class TokenRefreshLink extends ApolloLink {
   constructor({
     getRefreshTokenParameters,
     onAuthSuccess,
     onAuthError,
     onIdTokenExpired,
-  } : TokenRefreshLinkOptions) {
+  } : TokenRefreshLinkParameters) {
     super();
 
     this.getRefreshTokenParameters = getRefreshTokenParameters;
@@ -132,11 +131,18 @@ class TokenRefreshLink extends ApolloLink {
   refreshToken (operation: Operation, forward: NextLink): Promise<void> {
     this.fetching = true;
 
-    const context = removeAuthorizationHeader(operation.getContext());
-    const mutate = (req: *) => forward(createOperation(context, req));
+    const operationContext = operation.getContext();
+    operationContext.isRefreshingToken = true;
+
+    const mutate = (req: *) => forward(
+      createOperation(
+        operationContext,
+        req,
+      ),
+    );
 
     return new Promise((resolve, reject) => {
-      const refreshTokenParameters: RefreshTokenParameters = this.getRefreshTokenParameters();
+      const refreshTokenParameters: RefreshTokenQueryInput = this.getRefreshTokenParameters();
 
       mutate({
         query: gql(USER_REFRESH_TOKEN_QUERY),
@@ -147,7 +153,7 @@ class TokenRefreshLink extends ApolloLink {
           if (data === null || data.userRefreshToken === null) {
             reject(new RefreshTokenInvalidError());
           } else {
-            const { refreshToken, idToken }: RefreshTokenResult = data.userRefreshToken;
+            const { refreshToken, idToken }: RefreshTokenQueryResult = data.userRefreshToken;
 
             this.onAuthSuccess({ refreshToken, idToken });
 
@@ -161,6 +167,3 @@ class TokenRefreshLink extends ApolloLink {
     });
   }
 }
-
-
-export { TokenRefreshLink };
