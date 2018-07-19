@@ -1,24 +1,45 @@
-//@flow
-type ErrorObject = {
+// @flow
+export type ErrorObject = {
   code: string,
   message: string,
 };
 
-type RefreshTokenResult = {
+export type RefreshTokenQueryResult = {
   refreshToken: string,
   idToken: string,
 };
 
-type RefreshTokenParameters = {
+export type RefreshTokenQueryInput = {
   refreshToken: string,
   email: string,
 };
 
-type TokenRefreshLinkOptions = {
-  getRefreshTokenParameters: () => RefreshTokenParameters;
-  onAuthSuccess: (auth: RefreshTokenResult) => void;
-  onAuthError?: (error?: Object) => void;
+type GraphQLError = {
+  code: string,
+  details: {},
+  message: string,
+};
+
+export type TokenRefreshLinkParameters = {
+  getRefreshTokenParameters: () => RefreshTokenQueryInput;
+  onAuthSuccess: (RefreshTokenQueryResult) => void;
+  onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => void;
 };
 
-export type { TokenRefreshLinkOptions, ErrorObject, RefreshTokenResult, RefreshTokenParameters };
+export type ErrorLinkParameters = {
+  onGraphQLErrors?: (GraphQLError[]) => void,
+  onNetworkError?: (error: {}) => void,
+};
+
+export type AuthState = {
+  organizationId?: string,
+  accountId?: string,
+  idToken?: string,
+};
+
+export type AuthHeadersLinkParameters = {
+  getAuthState: () => AuthState,
+};
+
+export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;

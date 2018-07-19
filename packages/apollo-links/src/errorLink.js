@@ -2,9 +2,9 @@
 
 import * as R from 'ramda';
 import { onError } from 'apollo-link-error';
-import type { GetErrorLinkParams } from '../types';
+import type { ErrorLinkParameters } from './types';
 
-const getErrorLink = ({ onGraphQLErrors, onNetworkError }: GetErrorLinkParams) =>
+export const createErrorLink = ({ onGraphQLErrors, onNetworkError }: ErrorLinkParameters) =>
   onError((error) => {
     const { graphQLErrors, networkError } = error;
 
@@ -15,5 +15,3 @@ const getErrorLink = ({ onGraphQLErrors, onNetworkError }: GetErrorLinkParams) =
       onNetworkError && onNetworkError(networkError);
     }
   });
-
-export { getErrorLink };
