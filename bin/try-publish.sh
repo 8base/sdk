@@ -22,7 +22,6 @@ if [ "$published" != "$version" ]; then
   npm publish --access public; if [ "$?" != "0" ]; then status=1; fi
 else 
   echo "Current version of the package already published to the NPM."
-  status=1
 fi
 
 sleep 2
