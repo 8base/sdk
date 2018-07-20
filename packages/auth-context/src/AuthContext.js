@@ -3,8 +3,6 @@
 import React from 'react';
 import * as R from 'ramda';
 
-const { Provider, Consumer } = React.createContext({ isAuthorized: false });
-
 type AuthState = {
   accountId: string,
   idToken: string,
@@ -13,6 +11,10 @@ type AuthState = {
 type AuthProviderWrapperProps = {
   children: React$Node,
 } & AuthState;
+
+export type AuthContextProps = {
+  isAuthorized: boolean | void,
+};
 
 const checkIsEmptyOrNil: (any) => boolean = R.either(R.isNil, R.isEmpty);
 
@@ -23,6 +25,8 @@ const checkIsAuthorized = ({ accountId, idToken }: AuthState): boolean =>
       checkIsEmptyOrNil(idToken),
     ),
   );
+
+const { Provider, Consumer } = React.createContext({ isAuthorized: false });
 
 const AuthProviderWrapper = ({ accountId, idToken, children }: AuthProviderWrapperProps) => (
   <Provider value={{ isAuthorized: checkIsAuthorized({ accountId, idToken }) }}>
