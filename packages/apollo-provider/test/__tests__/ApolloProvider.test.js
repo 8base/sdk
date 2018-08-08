@@ -25,8 +25,6 @@ describe('As a Developer, I can use Apollo Provider with fetching interfaces sch
     );
     const testInstance = testRenderer.root;
 
-    expect(testInstance.findAllByType(DefaultApolloProvider)).toEqual([]);
-
     await testInstance.instance.componentDidMount();
 
     expect(getClient).toBeCalledWith(fetchedSchema);
@@ -47,10 +45,10 @@ describe('As a Developer, I can use Apollo Provider with fetching interfaces sch
     );
     const testInstance = testRenderer.root;
 
-    expect(childrenFunction).toBeCalledWith({ isLoading: true });
+    expect(childrenFunction.mock.calls[0][0].isLoading).toBeTruthy();
 
     await testInstance.instance.componentDidMount();
 
-    expect(childrenFunction).toBeCalledWith({ isLoading: false });
+    expect(childrenFunction.mock.calls[1][0].isLoading).toBeFalsy();
   });
 });

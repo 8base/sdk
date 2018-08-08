@@ -1,12 +1,12 @@
 {
-  "name": "@8base/auth-context",
+  "name": "@8base/auth-provider",
   "version": "0.0.1",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build": "NODE_ENV=production babel src -d es --ignore __tests__ && flow-copy-source src es",
     "doc": "NODE_ENV=test documentation readme",
-    "docs": "yarn doc src/AuthProvider.js --section=AuthProvider",
+    "docs": "yarn doc src/index.js --section=AuthProvider",
     "test": "NPM_ENV=test jest",
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
@@ -23,7 +23,9 @@
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
+    "flow-copy-source": "^2.0.2",
     "jest": "^23.1.0",
+    "jest-localstorage-mock": "^2.2.0",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -31,6 +33,9 @@
     "recompose": "^0.27.1"
   },
   "jest": {
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ],
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"

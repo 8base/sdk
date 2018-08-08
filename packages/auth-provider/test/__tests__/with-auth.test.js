@@ -2,14 +2,16 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { getDisplayName } from 'recompose';
 
-import { AuthContext, withAuth } from '../../src';
+import { AuthProvider, withAuth } from '../../src';
 
 type StubComponentProps = {
-  isAuthorized: boolean,
+  auth: {
+    isAuthorized: boolean,
+  },
   foo: number,
 };
 
-const StubComponent = ({ isAuthorized, foo }: StubComponentProps) => (
+const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>
     { isAuthorized ? 'I am authorized :)' : 'I am not authorized :(' }
     { foo }
@@ -18,11 +20,11 @@ const StubComponent = ({ isAuthorized, foo }: StubComponentProps) => (
 
 const EnhancedStubComponent = withAuth(StubComponent);
 
-const getTestInstance = ({ accountId, idToken }, { foo }) => {
+const getTestInstance = ({ foo }) => {
   const testRenderer = TestRenderer.create(
-    <AuthContext.Provider idToken={ idToken } accountId={ accountId } >
+    <AuthProvider>
       <EnhancedStubComponent foo={ foo } />
-    </AuthContext.Provider>,
+    </AuthProvider>,
   );
   const testInstance = testRenderer.root;
 
@@ -38,11 +40,19 @@ describe('As a developer, i can use withAuth HOC to get auth context', () => {
     const accountId = 'some account id';
     const idToken = 'some id token';
     const foo = 42;
-    const testInstance = getTestInstance({ accountId, idToken }, { foo });
+    const testInstance = getTestInstance({ foo });
 
-    expect(testInstance.findByType(StubComponent).props).toEqual({
-      isAuthorized: true,
-      foo,
+    const { auth } = testInstance.findByType(StubComponent).props;
+
+    auth.setAuthState({ accountId, idToken });
+
+    const updatedProps = testInstance.findByType(StubComponent).props;
+
+    expect(updatedProps.foo).toBe(foo);
+    expect(updatedProps.auth.isAuthorized).toBeTruthy();
+    expect(updatedProps.auth.authState).toEqual({
+      accountId,
+      idToken,
     });
   });
 });
