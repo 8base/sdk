@@ -25,7 +25,7 @@ interface AuthProps {
  *
  * @param {AuthContextProps} auth Auth state passed by the props.
  */
-const withAuth = <InputProps: {}>(
+const withAuth: any = <InputProps: {}>(
   WrappedComponent: React$ComponentType<AuthProps & InputProps>,
 ): React$ComponentType<InputProps> => {
   class WithAuth extends React.Component<InputProps> {
