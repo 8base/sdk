@@ -7,8 +7,9 @@ export const getFragmentsSchema = async (uri: string): ?Object => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      operationName: 'FragmentsSchema',
       query: `
-        {
+        query FragmentsSchema {
           __schema {
             types {
               kind
