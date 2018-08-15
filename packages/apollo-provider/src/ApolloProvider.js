@@ -44,6 +44,10 @@ class ApolloProvider extends PureComponent<ApolloProviderProps, ApolloProviderSt
       ? children({ isLoading, apolloClient })
       : children;
 
+    if (isLoading) {
+      return rendered;
+    }
+
     return (
       <DefaultApolloProvider client={ apolloClient }>
         { rendered }
