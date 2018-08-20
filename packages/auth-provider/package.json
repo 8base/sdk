@@ -4,7 +4,9 @@
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__ && flow-copy-source src es",
+    "build": "yarn build:es && yarn build:flow",
+    "build:es": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build:flow": "flow-copy-source src es",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=AuthProvider",
     "test": "NPM_ENV=test jest",

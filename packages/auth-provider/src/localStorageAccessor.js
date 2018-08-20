@@ -1,6 +1,6 @@
 // @flow
 
-type PossibleAuthItems = 'organizationId' | 'email' | 'id' | 'accountId' | 'refreshToken' | 'idToken';
+type PossibleAuthItems = 'organizationId' | 'email' | 'userId' | 'accountId' | 'refreshToken' | 'idToken';
 
 const AUTH_LOCALSTORAGE_KEY = 'auth';
 
