@@ -8,7 +8,9 @@ import { AuthProvider, AuthConsumer } from '../../src';
 type StubComponentProps = {
   auth: {
     isAuthorized: boolean,
-  }
+    setAuthState: Function,
+    authState: Object,
+  },
 };
 
 const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => (
@@ -22,7 +24,7 @@ const getTestInstance = () => {
     <AuthProvider>
       <AuthConsumer>
         {
-          (auth) => (
+          (auth: any) => (
             <StubComponent auth={ auth } />
           )
         }

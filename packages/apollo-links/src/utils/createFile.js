@@ -5,12 +5,14 @@ import * as R from 'ramda';
 
 const FILE_CREATE_MUTATION = gql`
   mutation FileCreateMutation ($data: FileCreateInput) {
-    fileCreate(data: $data) {
-      id
-      fileId
-      filename
-      uploadUrl
-      fields
+    system {
+      fileCreate(data: $data) {
+        id
+        fileId
+        filename
+        uploadUrl
+        fields
+      }
     }
   }
 `;
@@ -25,7 +27,9 @@ export type CreatedFile = {
 
 type FileCreateMutationResponse = {
   data: {
-    fileCreate: CreatedFile,
+    system: {
+      fileCreate: CreatedFile,
+    }
   },
   errors: {},
 };
@@ -159,7 +163,7 @@ export const createFile = (
   }).subscribe({
     error: (error: any) => reject(error),
     next: (response: FileCreateMutationResponse) => {
-      const createdFile: ?CreatedFile = R.path(['data', 'fileCreate'], response);
+      const createdFile: ?CreatedFile = R.path(['data', 'system', 'fileCreate'], response);
 
       if (!createdFile || checkHasErrors(response)) {
         return reject(response);

@@ -5,7 +5,7 @@ import * as R from 'ramda';
 
 import * as localStorageAccessor from './localStorageAccessor';
 import type { AuthState } from './localStorageAccessor';
-export type { AuthContextProps } from './withAuth';
+import type { AuthContextProps } from './withAuth';
 
 type AuthProviderProps = {
   children: React$Node,
@@ -21,7 +21,7 @@ const checkIsAuthorized = ({ accountId, idToken }: AuthState): boolean =>
     ),
   );
 
-const { Provider, Consumer: AuthConsumer } = React.createContext({
+const { Provider, Consumer } = React.createContext({
   isAuthorized: false,
   authState: {},
 });
@@ -54,6 +54,8 @@ class AuthProvider extends Component<AuthProviderProps> {
     );
   }
 }
+
+const AuthConsumer: React$ComponentType<{ children: (AuthContextProps) => React$Node }> = (Consumer: any);
 
 export {
   AuthProvider,

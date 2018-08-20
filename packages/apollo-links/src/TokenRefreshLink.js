@@ -20,15 +20,19 @@ import { hasTokenExpiredError, hasTokenInvalidError } from './utils';
 
 const USER_REFRESH_TOKEN_QUERY = `
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
-    userRefreshToken(data: {
-      refreshToken: $refreshToken,
-      email: $email,
-    }) {
-      refreshToken
-      idToken
+    system{
+      userRefreshToken(data: {
+        refreshToken: $refreshToken,
+        email: $email,
+      }) {
+        refreshToken
+        idToken
+      }
     }
   }
 `;
+
+const userRefreshTokenPath = ['system', 'userRefreshToken'];
 
 /**
  * Token Refresh Link renew authentication token when it's expired.
@@ -150,10 +154,10 @@ export class TokenRefreshLink extends ApolloLink {
       }).subscribe({
         error: reject,
         next: ({ data }) => {
-          if (data === null || data.userRefreshToken === null) {
+          if (data === null || R.path(userRefreshTokenPath, data) === null) {
             reject(new RefreshTokenInvalidError());
           } else {
-            const { refreshToken, idToken }: RefreshTokenQueryResult = data.userRefreshToken;
+            const { refreshToken, idToken }: RefreshTokenQueryResult = R.pathOr({}, userRefreshTokenPath, data);
 
             this.onAuthSuccess({ refreshToken, idToken });
 
