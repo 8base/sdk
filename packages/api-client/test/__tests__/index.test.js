@@ -64,9 +64,11 @@ it('When client receive token expired error, it should refresh token and repeat 
 
   mockRequest('https://api.test.8base.com', 200, {
     data: {
-      userRefreshToken: {
-        refreshToken: 'newRefreshToken',
-        idToken: 'newIdToken',
+      system: {
+        userRefreshToken: {
+          refreshToken: 'newRefreshToken',
+          idToken: 'newIdToken',
+        },
       },
     },
   });
