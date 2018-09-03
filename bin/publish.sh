@@ -6,6 +6,7 @@ status=0
 (./bin/try-publish.sh "apollo-links") || status=1
 (./bin/try-publish.sh "apollo-provider") || status=1
 (./bin/try-publish.sh "auth-provider") || status=1
+(./bin/try-publish.sh "crud") || status=1
 (./bin/try-publish.sh "create-apollo-client") || status=1
 (./bin/try-publish.sh "forms") || status=1
 (./bin/try-publish.sh "table-schema-provider") || status=1
