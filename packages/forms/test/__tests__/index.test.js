@@ -1,7 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { TableSchemaContext } from '@8base/table-schema-provider';
 
-import { Form, Field, Fieldset, FieldArray, SchemaContext } from '../../src';
+import { Form, Field, Fieldset, FieldArray } from '../../src';
 
 const TABLE_SCHEMA = {
   id: 'TABLE_SCHEMA_ID',
@@ -190,7 +191,7 @@ describe('As a developer, while I implementet a form,', () => {
   const TestField = jest.fn((props) => <input { ...props.input } />);
 
   const form = renderer.create(
-    <SchemaContext.Provider value={ [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }>
+    <TableSchemaContext.Provider value={ [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }>
       <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ jest.fn() }>
         {
           (renderProps) => TestForm(renderProps, ({ handleSubmit }) => (
@@ -231,7 +232,7 @@ describe('As a developer, while I implementet a form,', () => {
           ))
         }
       </Form>
-    </SchemaContext.Provider>,
+    </TableSchemaContext.Provider>,
   );
 
   it('Form should be rendered.', () => {

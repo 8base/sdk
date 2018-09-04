@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-import { SchemaContext } from '../SchemaContext';
+import { TableSchemaContext } from '@8base/table-schema-provider';
 import { getTableSchema } from './getTableSchema';
 import { logError } from './logError';
 import type { TableSchema, SchemaContextValue } from '../types';
@@ -38,7 +38,7 @@ const withTableSchema = (BaseComponent: React$ComponentType<*>) => {
       let rendered = null;
 
       if (tableSchemaName) {
-        rendered = <SchemaContext.Consumer>{ this.renderWithSchema }</SchemaContext.Consumer>;
+        rendered = <TableSchemaContext.Consumer>{ this.renderWithSchema }</TableSchemaContext.Consumer>;
       } else {
         rendered = <BaseComponent { ...restProps } />;
       }

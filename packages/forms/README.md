@@ -230,12 +230,13 @@ render(
 , document.getElementById('root'));
 ```
 
-### Multiple Forms with SchemaContext Provider
+### Multiple Forms with TableSchemaProvider
 
 ```jsx
 import React from 'react';
 import { render } from 'react-dom';
-import { Form, Field, SchemaContext } from '@8base/forms';
+import { Form, Field } from '@8base/forms';
+import { TableSchemaProvider } from '@8base/table-schema-provider';
 
 const SCHEMA = [{
   name: 'client',
@@ -320,7 +321,7 @@ const SCHEMA = [{
 }];
 
 render(
-  <SchemaContext.Provider schema={SCHEMA}>
+  <TableSchemaProvider schema={SCHEMA}>
     <Form tableSchemaName="client" onSubmit={ onSubmitClient }>
       {
         ({ handleSubmit }) => (
@@ -344,7 +345,7 @@ render(
         )
       }
     </Form>
-  </SchemaContext.Provider>
+  </TableSchemaProvider>
 , document.getElementById('root'));
 ```
 
@@ -353,7 +354,8 @@ render(
 ```jsx
 import React from 'react';
 import { render } from 'react-dom';
-import { Form, Field, SchemaContext } from '@8base/forms';
+import { Form, Field } from '@8base/forms';
+import { TableSchemaProvider } from '@8base/table-schema-provider';
 
 const SCHEMA = [{
   id: 'TABLE_SCHEMA_ID',
@@ -529,7 +531,7 @@ const INITIAL_VALUES = {
 };
 
 render(
-  <SchemaContext.Provider value={ SCHEMA }>
+  <TableSchemaProvider value={ SCHEMA }>
     <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ onSubmitForm }>
       {
         ({ handleSubmit }) => (
@@ -562,6 +564,6 @@ render(
         )
       }
     </Form>
-  </SchemaContext.Provider>
+  </TableSchemaProvider>
 , document.getElementById('root'));
 ```
