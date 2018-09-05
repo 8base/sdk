@@ -11,7 +11,6 @@
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "devDependencies": {
-    "apollo-test-utils": "^0.3.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
