@@ -8,10 +8,8 @@ import { TableSchemaContext } from './TableSchemaContext';
 
 const TABLES_SCHEMA_QUERY = gql`
   query TablesSchema {
-    system {
-      tablesList(filter: { onlyUserTables: true }) {
-        ...TableFragment
-      }
+    tablesList(filter: { onlyUserTables: true }) {
+      ...TableFragment
     }
   }
 
@@ -106,7 +104,7 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
 
     if (loading) return children({ loading });
 
-    return <TableSchemaContext.Provider value={ data.system.tablesList }>{ children({ loading }) }</TableSchemaContext.Provider>;
+    return <TableSchemaContext.Provider value={ data.tablesList }>{ children({ loading }) }</TableSchemaContext.Provider>;
   };
 
   render() {

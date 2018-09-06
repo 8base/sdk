@@ -20,19 +20,17 @@ import { hasTokenExpiredError, hasTokenInvalidError } from './utils';
 
 const USER_REFRESH_TOKEN_QUERY = `
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
-    system{
-      userRefreshToken(data: {
-        refreshToken: $refreshToken,
-        email: $email,
-      }) {
-        refreshToken
-        idToken
-      }
+    userRefreshToken(data: {
+      refreshToken: $refreshToken,
+      email: $email,
+    }) {
+      refreshToken
+      idToken
     }
   }
 `;
 
-const userRefreshTokenPath = ['system', 'userRefreshToken'];
+const userRefreshTokenPath = ['userRefreshToken'];
 
 /**
  * Token Refresh Link renew authentication token when it's expired.
