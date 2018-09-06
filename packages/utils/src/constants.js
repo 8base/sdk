@@ -1,11 +1,25 @@
 //@flow
+
 const FIELD_TYPE = {
-  NUMBER: 'NUMBER',
-  TEXT: 'TEXT',
   DATE: 'DATE',
-  SWITCH: 'SWITCH',
   FILE: 'FILE',
+  ID: 'ID',
+  NUMBER: 'NUMBER',
   RELATION: 'RELATION',
+  SWITCH: 'SWITCH',
+  TEXT: 'TEXT',
+};
+
+const FORMAT = {
+  UNFORMATTED: 'UNFORMATTED',
+  NAME: 'NAME',
+  ADDRESS: 'ADDRESS',
+  SSN: 'SSN',
+  EIN: 'EIN',
+  PHONE: 'PHONE',
+  EMAIL: 'EMAIL',
+  DATE: 'DATE',
+  DATETIME: 'DATETIME',
 };
 
 const MUTATION_TYPE = {
@@ -14,6 +28,7 @@ const MUTATION_TYPE = {
 };
 
 export {
+  FORMAT,
   FIELD_TYPE,
   MUTATION_TYPE,
 };

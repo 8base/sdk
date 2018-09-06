@@ -1,12 +1,6 @@
 //@flow
 
-import {
-  type Field,
-} from '../../src/validator';
-
-import {
-  type FieldType,
-} from '../../src/validator.constants';
+import { type FieldType } from '@8base/utils';
 
 export const mockField = (fieldType: FieldType) => <T>(fieldTypeAttributes: T): Field<T> => ({
   fieldType,

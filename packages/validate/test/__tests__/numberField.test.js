@@ -1,4 +1,5 @@
 //@flow
+import { FIELD_TYPE } from '@8base/utils';
 
 import {
   validatorFacade as validator,
@@ -7,7 +8,6 @@ import {
 } from '../../src/validator';
 
 import {
-  FIELD_TYPE,
   VALIDATION_ERROR,
 } from '../../src/validator.constants';
 

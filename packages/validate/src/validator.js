@@ -1,14 +1,8 @@
 //@flow
 
 import * as R from 'ramda';
-
-import {
-  FIELD_TYPE,
-  VALIDATION_ERROR,
-  FORMAT_PATTERN,
-  type FieldType,
-  type Format,
-} from './validator.constants';
+import { FIELD_TYPE, type FieldType, type Format } from '@8base/utils';
+import { VALIDATION_ERROR, FORMAT_PATTERN } from './validator.constants';
 
 type NumberFieldTypeAttributes = {
   precision?: number,

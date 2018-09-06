@@ -1,29 +1,6 @@
 //@flow
-
-export const FIELD_TYPE = {
-  NUMBER: 'NUMBER',
-  TEXT: 'TEXT',
-  DATE: 'DATE',
-  SWITCH: 'SWITCH',
-  FILE: 'FILE',
-  RELATION: 'RELATION',
-};
-
-export type FieldType = $Values<typeof FIELD_TYPE>;
-
-export const FORMAT = {
-  UNFORMATTED: 'UNFORMATTED',
-  NAME: 'NAME',
-  ADDRESS: 'ADDRESS',
-  SSN: 'SSN',
-  EIN: 'EIN',
-  PHONE: 'PHONE',
-  EMAIL: 'EMAIL',
-  DATE: 'DATE',
-  DATETIME: 'DATETIME',
-};
-
-export type Format = $Values<typeof FORMAT>;
+import { FORMAT } from '@8base/utils';
+import type { Format } from '@8base/utils';
 
 export const FORMAT_PATTERN = {
   [FORMAT.UNFORMATTED]: /.*/,

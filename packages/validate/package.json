@@ -29,6 +29,7 @@
     "jest": "^23.1.0"
   },
   "dependencies": {
+    "@8base/utils": "^0.1.4",
     "ramda": "^0.25.0"
   }
 }
