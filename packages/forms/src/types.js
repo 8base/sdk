@@ -1,8 +1,7 @@
 // @flow
 import type { FormProps as FinalFormProps, FieldProps as FinalFieldProps } from 'react-final-form';
 import type { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
-
-type FieldType = 'TEXT' | 'NUMBER' | 'DATE' | 'SWITCH' | 'ID';
+import type { FieldType } from '@8base/utils';
 
 type FieldSchema = {
   name: string,
