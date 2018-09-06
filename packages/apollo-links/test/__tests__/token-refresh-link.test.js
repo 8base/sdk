@@ -5,11 +5,9 @@ import errorCodes from '@8base/error-codes';
 
 const DYNO_QUERY = gql`
   mutation {
-    system {
       sample {
         id
       }
-    }
   }
 `;
 
@@ -58,11 +56,9 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
   it('When Apollo Link catch a token expired error - link should send request to refresh token.', () => {
     stub.mockReturnValueOnce(Observable.of({
       data: {
-        system: {
-          userRefreshToken: {
-            refreshToken: 'new-refresh-token',
-            idToken: 'new-id-token',
-          },
+        userRefreshToken: {
+          refreshToken: 'new-refresh-token',
+          idToken: 'new-id-token',
         },
       },
     }));
@@ -96,9 +92,7 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
         message: 'Invalid Refresh Token',
       }],
       data: {
-        system: {
-          userRefreshToken: null,
-        },
+        userRefreshToken: null,
       },
     }));
 
@@ -120,9 +114,7 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
         message: 'Token Expired',
       }],
       data: {
-        system: {
-          userRefreshToken: null,
-        },
+        userRefreshToken: null,
       },
     }));
 

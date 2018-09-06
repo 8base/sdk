@@ -7,14 +7,12 @@ import * as R from 'ramda';
 
 const USER_REFRESH_TOKEN_QUERY = gql`
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
-    system {
-      userRefreshToken(data: {
-        refreshToken: $refreshToken,
-        email: $email,
-      }) {
-        refreshToken
-        idToken
-      }
+    userRefreshToken(data: {
+      refreshToken: $refreshToken,
+      email: $email,
+    }) {
+      refreshToken
+      idToken
     }
   }
 `;
@@ -23,8 +21,8 @@ const hasTokenExpiredErrorCode = R.any(
   R.propEq('code', errorCodes.TokenExpiredErrorCode),
 );
 
-const getRefreshToken = R.path(['system', 'userRefreshToken', 'refreshToken']);
-const getIdToken = R.path(['system', 'userRefreshToken', 'idToken']);
+const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
+const getIdToken = R.path(['userRefreshToken', 'idToken']);
 
 type GraphQLClientResponse = {
   errors: Array<any>,

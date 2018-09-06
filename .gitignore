@@ -2,6 +2,7 @@
 .env
 .env.test
 .eslintcache
+.idea
 build
 coverage
 es

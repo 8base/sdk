@@ -40,13 +40,11 @@ describe(
     const uploadUrl = 'test.domain.com';
     const response = {
       data: {
-        system: {
-          fileCreate: {
-            id: '1',
-            fileId: '',
-            filename: '',
-            uploadUrl,
-          },
+        fileCreate: {
+          id: '1',
+          fileId: '',
+          filename: '',
+          uploadUrl,
         },
       },
       errors: {
@@ -74,7 +72,7 @@ describe(
     it('resolves created file', async () => {
       const createdFile = await createFile({ file, fileMeta }, mutate);
 
-      expect(createdFile).toBe(response.data.system.fileCreate);
+      expect(createdFile).toBe(response.data.fileCreate);
     });
 
     it('rejects response on mutation error', async () => {

@@ -15,10 +15,8 @@ import { createAuthLink } from '../../src/authLink';
 describe('As a developer, I can use \'authLink\' to send authorized requests and refresh token when it required', () => {
   const query: DocumentNode = gql`
     mutation {
-      system {
-        sample {
-          id
-        }
+      sample {
+        id
       }
     }
   `;
@@ -77,11 +75,9 @@ describe('As a developer, I can use \'authLink\' to send authorized requests and
       }));
       stubLink.mockReturnValueOnce(Observable.of({
         data: {
-          system: {
-            userRefreshToken: {
-              refreshToken: 'new refresh token',
-              idToken: 'new id token',
-            },
+          userRefreshToken: {
+            refreshToken: 'new refresh token',
+            idToken: 'new id token',
           },
         },
       }));
