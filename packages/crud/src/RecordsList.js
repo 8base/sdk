@@ -13,6 +13,7 @@ type RecordsListProps = {
   children: (recordsListResult: Object) => React$Node,
 }
 
+
 /**
  * Component for fetching the table content
  *
@@ -21,10 +22,41 @@ type RecordsListProps = {
  * @prop {(recordsListResult: Object) => React$Node} children - Render prop with result of the query
  */
 export class RecordsList extends Component<RecordsListProps> {
+  isFetchingNewTable: boolean;
+  isFetchingNewTable = false;
+
+  componentDidUpdate(prevProps: RecordsListProps) {
+    if (
+      this.props.tableName !== prevProps.tableName ||
+      this.props.tableId !== prevProps.tableId
+    ) {
+      this.startFetchingNewTable();
+    }
+  }
+
+  startFetchingNewTable() {
+    this.isFetchingNewTable = true;
+  }
+
+  stopFetchingNewTable() {
+    this.isFetchingNewTable = false;
+  }
+
+  /** this dirty hack needs to avoid passing the old table data after changing the table */
+  getRecordsListData = (recordsListResult: Object) => {
+    const recordsListData = this.isFetchingNewTable && recordsListResult.loading
+      ? []
+      : R.path(['data', 'tableContent'], recordsListResult);
+
+    if (this.isFetchingNewTable && !recordsListResult.loading) {
+      this.stopFetchingNewTable();
+    }
+
+    return recordsListData;
+  }
 
   render() {
     const { tableName, tableId, children, ...rest } = this.props;
-
     return (
       <TableMeta
         tableName={ tableName }
@@ -37,7 +69,7 @@ export class RecordsList extends Component<RecordsListProps> {
           >
             { (recordsListResult) => children({
               ...recordsListResult,
-              data: R.path(['data', 'tableContent'], recordsListResult),
+              data: this.getRecordsListData(recordsListResult),
             }) }
           </Query>
         ) }

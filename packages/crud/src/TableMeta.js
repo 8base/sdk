@@ -48,7 +48,7 @@ export class TableMeta extends Component<TableMetaProps> {
           if (!tableMeta && !tablesListResult.loading) throw Error('Table not found');
 
           return children({
-            ...tablesList,
+            ...tablesListResult,
             data: tableMeta,
           });
         } }
