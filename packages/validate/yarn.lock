@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@8base/utils@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.1.4.tgz#fa2851f4e1695310502c6064a5368648f11043ad"
-  dependencies:
-    ramda "^0.25.0"
-
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.51.tgz#bd71d9b192af978df915829d39d4094456439a0c"

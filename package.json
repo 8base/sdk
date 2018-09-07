@@ -4,7 +4,7 @@
     "eslint": "eslint .",
     "flow": "flow check",
     "postinstall": "lerna bootstrap",
-    "build-packages": "lerna run build",
+    "build-packages": "lerna run build --ignore crud-example",
     "test": "./bin/test.sh",
     "bump": "lerna publish --skip-npm --skip-git"
   },
@@ -20,4 +20,3 @@
     "lerna": "^2.11.0"
   }
 }
-
