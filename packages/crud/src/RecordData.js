@@ -31,7 +31,6 @@ export class RecordData extends Component<RecordDataProps> {
         { ...rest }
         query={ gql(createTableRowQueryTag(tableMeta)) }
         variables={{ id: recordId }}
-        errorPolicy="all"
       >
         { ({ data, ...rest }) => children({
           ...rest,
