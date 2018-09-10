@@ -37,17 +37,20 @@ class AuthProvider extends Component<AuthProviderProps> {
     this.forceUpdate();
   }
 
+  getAuthState = (): AuthState => {
+    return localStorageAccessor.getAuthState();
+  }
+
   render() {
     const { children } = this.props;
-    const authState = localStorageAccessor.getAuthState();
-    const { accountId, idToken } = authState;
+    const { accountId, idToken } = this.getAuthState();
     const isAuthorized = checkIsAuthorized({ accountId, idToken });
 
     return (
       <Provider value={{
-        authState,
         isAuthorized,
         setAuthState: this.setAuthState,
+        getAuthState: this.getAuthState,
       }}>
         { children }
       </Provider>

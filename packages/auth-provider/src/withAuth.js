@@ -11,13 +11,19 @@ import type { AuthState } from './localStorageAccessor';
  * Authentication context
  */
 interface AuthContextProps {
-  isAuthorized?: boolean,
-  authState?: AuthState,
-  setAuthState?: (AuthState) => void,
+  isAuthorized: boolean,
+  getAuthState: () => AuthState,
+  setAuthState: (AuthState) => void,
+}
+
+interface WithAuthProps {
+  isAuthorized: boolean,
+  authState: AuthState,
+  setAuthState: (AuthState) => void,
 }
 
 interface AuthProps {
-  auth: AuthContextProps,
+  auth: WithAuthProps,
 }
 
 /**
@@ -33,8 +39,12 @@ const withAuth: any = <InputProps: {}>(
       return (
         <AuthConsumer>
           {
-            (auth: AuthContextProps) => (
-              <WrappedComponent { ...this.props } auth={ auth } />
+            ({ isAuthorized, getAuthState, setAuthState }: AuthContextProps) => (
+              <WrappedComponent { ...this.props } auth={{
+                isAuthorized,
+                setAuthState,
+                authState: getAuthState(),
+              }} />
             )
           }
         </AuthConsumer>
