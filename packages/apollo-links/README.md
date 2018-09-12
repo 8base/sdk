@@ -23,3 +23,26 @@ Token Refresh Link renew authentication token when it's expired.
     -   `options.getRefreshTokenParameters` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The function which are using for get refresh token parameters.
     -   `options.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The callback which called when attempt to refresh authentication is success.
     -   `options.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when attempt to refresh authentication is failed.
+
+### onSuccess
+
+onSuccess link calls handler on every successful operation.
+
+#### Parameters
+
+- `successHandler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** success handler.
+
+#### Handler
+
+Success handler takes the folowing parameters:
+
+- `operation` **Operation** apollo graphql operation.
+
+#### Usage
+```js
+import { onSuccess } from '@8base/apollo-links';
+
+const link = onSuccess(({ operation }) => {
+  console.log(operation.getContext().someUsefulData);
+});
+```
