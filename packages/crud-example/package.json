@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@8base/api-client": "^0.1.4",
+    "@8base/api-client": "^0.1.8",
     "@8base/apollo-links": "^0.1.8",
     "@8base/apollo-provider": "^0.1.5",
     "@8base/auth-provider": "^0.1.3",
