@@ -107,7 +107,7 @@ class Client {
   }
 
   handleRequestErrors = (err: GraphQLClientError) => {
-    if (hasTokenExpiredErrorCode(err.response.errors)) {
+    if (hasTokenExpiredErrorCode(err.response.errors || [])) {
       return this.tryToRefreshToken(err);
     }
 
