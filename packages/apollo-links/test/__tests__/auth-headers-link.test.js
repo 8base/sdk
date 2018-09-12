@@ -53,7 +53,7 @@ describe('As a developer, I can use \'authHeadersLink\' to add authorization hea
           expect(context).toStrictEqual({
             headers: {
               'account-id': accountId,
-              authorization: idToken,
+              authorization: `Bearer ${idToken}`,
               'organization-id': organizationId,
             },
           });
@@ -87,7 +87,7 @@ describe('As a developer, I can use \'authHeadersLink\' to add authorization hea
 
           // $FlowFixMe
           expect(context).toStrictEqual({ headers: {
-            authorization: 'some-id-token',
+            authorization: 'Bearer some-id-token',
           }});
 
           resolve();

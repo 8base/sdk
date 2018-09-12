@@ -53,7 +53,7 @@ describe('As a developer, I can use \'authLink\' to send authorized requests and
           expect(context).toStrictEqual({
             headers: {
               'account-id': accountId,
-              authorization: idToken,
+              authorization: `Bearer ${idToken}`,
             },
           });
 
@@ -104,7 +104,7 @@ describe('As a developer, I can use \'authLink\' to send authorized requests and
           // $FlowFixMe
           expect(firstContext).toStrictEqual({
             headers: {
-              authorization: idToken,
+              authorization: `Bearer ${idToken}`,
               'account-id': accountId,
             },
           });
@@ -122,7 +122,7 @@ describe('As a developer, I can use \'authLink\' to send authorized requests and
           // $FlowFixMe
           expect(thirdContext).toStrictEqual({
             headers: {
-              authorization: idToken,
+              authorization: `Bearer ${idToken}`,
               'account-id': accountId,
             },
           });
