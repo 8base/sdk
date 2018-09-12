@@ -24,7 +24,7 @@ export const createAuthHeadersLink = ({ getAuthState }: AuthHeadersLinkParameter
 
       operation.setContext(
         R.over(R.lensProp('headers'), R.pipe(
-          assocWhenNotEmpty('authorization', idToken),
+          assocWhenNotEmpty('authorization', idToken ? `Bearer ${idToken}` : null),
           assocWhenNotEmpty('organization-id', organizationId),
           assocWhenNotEmpty('account-id', accountId),
         )),
