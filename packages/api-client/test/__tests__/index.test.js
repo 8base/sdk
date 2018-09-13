@@ -62,7 +62,7 @@ it('When client receive token expired error, it should refresh token and repeat 
     data: null,
   });
 
-  mockRequest('https://api.test.8base.com', 200, {
+  const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 200, {
     data: {
       userRefreshToken: {
         refreshToken: 'newRefreshToken',
@@ -81,6 +81,10 @@ it('When client receive token expired error, it should refresh token and repeat 
 
   await client.request('query { companyName }');
 
+  const refreshTokenRequest = await refreshTokenRequestPromise;
+
+  expect(refreshTokenRequest).toMatchSnapshot();
+  
   const request = await requestPromise;
 
   expect(request).toMatchSnapshot();

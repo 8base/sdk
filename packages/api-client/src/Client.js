@@ -48,7 +48,7 @@ class Client {
 
   accountId: string;
   email: string;
-  idToken: string;
+  idToken: ?string;
   refreshToken: string;
 
   constructor(endpoint: string) {
@@ -59,9 +59,14 @@ class Client {
    * Update id token.
    * @param idToken - The id token.
    */
-  setIdToken(idToken: string) {
+  setIdToken(idToken: ?string) {
     this.idToken = idToken;
-    this.gqlc.setHeader('Authorization', idToken);
+
+    if (idToken) {
+      this.gqlc.setHeader('Authorization', `Bearer ${idToken}`);
+    } else {
+      delete this.gqlc.options.headers['Authorization'];
+    }
   }
 
   /**
@@ -91,6 +96,8 @@ class Client {
 
   async tryToRefreshToken(err: GraphQLClientError) {
     const { refreshToken, email } = this;
+
+    this.setIdToken(null);
 
     const response = await this.request(USER_REFRESH_TOKEN_QUERY, {
       refreshToken,
