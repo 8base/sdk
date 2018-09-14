@@ -1,1 +1,0 @@
-export { mockRequest } from './mockRequest';

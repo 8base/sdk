@@ -59,83 +59,71 @@ import { AuthProvider, AuthConsumer } from '@8base/auth';
   </AuthProvider>
 ```
 
-### Usage with @8base/create-apollo-client, @8base/apollo-links and @8base/apollo-provider
+### Usage with @8base/apollo-client
 
 ```js
 import React, { Component } from 'react';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { withAuth } from '@8base/auth';
-import { createApolloClient } from '@8base/create-apollo-client';
-import { ApolloProvider } from '@8base/apollo-provider';
-import { createAuthLink,  fileUploadLink } from '@8base/apollo-links';
+import { withAuth } from '@8base/auth-provider';
+import { EightBaseApolloClient } from '@8base/apollo-client';
+import { ApolloProvider } from 'react-apollo';
 
-withAuth(
-  class extends Component {
-    getClient: Function;
+class Foo extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props: AsyncApolloProviderProps) {
-      super(props);
-
-      this.getClient = createApolloClient({
-        links: [
-          fileUploadLink,
-          createAuthLink({
-            getAuthState: this.getAuthState,
-            getRefreshTokenParameters: this.getRefreshTokenParameters,
-            onAuthSuccess: this.onAuthSuccess,
-            onAuthError: this.onAuthError,
-          }),
-          new BatchHttpLink({ uri: process.env.REACT_APP_SERVER_URL }),
-        ],
-      });
-    }
-
-    getRefreshTokenParameters = () => {
-      const { auth: { authState: { email, refreshToken }}} = this.props;
-
-      return { email, refreshToken };
-    }
-
-    onAuthSuccess = ({ refreshToken, idToken }) => {
-      const { auth: { setAuthState }} = this.props;
-
-      setAuthState({
-        idToken,
-        refreshToken,
-      });
-    }
-
-    onAuthError = (err) => {
-      const { auth: { setAuthState }} = this.props;
-
-      setAuthState({
-        idToken: '',
-        refreshToken: '',
-      });
-    }
-
-    getAuthState = () => {
-      const { auth: { authState: { idToken, organizationId, accountId }}} = this.props;
-
-      return {
-        idToken,
-        organizationId,
-        accountId,
-      };
-    }
-
-    render() {
-      const { children } = this.props;
-
-      return (
-        <ApolloProvider
-          getClient={ this.getClient }
-          uri={ process.env.REACT_APP_SERVER_URL }
-        >
-          { ({ apolloClient, isLoading }) => (<div />) }
-        </ApolloProvider>
-      );
-    }
+    this.client = createApolloClient({
+      getAuthState: this.getAuthState,
+      getRefreshTokenParameters: this.getRefreshTokenParameters,
+      onAuthSuccess: this.onAuthSuccess,
+      onAuthError: this.onAuthError,
+      uri: process.env.REACT_APP_SERVER_URL
+    });
   }
-)
+
+  getRefreshTokenParameters = () => {
+    const { auth: { authState: { email, refreshToken }}} = this.props;
+
+    return { email, refreshToken };
+  };
+
+  onAuthSuccess = ({ refreshToken, idToken }) => {
+    const { auth: { setAuthState }} = this.props;
+
+    setAuthState({
+      idToken,
+      refreshToken,
+    });
+  };
+
+  onAuthError = (err) => {
+    const { auth: { setAuthState }} = this.props;
+
+    setAuthState({
+      idToken: '',
+      refreshToken: '',
+    });
+  };
+
+  getAuthState = () => {
+    const { auth: { authState: { idToken, organizationId, accountId }}} = this.props;
+
+    return {
+      idToken,
+      organizationId,
+      accountId,
+    };
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      <ApolloProvider client={ this.client } >
+        <div />
+      </ApolloProvider>
+    );
+  }
+}
+
+Foo = withAuth(Foo);
 ```

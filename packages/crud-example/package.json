@@ -4,11 +4,10 @@
   "private": true,
   "dependencies": {
     "@8base/api-client": "^0.1.9",
+    "@8base/apollo-client": "^0.1.5",
     "@8base/apollo-links": "^0.1.8",
-    "@8base/apollo-provider": "^0.1.5",
     "@8base/auth": "^0.1.3",
     "@8base/boost": "^0.5.10",
-    "@8base/create-apollo-client": "^0.1.5",
     "@8base/forms": "^0.1.4",
     "@8base/table-schema-provider": "^0.1.0",
     "@8base/utils": "^0.1.4",

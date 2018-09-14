@@ -1,12 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import { compose } from 'recompose';
-import { BatchHttpLink } from 'apollo-link-batch-http';
 import { withRouter, BrowserRouter } from 'react-router-dom';
 import { TableSchemaProvider } from '@8base/table-schema-provider';
-import { ApolloProvider } from '@8base/apollo-provider';
-import { createApolloClient } from '@8base/create-apollo-client';
-import { createAuthLink, fileUploadLink } from '@8base/apollo-links';
+import { ApolloProvider } from 'react-apollo';
+import { EightBaseApolloClient } from '@8base/apollo-client';
 import { defaultTheme, resetGlobal, Loader } from '@8base/boost';
 import { withAuth, AuthProvider } from '@8base/auth';
 
@@ -18,17 +16,12 @@ class EnhancedProviders extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getClient = createApolloClient({
-      links: [
-        fileUploadLink,
-        createAuthLink({
-          getAuthState: this.getAuthState,
-          getRefreshTokenParameters: this.getRefreshTokenParameters,
-          onAuthSuccess: this.onAuthSuccess,
-          onAuthError: this.onAuthError,
-        }),
-        new BatchHttpLink({ uri: process.env.REACT_APP_8BASE_API_URL }),
-      ],
+    this.client = new EightBaseApolloClient({
+      getAuthState: this.getAuthState,
+      getRefreshTokenParameters: this.getRefreshTokenParameters,
+      onAuthSuccess: this.onAuthSuccess,
+      onAuthError: this.onAuthError,
+      uri: process.env.REACT_APP_8BASE_API_URL,
     });
   }
 
@@ -72,21 +65,13 @@ class EnhancedProviders extends React.Component {
     };
   };
 
-  renderContent = ({ isLoading }) => {
-    if (isLoading) {
-      return <Loader />;
-    }
-
+  render() {
     const { children } = this.props;
 
-    return children;
-  };
-
-  render() {
     return (
       <ThemeProvider theme={ defaultTheme }>
-        <ApolloProvider getClient={ this.getClient } uri={ process.env.REACT_APP_8BASE_API_URL }>
-          { this.renderContent }
+        <ApolloProvider client={ this.client }>
+          { children }
         </ApolloProvider>
       </ThemeProvider>
     );
