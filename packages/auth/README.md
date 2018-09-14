@@ -59,13 +59,13 @@ import { AuthProvider, AuthConsumer } from '@8base/auth';
   </AuthProvider>
 ```
 
-### Usage with @8base/create-apollo-client, @8base/apollo-links and @8base/apollo-provider
+### Usage with @8base/apollo-client, @8base/apollo-links and @8base/apollo-provider
 
 ```js
 import React, { Component } from 'react';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { withAuth } from '@8base/auth';
-import { createApolloClient } from '@8base/create-apollo-client';
+import { withAuth } from '@8base/auth-provider';
+import { createApolloClient } from '@8base/apollo-client';
 import { ApolloProvider } from '@8base/apollo-provider';
 import { createAuthLink,  fileUploadLink } from '@8base/apollo-links';
 

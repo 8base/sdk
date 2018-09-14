@@ -26,7 +26,7 @@ Provider fetch interfaces fragments schema and create apollo client
 ## Usage
 
 ```js
-  import { createApolloClient, createApolloLinks } from '@8base/create-apollo-client';
+  import { createApolloClient, createApolloLinks } from '@8base/apollo-client';
   import { ApolloProvider } from '@8base/apollo-provider';
 
   const getClient: Function = createApolloClient({
