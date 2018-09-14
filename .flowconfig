@@ -1,6 +1,6 @@
 [ignore]
 <PROJECT_ROOT>/packages/local-*
-<PROJECT_ROOT>/packages/crud-example
+<PROJECT_ROOT>/examples/crud-example
 
 [include]
 
