@@ -1,6 +1,6 @@
-# 8base Auth Provider
+# 8base Auth 
 
-The 8base Auth Provider library contains provider with authentication state
+The 8base Auth package contains provider with authentication state and auth helpers.
 
 ## AuthProvider
 
@@ -46,7 +46,7 @@ Returns **React$ComponentType&lt;InputProps>**
 ### Simple Usage
 
 ```js
-import { AuthProvider, AuthConsumer } from '@8base/auth-provider';
+import { AuthProvider, AuthConsumer } from '@8base/auth';
 
   <AuthProvider>
     ...
@@ -64,7 +64,7 @@ import { AuthProvider, AuthConsumer } from '@8base/auth-provider';
 ```js
 import React, { Component } from 'react';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { withAuth } from '@8base/auth-provider';
+import { withAuth } from '@8base/auth';
 import { createApolloClient } from '@8base/create-apollo-client';
 import { ApolloProvider } from '@8base/apollo-provider';
 import { createAuthLink,  fileUploadLink } from '@8base/apollo-links';

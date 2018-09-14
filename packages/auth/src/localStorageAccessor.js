@@ -23,10 +23,14 @@ const setAuthState = (newState: AuthState) => {
   localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify(mergedState));
 };
 
+const purgeAuthState = () => {
+  localStorage.removeItem(AUTH_LOCALSTORAGE_KEY);
+};
 
 export {
   getAuthState,
   setAuthState,
+  purgeAuthState,
 };
 
 export type {

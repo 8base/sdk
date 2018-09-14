@@ -1,8 +1,9 @@
 import { compose, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { withAuth } from '@8base/auth-provider';
 import * as R from 'ramda';
+
+import { withAuth } from './withAuth';
 
 const USER_LOGIN_MUTATION = gql`
   mutation UserLogin($data: UserLoginInput!) {

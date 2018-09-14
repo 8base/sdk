@@ -84,7 +84,7 @@ it('When client receive token expired error, it should refresh token and repeat 
   const refreshTokenRequest = await refreshTokenRequestPromise;
 
   expect(refreshTokenRequest).toMatchSnapshot();
-  
+
   const request = await requestPromise;
 
   expect(request).toMatchSnapshot();

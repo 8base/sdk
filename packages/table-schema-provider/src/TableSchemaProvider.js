@@ -2,7 +2,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { withAuth, type AuthContextProps } from '@8base/auth-provider';
+import { withAuth, type AuthContextProps } from '@8base/auth';
 
 import { TableSchemaContext } from './TableSchemaContext';
 

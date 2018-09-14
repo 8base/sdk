@@ -30,16 +30,21 @@ const { Provider, Consumer } = React.createContext({
  * Provides access to the authentication state.
  */
 class AuthProvider extends Component<AuthProviderProps> {
-
   setAuthState = (state: AuthState) => {
     localStorageAccessor.setAuthState(state);
 
     this.forceUpdate();
-  }
+  };
 
   getAuthState = (): AuthState => {
     return localStorageAccessor.getAuthState();
-  }
+  };
+
+  purgeAuthState = (): void => {
+    localStorageAccessor.purgeAuthState();
+
+    this.forceUpdate();
+  };
 
   render() {
     const { children } = this.props;
@@ -51,6 +56,7 @@ class AuthProvider extends Component<AuthProviderProps> {
         isAuthorized,
         setAuthState: this.setAuthState,
         getAuthState: this.getAuthState,
+        purgeAuthState: this.purgeAuthState,
       }}>
         { children }
       </Provider>

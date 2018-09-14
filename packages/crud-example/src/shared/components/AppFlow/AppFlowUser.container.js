@@ -3,9 +3,8 @@ import { compose } from 'recompose';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Dropdown, Menu, Avatar } from '@8base/boost';
+import { withLogOut } from '@8base/auth';
 import * as R from 'ramda';
-
-import { withLogOut } from 'shared/hocs';
 
 const USER_QUERY = gql`
   query User {

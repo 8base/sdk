@@ -10,6 +10,6 @@ status=0
 (./bin/run.sh "forms" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "utils" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "validate" "test" "yarn test --verbose") || status=1
-(./bin/run.sh "auth-provider" "test" "yarn test --verbose") || status=1
+(./bin/run.sh "auth" "test" "yarn test --verbose") || status=1
 
 exit $status

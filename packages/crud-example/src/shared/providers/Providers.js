@@ -8,7 +8,7 @@ import { ApolloProvider } from '@8base/apollo-provider';
 import { createApolloClient } from '@8base/create-apollo-client';
 import { createAuthLink, fileUploadLink } from '@8base/apollo-links';
 import { defaultTheme, resetGlobal, Loader } from '@8base/boost';
-import { withAuth, AuthProvider } from '@8base/auth-provider';
+import { withAuth, AuthProvider } from '@8base/auth';
 
 import { DialogProvider } from 'shared/dialog';
 
