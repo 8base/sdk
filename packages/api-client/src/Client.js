@@ -65,7 +65,7 @@ class Client {
     if (idToken) {
       this.gqlc.setHeader('Authorization', `Bearer ${idToken}`);
     } else {
-      delete this.gqlc.options.headers['Authorization'];
+      delete this.gqlc.options.headers.Authorization;
     }
   }
 

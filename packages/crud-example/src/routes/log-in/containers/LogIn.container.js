@@ -3,9 +3,8 @@ import { compose } from 'recompose';
 import { css } from 'emotion';
 import { Form, Field } from 'react-final-form';
 import { Grid, Button, InputField, Heading } from '@8base/boost';
+import { withLogIn } from '@8base/auth';
 import { withRouter } from 'react-router-dom';
-
-import { withLogIn } from 'shared/hocs';
 
 const formClassName = css`
   width: 320px;

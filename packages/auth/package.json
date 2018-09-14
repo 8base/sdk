@@ -1,5 +1,5 @@
 {
-  "name": "@8base/auth-provider",
+  "name": "@8base/auth",
   "version": "0.1.4",
   "main": "es/index.js",
   "module": "es/index.js",
@@ -13,14 +13,17 @@
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "peerDependencies": {
+    "apollo-client": "^2.4.2",
+    "graphql-tag": "^2.9.2",
+    "graphql": "^0.13.2",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
-  },
-  "dependencies": {
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.4.1",
     "recompose": "0.27.1"
   },
   "devDependencies": {
+    "apollo-client": "^2.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
@@ -28,12 +31,16 @@
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "jest": "^23.1.0",
     "jest-localstorage-mock": "^2.2.0",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.11",
     "react-dom": "^16.4.1",
-    "react-test-renderer": "^16.4.1"
+    "react-test-renderer": "^16.4.1",
+    "recompose": "0.27.1"
   },
   "jest": {
     "setupFiles": [

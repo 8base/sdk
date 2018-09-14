@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Route, Redirect } from 'react-router';
-import { withAuth } from '@8base/auth-provider';
+import { withAuth } from '@8base/auth';
 
 import { renderComponent } from 'shared/utils';
 

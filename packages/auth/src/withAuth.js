@@ -14,12 +14,14 @@ interface AuthContextProps {
   isAuthorized: boolean,
   getAuthState: () => AuthState,
   setAuthState: (AuthState) => void,
+  purgeAuthState: () => void,
 }
 
 interface WithAuthProps {
   isAuthorized: boolean,
   authState: AuthState,
   setAuthState: (AuthState) => void,
+  purgeAuthState: () => void,
 }
 
 interface AuthProps {
@@ -39,10 +41,11 @@ const withAuth: any = <InputProps: {}>(
       return (
         <AuthConsumer>
           {
-            ({ isAuthorized, getAuthState, setAuthState }: AuthContextProps) => (
+            ({ isAuthorized, getAuthState, setAuthState, purgeAuthState }: AuthContextProps) => (
               <WrappedComponent { ...this.props } auth={{
                 isAuthorized,
                 setAuthState,
+                purgeAuthState,
                 authState: getAuthState(),
               }} />
             )
