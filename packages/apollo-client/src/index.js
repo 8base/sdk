@@ -38,6 +38,7 @@ class EightBaseApolloClient extends ApolloClient {
       onAuthSuccess,
       onAuthError,
       onIdTokenExpired,
+      ...rest
     } = config;
 
     let { cache } = config;
@@ -65,7 +66,7 @@ class EightBaseApolloClient extends ApolloClient {
       batchHttpLink,
     ]);
 
-    super({ cache, link });
+    super({ cache, link, ...rest });
   }
 }
 
