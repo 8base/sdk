@@ -70,6 +70,9 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
       stubLink.mockReturnValueOnce(Observable.of({
         errors: [{
           code: errorCodes.TokenExpiredErrorCode,
+          details: {
+            idToken: 'Expired Id Token',
+          },
         }],
         data: null,
       }));

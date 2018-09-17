@@ -2,10 +2,14 @@
 import * as R from 'ramda';
 import * as errorCodes from '@8base/error-codes';
 
-export const hasTokenExpiredError = R.any(R.anyPass([
-  R.propEq('code', errorCodes.TokenExpiredErrorCode),
-  R.propEq('message', 'jwt expired'),
-]));
+export const hasIdTokenExpiredError = R.any(R.where({
+  code: R.equals(errorCodes.TokenExpiredErrorCode),
+  details: R.has('idToken'),
+}));
 
-export const hasTokenInvalidError = R.any(R.propEq('code', errorCodes.InvalidTokenErrorCode));
+export const hasRefreshTokenExpiredError = R.any(R.where({
+  code: R.equals(errorCodes.TokenExpiredErrorCode),
+  details: R.has('refreshToken'),
+}));
+
 

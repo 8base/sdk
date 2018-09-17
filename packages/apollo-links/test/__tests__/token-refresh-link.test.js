@@ -44,6 +44,10 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
     stub.mockReturnValueOnce(Observable.of({
       errors: [{
         code: errorCodes.TokenExpiredErrorCode,
+        message: 'Expired Id Expired',
+        details: {
+          idToken: 'Expired Id Token',
+        },
       }],
       data: null,
     }));
@@ -88,8 +92,11 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
   it('When Apollo Link catch a refresh token error - auth failed callback should be called.', async () => {
     stub.mockReturnValueOnce(Observable.of({
       errors: [{
-        code: errorCodes.InvalidTokenErrorCode,
-        message: 'Invalid Refresh Token',
+        code: errorCodes.TokenExpiredErrorCode,
+        message: 'Expired Refresh Token',
+        details: {
+          refreshToken: 'Expired Refresh Token',
+        },
       }],
       data: {
         userRefreshToken: null,
@@ -111,7 +118,10 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
     stub.mockReturnValueOnce(Observable.of({
       errors: [{
         code: errorCodes.TokenExpiredErrorCode,
-        message: 'Token Expired',
+        message: 'Expired Id Expired',
+        details: {
+          idToken: 'Expired Id Token',
+        },
       }],
       data: {
         userRefreshToken: null,
