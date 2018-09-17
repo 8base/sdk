@@ -199,31 +199,34 @@ const forwardOperation = (operation: Operation, forward: NextLink, observer: *) 
   });
 };
 
-export const fileUploadLink: ApolloLink = new ApolloLink(
-  (operation: Operation, forward: NextLink): Observable<FetchResult> => new Observable(observer => {
-    const filePaths: Array<Path> = findFilePaths(operation.variables);
+export class FileUploadLink extends ApolloLink {
+  request(operation: Operation, forward: NextLink): Observable<FetchResult> {
+    return new Observable(observer => {
+      const filePaths: Array<Path> = findFilePaths(operation.variables);
 
-    if (filePaths.length === 0) {
-      forwardOperation(operation, forward, observer);
-      return;
-    }
-
-    const fileFieldPaths: Array<Path> = R.map(R.init, filePaths);
-    const files: Array<File> = getFiles(filePaths, operation.variables);
-    const mutate = (req: GraphQLRequest) => forward(createOperation(operation.getContext(), req));
-
-    operation.variables = dissocFileProps(filePaths, operation.variables);
-
-    createFiles(files, fileFieldPaths, operation.variables, mutate)
-      .then((createdFiles: Array<CreatedFile>) => {
-        operation.variables = assocConnectFieldsWithFileIds(fileFieldPaths, createdFiles, operation.variables);
-        operation.variables = dissocCreateFields(fileFieldPaths, operation.variables);
-      })
-      .then(() => {
+      if (filePaths.length === 0) {
         forwardOperation(operation, forward, observer);
-      })
-      .catch((...args) => {
-        observer.error(...args);
-      });
-  }),
-);
+        return;
+      }
+
+      const fileFieldPaths: Array<Path> = R.map(R.init, filePaths);
+      const files: Array<File> = getFiles(filePaths, operation.variables);
+      const mutate = (req: GraphQLRequest) => forward(createOperation(operation.getContext(), req));
+
+      operation.variables = dissocFileProps(filePaths, operation.variables);
+
+      createFiles(files, fileFieldPaths, operation.variables, mutate)
+        .then((createdFiles: Array<CreatedFile>) => {
+          operation.variables = assocConnectFieldsWithFileIds(fileFieldPaths, createdFiles, operation.variables);
+          operation.variables = dissocCreateFields(fileFieldPaths, operation.variables);
+        })
+        .then(() => {
+          forwardOperation(operation, forward, observer);
+        })
+        .catch((...args) => {
+          observer.error(...args);
+        });
+    });
+  }
+}
+

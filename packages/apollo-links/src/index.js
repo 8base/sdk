@@ -1,10 +1,9 @@
 export { TokenRefreshLink } from './TokenRefreshLink';
-export { fileUploadLink } from './fileUploadLink';
+export { FileUploadLink } from './FileUploadLink';
 export { createFile } from './utils/createFile';
-export { createAuthLink } from './authLink';
-export { createAuthHeadersLink } from './authHeadersLink';
-export { authHeadersCleanerLink } from './authHeadersCleanerLink';
-export { createErrorLink } from './errorLink';
-export { onSuccess } from './onSuccess';
+export { AuthLink } from './AuthLink';
+export { AuthHeadersLink } from './AuthHeadersLink';
+export { AuthHeadersCleanerLink } from './AuthHeadersCleanerLink';
+export { SuccessLink } from './SuccessLink';
 export { SubscriptionClientLink as SubscriptionLink } from '@8base/sdk';
 export * from './types';

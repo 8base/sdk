@@ -10,9 +10,9 @@ import {
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
 
-import { createAuthLink } from '../../src/authLink';
+import { AuthLink } from '../../src/AuthLink';
 
-describe('As a developer, I can use \'authLink\' to send authorized requests and refresh token when it required', () => {
+describe('As a developer, I can use \'AuthLink\' to send authorized requests and refresh token when it required', () => {
   const query: DocumentNode = gql`
     mutation {
       sample {
@@ -23,7 +23,7 @@ describe('As a developer, I can use \'authLink\' to send authorized requests and
   const accountId: string = 'some account id';
   const idToken: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
-  const authLink: ApolloLink = createAuthLink({
+  const authLink: ApolloLink = new AuthLink({
     getAuthState: () => ({
       accountId,
       idToken,
