@@ -9,9 +9,9 @@ import {
 } from 'apollo-link';
 import gql from 'graphql-tag';
 
-import { createAuthHeadersLink } from '../../src/authHeadersLink';
+import { AuthHeadersLink } from '../../src/AuthHeadersLink';
 
-describe('As a developer, I can use \'authHeadersLink\' to add authorization headers to operation\'s context', () => {
+describe('As a developer, I can use \'AuthHeadersLink\' to add authorization headers to operation\'s context', () => {
   const query: DocumentNode = gql`
     mutation {
       sample {
@@ -24,7 +24,7 @@ describe('As a developer, I can use \'authHeadersLink\' to add authorization hea
   const idToken: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
   const getAuthState = jest.fn();
-  const authHeadersLink: ApolloLink = createAuthHeadersLink({ getAuthState });
+  const authHeadersLink: ApolloLink = new AuthHeadersLink({ getAuthState });
   const links: ApolloLink = ApolloLink.from([
     authHeadersLink,
     stubLink,

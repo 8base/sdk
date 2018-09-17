@@ -15,7 +15,6 @@ import type {
   RefreshTokenQueryInput,
   RefreshTokenQueryResult,
 } from './types';
-import { RefreshTokenInvalidError } from './RefreshTokenInvalidError';
 import { hasTokenExpiredError, hasTokenInvalidError } from './utils';
 
 const USER_REFRESH_TOKEN_QUERY = `
@@ -29,6 +28,12 @@ const USER_REFRESH_TOKEN_QUERY = `
     }
   }
 `;
+
+class RefreshTokenInvalidError extends Error {
+  constructor() {
+    super('Can\'t refresh token.');
+  }
+}
 
 const userRefreshTokenPath = ['userRefreshToken'];
 

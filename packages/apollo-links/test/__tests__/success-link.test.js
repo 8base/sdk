@@ -1,7 +1,7 @@
 import { ApolloLink, Observable, execute } from 'apollo-link';
 import gql from 'graphql-tag';
 
-import { onSuccess } from '../../src';
+import { SuccessLink } from '../../src';
 
 const TEST_QUERY = gql`
   query {
@@ -11,13 +11,13 @@ const TEST_QUERY = gql`
   }
 `;
 
-describe('As a developer i can use onSuccess link to handle success graphql operations', () => {
+describe('As a developer i can use SuccessLink to handle success graphql operations', () => {
   it('calls handler on successful operation', () => {
     const terminatingLink = () => Observable.of({});
     const successHandler = jest.fn();
 
     const links = ApolloLink.from([
-      onSuccess(successHandler),
+      new SuccessLink(successHandler),
       terminatingLink,
     ]);
 
@@ -35,7 +35,7 @@ describe('As a developer i can use onSuccess link to handle success graphql oper
     const successHandler = jest.fn();
 
     const links = ApolloLink.from([
-      onSuccess(successHandler),
+      new SuccessLink(successHandler),
       errorTerminatingLink,
     ]);
 

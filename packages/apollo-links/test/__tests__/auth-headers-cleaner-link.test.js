@@ -9,9 +9,9 @@ import {
 } from 'apollo-link';
 import gql from 'graphql-tag';
 
-import { authHeadersCleanerLink } from '../../src/authHeadersCleanerLink';
+import { AuthHeadersCleanerLink } from '../../src/AuthHeadersCleanerLink';
 
-describe('As a developer, I can use \'authHeadersCleanerLink\' to remove authorization header from operation\'s context', () => {
+describe('As a developer, I can use \'AuthHeadersCleanerLink\' to remove authorization header from operation\'s context', () => {
   const query: DocumentNode = gql`
     mutation {
       sample {
@@ -21,7 +21,7 @@ describe('As a developer, I can use \'authHeadersCleanerLink\' to remove authori
   `;
   const stubLink = jest.fn(() => Observable.of());
   const links: ApolloLink = ApolloLink.from([
-    authHeadersCleanerLink,
+    new AuthHeadersCleanerLink(),
     stubLink,
   ]);
 

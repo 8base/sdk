@@ -14,10 +14,10 @@ import {
   replaceLastCreatePropByConnectProp,
   assocConnectFieldsWithFileIds,
   dissocCreateFields,
-  fileUploadLink,
+  FileUploadLink,
   FILE_PROP,
   MAX_OBJECT_DEPTH,
-} from '../../src/fileUploadLink';
+} from '../../src/FileUploadLink';
 
 import { createFile } from '../../src/utils/createFile';
 
@@ -364,7 +364,7 @@ describe('dissocCreateFields function', () => {
   });
 });
 
-describe('As a developer i can use fileUploadLink for file uploading functionality', () => {
+describe('As a developer i can use FileUploadLink for file uploading functionality', () => {
   const files = [
     new File([], ''),
     new File([], ''),
@@ -421,7 +421,7 @@ describe('As a developer i can use fileUploadLink for file uploading functionali
   `;
   const stubLink = jest.fn(() => Observable.of({}));
   const links = ApolloLink.from([
-    fileUploadLink, stubLink,
+    new FileUploadLink(), stubLink,
   ]);
 
   createFile.mockImplementationOnce(() => Promise.resolve(createdFiles[0]));
