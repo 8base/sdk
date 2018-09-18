@@ -1,9 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import { withAuth } from '@8base/auth';
 
-import { renderComponent } from 'shared/utils';
+import { renderComponent } from '../../utils';
 
 class ProtectedRoute extends React.Component {
   renderRoute = () => {

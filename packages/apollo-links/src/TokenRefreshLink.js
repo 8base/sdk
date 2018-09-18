@@ -87,6 +87,7 @@ export class TokenRefreshLink extends ApolloLink {
         next: data => {
           const dataErrors = data.errors || [];
 
+
           if (hasTokenExpiredError(dataErrors)) {
             this.handleTokenExpired();
 
@@ -99,6 +100,7 @@ export class TokenRefreshLink extends ApolloLink {
         },
         error: error => {
           const batchedErrors = R.pathOr([error], ['response', 'parsed', 'errors'], error);
+
 
           if (hasTokenExpiredError(batchedErrors)) {
             this.handleTokenExpired();

@@ -1,8 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { withModal } from '@8base/boost';
 
-import { withDialog } from 'shared/dialog';
 import { Clients } from '../components/Clients';
 
 const CLIENTS_LIST_QUERY = gql`
@@ -20,9 +20,9 @@ const CLIENTS_LIST_QUERY = gql`
 
 class ClientsContainer extends React.Component {
   renderContent = ({ data, loading }) => {
-    const { openDialog } = this.props;
+    const { openModal } = this.props;
 
-    return <Clients data={ data } loading={ loading } openDialog={ openDialog } />;
+    return <Clients data={ data } loading={ loading } openModal={ openModal } />;
   };
 
   render() {
@@ -30,6 +30,6 @@ class ClientsContainer extends React.Component {
   }
 }
 
-ClientsContainer = withDialog(ClientsContainer);
+ClientsContainer = withModal(ClientsContainer);
 
 export { ClientsContainer };

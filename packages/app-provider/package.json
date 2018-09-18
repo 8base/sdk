@@ -1,0 +1,37 @@
+{
+  "name": "@8base/app-provider",
+  "version": "0.1.0",
+  "main": "es/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "docs": "NODE_ENV=test documentation readme src/EightBaseAppProvider.js --section=API",
+    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+  },
+  "dependencies": {
+    "@8base/auth": "^0.1.3",
+    "@8base/table-schema-provider": "^0.1.0",
+    "apollo-client": "^2.4.2",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "prop-types": "^15.6.2",
+    "ramda": "^0.25.0",
+    "react-apollo": "^2.1.11",
+    "recompose": "^0.29.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-runtime": "^6.26.0",
+    "documentation": "^8.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "peerDependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "license": "MIT"
+}

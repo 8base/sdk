@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { compose } from 'recompose';
 import { Form } from 'react-final-form';
-import { Button } from '@8base/boost';
 import { Mutation } from 'react-apollo';
+import { Dialog, withModal, Button } from '@8base/boost';
 import { withRouter } from 'react-router-dom';
-
-import { Dialog, withDialog } from 'shared/dialog';
 
 const CLIENT_DELETE_MUTATION = gql`
   mutation ClientDelete($data: ClientDeleteInput!) {
@@ -24,20 +22,20 @@ class ClientDeleteDialogContainer extends Component {
       // TODO: Handle errors
     }
 
-    this.props.closeDialog('CLIENT_DELETE_DIALOG');
+    this.props.closeModal('CLIENT_DELETE_DIALOG');
   };
 
   renderFormContent = ({ handleSubmit, submitting, invalid }) => {
-    const { closeDialog } = this.props;
+    const { closeModal } = this.props;
 
     return (
       <form onSubmit={ handleSubmit }>
-        <Dialog.Header title="Delete Client" onClose={ () => closeDialog('CLIENT_DELETE_DIALOG') } />
+        <Dialog.Header title="Delete Client" onClose={ () => closeModal('CLIENT_DELETE_DIALOG') } />
         <Dialog.Body>
           Are you really want to delete client?
         </Dialog.Body>
         <Dialog.Footer>
-          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeDialog('CLIENT_DELETE_DIALOG') }>Cancel</Button>
+          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeModal('CLIENT_DELETE_DIALOG') }>Cancel</Button>
           <Button color="red" type="submit" text="Delete Client" disabled={ invalid } loading={ submitting } />
         </Dialog.Footer>
       </form>
@@ -75,7 +73,7 @@ class ClientDeleteDialogContainer extends Component {
 
 ClientDeleteDialogContainer = compose(
   withRouter,
-  withDialog,
+  withModal,
 )(ClientDeleteDialogContainer);
 
 export { ClientDeleteDialogContainer };

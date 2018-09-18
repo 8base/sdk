@@ -3,11 +3,9 @@ import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { compose } from 'recompose';
 import { Form, Field } from '@8base/forms';
-import { Grid, Button, InputField, Loader } from '@8base/boost';
 import { Mutation, Query } from 'react-apollo';
+import { Dialog, Grid, Button, InputField, Loader, withModal } from '@8base/boost';
 import { withRouter } from 'react-router-dom';
-
-import { Dialog, withDialog } from 'shared/dialog';
 
 const CLIENT_QUERY = gql`
   query Client($id: ID!) {
@@ -39,15 +37,15 @@ class ClientUpdateDialogContainer extends Component {
       // TODO: Handle errors
     }
 
-    this.props.closeDialog('CLIENT_UPDATE_DIALOG');
+    this.props.closeModal('CLIENT_UPDATE_DIALOG');
   };
 
   renderFormContent = ({ handleSubmit, submitting, invalid }) => {
-    const { closeDialog } = this.props;
+    const { closeModal } = this.props;
 
     return (
       <form onSubmit={ handleSubmit }>
-        <Dialog.Header title="Update Client" onClose={ () => closeDialog('CLIENT_UPDATE_DIALOG') } />
+        <Dialog.Header title="Update Client" onClose={ () => closeModal('CLIENT_UPDATE_DIALOG') } />
         <Dialog.Body>
           <Grid.Layout gap="xl" stretch>
             <Grid.Box>
@@ -62,7 +60,7 @@ class ClientUpdateDialogContainer extends Component {
           </Grid.Layout>
         </Dialog.Body>
         <Dialog.Footer>
-          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeDialog('CLIENT_UPDATE_DIALOG') }>Cancel</Button>
+          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeModal('CLIENT_UPDATE_DIALOG') }>Cancel</Button>
           <Button color="red" type="submit" text="Update Client" disabled={ invalid } loading={ submitting } />
         </Dialog.Footer>
       </form>
@@ -108,7 +106,7 @@ class ClientUpdateDialogContainer extends Component {
 
 ClientUpdateDialogContainer = compose(
   withRouter,
-  withDialog,
+  withModal,
 )(ClientUpdateDialogContainer);
 
 export { ClientUpdateDialogContainer };
