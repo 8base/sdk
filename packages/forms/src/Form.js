@@ -13,7 +13,7 @@ import type { FormProps, FormContextValue } from './types';
 /**
  * `Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FormProps`](https://github.com/final-form/react-final-form#formprops) props and some extra props for easy working with 8base API.
  * @prop {TableSchema} [tableSchema] - The 8base API table schema.
- * @prop {string} [tableSchemaName] - The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
+ * @prop {string} [tableSchemaName] - The name of the 8base API table schema.
  */
 class Form extends React.Component<FormProps> {
   static defaultProps = {
@@ -39,9 +39,8 @@ class Form extends React.Component<FormProps> {
   };
 
   render() {
-    const contextValue: FormContextValue = this.collectContextValue();
-
     const props: FinalFormProps = this.collectProps();
+    const contextValue: FormContextValue = this.collectContextValue();
 
     return (
       <FormContext.Provider value={ contextValue }>

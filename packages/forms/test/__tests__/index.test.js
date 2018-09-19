@@ -201,7 +201,7 @@ describe('As a developer, while I implementet a form,', () => {
                 {
                   ({ fields }) => (
                     fields.map((name) => (
-                      <Field key={ name } name={ name }component={ TestField } />
+                      <Field key={ name } name={ name } component={ TestField } />
                     ))
                   )
                 }

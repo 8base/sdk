@@ -4,7 +4,7 @@ import React from 'react';
 import { FormContext } from '../FormContext';
 import { getFieldSchemaName } from './getFieldSchemaName';
 import { getFieldSchema } from './getFieldSchema';
-import { logError } from './logError';
+import { logWarning } from './log';
 import type { FieldSchema, FormContextValue } from '../types';
 
 type FieldSchemaConsumerProps = {
@@ -13,40 +13,31 @@ type FieldSchemaConsumerProps = {
 
 const withFieldSchema = (BaseComponent: React$ComponentType<*>) => {
   class FieldSchemaConsumer extends React.Component<FieldSchemaConsumerProps> {
-    renderWithFormSchema = (context: ?FormContextValue) => {
-      const { name, ...restProps } = this.props;
-
-      let rendered = null;
+    renderWithFormSchema = (context?: FormContextValue) => {
+      const { name } = this.props;
 
       if (context && context.tableSchema && name) {
+        const { tableSchema } = context;
         const fieldSchemaName = getFieldSchemaName(name);
 
-        const fieldSchema: ?FieldSchema = getFieldSchema(context.tableSchema, fieldSchemaName);
+        const fieldSchema: ?FieldSchema = getFieldSchema(tableSchema, fieldSchemaName);
 
         if (fieldSchema) {
-          rendered = <BaseComponent { ...restProps } name={ name } fieldSchema={ fieldSchema } />;
-        } else {
-          logError(`Error: table schema ${context.tableSchema.name} doesn't contain field schema with \`${fieldSchemaName}\` name for \`${name}\` field.`);
+          return <BaseComponent { ...this.props } fieldSchema={ fieldSchema } />;
         }
-      } else {
-        logError('Error: can\'t find table schema in the form context.');
+
+        logWarning(`table schema ${tableSchema && tableSchema.name} doesn't contain field schema with \`${fieldSchemaName}\` name for \`${name}\` field.`);
       }
 
-      return rendered;
+      return <BaseComponent { ...this.props } />;
     }
 
     render() {
-      const { name, ...restProps } = this.props;
-
-      let rendered = null;
-
-      if (name) {
-        rendered = <FormContext.Consumer>{ this.renderWithFormSchema }</FormContext.Consumer>;
-      } else {
-        rendered = <BaseComponent { ...restProps } />;
-      }
-
-      return rendered;
+      return (
+        <FormContext.Consumer>
+          { this.renderWithFormSchema }
+        </FormContext.Consumer>
+      );
     }
   }
 
