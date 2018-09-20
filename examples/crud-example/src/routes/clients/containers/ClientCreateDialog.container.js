@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { Grid, Button, InputField } from '@8base/boost';
 import { Form, Field } from '@8base/forms';
 import { withRouter } from 'react-router-dom';
+import { Dialog, withModal, Grid, Button, InputField } from '@8base/boost';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-
-import { Dialog, withDialog } from 'shared/dialog';
 
 const CLIENT_CREATE_MUTATION = gql`
   mutation ClientCreate($data: ClientCreateInput!) {
@@ -29,15 +27,15 @@ class ClientCreateDialogContainer extends Component {
       // TODO: Handle errors
     }
 
-    this.props.closeDialog('CLIENT_CREATE_DIALOG');
+    this.props.closeModal('CLIENT_CREATE_DIALOG');
   };
 
   renderFormContent = ({ handleSubmit, submitting, invalid }) => {
-    const { closeDialog } = this.props;
+    const { closeModal } = this.props;
 
     return (
       <form onSubmit={ handleSubmit }>
-        <Dialog.Header title="New Client" onClose={ () => closeDialog('CLIENT_CREATE_DIALOG') } />
+        <Dialog.Header title="New Client" onClose={ () => closeModal('CLIENT_CREATE_DIALOG') } />
         <Dialog.Body>
           <Grid.Layout gap="xl" stretch>
             <Grid.Box>
@@ -52,7 +50,7 @@ class ClientCreateDialogContainer extends Component {
           </Grid.Layout>
         </Dialog.Body>
         <Dialog.Footer>
-          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeDialog('CLIENT_CREATE_DIALOG') }>Cancel</Button>
+          <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ () => closeModal('CLIENT_CREATE_DIALOG') }>Cancel</Button>
           <Button color="red" type="submit" text="Create Client" disabled={ invalid } loading={ submitting } />
         </Dialog.Footer>
       </form>
@@ -80,7 +78,7 @@ class ClientCreateDialogContainer extends Component {
 
 ClientCreateDialogContainer = compose(
   withRouter,
-  withDialog,
+  withModal,
 )(ClientCreateDialogContainer);
 
 export { ClientCreateDialogContainer };

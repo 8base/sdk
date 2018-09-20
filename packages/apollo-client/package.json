@@ -18,7 +18,7 @@
     "documentation": "^8.1.2"
   },
   "dependencies": {
-    "@8base/apollo-links": "^0.1.8",
+    "@8base/apollo-links": "^0.2.0",
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",
     "apollo-link": "^1.2.2",

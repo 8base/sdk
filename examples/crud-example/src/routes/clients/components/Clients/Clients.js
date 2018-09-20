@@ -7,7 +7,7 @@ import { ClientCreateDialogContainer } from '../../containers/ClientCreateDialog
 import { ClientUpdateDialogContainer } from '../../containers/ClientUpdateDialog.container';
 import { ClientDeleteDialogContainer } from '../../containers/ClientDeleteDialog.container';
 
-const Clients = ({ data, loading, openDialog }) => (
+const Clients = ({ data, loading, openModal }) => (
   <Card.Plate padding="md" stretch>
     <Card.Header>
       <Heading type="h4" text="Clients" />
@@ -38,7 +38,7 @@ const Clients = ({ data, loading, openDialog }) => (
                       { client.id }
                     </Table.BodyCell>
                     <Table.BodyCell>
-                      <Link to="" onClick={ () => openDialog('CLIENT_UPDATE_DIALOG', { id: client.id }) }>{ `${client.firstName} ${client.lastName}` }</Link>
+                      <Link to="" onClick={ () => openModal('CLIENT_UPDATE_DIALOG', { id: client.id }) }>{ `${client.firstName} ${client.lastName}` }</Link>
                     </Table.BodyCell>
                     <Table.BodyCell>
                       { client.email }
@@ -58,7 +58,7 @@ const Clients = ({ data, loading, openDialog }) => (
                           {
                             ({ closeDropdown }) => (
                               <Menu.Plate>
-                                <Menu.Item onClick={ () => { openDialog('CLIENT_DELETE_DIALOG', { id: client.id }); closeDropdown(); } }>Delete</Menu.Item>
+                                <Menu.Item onClick={ () => { openModal('CLIENT_DELETE_DIALOG', { id: client.id }); closeDropdown(); } }>Delete</Menu.Item>
                               </Menu.Plate>
                             )
                           }
@@ -72,7 +72,7 @@ const Clients = ({ data, loading, openDialog }) => (
           </AsyncContent>
         </Table.Body>
         <Table.Footer justifyContent="center">
-          <Button onClick={ () => openDialog('CLIENT_CREATE_DIALOG') }>Create Client</Button>
+          <Button onClick={ () => openModal('CLIENT_CREATE_DIALOG') }>Create Client</Button>
         </Table.Footer>
       </Table.Plate>
     </Card.Body>
