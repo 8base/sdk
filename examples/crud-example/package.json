@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@8base/apollo-client": "^0.1.5",
     "@8base/app-provider": "^0.1.0",
     "@8base/auth": "^0.1.4",
     "@8base/boost": "^0.5.19",
