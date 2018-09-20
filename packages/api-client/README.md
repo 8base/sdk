@@ -35,7 +35,7 @@ Update id token.
 
 ##### Parameters
 
--   `idToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id token.
+-   `idToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The id token.
 
 #### setRefreshToken
 
@@ -71,3 +71,16 @@ Send request to the API
 -   `variables` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The variables that will be used when executing the query.
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+# Usage
+
+```js
+import gql from 'graphql-tag';
+import { Client } from '@8base/api-client';
+
+const client = new Client(process.env.API_ENDPOINT);
+
+client.request(gql`query { companyName }`).then((res) => {
+  console.log(res);
+});
+```
