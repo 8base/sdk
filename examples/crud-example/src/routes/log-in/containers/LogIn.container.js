@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { css } from 'emotion';
-import { Form, Field } from 'react-final-form';
+import { Form, Field } from '@8base/forms';
 import { withLogIn } from '@8base/auth';
 import { Grid, Button, InputField, Heading } from '@8base/boost';
 import { withRouter } from 'react-router-dom';
