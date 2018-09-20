@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
-import * as R from 'ramda';
 import { Field as FinalField } from 'react-final-form';
 import { compose, setDisplayName } from 'recompose';
 import createValidate from '@8base/validate';
-import type { FieldProps as FinalFieldProps } from 'react-final-form';
+import * as R from 'ramda';
 
 import { withFieldSchema } from './utils';
 import type { FieldProps } from './types';
@@ -15,17 +14,23 @@ import type { FieldProps } from './types';
  * @prop {string} [name] - The name of field, based on the 8base API table schema.
  */
 class Field extends React.Component<FieldProps> {
-  collectProps = (): FinalFieldProps => R.pipe(
+  collectProps = R.pipe(
+    R.when(
+      R.has('fieldSchema'),
+      (props) => ({
+        name: props.name || props.fieldSchema.name,
+        validate: createValidate(props.fieldSchema),
+        ...props,
+      }),
+    ),
     R.when(
       R.propIs(String, 'component'),
-      R.dissoc ('fieldSchema'),
+      R.dissoc('fieldSchema'),
     ),
-    R.assoc('validate', createValidate(this.props.fieldSchema)),
-    R.assoc('name', this.props.name || this.props.fieldSchema.name),
-  )(this.props);
+  );
 
   render() {
-    const collectedProps = this.collectProps();
+    const collectedProps = this.collectProps(this.props);
 
     // $FlowFixMe: Waiting a new version of react-final-form with typing fix (https://github.com/final-form/react-final-form/pull/284)
     return <FinalField { ...collectedProps } />;

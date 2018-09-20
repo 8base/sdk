@@ -34,11 +34,11 @@ type RenderableProps = {
 };
 
 type FormContextValue = {|
-  tableSchema: TableSchema,
+  tableSchema?: TableSchema,
 |};
 
 type FormProps = {
-  tableSchema: TableSchema,
+  tableSchema?: TableSchema,
 } & FinalFormProps;
 
 type FieldsetProps = {
@@ -47,7 +47,7 @@ type FieldsetProps = {
 } & RenderableProps;
 
 type FieldProps = {
-  fieldSchema: FieldSchema,
+  fieldSchema?: FieldSchema,
 } & FinalFieldProps;
 
 type FieldArrayProps = FinalFieldArrayProps;

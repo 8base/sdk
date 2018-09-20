@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-import { logError } from './logError';
+import { logError } from './log';
 import type { RenderableProps } from '../types';
 
 const renderComponent = (props: RenderableProps) => {
@@ -22,7 +22,7 @@ const renderComponent = (props: RenderableProps) => {
   } else if (children) {
     rendered = children;
   } else {
-    logError('Error: must specify either a render prop, a render function as children, or a component prop.');
+    logError('must specify either a render prop, a render function as children, or a component prop.');
   }
 
   return rendered;
