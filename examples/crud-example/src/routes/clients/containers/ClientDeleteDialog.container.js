@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { compose } from 'recompose';
-import { Form } from 'react-final-form';
+import { Form } from '@8base/forms';
 import { Mutation } from 'react-apollo';
 import { Dialog, withModal, Button } from '@8base/boost';
 import { withRouter } from 'react-router-dom';
