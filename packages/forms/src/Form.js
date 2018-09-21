@@ -5,6 +5,7 @@ import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
 import type { FormProps as FinalFormProps } from 'react-final-form';
+import { formatDataForMutation } from '@8base/utils';
 
 import { FormContext } from './FormContext';
 import { withTableSchema } from './utils';
@@ -21,13 +22,18 @@ class Form extends React.Component<FormProps> {
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, ...restProps } = this.props;
+    const { mutators, tableSchema, type, schema, onSubmit, ...restProps } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
       tableSchema,
+      onSubmit,
       ...restProps,
     };
+
+    if (type && tableSchema && schema) {
+      collectedProps.onSubmit = (data, form, callback) => onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), form, callback);
+    }
 
     return collectedProps;
   };
