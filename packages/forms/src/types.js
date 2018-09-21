@@ -39,6 +39,8 @@ type FormContextValue = {|
 
 type FormProps = {
   tableSchema?: TableSchema,
+  schema?: Schema,
+  type?: 'CREATE' | 'UPDATE',
 } & FinalFormProps;
 
 type FieldsetProps = {

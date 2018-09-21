@@ -114,7 +114,7 @@ const TABLE_SCHEMA = {
 };
 
 render(
-  <Form tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
+  <Form type="CREATE" tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
         <form onSubmit={ handleSubmit }>
@@ -200,7 +200,7 @@ const TABLE_SCHEMA = {
 };
 
 render(
-  <Form tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
+  <Form type="CREATE" tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
         <form onSubmit={ handleSubmit }>
@@ -322,7 +322,7 @@ const SCHEMA = [{
 
 render(
   <TableSchemaProvider schema={SCHEMA}>
-    <Form tableSchemaName="client" onSubmit={ onSubmitClient }>
+    <Form type="CREATE" tableSchemaName="client" onSubmit={ onSubmitClient }>
       {
         ({ handleSubmit }) => (
           <form onSubmit={ handleSubmit }>
@@ -334,7 +334,7 @@ render(
         )
       }
     </Form>
-    <Form tableSchemaName="order" onSubmit={onSubmitOrder}>
+    <Form type="CREATE" tableSchemaName="order" onSubmit={onSubmitOrder}>
       {
         ({ handleSubmit }) => (
           <form onSubmit={ handleSubmit }>
@@ -532,7 +532,7 @@ const INITIAL_VALUES = {
 
 render(
   <TableSchemaProvider value={ SCHEMA }>
-    <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ onSubmitForm }>
+    <Form type="CREATE" tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ onSubmitForm }>
       {
         ({ handleSubmit }) => (
           <form onSubmit={ handleSubmit }>

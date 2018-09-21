@@ -19,7 +19,7 @@ const withTableSchema = (BaseComponent: React$ComponentType<*>) => {
         const tableSchema: ?TableSchema = getTableSchema(contextSchema, tableSchemaName);
 
         if (tableSchema) {
-          return <BaseComponent { ...restProps } tableSchema={ tableSchema } />;
+          return <BaseComponent { ...restProps } tableSchema={ tableSchema } schema={ contextSchema } />;
         }
 
         logError(`Error: schema doesn't contain table schema with ${tableSchemaName} name.`);

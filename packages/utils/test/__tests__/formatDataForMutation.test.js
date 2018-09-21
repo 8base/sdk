@@ -24,6 +24,46 @@ const SCHEMA = [{
       relation: null,
     },
     {
+      name: 'file',
+      displayName: 'File',
+      description: null,
+      fieldType: 'FILE',
+      fieldTypeAttributes: {
+        format: 'FILE',
+        showTitle: null,
+        showUrl: null,
+        maxSize: null,
+        typeRestrictions: null,
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+    {
+      name: 'fileList',
+      displayName: 'File List',
+      description: null,
+      fieldType: 'FILE',
+      fieldTypeAttributes: {
+        format: 'FILE',
+        showTitle: null,
+        showUrl: null,
+        maxSize: null,
+        typeRestrictions: null,
+      },
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+    {
       name: 'scalarList',
       displayName: 'Scalar List',
       description: null,
@@ -327,6 +367,22 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
+  it('Data with file.', () => {
+    const file = new File([''], 'filename');
+
+    const data = {
+      file,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        create: {
+          $file: file,
+        },
+      },
+    });
+  });
+
   it('Data with relation list reference.', () => {
     const data = {
       relationList: [
@@ -363,6 +419,22 @@ describe('As developer, I can format for create mutation,', () => {
             'Relation List Scalar List Value',
           ],
         }],
+      },
+    });
+  });
+
+  it('Data with file list.', () => {
+    const file = new File([''], 'filename');
+
+    const data = {
+      fileList: [file],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      fileList: {
+        create: {
+          $file: [file],
+        },
       },
     });
   });
