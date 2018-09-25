@@ -22,7 +22,7 @@ const getFieldPartOfTheQuery = createSelector(
   tableSelectors.isFileField,
   (fieldName, isRelation, isFile) => {
     if (isRelation) return `${fieldName} { id _description }`;
-    if (isFile) return `${fieldName} { id fileId filename }`;
+    if (isFile) return `${fieldName} { id fileId filename url }`;
     return fieldName;
   },
 );
