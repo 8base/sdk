@@ -38,13 +38,49 @@ Success handler takes the following parameters:
 
 - `operation` **Operation** apollo graphql operation.
 
-#### Usage
+## Usage
 ```js
-import { SuccessLink } from '@8base/apollo-links';
+import {
+  AuthLink,
+  FileUploadLink,
+  SuccessLink,
+} from '@8base/apollo-links';
 
 const successHandler = ({ operation }) => {
   console.log(operation.getContext().someUsefulData);
 };
 
-const link = new SuccessLink({ successHandler });
+const getAuthState = () => ({
+  workaspace: '',
+  email: '',
+  userId: '',
+  idToken: '',
+  refreshToken: '',
+});
+
+const getRefreshTokenParameters = () => ({
+  email: '',
+  refreshToken: '',
+});
+
+const authSuccessHandler = ({ idToken, refreshToken}) => {
+  conolse.log({ idToken, refreshToken });
+}
+
+const authErrorHandler = () => {
+  console.log('Auth error');
+}
+
+
+const links = ApolloLink.from([
+  new FileUploadLink(),
+  new SuccessLink(successHandler),
+  new AuthLink({
+    getAuthState: getAuthState,
+    getRefreshTokenParameters: getRefreshTokenParameters,
+    onAuthSuccess: authSuccessHandler,
+    onAuthError: authErrorHandler,
+  }),
+])
+
 ```
