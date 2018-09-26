@@ -1,6 +1,6 @@
 {
   "name": "@8base/forms",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -45,7 +45,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@8base/table-schema-provider": "^0.1.1",
+    "@8base/table-schema-provider": "^0.1.2",
     "@8base/utils": "^0.1.4",
     "@8base/validate": "^0.1.4",
     "prop-types": "^15.6.1",

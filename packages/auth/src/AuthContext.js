@@ -13,10 +13,10 @@ type AuthProviderProps = {
 
 const checkIsEmptyOrNil: (?string) => boolean = R.either(R.isNil, R.isEmpty);
 
-const checkIsAuthorized = ({ accountId, idToken }: AuthState): boolean =>
+const checkIsAuthorized = ({ workspaceId, idToken }: AuthState): boolean =>
   R.not(
     R.or(
-      checkIsEmptyOrNil(accountId),
+      checkIsEmptyOrNil(workspaceId),
       checkIsEmptyOrNil(idToken),
     ),
   );
@@ -48,8 +48,8 @@ class AuthProvider extends Component<AuthProviderProps> {
 
   render() {
     const { children } = this.props;
-    const { accountId, idToken } = this.getAuthState();
-    const isAuthorized = checkIsAuthorized({ accountId, idToken });
+    const { workspaceId, idToken } = this.getAuthState();
+    const isAuthorized = checkIsAuthorized({ workspaceId, idToken });
 
     return (
       <Provider value={{

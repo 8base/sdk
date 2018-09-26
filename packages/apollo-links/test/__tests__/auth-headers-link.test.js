@@ -19,8 +19,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
       }
     }
   `;
-  const accountId: string = 'some account id';
-  const organizationId: string = 'some organization id';
+  const workspaceId: string = 'some workspace id';
   const idToken: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
   const getAuthState = jest.fn();
@@ -34,8 +33,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
     'adds authorization headers',
     () => new Promise((resolve, reject) => {
       getAuthState.mockReturnValueOnce({
-        accountId,
-        organizationId,
+        workspaceId,
         idToken,
       });
 
@@ -52,9 +50,8 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
           // $FlowFixMe
           expect(context).toStrictEqual({
             headers: {
-              'account-id': accountId,
+              workspace: workspaceId,
               authorization: `Bearer ${idToken}`,
-              'organization-id': organizationId,
             },
           });
 
@@ -70,9 +67,8 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
       stubLink.mockClear();
 
       getAuthState.mockReturnValueOnce({
-        accountId: '',
+        workspaceId: '',
         idToken: 'some-id-token',
-        organizationId: undefined,
       });
 
       execute(

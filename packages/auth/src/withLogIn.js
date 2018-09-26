@@ -13,9 +13,9 @@ const USER_LOGIN_MUTATION = gql`
         refreshToken
         idToken
       }
-      accounts {
+      workspaces {
         name
-        account
+        workspace
       }
     }
   }
@@ -24,7 +24,7 @@ const USER_LOGIN_MUTATION = gql`
 const getAuthStateFromResponse = (userLoginResponse) => ({
   idToken: R.path(['data', 'userLogin', 'auth', 'idToken'], userLoginResponse),
   refreshToken: R.path(['data', 'userLogin', 'auth', 'refreshToken'], userLoginResponse),
-  accountId: R.path(['data', 'userLogin', 'accounts', 0, 'account'], userLoginResponse),
+  workspaceId: R.path(['data', 'userLogin', 'workspaces', 0, 'workspace'], userLoginResponse),
 });
 
 const withLogIn = compose(

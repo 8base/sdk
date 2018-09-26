@@ -33,7 +33,7 @@ it('As a developer, I can create client, set API credentials and send request.',
   const client = new Client('https://api.test.8base.com');
 
   client.setIdToken('idToken');
-  client.setAccountId('accountId');
+  client.setWorkspaceId('workspaceId');
 
   await client.request('query { companyName }');
 
@@ -76,7 +76,7 @@ it('When client receive token expired error, it should refresh token and repeat 
   const client = new Client('https://api.test.8base.com');
 
   client.setIdToken('idToken');
-  client.setAccountId('accountId');
+  client.setWorkspaceId('workspaceId');
   client.setEmail('test@site.com');
 
   await client.request('query { companyName }');
@@ -103,7 +103,7 @@ it('When client receive other errors, it should throw that error.', async () => 
   const client = new Client('https://api.test.8base.com');
 
   client.setIdToken('idToken');
-  client.setAccountId('accountId');
+  client.setWorkspaceId('workspaceId');
   client.setEmail('test@site.com');
 
   let error = null;

@@ -29,9 +29,6 @@ Object {
     "accept-encoding": Array [
       "gzip,deflate",
     ],
-    "account-id": Array [
-      "accountId",
-    ],
     "authorization": Array [
       "Bearer idToken",
     ],
@@ -47,6 +44,9 @@ Object {
     "host": "api.test.8base.com",
     "user-agent": Array [
       "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
     ],
   },
 }
@@ -274,9 +274,6 @@ Object {
     "accept-encoding": Array [
       "gzip,deflate",
     ],
-    "account-id": Array [
-      "accountId",
-    ],
     "connection": Array [
       "close",
     ],
@@ -289,6 +286,9 @@ Object {
     "host": "api.test.8base.com",
     "user-agent": Array [
       "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
     ],
   },
 }
@@ -307,9 +307,6 @@ Object {
     "accept-encoding": Array [
       "gzip,deflate",
     ],
-    "account-id": Array [
-      "accountId",
-    ],
     "authorization": Array [
       "Bearer newIdToken",
     ],
@@ -325,6 +322,9 @@ Object {
     "host": "api.test.8base.com",
     "user-agent": Array [
       "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
     ],
   },
 }
