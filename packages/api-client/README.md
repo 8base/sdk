@@ -16,7 +16,7 @@ This client library is used by the other 8base service packages to make requests
         -   [Parameters](#parameters-2)
     -   [setEmail](#setemail)
         -   [Parameters](#parameters-3)
-    -   [setAccountId](#setaccountid)
+    -   [setWorkspaceid](#setworkspaceid)
         -   [Parameters](#parameters-4)
     -   [request](#request)
         -   [Parameters](#parameters-5)
@@ -53,13 +53,13 @@ Update user email.
 
 -   `email` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user email.
 
-#### setAccountId
+#### setWorkspaceId
 
-Update account identifier.
+Update workspace identifier.
 
 ##### Parameters
 
--   `accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The account identifier.
+-   `workspaceId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The workspace identifier.
 
 #### request
 

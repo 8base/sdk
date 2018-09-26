@@ -20,12 +20,12 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
       }
     }
   `;
-  const accountId: string = 'some account id';
+  const workspaceId: string = 'some workspace id';
   const idToken: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
   const authLink: ApolloLink = new AuthLink({
     getAuthState: () => ({
-      accountId,
+      workspaceId,
       idToken,
     }),
     getRefreshTokenParameters: () => ({
@@ -52,7 +52,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           // $FlowFixMe
           expect(context).toStrictEqual({
             headers: {
-              'account-id': accountId,
+              workspace: workspaceId,
               authorization: `Bearer ${idToken}`,
             },
           });
@@ -105,7 +105,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           expect(firstContext).toStrictEqual({
             headers: {
               authorization: `Bearer ${idToken}`,
-              'account-id': accountId,
+              workspace: workspaceId,
             },
           });
 
@@ -113,7 +113,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           // $FlowFixMe
           expect(secondContext).toStrictEqual({
             headers: {
-              'account-id': accountId,
+              workspace: workspaceId,
             },
             isRefreshingToken: true,
           });
@@ -123,7 +123,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           expect(thirdContext).toStrictEqual({
             headers: {
               authorization: `Bearer ${idToken}`,
-              'account-id': accountId,
+              workspace: workspaceId,
             },
           });
 

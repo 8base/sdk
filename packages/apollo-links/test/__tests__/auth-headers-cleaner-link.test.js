@@ -35,7 +35,7 @@ describe('As a developer, I can use \'AuthHeadersCleanerLink\' to remove authori
           context: {
             headers: {
               authorization: 'some id token',
-              'account-id': 'some account id',
+              workspace: 'some workspace id',
             },
             someProp: 'test',
           },
@@ -50,7 +50,7 @@ describe('As a developer, I can use \'AuthHeadersCleanerLink\' to remove authori
           // $FlowFixMe
           expect(context).toStrictEqual({
             headers: {
-              'account-id': 'some account id',
+              workspace: 'some workspace id',
             },
             someProp: 'test',
           });

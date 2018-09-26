@@ -105,12 +105,11 @@ class Foo extends Component {
   };
 
   getAuthState = () => {
-    const { auth: { authState: { idToken, organizationId, accountId }}} = this.props;
+    const { auth: { authState: { idToken, workspaceId }}} = this.props;
 
     return {
       idToken,
-      organizationId,
-      accountId,
+      workspaceId,
     };
   };
 

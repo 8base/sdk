@@ -46,7 +46,7 @@ type GraphQLClientError = {
 class Client {
   gqlc: GraphQLClient;
 
-  accountId: string;
+  workspaceId: string;
   email: string;
   idToken: ?string;
   refreshToken: string;
@@ -86,12 +86,12 @@ class Client {
   }
 
   /**
-   * Update account identifier.
-   * @param accountId - The account identifier.
+   * Update workspace identifier.
+   * @param workspaceId - The workspace identifier.
    */
-  setAccountId(accountId: string) {
-    this.accountId = accountId;
-    this.gqlc.setHeader('account-id', accountId);
+  setWorkspaceId(workspaceId: string) {
+    this.workspaceId = workspaceId;
+    this.gqlc.setHeader('workspace', workspaceId);
   }
 
   async tryToRefreshToken(err: GraphQLClientError) {

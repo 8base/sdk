@@ -33,8 +33,7 @@ export type ErrorLinkParameters = {
 };
 
 export type AuthState = {
-  organizationId?: string,
-  accountId?: string,
+  workspaceId?: string,
   idToken?: string,
 };
 

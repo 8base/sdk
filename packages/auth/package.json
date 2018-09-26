@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
   },
   "peerDependencies": {
     "apollo-client": "^2.4.2",
-    "graphql-tag": "^2.9.2",
     "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-apollo": "^2.1.11",

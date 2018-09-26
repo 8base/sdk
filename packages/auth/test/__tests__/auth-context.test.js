@@ -37,33 +37,33 @@ const getTestInstance = () => {
 };
 
 describe('As a developer, i can use AuthContext to get authorization state in any place of react tree', () => {
-  it('sets isAuthorized=true if there are valid accountId and idToken', () => {
-    const accountId = 'some account id';
+  it('sets isAuthorized=true if there are valid workspaceId and idToken', () => {
+    const workspaceId = 'some workspace id';
     const idToken = 'some id token';
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ accountId, idToken });
+    setAuthState({ workspaceId, idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(true);
   });
 
   it('sets isAuthorized=false if there is an invalid prop', () => {
-    const accountId = 'some account id';
+    const workspaceId = 'some workspace id';
     const idToken = undefined;
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ accountId, idToken });
+    setAuthState({ workspaceId, idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
   });
 
   it('merges new auth state with previously state', () => {
-    const accountId = 'some account id';
+    const workspaceId = 'some workspace id';
     const idToken = undefined;
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ accountId, idToken });
+    setAuthState({ workspaceId, idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
   });
 });
