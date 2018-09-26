@@ -61,4 +61,4 @@ const withAuth: any = <InputProps: {}>(
 
 export { withAuth };
 
-export type { AuthContextProps };
+export type { AuthContextProps, AuthProps, WithAuthProps };
