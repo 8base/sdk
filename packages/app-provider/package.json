@@ -9,8 +9,10 @@
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "dependencies": {
+    "@8base/apollo-client": "^0.2.0",
     "@8base/auth": "^0.1.5",
     "@8base/table-schema-provider": "^0.1.2",
+    "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",

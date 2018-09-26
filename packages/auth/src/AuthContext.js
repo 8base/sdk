@@ -46,18 +46,22 @@ class AuthProvider extends Component<AuthProviderProps> {
     this.forceUpdate();
   };
 
+  getContextValue = R.memoize((isAuthorized) => ({
+    isAuthorized,
+    setAuthState: this.setAuthState,
+    getAuthState: this.getAuthState,
+    purgeAuthState: this.purgeAuthState,
+  }));
+
   render() {
     const { children } = this.props;
     const { workspaceId, idToken } = this.getAuthState();
     const isAuthorized = checkIsAuthorized({ workspaceId, idToken });
 
+    const contextValue = this.getContextValue(isAuthorized);
+
     return (
-      <Provider value={{
-        isAuthorized,
-        setAuthState: this.setAuthState,
-        getAuthState: this.getAuthState,
-        purgeAuthState: this.purgeAuthState,
-      }}>
+      <Provider value={ contextValue }>
         { children }
       </Provider>
     );

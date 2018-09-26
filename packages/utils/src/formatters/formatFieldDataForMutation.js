@@ -9,11 +9,11 @@ const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema
   let formatedData = data;
 
   if (isRelationReference(fieldSchema, data) || isFileReference(fieldSchema, data)) {
-    formatedData = formatRelationReferenceForMutation(type, data);
+    formatedData = formatRelationReferenceForMutation(type, fieldSchema, data);
   } else if (isRelationInstance(fieldSchema, data)) {
     formatedData = formatRelationInstanceForMutation(type, fieldSchema, data, schema);
   } else if (isFileInstance(fieldSchema, data)) {
-    formatedData = formatFileInstanceForMutation(type, data);
+    formatedData = formatFileInstanceForMutation(type, fieldSchema, data);
   }
 
   return formatedData;

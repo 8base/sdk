@@ -1,7 +1,12 @@
 //@flow
-import type { MutationType } from '../types';
+import type { MutationType, FieldSchema } from '../types';
+import { isListField } from '../verifiers';
 
-const formatFileInstanceForMutation = (type: MutationType, data: Object) => {
+const formatFileInstanceForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object) => {
+  if (isListField(fieldSchema)) {
+    return { create: data.map((value) => ({ $file: value })) };
+  }
+
   return { create: { $file: data }};
 };
 

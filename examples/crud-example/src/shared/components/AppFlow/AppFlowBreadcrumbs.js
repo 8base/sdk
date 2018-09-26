@@ -5,8 +5,20 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { Grid, Breadcrumbs, Link } from '@8base/boost';
 
 const BREADCRUMBS_ROUTES = [{
-  path: '/clients',
-  component: () => 'Clients',
+  path: '/brokers',
+  component: () => 'Brokers',
+  matchOptions: { exact: true },
+}, {
+  path: '/customers',
+  component: () => 'Customers',
+  matchOptions: { exact: true },
+}, {
+  path: '/properties',
+  component: () => 'Properties',
+  matchOptions: { exact: true },
+}, {
+  path: '/listings',
+  component: () => 'Listings',
   matchOptions: { exact: true },
 }];
 

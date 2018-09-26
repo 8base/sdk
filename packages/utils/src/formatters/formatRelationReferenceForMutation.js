@@ -1,9 +1,16 @@
 //@flow
 import { MUTATION_TYPE } from '../constants';
-import type { MutationType } from '../types';
+import { isListField } from '../verifiers';
+import type { FieldSchema, MutationType } from '../types';
 
-const formatRelationReferenceForMutation = (type: MutationType, data: Object) => {
+const formatRelationReferenceForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object) => {
   let formatedData = data;
+
+  if (isListField(fieldSchema)) {
+    formatedData = formatedData.map((id) => ({ id }));
+  } else {
+    formatedData = { id: formatedData };
+  }
 
   if (type === MUTATION_TYPE.CREATE) {
     formatedData = { connect: formatedData };

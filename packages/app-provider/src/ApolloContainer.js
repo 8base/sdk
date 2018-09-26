@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import { EightBaseApolloClient } from '@8base/apollo-client';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { withAuth } from '@8base/auth';
+import * as R from 'ramda';
 
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
@@ -38,12 +39,8 @@ class ApolloContainer extends React.Component {
     };
   };
 
-  renderContent = ({ loading, fragmentsSchema }) => {
-    if (loading) {
-      return null;
-    }
-
-    this.client = new EightBaseApolloClient({
+  createClient = R.memoize((fragmentsSchema) => {
+    return new EightBaseApolloClient({
       getAuthState: this.getAuthState,
       getRefreshTokenParameters: this.getRefreshTokenParameters,
       onAuthSuccess: this.onAuthSuccess,
@@ -51,6 +48,14 @@ class ApolloContainer extends React.Component {
       uri: this.props.uri,
       cache: new InMemoryCache({ fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData: fragmentsSchema }) }),
     });
+  });
+
+  renderContent = ({ loading, fragmentsSchema }) => {
+    if (loading) {
+      return null;
+    }
+
+    this.client = this.createClient(fragmentsSchema);
 
     return (
       <ApolloProvider client={ this.client }>

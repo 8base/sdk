@@ -110,10 +110,12 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
   render() {
     const { auth: { isAuthorized }, children } = this.props;
 
-    let rendered = children({});
+    let rendered = null;
 
     if (isAuthorized) {
       rendered = <Query query={ TABLES_SCHEMA_QUERY }>{ this.renderContent }</Query>;
+    } else {
+      rendered = children({});
     }
 
     return rendered;

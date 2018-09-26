@@ -32,7 +32,9 @@ class Form extends React.Component<FormProps> {
     };
 
     if (type && tableSchema && schema) {
-      collectedProps.onSubmit = (data, form, callback) => onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), form, callback);
+      collectedProps.onSubmit = (data, form, callback) => {
+        return onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), form, callback);
+      };
     }
 
     return collectedProps;
