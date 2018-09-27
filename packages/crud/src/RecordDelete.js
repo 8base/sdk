@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
+import { TableConsumer } from '@8base/table-schema-provider';
 
-import { TableMeta } from './TableMeta';
 import { RecordCrud } from './RecordCrud';
 
 interface ChildrenPropObject {
@@ -30,14 +30,14 @@ export class RecordDelete extends Component<RecordDeleteProps> {
     const { tableName, tableId, children, ...rest } = this.props;
 
     return (
-      <TableMeta
-        tableName={ tableName }
-        tableId={ tableId }
+      <TableConsumer
+        name={ tableName }
+        id={ tableId }
       >
         { (tableMetaResult) => (
           <RecordCrud
             { ...rest }
-            tableMeta={ tableMetaResult.data }
+            tableMeta={ tableMetaResult }
             mode="delete"
           >
             { (mutateFunction, mutateResult) =>
@@ -49,7 +49,7 @@ export class RecordDelete extends Component<RecordDeleteProps> {
                 }) }
           </RecordCrud>
         ) }
-      </TableMeta>
+      </TableConsumer>
     );
   }
 }

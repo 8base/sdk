@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@8base/sdk": "^0.0.67",
+    "@8base/table-schema-provider": "^0.1.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",

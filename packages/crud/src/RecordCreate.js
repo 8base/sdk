@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
+import { TableConsumer } from '@8base/table-schema-provider';
 
-import { TableMeta } from './TableMeta';
 import { RecordCrud } from './RecordCrud';
 
 
@@ -31,14 +31,14 @@ export class RecordCreate extends Component<RecordCreateProps> {
     const { tableName, tableId, children, ...rest } = this.props;
 
     return (
-      <TableMeta
-        tableName={ tableName }
-        tableId={ tableId }
+      <TableConsumer
+        name={ tableName }
+        id={ tableId }
       >
         { (tableMetaResult) => (
           <RecordCrud
             { ...rest }
-            tableMeta={ tableMetaResult.data }
+            tableMeta={ tableMetaResult }
             mode="create"
           >
             { (mutateFunction, mutateResult) =>
@@ -50,7 +50,7 @@ export class RecordCreate extends Component<RecordCreateProps> {
                 }) }
           </RecordCrud>
         ) }
-      </TableMeta>
+      </TableConsumer>
     );
   }
 }

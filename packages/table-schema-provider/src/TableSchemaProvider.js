@@ -8,7 +8,7 @@ import { TableSchemaContext } from './TableSchemaContext';
 
 const TABLES_SCHEMA_QUERY = gql`
   query TablesSchema {
-    tablesList(filter: { onlyUserTables: true }) {
+    tablesList {
       ...TableFragment
     }
   }
@@ -24,6 +24,19 @@ const TABLES_SCHEMA_QUERY = gql`
   }
 
   fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      id
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...CustomFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
     id
     name
     displayName
@@ -83,9 +96,28 @@ const TABLES_SCHEMA_QUERY = gql`
     typeRestrictions
   }
 
+  fragment CustomFieldTypesAttributes on CustomFieldTypeAttributes {
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+    id
+  }
+
   fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
     format
-    listOptions
   }
 `;
 
@@ -110,10 +142,12 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
   render() {
     const { auth: { isAuthorized }, children } = this.props;
 
-    let rendered = children({});
+    let rendered = null;
 
     if (isAuthorized) {
       rendered = <Query query={ TABLES_SCHEMA_QUERY }>{ this.renderContent }</Query>;
+    } else {
+      rendered = children({});
     }
 
     return rendered;

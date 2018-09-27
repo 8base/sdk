@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { TableConsumer } from '@8base/table-schema-provider';
 
-import { TableMeta } from './TableMeta';
 import { createTableFilterGraphqlTag } from './queryTableGenerator';
 
 type RecordsListProps = {
@@ -58,14 +58,14 @@ export class RecordsList extends Component<RecordsListProps> {
   render() {
     const { tableName, tableId, children, ...rest } = this.props;
     return (
-      <TableMeta
-        tableName={ tableName }
-        tableId={ tableId }
+      <TableConsumer
+        name={ tableName }
+        id={ tableId }
       >
         { (tableMetaResult) => (
           <Query
             { ...rest }
-            query={ gql(createTableFilterGraphqlTag(tableMetaResult.data)) }
+            query={ gql(createTableFilterGraphqlTag(tableMetaResult)) }
           >
             { (recordsListResult) => children({
               ...recordsListResult,
@@ -73,7 +73,7 @@ export class RecordsList extends Component<RecordsListProps> {
             }) }
           </Query>
         ) }
-      </TableMeta>
+      </TableConsumer>
     );
   }
 }
