@@ -1,5 +1,5 @@
 //@flow
-import { FIELD_TYPE, FORMAT, type Format } from '@8base/utils';
+import { FIELD_TYPE, DATE_FORMATS, type Format } from '@8base/utils';
 
 import {
   validatorFacade as validator,
@@ -17,7 +17,7 @@ const mockDateField = mockField(FIELD_TYPE.DATE);
 
 describe('As developer, i can create date field vaidator', () => {
   it('should check invalid value by "isRequired" attribute and provide error message', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     dateField.isRequired = true;
 
@@ -27,7 +27,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check empty value by "isRequired" attribute and provide error message', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     dateField.isRequired = true;
 
@@ -37,7 +37,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check valid value by "isRequired" attribute and return undefined', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     dateField.isRequired = true;
 
@@ -47,7 +47,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check invalid value by date format and provide error message', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 
@@ -55,7 +55,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check empty value by date format and return undefined', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 
@@ -63,7 +63,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check valid value by date format and return undefined', () => {
-    const format: Format = FORMAT.DATE;
+    const format: Format = DATE_FORMATS.DATE;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 
@@ -71,7 +71,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check invalid value by datetime format and provide error message', () => {
-    const format: Format = FORMAT.DATETIME;
+    const format: Format = DATE_FORMATS.DATETIME;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 
@@ -79,7 +79,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check empty value by datetime format and return undefined', () => {
-    const format: Format = FORMAT.DATETIME;
+    const format: Format = DATE_FORMATS.DATETIME;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 
@@ -87,7 +87,7 @@ describe('As developer, i can create date field vaidator', () => {
   });
 
   it('should check valid value by datetime format and return undefined', () => {
-    const format: Format = FORMAT.DATETIME;
+    const format: Format = DATE_FORMATS.DATETIME;
     const dateField: DateField = mockDateField({ format });
     const validate: PreparedValidator = validator(dateField);
 

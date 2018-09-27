@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowCreate($data: CommonCreateInput) {
+    commonCreate(data: $data) {
+      field1
+      field2
+      field3
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with custom fields 1`] = `
+"
+  mutation DataViewerCustomFieldsRowCreate($data: CustomFieldCreateInput) {
+    customFieldCreate(data: $data) {
+      phone { code number }
+      address { street1 street2 zip city state }
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowCreate($data: RelationCreateInput) {
+    relationCreate(data: $data) {
+      field1 { id _description }
+      field2
+      field3
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowDelete($data: CommonDeleteInput) {
+    commonDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with custom fields 1`] = `
+"
+  mutation DataViewerCustomFieldsRowDelete($data: CustomFieldDeleteInput) {
+    customFieldDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowDelete($data: RelationDeleteInput) {
+    relationDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput) {
+    commonUpdate(data: $data) {
+      field1
+      field2
+      field3
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with custom fields 1`] = `
+"
+  mutation DataViewerCustomFieldsRowUpdate($data: CustomFieldUpdateInput) {
+    customFieldUpdate(data: $data) {
+      phone { code number }
+      address { street1 street2 zip city state }
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput) {
+    relationUpdate(data: $data) {
+      field1 { id _description }
+      field2
+      field3
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
+"
+  query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      field1
+      field2
+      field3
+      _description
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with custom fields 1`] = `
+"
+  query DataViewerTableCustomFieldsContent($filter: CustomFieldFilter, $orderBy: [CustomFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: customFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      id
+      createdAt
+      updatedAt
+      createdBy { id _description }
+      phone { code number }
+      address { street1 street2 zip city state }
+      _description
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
+"
+  query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      field1 { id _description }
+      field2
+      field3
+      _description
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema  1`] = `
+"
+  query DataViewerCommonsRow($id: ID!) {
+    common(id: $id) {
+      field1
+      field2
+      field3
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with custom fields 1`] = `
+"
+  query DataViewerCustomFieldsRow($id: ID!) {
+    customField(id: $id) {
+      id
+      createdAt
+      updatedAt
+      createdBy { id _description }
+      phone { code number }
+      address { street1 street2 zip city state }
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
+"
+  query DataViewerRelationRow($id: ID!) {
+    relation(id: $id) {
+      field1 { id _description }
+      field2
+      field3
+      id
+    }
+  }"
+`;
