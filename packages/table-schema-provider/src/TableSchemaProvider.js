@@ -97,6 +97,7 @@ const TABLES_SCHEMA_QUERY = gql`
   }
 
   fragment CustomFieldTypesAttributes on CustomFieldTypeAttributes {
+    format
     innerFields {
       name
       displayName
