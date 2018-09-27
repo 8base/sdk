@@ -1,5 +1,5 @@
 //@flow
-import { FIELD_TYPE, FORMAT, type Format } from '@8base/utils';
+import { FIELD_TYPE, TEXT_FORMATS, type Format } from '@8base/utils';
 
 import {
   validatorFacade as validator,
@@ -17,7 +17,7 @@ const mockTextField = mockField(FIELD_TYPE.TEXT);
 
 describe('As developer, i can create text field vaidator', () => {
   it('should check invalid value by "isRequired" attribute and provide error message', () => {
-    const format: Format = FORMAT.UNFORMATTED;
+    const format: Format = TEXT_FORMATS.UNFORMATTED;
     const textField: TextField = mockTextField({ format });
     textField.isRequired = true;
 
@@ -27,7 +27,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check empty value by "isRequired" attribute and provide error message', () => {
-    const format: Format = FORMAT.UNFORMATTED;
+    const format: Format = TEXT_FORMATS.UNFORMATTED;
     const textField: TextField = mockTextField({ format });
     textField.isRequired = true;
 
@@ -37,7 +37,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check valid value by "isRequired" attribute and return undefined', () => {
-    const format: Format = FORMAT.UNFORMATTED;
+    const format: Format = TEXT_FORMATS.UNFORMATTED;
     const textField: TextField = mockTextField({ format });
     textField.isRequired = true;
 
@@ -51,7 +51,7 @@ describe('As developer, i can create text field vaidator', () => {
     and provide error message with allowed fieldSize`,
     () => {
       const fieldSize = 5;
-      const format: Format = FORMAT.UNFORMATTED;
+      const format: Format = TEXT_FORMATS.UNFORMATTED;
       const textField: TextField = mockTextField({ fieldSize, format });
       const validate: PreparedValidator = validator(textField);
 
@@ -61,7 +61,7 @@ describe('As developer, i can create text field vaidator', () => {
 
   it('should check empty value by "fieldSize" attribute and return undefined', () => {
     const fieldSize = 5;
-    const format: Format = FORMAT.UNFORMATTED;
+    const format: Format = TEXT_FORMATS.UNFORMATTED;
     const textField: TextField = mockTextField({ fieldSize, format });
     const validate: PreparedValidator = validator(textField);
 
@@ -70,7 +70,7 @@ describe('As developer, i can create text field vaidator', () => {
 
   it('should check valid value by "fieldSize" attribute and return undefined', () => {
     const fieldSize = 5;
-    const format = FORMAT.UNFORMATTED;
+    const format = TEXT_FORMATS.UNFORMATTED;
     const textField: TextField = mockTextField({ fieldSize, format });
     const validate: PreparedValidator = validator(textField);
 
@@ -78,7 +78,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check invalid value by email format and provide error message', () => {
-    const format: Format = FORMAT.EMAIL;
+    const format: Format = TEXT_FORMATS.EMAIL;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -86,7 +86,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check empty value by email format and return undefined', () => {
-    const format: Format = FORMAT.EMAIL;
+    const format: Format = TEXT_FORMATS.EMAIL;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -94,7 +94,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check valid value by email format and return undefined', () => {
-    const format: Format = FORMAT.EMAIL;
+    const format: Format = TEXT_FORMATS.EMAIL;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -102,7 +102,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check invalid value by phone format and provide error message', () => {
-    const format: Format = FORMAT.PHONE;
+    const format: Format = TEXT_FORMATS.PHONE;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -110,7 +110,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check empty value by phone format and return undefined', () => {
-    const format: Format = FORMAT.PHONE;
+    const format: Format = TEXT_FORMATS.PHONE;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -118,7 +118,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check valid value by phone format and return undefined', () => {
-    const format: Format = FORMAT.PHONE;
+    const format: Format = TEXT_FORMATS.PHONE;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -126,7 +126,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check invalid value by ssn format and provide error message', () => {
-    const format: Format = FORMAT.SSN;
+    const format: Format = TEXT_FORMATS.SSN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -134,7 +134,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check empty value by ssn format and return undefined', () => {
-    const format: Format = FORMAT.SSN;
+    const format: Format = TEXT_FORMATS.SSN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -142,7 +142,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check valid value by ssn format and return undefined', () => {
-    const format: Format = FORMAT.SSN;
+    const format: Format = TEXT_FORMATS.SSN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -150,7 +150,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check invalid value by ein format and provide error message', () => {
-    const format: Format = FORMAT.EIN;
+    const format: Format = TEXT_FORMATS.EIN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -158,7 +158,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check empty value by ein format and return undefined', () => {
-    const format: Format = FORMAT.EIN;
+    const format: Format = TEXT_FORMATS.EIN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 
@@ -166,7 +166,7 @@ describe('As developer, i can create text field vaidator', () => {
   });
 
   it('should check valid value by ein format and return undefined', () => {
-    const format: Format = FORMAT.EIN;
+    const format: Format = TEXT_FORMATS.EIN;
     const textField: TextField = mockTextField({ format });
     const validate: PreparedValidator = validator(textField);
 

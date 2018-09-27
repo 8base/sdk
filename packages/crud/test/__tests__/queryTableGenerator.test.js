@@ -1,111 +1,110 @@
 // @flow
-import * as R from 'ramda';
 import {
-  createQueryString, createTableFilterGraphqlTag,
-  createTableRowCreateTag, createTableRowDeleteTag,
+  createTableFilterGraphqlTag,
+  createTableRowCreateTag,
+  createTableRowQueryTag,
+  createTableRowUpdateTag,
+  createTableRowDeleteTag,
 } from '../../src/queryTableGenerator';
 
-const removeEmptySymbols = R.pipe(
-  R.replace(/\s\s/g, ''),
-  R.replace(/\n/g, ' '),
-  R.replace(/\{\s/g, '{'),
-  R.replace(/\s\}/g, '}'),
-);
+import * as fixtures from '../__fixtures__';
 
-describe('helpers for the table query generator', () => {
-  it('should transform fields list to the string', () => {
-    expect(removeEmptySymbols(
-      createQueryString(
-        {
-          name: 'table',
-          fields: [
-            { name: 'field1', id: '1' },
-            { name: 'field2', id: '2' },
-            { name: 'field3', id: '3' },
-          ],
-        })),
-    ).toEqual(removeEmptySymbols(
-      `field1
-      field2
-      field3
-    `));
+describe('As a developer, I can generate graphql query for list by table schema', () => {
+  it('should generate graphql tag for the table content by common table schema ', () => {
+    const tag = createTableFilterGraphqlTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
   });
 
-  it('should transform fieldslist to the string with relation fields', () => {
-    expect(removeEmptySymbols(
-      createQueryString({
-        name: 'table',
-        fields: [
-          { name: 'field1', id: '1', fieldType: 'RELATION' },
-          { name: 'field2', id: '2' },
-          { name: 'field3', id: '3' },
-        ],
-      })),
-    ).toEqual(removeEmptySymbols(
-      `field1 { id _description }
-      field2
-      field3
-    `));
+  it('should generate graphql tag for the table content by table schema with relation', () => {
+    const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
+
+    expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for the table content ', () => {
-    expect(removeEmptySymbols(
-      createTableFilterGraphqlTag(
-        {
-          name: 'someTable',
-          fields: [{ name: 'field1', id: '1' }, { name: 'field2', id: '2' }, { name: 'field3', id: '3' }],
-        },
-      )),
-    ).toEqual(removeEmptySymbols(`
-      query DataViewerTableSomeTableContent($filter: SomeTableFilter, $orderBy: [SomeTableOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-        tableContent: someTablesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-          field1
-          field2
-          field3
-          _description
-          id
-        }
-      }`,
-    ));
+  it('should generate graphql tag for the table content by table schema with custom fields', () => {
+    const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+
+    expect(tag).toMatchSnapshot();
+  });
+});
+
+describe('As a developer, I can generate graphql mutation for create entity by table schema', () => {
+  it('should generate graphql tag for create mutation by common table schema ', () => {
+    const tag = createTableRowCreateTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for the table in PascalCase ', () => {
-    expect(removeEmptySymbols(createTableFilterGraphqlTag({ name: 'PascalTable' })),
-    ).toEqual(removeEmptySymbols(`
-      query DataViewerTablePascalTableContent($filter: PascalTableFilter, $orderBy: [PascalTableOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-        tableContent: pascalTablesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-          _description
-          id
-        }
-      }`,
-    ));
+  it('should generate graphql tag for create mutation by table schema with relation', () => {
+    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
+
+    expect(tag).toMatchSnapshot();
   });
 
-  it('should generate tag for the delete mutation', () => {
-    expect(removeEmptySymbols(createTableRowDeleteTag({ name: 'PascalTable' })))
-      .toEqual(removeEmptySymbols(`
-        mutation DataViewerPascalTableRowDelete($data: PascalTableDeleteInput) {
-          pascalTableDelete(data: $data) {
-            success
-          }
-        }`,
-      ));
+  it('should generate graphql tag for create mutation by table schema with custom fields', () => {
+    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+
+    expect(tag).toMatchSnapshot();
+  });
+});
+
+describe('As a developer, I can generate graphql query for read entity by table schema', () => {
+  it('should generate graphql tag for row query by common table schema ', () => {
+    const tag = createTableRowQueryTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
   });
 
-  it('should generate tag for the create mutation', () => {
-    expect(removeEmptySymbols(createTableRowCreateTag({
-      name: 'PascalTable',
-      fields: [{ name: 'field1', id: '1' }, { name: 'field2', id: '2' }, { name: 'field3', id: '3' }],
-    })))
-      .toEqual(removeEmptySymbols(`
-        mutation DataViewerPascalTableRowCreate($data: PascalTableCreateInput) {
-          pascalTableCreate(data: $data) {
-            field1
-            field2
-            field3
-            id
-          }
-        }`,
-      ));
+  it('should generate graphql tag for row query by table schema with relation', () => {
+    const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for row query by table schema with custom fields', () => {
+    const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+
+    expect(tag).toMatchSnapshot();
+  });
+});
+
+describe('As a developer, I can generate graphql mutation for update entity by table schema', () => {
+  it('should generate graphql tag for update mutation by common table schema ', () => {
+    const tag = createTableRowUpdateTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for update mutation by table schema with relation', () => {
+    const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for update mutation by table schema with custom fields', () => {
+    const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+
+    expect(tag).toMatchSnapshot();
+  });
+});
+
+describe('As a developer, I can generate graphql mutation for delete entity by table schema', () => {
+  it('should generate graphql tag for delete mutation by common table schema ', () => {
+    const tag = createTableRowDeleteTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for delete mutation by table schema with relation', () => {
+    const tag = createTableRowDeleteTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for delete mutation by table schema with custom fields', () => {
+    const tag = createTableRowDeleteTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+
+    expect(tag).toMatchSnapshot();
   });
 });

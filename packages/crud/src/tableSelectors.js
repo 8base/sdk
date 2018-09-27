@@ -29,9 +29,14 @@ export const isFileField = createSelector(
   R.equals(FIELD_TYPE.FILE),
 );
 
+export const isCustomField = createSelector(
+  getFieldTypeById,
+  R.equals(FIELD_TYPE.CUSTOM),
+);
+
 export const isMetaField = createSelector(
   getFieldById,
-  R.prop('isMeta'),
+  R.propEq('isMeta', true),
 );
 
 export const getFieldNameById = createSelector(

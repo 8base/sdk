@@ -1,11 +1,22 @@
 // @flow
-import { FIELD_TYPE, FORMAT } from './constants';
+import {
+  FIELD_TYPE,
+  SWITCH_FORMATS,
+  TEXT_FORMATS,
+  NUMBER_FORMATS,
+  FILE_FORMATS,
+  DATE_FORMATS,
+} from './constants';
 
 type MutationType = 'CREATE' | 'UPDATE';
 
 type FieldType = $Values<typeof FIELD_TYPE>;
 
-type Format = $Values<typeof FORMAT>;
+type Format = $Values<typeof SWITCH_FORMATS>
+  | $Values<typeof TEXT_FORMATS>
+  | $Values<typeof NUMBER_FORMATS>
+  | $Values<typeof FILE_FORMATS>
+  | $Values<typeof DATE_FORMATS>;
 
 type FieldSchema = {
   id: string,
