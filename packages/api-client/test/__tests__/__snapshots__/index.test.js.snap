@@ -110,6 +110,8 @@ Object {
 }
 `;
 
+exports[`When client receive network errors, it should throw that error. 1`] = `[Error: GraphQL Error (Code: 502): {"response":{"foo":"bar","status":502},"request":{"query":{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":21}},"variables":{}}}]`;
+
 exports[`When client receive other errors, it should throw that error. 1`] = `
 Object {
   "data": null,
@@ -121,6 +123,8 @@ Object {
   "status": 502,
 }
 `;
+
+exports[`When client receive refresh token expired error, it should throw cant refresh token error. 1`] = `[Error: Can't refresh token.]`;
 
 exports[`When client receive token expired error, it should refresh token and repeat my request. 1`] = `
 Object {

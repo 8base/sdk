@@ -25,8 +25,8 @@ const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
 const getIdToken = R.path(['userRefreshToken', 'idToken']);
 
 type GraphQLClientResponse = {
-  errors: Array<any>,
-  data: any,
+  errors: Array<Object>,
+  data: Object,
 };
 
 type GraphQLClientRequest = {
@@ -38,6 +38,12 @@ type GraphQLClientError = {
   response: GraphQLClientResponse,
   request: GraphQLClientRequest,
 };
+
+class RefreshTokenInvalidError extends Error {
+  constructor() {
+    super('Can\'t refresh token.');
+  }
+}
 
 /**
  * Client provides methods to make requests to the API.
@@ -99,10 +105,16 @@ class Client {
 
     this.setIdToken(null);
 
-    const response = await this.request(USER_REFRESH_TOKEN_QUERY, {
-      refreshToken,
-      email,
-    });
+    let response = null;
+
+    try {
+      response = await this.gqlc.request(USER_REFRESH_TOKEN_QUERY, {
+        refreshToken,
+        email,
+      });
+    } catch (err) {
+      throw new RefreshTokenInvalidError();
+    }
 
     const newRefreshToken = getRefreshToken(response);
     const newIdToken = getIdToken(response);
@@ -114,11 +126,12 @@ class Client {
   }
 
   handleRequestErrors = (err: GraphQLClientError) => {
-    if (hasTokenExpiredErrorCode(err.response.errors || [])) {
+    // $FlowFixMe
+    if (hasTokenExpiredErrorCode(R.pathOr([], ['response', 'errors'], err))) {
       return this.tryToRefreshToken(err);
     }
-
     throw err;
+
   };
 
   /**
