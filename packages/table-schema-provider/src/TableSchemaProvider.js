@@ -125,6 +125,7 @@ const TABLES_SCHEMA_QUERY = gql`
 type TableSchemaProviderProps = {
   children: ({ loading?: boolean }) => React$Node,
   auth: AuthContextProps,
+  notifyOnNetworkStatusChange: boolean,
 };
 
 /**
@@ -141,12 +142,19 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
   };
 
   render() {
-    const { auth: { isAuthorized }, children } = this.props;
+    const { auth: { isAuthorized }, notifyOnNetworkStatusChange, children } = this.props;
 
     let rendered = null;
 
     if (isAuthorized) {
-      rendered = <Query query={ TABLES_SCHEMA_QUERY }>{ this.renderContent }</Query>;
+      rendered = (
+        <Query
+          query={ TABLES_SCHEMA_QUERY }
+          notifyOnNetworkStatusChange={ notifyOnNetworkStatusChange }
+        >
+          { this.renderContent }
+        </Query>
+      );
     } else {
       rendered = children({});
     }
