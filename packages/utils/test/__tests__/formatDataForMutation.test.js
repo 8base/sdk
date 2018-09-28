@@ -9,6 +9,104 @@ const SCHEMA = [{
   isSystem: false,
   fields: [
     {
+      name: 'meta',
+      displayName: 'meta',
+      description: null,
+      fieldType: 'TEXT',
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+        fieldSize: 100,
+      },
+      isMeta: true,
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: null,
+      relation: null,
+    },
+    {
+      name: 'address',
+      displayName: 'Address',
+      description: null,
+      fieldType: 'CUSTOM',
+      fieldTypeAttributes: {
+        innerFields: [
+          {
+            name: 'street1',
+            displayName: 'Street 1',
+            description: null,
+            fieldType: 'TEXT',
+            isList: false,
+            isRequired: true,
+            isUnique: false,
+            fieldTypeAttributes: {
+              format: 'UNFORMATTED',
+              fieldSize: 255,
+            },
+          },
+          {
+            name: 'street2',
+            displayName: 'Street 2',
+            description: null,
+            fieldType: 'TEXT',
+            isList: false,
+            isRequired: false,
+            isUnique: false,
+            fieldTypeAttributes: {
+              format: 'UNFORMATTED',
+              fieldSize: 255,
+            },
+          },
+          {
+            name: 'zip',
+            displayName: 'Zip',
+            description: null,
+            fieldType: 'TEXT',
+            isList: false,
+            isRequired: false,
+            isUnique: false,
+            fieldTypeAttributes: {
+              format: 'UNFORMATTED',
+              fieldSize: 255,
+            },
+          },
+          {
+            name: 'city',
+            displayName: 'City',
+            description: null,
+            fieldType: 'TEXT',
+            isList: false,
+            isRequired: true,
+            isUnique: false,
+            fieldTypeAttributes: {
+              format: 'UNFORMATTED',
+              fieldSize: 255,
+            },
+          },
+          {
+            name: 'state',
+            displayName: 'State',
+            description: null,
+            fieldType: 'TEXT',
+            isList: false,
+            isRequired: false,
+            isUnique: false,
+            fieldTypeAttributes: {
+              format: 'UNFORMATTED',
+              fieldSize: 255,
+            },
+          },
+        ],
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+    {
       name: 'scalar',
       displayName: 'Scalar',
       description: null,
@@ -553,6 +651,14 @@ describe('As developer, I can format for update mutation,', () => {
 
   it('Compelex data.', () => {
     const data = {
+      meta: 'meta',
+      address: {
+        street1: 'Pamelia Quall',
+        street2: 'Lasonya Friedly',
+        zip: 'Timothy Ingleton',
+        city: 'Kenia Urhahn',
+        state: 'Scottie Swailes',
+      },
       scalar: 'Scalar Value',
       scalarList: [
         'Scalar List Value',
@@ -573,6 +679,8 @@ describe('As developer, I can format for update mutation,', () => {
           ],
         }],
       }],
+      _description: 'Description',
+      __typename: 'Address',
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();

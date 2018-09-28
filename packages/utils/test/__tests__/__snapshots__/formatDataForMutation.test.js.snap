@@ -39,6 +39,13 @@ Object {
 
 exports[`As developer, I can format for update mutation, Compelex data. 1`] = `
 Object {
+  "address": Object {
+    "city": "Kenia Urhahn",
+    "state": "Scottie Swailes",
+    "street1": "Pamelia Quall",
+    "street2": "Lasonya Friedly",
+    "zip": "Timothy Ingleton",
+  },
   "relation": Object {
     "create": Object {
       "scalar": "Relation Scalar Value",
