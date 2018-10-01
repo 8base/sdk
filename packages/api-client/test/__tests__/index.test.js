@@ -1,7 +1,12 @@
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
+import nock from 'nock';
 
 import { Client } from '../../src';
+
+beforeEach(() => {
+  nock.cleanAll();
+});
 
 it('As a developer, I can create client and send request.', async () => {
   const requestPromise = mockRequest('https://api.test.8base.com');
@@ -115,4 +120,60 @@ it('When client receive other errors, it should throw that error.', async () => 
   }
 
   expect(error.response).toMatchSnapshot();
+});
+
+it('When client receive network errors, it should throw that error.', async () => {
+  mockRequest('https://api.test.8base.com', 502, {
+    foo: 'bar',
+  });
+
+  const client = new Client('https://api.test.8base.com');
+
+  client.setIdToken('idToken');
+  client.setWorkspaceId('workspaceId');
+  client.setEmail('test@site.com');
+
+  let error = null;
+
+  try {
+    await client.request(gql`query { companyName }`);
+  } catch (err) {
+    error = err;
+  }
+
+  expect(error).toMatchSnapshot();
+});
+
+it('When client receive refresh token expired error, it should throw cant refresh token error.', async () => {
+  mockRequest('https://api.test.8base.com', 502, {
+    errors: [{
+      code: errorCodes.TokenExpiredErrorCode,
+    }],
+    data: null,
+  });
+
+  const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 502, {
+    errors: [{
+      code: errorCodes.TokenExpiredErrorCode,
+    }],
+    data: 1,
+  });
+
+  const client = new Client('https://api.test.8base.com');
+
+  client.setIdToken('idToken');
+  client.setWorkspaceId('workspaceId');
+  client.setEmail('test@site.com');
+
+  let error = null;
+
+  try {
+    await client.request(gql`query { companyName }`);
+  } catch (err) {
+    error = err;
+  }
+
+  await refreshTokenRequestPromise;
+
+  expect(error).toMatchSnapshot();
 });
