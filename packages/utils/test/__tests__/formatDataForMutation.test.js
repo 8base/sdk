@@ -438,7 +438,7 @@ describe('As developer, I can format for create mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       relation: {
-        connect: { id: '5b32159b66a4500f96285626'},
+        connect: { id: '5b32159b66a4500f96285626' },
       },
     });
   });
@@ -460,6 +460,20 @@ describe('As developer, I can format for create mutation,', () => {
           scalarList: [
             'Relation Scalar List Value',
           ],
+        },
+      },
+    });
+  });
+
+  it('Data with null relation.', () => {
+    const data = {
+      relation: null,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      relation: {
+        connect: {
+          id: null,
         },
       },
     });
@@ -492,8 +506,8 @@ describe('As developer, I can format for create mutation,', () => {
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
         connect: [
-          { id: '5b32159b66a450c047285628'},
-          { id: '5b32159b66a450fae928562a'},
+          { id: '5b32159b66a450c047285628' },
+          { id: '5b32159b66a450fae928562a' },
         ],
       },
     });
@@ -582,7 +596,7 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relation: {
-        reconnect: { id: '5b32159b66a4500f96285626'},
+        reconnect: { id: '5b32159b66a4500f96285626' },
       },
     });
   });
@@ -604,6 +618,20 @@ describe('As developer, I can format for update mutation,', () => {
           scalarList: [
             'Relation Scalar List Value',
           ],
+        },
+      },
+    });
+  });
+
+  it('Data with null relation.', () => {
+    const data = {
+      relation: null,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      relation: {
+        reconnect: {
+          id: null,
         },
       },
     });
