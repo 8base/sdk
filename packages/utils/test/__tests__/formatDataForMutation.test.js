@@ -471,11 +471,7 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
-      relation: {
-        connect: {
-          id: null,
-        },
-      },
+      relation: null,
     });
   });
 
@@ -629,11 +625,7 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
-      relation: {
-        reconnect: {
-          id: null,
-        },
-      },
+      relation: null,
     });
   });
 
