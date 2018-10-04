@@ -37,7 +37,7 @@
   "license": "MIT",
   "dependencies": {
     "@8base/auth": "^0.1.6",
-    "@8base/utils": "^0.2.8",
+    "@8base/utils": "^0.2.9",
     "apollo-client": "^2.4.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
