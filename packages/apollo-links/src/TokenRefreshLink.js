@@ -15,7 +15,7 @@ import type {
   RefreshTokenQueryInput,
   RefreshTokenQueryResult,
 } from './types';
-import { hasTokenExpiredError, hasTokenInvalidError } from './utils';
+import { hasIdTokenExpiredError, hasRefreshTokenExpiredError } from './utils';
 
 const USER_REFRESH_TOKEN_QUERY = `
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
@@ -87,12 +87,11 @@ export class TokenRefreshLink extends ApolloLink {
         next: data => {
           const dataErrors = data.errors || [];
 
-
-          if (hasTokenExpiredError(dataErrors)) {
+          if (hasIdTokenExpiredError(dataErrors)) {
             this.handleTokenExpired();
 
             handleTokenRefresh();
-          } else if (hasTokenInvalidError(dataErrors)) {
+          } else if (hasRefreshTokenExpiredError(dataErrors)) {
             this.handleAuthFailed();
           } else {
             observer.next(data);
@@ -101,12 +100,11 @@ export class TokenRefreshLink extends ApolloLink {
         error: error => {
           const batchedErrors = R.pathOr([error], ['response', 'parsed', 'errors'], error);
 
-
-          if (hasTokenExpiredError(batchedErrors)) {
+          if (hasIdTokenExpiredError(batchedErrors)) {
             this.handleTokenExpired();
 
             handleTokenRefresh();
-          } else if (hasTokenInvalidError(batchedErrors)) {
+          } else if (hasRefreshTokenExpiredError(batchedErrors)) {
             this.handleAuthFailed();
           } else {
             observer.error(error);
