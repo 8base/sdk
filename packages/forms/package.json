@@ -46,7 +46,7 @@
   "license": "MIT",
   "dependencies": {
     "@8base/table-schema-provider": "^0.2.6",
-    "@8base/utils": "^0.2.9",
+    "@8base/utils": "^0.2.11",
     "@8base/validate": "^0.1.4",
     "prop-types": "^15.6.1",
     "ramda": "^0.25.0",
