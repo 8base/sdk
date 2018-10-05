@@ -1,5 +1,5 @@
 //@flow
-import { isRelationReference, isRelationInstance, isFileReference, isFileInstance } from '../verifiers';
+import { isRelationReference, isRelationInstance, isFileReference, isFileInstance, isFileEntity } from '../verifiers';
 import { formatConnectionForMutation } from './formatConnectionForMutation';
 import { formatRelationCreationForMutation } from './formatRelationCreationForMutation';
 import { formatFileCreationForMutation } from './formatFileCreationForMutation';
@@ -13,7 +13,7 @@ const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema
   } else if (isRelationInstance(fieldSchema, data)) {
     formatedData = formatRelationCreationForMutation(type, fieldSchema, data, schema);
   } else if (isFileInstance(fieldSchema, data)) {
-    formatedData = formatFileCreationForMutation(type, data);
+    formatedData = formatFileCreationForMutation(type, data, isFileEntity(fieldSchema, data));
   }
 
   return formatedData;
