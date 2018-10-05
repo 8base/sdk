@@ -1,13 +1,12 @@
 {
   "name": "@8base/utils",
   "version": "0.2.11",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/utils.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build": "NODE_ENV=production webpack --env dev && webpack --env build",
     "docs": "NODE_ENV=test documentation readme src/formatters/formatDataForMutation.js --section=API",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "NODE_ENV=development webpack --progress --colors --watch --env dev"
   },
   "jest": {
     "setupFiles": [
@@ -22,15 +21,24 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
-    "jest": "^23.1.0"
+    "jest": "^23.1.0",
+    "ramda": "^0.25.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "yargs": "^12.0.1"
   },
   "dependencies": {
-    "@8base/error-codes": "^1.0.5",
+    "@8base/error-codes": "^1.0.5"
+  },
+  "peerDependencies": {
     "ramda": "^0.25.0"
   }
 }

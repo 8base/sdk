@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 const env = require('yargs').argv.env;
 
-const LIBRARY_NAME = 'api-client';
+const LIBRARY_NAME = 'utils';
 
 let outputFile, mode;
 
@@ -43,7 +43,6 @@ const config = {
   },
   externals: {
     'ramda': 'ramda',
-    'graphql': 'graphql',
   }
 };
 

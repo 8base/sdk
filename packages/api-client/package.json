@@ -18,9 +18,9 @@
     "babel-preset-flow": "^6.23.0",
     "documentation": "^8.0.0",
     "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
     "jest": "^23.5.0",
     "nock": "^9.3.3",
+    "ramda": "^0.25.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "yargs": "^12.0.1"
@@ -29,7 +29,11 @@
     "@8base/error-codes": "^1.0.5",
     "@8base/utils": "^0.2.11",
     "graphql-request": "^1.6.0",
-    "ramda": "^0.25.0"
+    "graphql-tag": "^2.9.2"
+  },
+  "peerDependencies": {
+    "ramda": "^0.25.0",
+    "graphql": "^0.13.2"
   },
   "jest": {
     "setupFiles": [
