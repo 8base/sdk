@@ -1,19 +1,19 @@
 //@flow
 import { isRelationReference, isRelationInstance, isFileReference, isFileInstance } from '../verifiers';
-import { formatRelationReferenceForMutation } from './formatRelationReferenceForMutation';
-import { formatRelationInstanceForMutation } from './formatRelationInstanceForMutation';
-import { formatFileInstanceForMutation } from './formatFileInstanceForMutation';
+import { formatConnectionForMutation } from './formatConnectionForMutation';
+import { formatRelationCreationForMutation } from './formatRelationCreationForMutation';
+import { formatFileCreationForMutation } from './formatFileCreationForMutation';
 import type { MutationType, FieldSchema, Schema } from '../types';
 
 const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object, schema: Schema) => {
   let formatedData = data;
 
   if (isRelationReference(fieldSchema, data) || isFileReference(fieldSchema, data)) {
-    formatedData = formatRelationReferenceForMutation(type, data);
+    formatedData = formatConnectionForMutation(type, data);
   } else if (isRelationInstance(fieldSchema, data)) {
-    formatedData = formatRelationInstanceForMutation(type, fieldSchema, data, schema);
+    formatedData = formatRelationCreationForMutation(type, fieldSchema, data, schema);
   } else if (isFileInstance(fieldSchema, data)) {
-    formatedData = formatFileInstanceForMutation(type, data);
+    formatedData = formatFileCreationForMutation(type, data);
   }
 
   return formatedData;

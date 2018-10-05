@@ -4,7 +4,7 @@ import { isListField } from '../verifiers';
 import { formatDataForMutation } from './formatDataForMutation';
 import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 
-const formatRelationInstanceForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object, schema: Schema) => {
+const formatRelationCreationForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object, schema: Schema) => {
   const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
 
   if (!relationTableSchema) {
@@ -25,4 +25,4 @@ const formatRelationInstanceForMutation = (type: MutationType, fieldSchema: Fiel
 };
 
 
-export { formatRelationInstanceForMutation };
+export { formatRelationCreationForMutation };

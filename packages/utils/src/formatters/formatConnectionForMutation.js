@@ -2,7 +2,7 @@
 import { MUTATION_TYPE } from '../constants';
 import type { MutationType } from '../types';
 
-const formatRelationReferenceForMutation = (type: MutationType, data: Object) => {
+const formatConnectionForMutation = (type: MutationType, data: Object) => {
   let formatedData = data;
 
   if (Array.isArray(formatedData)) {
@@ -21,4 +21,4 @@ const formatRelationReferenceForMutation = (type: MutationType, data: Object) =>
 };
 
 
-export { formatRelationReferenceForMutation };
+export { formatConnectionForMutation };
