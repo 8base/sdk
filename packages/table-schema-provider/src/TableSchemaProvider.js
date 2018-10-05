@@ -119,6 +119,7 @@ const TABLES_SCHEMA_QUERY = gql`
 
   fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
     format
+    listOptions
   }
 `;
 
