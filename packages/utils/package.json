@@ -1,6 +1,6 @@
 {
   "name": "@8base/utils",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "main": "lib/utils.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --env dev && webpack --env build",
