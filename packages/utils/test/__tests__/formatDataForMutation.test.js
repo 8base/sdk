@@ -475,7 +475,7 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
-  it('Data with file.', () => {
+  it('Data with file entity.', () => {
     const file = new File([''], 'filename');
 
     const data = {
@@ -487,6 +487,24 @@ describe('As developer, I can format for create mutation,', () => {
         create: {
           $file: file,
         },
+      },
+    });
+  });
+
+  it('Data with file object.', () => {
+    const file = {
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+      id: 'id',
+    };
+
+    const data = {
+      file,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        create: file,
       },
     });
   });
