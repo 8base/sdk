@@ -2,7 +2,7 @@
 import type { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 import { GraphQLClient } from 'graphql-request';
-import errorCodes from '@8base/error-codes';
+import { hasIdTokenExpiredError } from '@8base/utils';
 import * as R from 'ramda';
 
 const USER_REFRESH_TOKEN_QUERY = gql`
@@ -16,11 +16,6 @@ const USER_REFRESH_TOKEN_QUERY = gql`
     }
   }
 `;
-
-const hasIdTokenExpiredError = R.any(R.allPass([
-  R.propEq('code', errorCodes.TokenExpiredErrorCode),
-  R.propEq('message', 'Token expired'),
-]));
 
 const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
 const getIdToken = R.path(['userRefreshToken', 'idToken']);

@@ -30,6 +30,7 @@
     "jest": "^23.1.0"
   },
   "dependencies": {
+    "@8base/error-codes": "^1.0.5",
     "ramda": "^0.25.0"
   }
 }

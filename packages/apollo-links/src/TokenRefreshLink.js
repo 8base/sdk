@@ -15,7 +15,7 @@ import type {
   RefreshTokenQueryInput,
   RefreshTokenQueryResult,
 } from './types';
-import { hasIdTokenExpiredError, hasRefreshTokenExpiredError } from './utils';
+import { hasIdTokenExpiredError, hasRefreshTokenExpiredError } from '@8base/utils';
 
 const USER_REFRESH_TOKEN_QUERY = `
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
