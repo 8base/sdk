@@ -1,5 +1,6 @@
 export { hasIdTokenExpiredError } from './hasIdTokenExpiredError';
 export { hasRefreshTokenExpiredError } from './hasRefreshTokenExpiredError';
+export { isFileEntity } from './isFileEntity';
 export { isFileField } from './isFileField';
 export { isFileInstance } from './isFileInstance';
 export { isFileReference } from './isFileReference';
