@@ -17,9 +17,10 @@ const USER_REFRESH_TOKEN_QUERY = gql`
   }
 `;
 
-const hasTokenExpiredErrorCode = R.any(
+const hasIdTokenExpiredError = R.any(R.allPass([
   R.propEq('code', errorCodes.TokenExpiredErrorCode),
-);
+  R.propEq('message', 'Token expired'),
+]));
 
 const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
 const getIdToken = R.path(['userRefreshToken', 'idToken']);
@@ -127,7 +128,7 @@ class Client {
 
   handleRequestErrors = (err: GraphQLClientError) => {
     // $FlowFixMe
-    if (hasTokenExpiredErrorCode(R.pathOr([], ['response', 'errors'], err))) {
+    if (hasIdTokenExpiredError(R.pathOr([], ['response', 'errors'], err))) {
       return this.tryToRefreshToken(err);
     }
     throw err;
