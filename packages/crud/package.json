@@ -19,7 +19,7 @@
     "react-dom": "^16.4.1"
   },
   "dependencies": {
-    "@8base/utils": "^0.2.9",
+    "@8base/utils": "^0.2.13",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
