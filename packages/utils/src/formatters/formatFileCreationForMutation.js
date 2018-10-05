@@ -1,9 +1,9 @@
 //@flow
 import type { MutationType } from '../types';
 
-const formatFileInstanceForMutation = (type: MutationType, data: Object) => {
+const formatFileCreationForMutation = (type: MutationType, data: Object) => {
   return { create: { $file: data }};
 };
 
 
-export { formatFileInstanceForMutation };
+export { formatFileCreationForMutation };
