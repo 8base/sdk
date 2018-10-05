@@ -5,9 +5,9 @@ import errorCodes from '@8base/error-codes';
 
 const DYNO_QUERY = gql`
   mutation {
-      sample {
-        id
-      }
+    sample {
+      id
+    }
   }
 `;
 
@@ -42,10 +42,15 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
     stub = jest.fn();
 
     stub.mockReturnValueOnce(Observable.of({
-      errors: [{
-        code: errorCodes.TokenExpiredErrorCode,
-      }],
-      data: null,
+      errors: [
+        {
+          code: errorCodes.TokenExpiredErrorCode,
+          message: 'Token expired',
+          details: {
+            token: 'jwt expired',
+          },
+        },
+      ],
     }));
 
     link = ApolloLink.from([
@@ -87,35 +92,27 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
 
   it('When Apollo Link catch a refresh token error - auth failed callback should be called.', async () => {
     stub.mockReturnValueOnce(Observable.of({
-      errors: [{
-        code: errorCodes.InvalidTokenErrorCode,
-        message: 'Invalid Refresh Token',
-      }],
       data: {
         userRefreshToken: null,
       },
-    }));
-
-    execute(link, { query: DYNO_QUERY }).subscribe(
-      () => null,
-      () => null,
-      () => null,
-    );
-
-    await (async () => new Promise((resolve) => setTimeout(() => resolve()), 10000))();
-
-    expect(onAuthError).toHaveBeenCalledTimes(1);
-  });
-
-  it('When Apollo Link catch a id token expired error - id token expired callback should be called.', async () => {
-    stub.mockReturnValueOnce(Observable.of({
-      errors: [{
-        code: errorCodes.TokenExpiredErrorCode,
-        message: 'Token Expired',
-      }],
-      data: {
-        userRefreshToken: null,
-      },
+      errors: [
+        {
+          message: 'Refresh Token has expired',
+          locations: [
+            {
+              line: 2,
+              column: 3,
+            },
+          ],
+          path: [
+            'userRefreshToken',
+          ],
+          code: errorCodes.TokenExpiredErrorCode,
+          details: {
+            refreshToken: 'Refresh Token has expired',
+          },
+        },
+      ],
     }));
 
     execute(link, { query: DYNO_QUERY }).subscribe(
