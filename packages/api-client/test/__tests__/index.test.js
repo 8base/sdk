@@ -61,10 +61,15 @@ it('As a developer, I can send queries with graphql tag.', async () => {
 
 it('When client receive token expired error, it should refresh token and repeat my request.', async () => {
   mockRequest('https://api.test.8base.com', 502, {
-    errors: [{
-      code: errorCodes.TokenExpiredErrorCode,
-    }],
-    data: null,
+    errors: [
+      {
+        code: errorCodes.TokenExpiredErrorCode,
+        message: 'Token expired',
+        details: {
+          token: 'jwt expired',
+        },
+      },
+    ],
   });
 
   const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 200, {
@@ -146,17 +151,39 @@ it('When client receive network errors, it should throw that error.', async () =
 
 it('When client receive refresh token expired error, it should throw cant refresh token error.', async () => {
   mockRequest('https://api.test.8base.com', 502, {
-    errors: [{
-      code: errorCodes.TokenExpiredErrorCode,
-    }],
-    data: null,
+    errors: [
+      {
+        code: errorCodes.TokenExpiredErrorCode,
+        message: 'Token expired',
+        details: {
+          token: 'jwt expired',
+        },
+      },
+    ],
   });
 
   const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 502, {
-    errors: [{
-      code: errorCodes.TokenExpiredErrorCode,
-    }],
-    data: 1,
+    data: {
+      userRefreshToken: null,
+    },
+    errors: [
+      {
+        message: 'Refresh Token has expired',
+        locations: [
+          {
+            line: 2,
+            column: 3,
+          },
+        ],
+        path: [
+          'userRefreshToken',
+        ],
+        code: errorCodes.TokenExpiredErrorCode,
+        details: {
+          refreshToken: 'Refresh Token has expired',
+        },
+      },
+    ],
   });
 
   const client = new Client('https://api.test.8base.com');

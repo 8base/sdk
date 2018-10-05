@@ -68,10 +68,15 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
     () => new Promise((resolve, reject) => {
       stubLink.mockClear();
       stubLink.mockReturnValueOnce(Observable.of({
-        errors: [{
-          code: errorCodes.TokenExpiredErrorCode,
-        }],
-        data: null,
+        errors: [
+          {
+            code: errorCodes.TokenExpiredErrorCode,
+            message: 'Token expired',
+            details: {
+              token: 'jwt expired',
+            },
+          },
+        ],
       }));
       stubLink.mockReturnValueOnce(Observable.of({
         data: {

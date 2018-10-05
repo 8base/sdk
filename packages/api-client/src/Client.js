@@ -2,7 +2,7 @@
 import type { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 import { GraphQLClient } from 'graphql-request';
-import errorCodes from '@8base/error-codes';
+import { hasIdTokenExpiredError } from '@8base/utils';
 import * as R from 'ramda';
 
 const USER_REFRESH_TOKEN_QUERY = gql`
@@ -16,10 +16,6 @@ const USER_REFRESH_TOKEN_QUERY = gql`
     }
   }
 `;
-
-const hasTokenExpiredErrorCode = R.any(
-  R.propEq('code', errorCodes.TokenExpiredErrorCode),
-);
 
 const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
 const getIdToken = R.path(['userRefreshToken', 'idToken']);
@@ -127,7 +123,7 @@ class Client {
 
   handleRequestErrors = (err: GraphQLClientError) => {
     // $FlowFixMe
-    if (hasTokenExpiredErrorCode(R.pathOr([], ['response', 'errors'], err))) {
+    if (hasIdTokenExpiredError(R.pathOr([], ['response', 'errors'], err))) {
       return this.tryToRefreshToken(err);
     }
     throw err;
