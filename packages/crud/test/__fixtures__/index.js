@@ -1,18 +1,18 @@
 export const COMMON_TABLE_SCHEMA = {
   name: 'commons',
   fields: [
-    { name: 'field1', id: '1' },
-    { name: 'field2', id: '2' },
-    { name: 'field3', id: '3' },
+    { name: 'field1', id: '1', isSystem: false },
+    { name: 'field2', id: '2', isSystem: false },
+    { name: 'field3', id: '3', isSystem: false },
   ],
 };
 
 export const TABLE_SCHEMA_WITH_RELATION = {
   name: 'Relation',
   fields: [
-    { name: 'field1', id: '1', fieldType: 'RELATION' },
-    { name: 'field2', id: '2' },
-    { name: 'field3', id: '3' },
+    { name: 'field1', isSystem: false, id: '1', fieldType: 'RELATION' },
+    { name: 'field2', isSystem: false, id: '2' },
+    { name: 'field3', isSystem: false, id: '3' },
   ],
 };
 
@@ -225,6 +225,90 @@ export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
       isSystem: false,
       isMeta: false,
       relation: null,
+    },
+  ],
+};
+
+export const TABLE_SCHEMA_WITHOUT_USER_FIELDS = {
+  name: 'TableWithoutUserFields',
+  fields: [
+    {
+      id: '5bac9e032cb41016073279c1',
+      name: 'id',
+      displayName: 'ID',
+      description: null,
+      fieldType: 'ID',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: true,
+      isUnique: true,
+      defaultValue: null,
+      isSystem: true,
+      isMeta: true,
+      relation: null,
+    },
+    {
+      id: '5bac9e032cb410aaae3279c2',
+      name: 'createdAt',
+      displayName: 'Created At',
+      description: null,
+      fieldType: 'DATE',
+      fieldTypeAttributes: {
+        id: '5bac9e032cb41071903279c3',
+        format: 'DATETIME',
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: null,
+      isSystem: true,
+      isMeta: true,
+      relation: null,
+    },
+    {
+      id: '5bac9e032cb4101d9e3279c4',
+      name: 'updatedAt',
+      displayName: 'Updated At',
+      description: null,
+      fieldType: 'DATE',
+      fieldTypeAttributes: {
+        id: '5bac9e032cb41038203279c5',
+        format: 'DATETIME',
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: null,
+      isSystem: true,
+      isMeta: true,
+      relation: null,
+    },
+    {
+      id: '5bac9e032cb41050d33279c8',
+      name: 'createdBy',
+      displayName: 'Created By',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: null,
+      isSystem: true,
+      isMeta: true,
+      relation: {
+        id: '5bac9e032cb410d7643279c9',
+        refFieldName: null,
+        refFieldDisplayName: null,
+        relationTableName: 'Users',
+        relationFieldName: null,
+        refTable: {
+          id: '5bac9daf2cb4100073327873',
+          name: 'Users',
+        },
+        refFieldIsList: null,
+        refFieldIsRequired: null,
+      },
     },
   ],
 };

@@ -23,6 +23,16 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
   }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with custom fields 2`] = `
+"
+  mutation DataViewerTableWithoutUserFieldsRowCreate {
+    tableWithoutUserFieldCreate {
+      
+      id
+    }
+  }"
+`;
+
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
 "
   mutation DataViewerRelationRowCreate($data: RelationCreateInput) {

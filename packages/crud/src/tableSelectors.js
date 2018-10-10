@@ -43,3 +43,8 @@ export const getFieldNameById = createSelector(
   getFieldById,
   R.prop('name'),
 );
+
+export const hasUserFields = R.pipe(
+  R.prop('fields'),
+  R.any(R.propEq('isSystem', false)),
+);
