@@ -1,5 +1,6 @@
 // @flow
 
+import { not, has } from 'ramda';
 import {
   ApolloLink,
   Observable,
@@ -7,6 +8,7 @@ import {
   NextLink,
   FetchResult,
 } from 'apollo-link';
+
 
 type SuccessHandler = ({ operation: Operation }) => void;
 
@@ -25,9 +27,12 @@ export class SuccessLink extends ApolloLink {
     return new Observable(
       observer => {
         forward(operation).subscribe({
-          next: (...args) => {
-            this.successHandler({ operation });
-            observer.next(...args);
+          next: (data) => {
+            if (not(has('errors', data))) {
+              this.successHandler({ operation, data });
+            }
+
+            observer.next(data);
           },
           error: (...args) => observer.error(...args),
           complete: (...args) => observer.complete(...args),

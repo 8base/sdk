@@ -1,5 +1,6 @@
 import { ApolloLink, Observable, execute } from 'apollo-link';
 import gql from 'graphql-tag';
+import errorCodes from '@8base/error-codes';
 
 import { SuccessLink } from '../../src';
 
@@ -12,36 +13,48 @@ const TEST_QUERY = gql`
 `;
 
 describe('As a developer i can use SuccessLink to handle success graphql operations', () => {
-  it('calls handler on successful operation', () => {
+  it('calls handler on successful operation', (done) => {
     const terminatingLink = () => Observable.of({});
     const successHandler = jest.fn();
 
     const links = ApolloLink.from([
-      new SuccessLink(successHandler),
+      new SuccessLink({ successHandler }),
       terminatingLink,
     ]);
 
     execute(links, { query: TEST_QUERY, variables: {}}).subscribe({
       complete: () => {
         expect(successHandler).toHaveBeenCalled();
+
+        done();
       },
     });
   });
 
-  it('doesn\'t call handler on unsuccessful operation', () => {
-    const errorTerminatingLink = () => new Observable(observer => {
-      observer.error(new Error());
+  it('doesn\'t call handler on operation with error', (done) => {
+    const terminatingLink = () => Observable.of({
+      errors: [
+        {
+          code: errorCodes.TokenExpiredErrorCode,
+          message: 'Token expired',
+          details: {
+            token: 'jwt expired',
+          },
+        },
+      ],
     });
     const successHandler = jest.fn();
 
     const links = ApolloLink.from([
-      new SuccessLink(successHandler),
-      errorTerminatingLink,
+      new SuccessLink({ successHandler }),
+      terminatingLink,
     ]);
 
     execute(links, { query: TEST_QUERY, variables: {}}).subscribe({
       complete: () => {
         expect(successHandler).not.toHaveBeenCalled();
+
+        done();
       },
     });
   });
