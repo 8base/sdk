@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
 import * as R from 'ramda';
+import { FORM_ERROR } from 'final-form';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
 import type { FormProps as FinalFormProps } from 'react-final-form';
 import { formatDataForMutation } from '@8base/utils';
+import errorCodes from '@8base/error-codes';
 
 import { FormContext } from './FormContext';
 import { withTableSchema } from './utils';
@@ -32,7 +34,21 @@ class Form extends React.Component<FormProps> {
     };
 
     if (type && tableSchema && schema) {
-      collectedProps.onSubmit = (data, ...rest) => onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), ...rest);
+      collectedProps.onSubmit = async (data, ...rest) => {
+        try {
+          await onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), ...rest);
+        } catch (e) {
+          if (e.graphQLErrors) {
+            const error = e.graphQLErrors[0];
+
+            if (error.code === errorCodes.ValidationErrorCode) {
+              return error.details;
+            }
+
+            return { [FORM_ERROR]: error.message };
+          }
+        }
+      };
     }
 
     return collectedProps;

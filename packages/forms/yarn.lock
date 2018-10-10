@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@8base/error-codes@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@8base/error-codes/-/error-codes-1.0.8.tgz#c7598139eaa1a093b88f841272480ce1c1a0bd1d"
+  integrity sha512-wfFRrM77CZ3K6Bua+8/L2z0qRuvNshNXAiAuF9btWEDabJzEx53LaVTaHiws8SZM8fjTnapJufeaYtA7uNvP4w==
+
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.51.tgz#bd71d9b192af978df915829d39d4094456439a0c"
