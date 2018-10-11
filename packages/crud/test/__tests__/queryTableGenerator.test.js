@@ -47,6 +47,12 @@ describe('As a developer, I can generate graphql mutation for create entity by t
 
     expect(tag).toMatchSnapshot();
   });
+
+  it('should generate graphql tag for create mutation by table schema with custom fields', () => {
+    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS);
+
+    expect(tag).toMatchSnapshot();
+  });
 });
 
 describe('As a developer, I can generate graphql query for read entity by table schema', () => {

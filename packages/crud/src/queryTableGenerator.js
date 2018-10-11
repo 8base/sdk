@@ -50,13 +50,27 @@ export const createTableFilterGraphqlTag = (table: TableSchema) => `
     }
   }`;
 
-export const createTableRowCreateTag = (table: TableSchema) => `
+export const createTableRowCreateTag = (table: TableSchema) => {
+  const hasUserFields = tableSelectors.hasUserFields(table);
+
+  if (hasUserFields) {
+    return `
   mutation DataViewer${upperFirst(table.name)}RowCreate($data: ${SchemaNameGenerator.getCreateInputName(table.name)}) {
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
       ${createQueryStringWithoutMetaFields(table)}
       id
     }
   }`;
+  }
+
+  return `
+  mutation DataViewer${upperFirst(table.name)}RowCreate {
+    ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
+      ${createQueryStringWithoutMetaFields(table)}
+      id
+    }
+  }`;
+};
 
 export const createTableRowUpdateTag = (table: TableSchema) => `
   mutation DataViewer${upperFirst(table.name)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(table.name)}) {
