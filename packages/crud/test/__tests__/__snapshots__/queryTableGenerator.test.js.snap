@@ -111,11 +111,13 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 "
   query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      field1
-      field2
-      field3
-      _description
-      id
+      items {
+        field1
+        field2
+        field3
+        _description
+      }
+      count
     }
   }"
 `;
@@ -124,14 +126,16 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 "
   query DataViewerTableCustomFieldsContent($filter: CustomFieldFilter, $orderBy: [CustomFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: customFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      id
-      createdAt
-      updatedAt
-      createdBy { id _description }
-      phone { code number }
-      address { street1 street2 zip city state }
-      _description
-      id
+      items {
+        id
+        createdAt
+        updatedAt
+        createdBy { id _description }
+        phone { code number }
+        address { street1 street2 zip city state }
+        _description
+      }
+      count
     }
   }"
 `;
@@ -140,11 +144,13 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 "
   query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      field1 { id _description }
-      field2
-      field3
-      _description
-      id
+      items {
+        field1 { id _description }
+        field2
+        field3
+        _description
+      }
+      count
     }
   }"
 `;
@@ -156,7 +162,6 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       field1
       field2
       field3
-      id
     }
   }"
 `;
@@ -171,7 +176,6 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       createdBy { id _description }
       phone { code number }
       address { street1 street2 zip city state }
-      id
     }
   }"
 `;
@@ -183,7 +187,6 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       field1 { id _description }
       field2
       field3
-      id
     }
   }"
 `;
