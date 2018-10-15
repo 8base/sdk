@@ -29,24 +29,29 @@ const getFieldPartOfTheQuery = createSelector(
   },
 );
 
-const createQueryFromFields = (table) => R.pipe(
+const createQueryFromFields = (table, spaceCount = 6) => R.pipe(
   R.reduce((accum, field) => [...accum, getFieldPartOfTheQuery(table, field.id)], []),
-  R.join('\n      '),
+  R.join(`\n${R.repeat(' ', spaceCount).join('')}`),
 );
 
-export const createQueryString = (table: TableSchema) => createQueryFromFields(table)(R.propOr([], 'fields', table));
+export const createQueryString = (table: TableSchema, spaceCount?: number) => createQueryFromFields(
+  table,
+  spaceCount,
+)(R.propOr([], 'fields', table));
 
-export const createQueryStringWithoutMetaFields = (table: TableSchema) => R.pipe(
+export const createQueryStringWithoutMetaFields = (table: TableSchema, spaceCount?: number) => R.pipe(
   R.filter((field) => !tableSelectors.isMetaField(table, field.id)),
-  createQueryFromFields(table),
+  createQueryFromFields(table, spaceCount),
 )(R.propOr([], 'fields', table));
 
 export const createTableFilterGraphqlTag = (table: TableSchema) => `
   query DataViewerTable${upperFirst(table.name)}Content($filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name)}, $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name)}], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     ${TABLE_CONTENT_NAME}: ${SchemaNameGenerator.getGetListItemFieldName(table.name)}(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      ${createQueryString(table)}
-      _description
-      id
+      items {
+        ${createQueryString(table, 8)}
+        _description
+      }
+      count
     }
   }`;
 
@@ -84,7 +89,6 @@ export const createTableRowQueryTag = (table: TableSchema) => `
   query DataViewer${upperFirst(table.name)}Row($id: ID!) {
     ${SchemaNameGenerator.getGetItemFieldName(table.name)}(id: $id) {
       ${createQueryString(table)}
-      id
     }
   }`;
 
