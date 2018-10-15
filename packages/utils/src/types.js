@@ -8,17 +8,17 @@ import {
   DATE_FORMATS,
 } from './constants';
 
-type MutationType = 'CREATE' | 'UPDATE';
+export type MutationType = 'CREATE' | 'UPDATE';
 
-type FieldType = $Values<typeof FIELD_TYPE>;
+export type FieldType = $Values<typeof FIELD_TYPE>;
 
-type Format = $Values<typeof SWITCH_FORMATS>
+export type Format = $Values<typeof SWITCH_FORMATS>
   | $Values<typeof TEXT_FORMATS>
   | $Values<typeof NUMBER_FORMATS>
   | $Values<typeof FILE_FORMATS>
   | $Values<typeof DATE_FORMATS>;
 
-type FieldSchema = {
+export type FieldSchema = {
   id: string,
   name: string,
   displayName?: string,
@@ -45,7 +45,7 @@ type FieldSchema = {
   },
 };
 
-type TableSchema = {
+export type TableSchema = {
   id: string,
   name: string,
   displayName?: string,
@@ -53,13 +53,10 @@ type TableSchema = {
   fields: Array<FieldSchema>,
 };
 
-type Schema = Array<TableSchema>;
+export type Schema = Array<TableSchema>;
 
-export type {
-  MutationType,
-  FieldType,
-  Format,
-  FieldSchema,
-  TableSchema,
-  Schema,
+export type SchemaResponse = {
+  items: Schema,
+  count: number,
 };
+

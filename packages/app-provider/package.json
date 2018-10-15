@@ -1,6 +1,6 @@
 {
   "name": "@8base/app-provider",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "@8base/apollo-client": "^0.2.3",
     "@8base/auth": "^0.1.8",
-    "@8base/table-schema-provider": "^0.2.8",
+    "@8base/table-schema-provider": "^0.2.9",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "prop-types": "^15.6.2",

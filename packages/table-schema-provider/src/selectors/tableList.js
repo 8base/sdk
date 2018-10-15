@@ -1,6 +1,12 @@
 // @flow
-import type { TableSchema } from '@8base/utils';
+import type { SchemaResponse, } from '@8base/utils';
 
-export const getTableById = (tables: Array<TableSchema>, tableId?: string) => tables.find(({ id }) => id === tableId);
+export const getTableById = (
+  schemaResponse: SchemaResponse,
+  tableId?: string,
+) => schemaResponse.items.find(({ id }) => id === tableId);
 
-export const getTableByName = (tables: Array<TableSchema>, tableName?: string) => tables.find(({ name }) => name === tableName);
+export const getTableByName = (
+  schemaResponse: SchemaResponse,
+  tableName?: string,
+) => schemaResponse.items.find(({ name }) => name === tableName);
