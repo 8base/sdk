@@ -1,6 +1,6 @@
 {
   "name": "@8base/table-schema-provider",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -37,7 +37,7 @@
   "license": "MIT",
   "dependencies": {
     "@8base/auth": "^0.1.8",
-    "@8base/utils": "^0.2.15",
+    "@8base/utils": "^0.2.16",
     "apollo-client": "^2.4.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
