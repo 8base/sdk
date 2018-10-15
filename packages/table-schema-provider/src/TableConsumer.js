@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import type { SchemaResponse, TableSchema, } from '@8base/utils';
+import type { Schema, TableSchema } from '@8base/utils';
 
 import { TableSchemaContext } from './TableSchemaContext';
 import * as selectors from './selectors';
@@ -12,15 +12,15 @@ type TableConsumerProps = {
 };
 
 class TableConsumer extends React.Component<TableConsumerProps> {
-  renderWithSchemaResponse = (schemaResponce: ?SchemaResponse) => {
+  renderWithSchemaResponse = (schema: ?Schema) => {
     const { id, name, children } = this.props;
 
     let tableSchema = null;
 
     if (id) {
-      tableSchema = selectors.tableList.getTableById(schemaResponce, id);
+      tableSchema = selectors.tableList.getTableById(schema, id);
     } else if (name) {
-      tableSchema = selectors.tableList.getTableByName(schemaResponce, name);
+      tableSchema = selectors.tableList.getTableByName(schema, name);
     }
 
     return children(tableSchema);

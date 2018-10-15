@@ -143,7 +143,7 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
     if (loading) return children({ loading });
 
     return (
-      <TableSchemaContext.Provider value={ data.tablesList }>
+      <TableSchemaContext.Provider value={ data.tablesList.items }>
         { children({ loading }) }
       </TableSchemaContext.Provider>
     );
