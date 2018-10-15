@@ -475,18 +475,14 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
-  it('Data with file entity.', () => {
-    const file = new File([''], 'filename');
-
+  it('Data with file reference.', () => {
     const data = {
-      file,
+      file: '5b32159b66a4500f96285626',
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       file: {
-        create: {
-          $file: file,
-        },
+        connect: { id: '5b32159b66a4500f96285626' },
       },
     });
   });
@@ -549,18 +545,14 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
-  it('Data with file list.', () => {
-    const file = new File([''], 'filename');
-
+  it('Data with file list reference.', () => {
     const data = {
-      fileList: [file],
+      fileList: ['5b32159b66a4500f96285626'],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       fileList: {
-        create: {
-          $file: [file],
-        },
+        connect: [{ id: '5b32159b66a4500f96285626' }],
       },
     });
   });
@@ -644,6 +636,30 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relation: null,
+    });
+  });
+
+  it('Data with file reference.', () => {
+    const data = {
+      file: '5b32159b66a4500f96285626',
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        reconnect: { id: '5b32159b66a4500f96285626' },
+      },
+    });
+  });
+
+  it('Data with file list reference.', () => {
+    const data = {
+      fileList: ['5b32159b66a4500f96285626'],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      fileList: {
+        reconnect: [{ id: '5b32159b66a4500f96285626' }],
+      },
     });
   });
 

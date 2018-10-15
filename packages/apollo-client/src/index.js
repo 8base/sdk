@@ -5,7 +5,7 @@ import { type ApolloClientOptions, ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { AuthLink, FileUploadLink, SubscriptionLink } from '@8base/apollo-links';
+import { AuthLink, SubscriptionLink } from '@8base/apollo-links';
 
 type EightBaseApolloClientOptions = {
   uri: string,
@@ -47,8 +47,6 @@ class EightBaseApolloClient extends ApolloClient {
       cache = new InMemoryCache();
     }
 
-    const fileUploadLink = new FileUploadLink();
-
     const authLink = new AuthLink({
       getAuthState,
       getRefreshTokenParameters,
@@ -62,7 +60,6 @@ class EightBaseApolloClient extends ApolloClient {
     const batchHttpLink = new BatchHttpLink({ uri });
 
     const link = ApolloLink.from([
-      fileUploadLink,
       authLink,
       subscriptionLink,
       batchHttpLink,
