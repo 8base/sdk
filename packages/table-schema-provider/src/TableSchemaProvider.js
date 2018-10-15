@@ -9,7 +9,10 @@ import { TableSchemaContext } from './TableSchemaContext';
 const TABLES_SCHEMA_QUERY = gql`
   query TablesSchema {
     tablesList {
-      ...TableFragment
+      items {
+        ...TableFragment
+      }
+      count
     }
   }
 
@@ -139,11 +142,19 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
 
     if (loading) return children({ loading });
 
-    return <TableSchemaContext.Provider value={ data.tablesList }>{ children({ loading }) }</TableSchemaContext.Provider>;
+    return (
+      <TableSchemaContext.Provider value={ data.tablesList }>
+        { children({ loading }) }
+      </TableSchemaContext.Provider>
+    );
   };
 
   render() {
-    const { auth: { isAuthorized }, notifyOnNetworkStatusChange, children } = this.props;
+    const {
+      auth: { isAuthorized },
+      notifyOnNetworkStatusChange,
+      children,
+    } = this.props;
 
     let rendered = null;
 

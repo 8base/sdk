@@ -3,11 +3,14 @@ import renderer from 'react-test-renderer';
 
 import { TableConsumer, TableSchemaContext } from '../../src';
 
-const TABLES_SCHEMA = [{
-  id: '1',
-  name: 'tableName',
-  fields: [],
-}];
+const TABLES_SCHEMA = {
+  items: [{
+    id: '1',
+    name: 'tableName',
+    fields: [],
+  }],
+  count: 1,
+};
 
 it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
   const testRenderFn = jest.fn(() => <div />);
@@ -21,7 +24,7 @@ it('As a developer, I can get access to the table schema via TableConsumer by ta
   );
 
   expect(testRenderFn).toHaveBeenCalledTimes(1);
-  expect(testRenderFn).toHaveBeenCalledWith(TABLES_SCHEMA[0]);
+  expect(testRenderFn).toHaveBeenCalledWith(TABLES_SCHEMA.items[0]);
 });
 
 it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
@@ -36,5 +39,5 @@ it('As a developer, I can get access to the table schema via TableConsumer by ta
   );
 
   expect(testRenderFn).toHaveBeenCalledTimes(1);
-  expect(testRenderFn).toHaveBeenCalledWith(TABLES_SCHEMA[0]);
+  expect(testRenderFn).toHaveBeenCalledWith(TABLES_SCHEMA.items[0]);
 });
