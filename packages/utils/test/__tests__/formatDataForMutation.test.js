@@ -509,6 +509,24 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
+  it('Data with file list objects.', () => {
+    const file = [{
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+      id: 'id',
+    }];
+
+    const data = {
+      file,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        create: file,
+      },
+    });
+  });
+
   it('Data with relation list reference.', () => {
     const data = {
       relationList: [
