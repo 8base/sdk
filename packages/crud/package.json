@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@8base/sdk": "^0.0.67",
-    "@8base/table-schema-provider": "^0.2.9",
+    "@8base/table-schema-provider": "^0.2.10",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-flow": "^6.23.0",
