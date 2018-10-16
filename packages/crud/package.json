@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
