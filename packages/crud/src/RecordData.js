@@ -34,7 +34,7 @@ export class RecordData extends Component<RecordDataProps> {
       >
         { ({ data, ...rest }) => children({
           ...rest,
-          data: fp.get([SchemaNameGenerator.getGetItemFieldName(tableMeta.name)], data),
+          data: fp.get([SchemaNameGenerator.getTableItemFieldName(tableMeta.name)], data),
         }) }
       </Query>
     );

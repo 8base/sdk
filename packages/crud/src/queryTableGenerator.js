@@ -46,7 +46,7 @@ export const createQueryStringWithoutMetaFields = (table: TableSchema, spaceCoun
 
 export const createTableFilterGraphqlTag = (table: TableSchema) => `
   query DataViewerTable${upperFirst(table.name)}Content($filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name)}, $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name)}], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    ${TABLE_CONTENT_NAME}: ${SchemaNameGenerator.getGetListItemFieldName(table.name)}(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    ${TABLE_CONTENT_NAME}: ${SchemaNameGenerator.getTableListFieldName(table.name)}(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
         ${createQueryString(table, 8)}
         _description
@@ -87,7 +87,7 @@ export const createTableRowUpdateTag = (table: TableSchema) => `
 
 export const createTableRowQueryTag = (table: TableSchema) => `
   query DataViewer${upperFirst(table.name)}Row($id: ID!) {
-    ${SchemaNameGenerator.getGetItemFieldName(table.name)}(id: $id) {
+    ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
       ${createQueryString(table)}
     }
   }`;
