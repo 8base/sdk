@@ -491,7 +491,6 @@ describe('As developer, I can format for create mutation,', () => {
     const file = {
       fileId: 'file-id',
       filename: 'Screenshot at авг. 13 15-22-49.png',
-      id: 'id',
     };
 
     const data = {
@@ -553,6 +552,23 @@ describe('As developer, I can format for create mutation,', () => {
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       fileList: {
         connect: [{ id: '5b32159b66a4500f96285626' }],
+      },
+    });
+  });
+
+  it('Data with list of the file objects.', () => {
+    const fileList = [{
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+    }];
+
+    const data = {
+      fileList,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      fileList: {
+        create: fileList,
       },
     });
   });
