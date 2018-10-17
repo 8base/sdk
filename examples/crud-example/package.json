@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@8base/app-provider": "^0.1.5",
+    "@8base/app-provider": "^0.1.9",
     "@8base/auth": "^0.1.8",
     "@8base/boost": "^0.5.19",
     "@8base/forms": "^0.2.6",
