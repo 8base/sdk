@@ -39,6 +39,11 @@ export const isMetaField = createSelector(
   R.propEq('isMeta', true),
 );
 
+export const isListField = createSelector(
+  getFieldById,
+  R.propEq('isList', true),
+);
+
 export const getFieldNameById = createSelector(
   getFieldById,
   R.prop('name'),

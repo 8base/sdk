@@ -21,11 +21,23 @@ const getFieldPartOfTheQuery = createSelector(
   tableSelectors.isRelationField,
   tableSelectors.isFileField,
   tableSelectors.isCustomField,
-  (field, isRelation, isFile, isCustom) => {
-    if (isRelation) return `${field.name} { id _description }`;
-    if (isFile) return `${field.name} { id fileId filename url }`;
-    if (isCustom) return `${field.name} { ${field.fieldTypeAttributes.innerFields.map(({ name }) => name).join(' ')} }`;
-    return field.name;
+  tableSelectors.isListField,
+  (field, isRelation, isFile, isCustom, isList) => {
+    let postfix = '';
+
+    if (isRelation) {
+      postfix = '{ id _description }';
+    } else if (isFile) {
+      postfix = '{ id fileId filename url }';
+    } else if (isCustom) {
+      postfix = `{ ${field.fieldTypeAttributes.innerFields.map(({ name }) => name).join(' ')} }`;
+    }
+
+    if (isList && (isRelation || isFile)) {
+      postfix = `{ items ${postfix} }`;
+    }
+
+    return postfix ? `${field.name} ${postfix}` : field.name;
   },
 );
 
