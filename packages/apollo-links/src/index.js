@@ -1,6 +1,4 @@
 export { TokenRefreshLink } from './TokenRefreshLink';
-export { FileUploadLink } from './FileUploadLink';
-export { createFile } from './utils/createFile';
 export { AuthLink } from './AuthLink';
 export { AuthHeadersLink } from './AuthHeadersLink';
 export { AuthHeadersCleanerLink } from './AuthHeadersCleanerLink';
