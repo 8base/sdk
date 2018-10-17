@@ -6,7 +6,7 @@
     "postinstall": "lerna bootstrap",
     "build-packages": "lerna run build --ignore crud-example",
     "test": "./bin/test.sh",
-    "bump": "lerna publish --skip-npm --skip-git"
+    "bump": "lerna publish --skip-npm"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
