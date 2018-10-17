@@ -4,11 +4,13 @@ import renderer from 'react-test-renderer';
 import { TableConsumer, TableSchemaContext } from '../../src';
 
 const TABLES_SCHEMA = {
-  items: [{
-    id: '1',
-    name: 'tableName',
-    fields: [],
-  }],
+  items: [
+    {
+      id: '1',
+      name: 'tableName',
+      fields: [],
+    }
+  ],
   count: 1,
 };
 
@@ -16,7 +18,7 @@ it('As a developer, I can get access to the table schema via TableConsumer by ta
   const testRenderFn = jest.fn(() => <div />);
 
   renderer.create(
-    <TableSchemaContext.Provider value={ TABLES_SCHEMA }>
+    <TableSchemaContext.Provider value={ TABLES_SCHEMA.items }>
       <TableConsumer name="tableName">
         { testRenderFn }
       </TableConsumer>
@@ -31,7 +33,7 @@ it('As a developer, I can get access to the table schema via TableConsumer by ta
   const testRenderFn = jest.fn(() => <div />);
 
   renderer.create(
-    <TableSchemaContext.Provider value={ TABLES_SCHEMA }>
+    <TableSchemaContext.Provider value={ TABLES_SCHEMA.items }>
       <TableConsumer id="1">
         { testRenderFn }
       </TableConsumer>
