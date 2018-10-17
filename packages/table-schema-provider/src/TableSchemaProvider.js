@@ -29,7 +29,6 @@ const TABLES_SCHEMA_QUERY = gql`
   fragment TableFieldFragment on TableField {
     ...CommonTableFieldFragment
     fieldTypeAttributes {
-      id
       ...TextFieldTypeAttributes
       ...NumberFieldTypeAttributes
       ...FileFieldTypeAttributes
@@ -46,7 +45,6 @@ const TABLES_SCHEMA_QUERY = gql`
     description
     fieldType
     fieldTypeAttributes {
-      id
       ...TextFieldTypeAttributes
       ...NumberFieldTypeAttributes
       ...FileFieldTypeAttributes
@@ -60,7 +58,6 @@ const TABLES_SCHEMA_QUERY = gql`
     isSystem
     isMeta
     relation {
-      id
       refFieldName
       refFieldDisplayName
       relationTableName
@@ -117,7 +114,6 @@ const TABLES_SCHEMA_QUERY = gql`
         ...SwitchFieldTypeAttributes
       }
     }
-    id
   }
 
   fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
