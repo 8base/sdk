@@ -1,6 +1,6 @@
 {
   "name": "@8base/utils",
-  "version": "0.2.16",
+  "version": "0.3.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {

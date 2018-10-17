@@ -1,6 +1,6 @@
 {
   "name": "@8base/app-provider",
-  "version": "0.1.9",
+  "version": "0.3.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.2.4",
-    "@8base/auth": "^0.1.8",
-    "@8base/table-schema-provider": "^0.2.11",
+    "@8base/apollo-client": "^0.3.0",
+    "@8base/auth": "^0.3.0",
+    "@8base/table-schema-provider": "^0.3.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "prop-types": "^15.6.2",
