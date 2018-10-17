@@ -9,7 +9,7 @@ const TABLES_SCHEMA = {
       id: '1',
       name: 'tableName',
       fields: [],
-    }
+    },
   ],
   count: 1,
 };

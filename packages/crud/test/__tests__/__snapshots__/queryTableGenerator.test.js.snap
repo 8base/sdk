@@ -18,6 +18,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
     customFieldCreate(data: $data) {
       phone { code number }
       address { street1 street2 zip city state }
+      phoneList { code number }
       id
     }
   }"
@@ -40,6 +41,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
       field1 { id _description }
       field2
       field3
+      field4 { items { id _description } }
       id
     }
   }"
@@ -90,6 +92,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     customFieldUpdate(data: $data) {
       phone { code number }
       address { street1 street2 zip city state }
+      phoneList { code number }
       id
     }
   }"
@@ -102,6 +105,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
       field1 { id _description }
       field2
       field3
+      field4 { items { id _description } }
       id
     }
   }"
@@ -133,6 +137,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
         createdBy { id _description }
         phone { code number }
         address { street1 street2 zip city state }
+        phoneList { code number }
         _description
       }
       count
@@ -148,6 +153,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
         field1 { id _description }
         field2
         field3
+        field4 { items { id _description } }
         _description
       }
       count
@@ -176,6 +182,7 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       createdBy { id _description }
       phone { code number }
       address { street1 street2 zip city state }
+      phoneList { code number }
     }
   }"
 `;
@@ -187,6 +194,7 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       field1 { id _description }
       field2
       field3
+      field4 { items { id _description } }
     }
   }"
 `;
