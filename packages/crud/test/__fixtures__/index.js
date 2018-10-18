@@ -17,6 +17,54 @@ export const TABLE_SCHEMA_WITH_RELATION = {
   ],
 };
 
+export const TABLE_SCHEMA_WITH_FILES = {
+  name: 'Files',
+  fields: [
+    {
+      id: '1',
+      name: 'file',
+      displayName: 'File',
+      description: null,
+      fieldType: 'FILE',
+      fieldTypeAttributes: {
+        format: 'FILE',
+        showTitle: null,
+        showUrl: null,
+        maxSize: null,
+        typeRestrictions: null,
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+    {
+      id: '2',
+      name: 'fileList',
+      displayName: 'File List',
+      description: null,
+      fieldType: 'FILE',
+      fieldTypeAttributes: {
+        format: 'FILE',
+        showTitle: null,
+        showUrl: null,
+        maxSize: null,
+        typeRestrictions: null,
+      },
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+  ],
+};
+
 export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
   name: 'CustomFields',
   fields: [
