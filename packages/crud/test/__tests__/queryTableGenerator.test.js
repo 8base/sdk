@@ -16,6 +16,12 @@ describe('As a developer, I can generate graphql query for list by table schema'
     expect(tag).toMatchSnapshot();
   });
 
+  it('should generate graphql tag for the table content by table schema with files', () => {
+    const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_FILES);
+
+    expect(tag).toMatchSnapshot();
+  });
+
   it('should generate graphql tag for the table content by table schema with relation', () => {
     const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
 
@@ -32,6 +38,12 @@ describe('As a developer, I can generate graphql query for list by table schema'
 describe('As a developer, I can generate graphql mutation for create entity by table schema', () => {
   it('should generate graphql tag for create mutation by common table schema ', () => {
     const tag = createTableRowCreateTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for create mutation by table schema with files', () => {
+    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITH_FILES);
 
     expect(tag).toMatchSnapshot();
   });
@@ -62,6 +74,12 @@ describe('As a developer, I can generate graphql query for read entity by table 
     expect(tag).toMatchSnapshot();
   });
 
+  it('should generate graphql tag for row query by table schema with files', () => {
+    const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_FILES);
+
+    expect(tag).toMatchSnapshot();
+  });
+
   it('should generate graphql tag for row query by table schema with relation', () => {
     const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
 
@@ -82,6 +100,12 @@ describe('As a developer, I can generate graphql mutation for update entity by t
     expect(tag).toMatchSnapshot();
   });
 
+  it('should generate graphql tag for update mutation by table schema with files', () => {
+    const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_FILES);
+
+    expect(tag).toMatchSnapshot();
+  });
+
   it('should generate graphql tag for update mutation by table schema with relation', () => {
     const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_RELATION);
 
@@ -98,6 +122,12 @@ describe('As a developer, I can generate graphql mutation for update entity by t
 describe('As a developer, I can generate graphql mutation for delete entity by table schema', () => {
   it('should generate graphql tag for delete mutation by common table schema ', () => {
     const tag = createTableRowDeleteTag(fixtures.COMMON_TABLE_SCHEMA);
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for delete mutation by table schema with files', () => {
+    const tag = createTableRowDeleteTag(fixtures.TABLE_SCHEMA_WITH_FILES);
 
     expect(tag).toMatchSnapshot();
   });
