@@ -5,3 +5,24 @@
   justify-content: center;
   width: 100vw;
 }
+
+.fsp-picker,
+.fsp-picker * {
+  transition: none;
+}
+
+.fsp-picker-appear-active {
+  transition: none;
+  opacity: 0;
+  display: none;
+}
+
+.fsp-picker-appear-to {
+  opacity: 0;
+  display: none;
+}
+
+.fsp-picker-appear {
+  opacity: 0;
+  display: none;
+}

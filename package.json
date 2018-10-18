@@ -3,7 +3,7 @@
   "scripts": {
     "eslint": "eslint .",
     "flow": "flow check",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap && yarn build-packages",
     "build-packages": "lerna run build --ignore crud-example",
     "test": "./bin/test.sh",
     "bump": "lerna publish --skip-npm"

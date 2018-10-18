@@ -15,9 +15,7 @@ const USER_QUERY = gql`
       lastName
       avatar {
         id
-        fileId
-        public
-        filename
+        downloadUrl
       }
     }
   }
@@ -32,7 +30,7 @@ class AppFlowUserContainer extends React.Component {
     return (
       <Dropdown.Plate defaultOpen={ false }>
         <Dropdown.Head>
-          <Avatar src={ R.path(['user', 'avatar', 'public'], data) } size="sm" />
+          <Avatar src={ R.path(['user', 'avatar', 'downloadUrl'], data) } size="sm" />
         </Dropdown.Head>
         <Dropdown.Body pin="right">
           {
