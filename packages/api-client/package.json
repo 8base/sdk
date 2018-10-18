@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "main": "lib/api-client.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",

@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
