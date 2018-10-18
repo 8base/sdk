@@ -4,7 +4,12 @@ import { withApollo } from 'react-apollo';
 import * as filestack from 'filestack-js';
 import gql from 'graphql-tag';
 
-type FileValue = { fileId: string, filename: string };
+type FileValue = {
+  fileId: string,
+  filename: string,
+  id?: string,
+  downloadUrl?: string,
+};
 
 type FileInputValue = FileValue | FileValue[];
 
@@ -14,6 +19,7 @@ type FileInputProps = {
   children: ({ pick: () => Promise<void>, value: ?FileInputValue, error: ?Object }) => React$Node,
   value?: FileInputValue,
   maxFiles?: number,
+  onUploadFinish?: (value: FileInputValue) => Promise<FileInputValue>,
 };
 
 type FileInputState = {
@@ -78,16 +84,20 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     });
   }
 
-  onUploadDone = ({ filesUploaded }) => {
+  onUploadDone = async ({ filesUploaded }) => {
     let value = filesUploaded.map(({ handle, filename }) => ({
       fileId: handle,
       filename,
     }));
 
-    const { maxFiles } = this.props;
+    const { maxFiles, onUploadFinish } = this.props;
 
     if (maxFiles === 1) {
       value = value[0];
+    }
+
+    if (typeof onUploadFinish === 'function') {
+      value = await onUploadFinish(value);
     }
 
     this.props.onChange(value);

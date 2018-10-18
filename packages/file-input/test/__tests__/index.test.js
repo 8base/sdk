@@ -62,7 +62,7 @@ describe('should call onChange when file is uploaded', async () => {
     expect(mock_client.query).toHaveBeenCalledTimes(1);
     expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
 
-    mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename' });
@@ -85,7 +85,7 @@ describe('should call onChange when file is uploaded', async () => {
     expect(mock_client.query).toHaveBeenCalledTimes(1);
     expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
 
-    mock_onUploadDone({
+    await mock_onUploadDone({
       filesUploaded: [
         { handle: 'handle1', filename: 'filename1' },
         { handle: 'handle2', filename: 'filename2' },
@@ -101,6 +101,35 @@ describe('should call onChange when file is uploaded', async () => {
         { fileId: 'handle3', filename: 'filename3' },
       ],
     );
+  });
+
+  it('for input with custom on upload handler', async() => {
+    const renderFileInputView = jest.fn(() => null);
+    const onChange = jest.fn();
+
+    const onUploadFinish = (value) => new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
+      }, 50);
+    });
+
+    renderer.create(
+      <FileInput onChange={ onChange } onUploadFinish={ onUploadFinish }>
+        { renderFileInputView }
+      </FileInput>,
+    );
+
+    expect(renderFileInputView).toHaveBeenCalledTimes(1);
+
+    await renderFileInputView.mock.calls[0][0].pick();
+
+    expect(mock_client.query).toHaveBeenCalledTimes(1);
+    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', id: 'id', downloadUrl: 'downloadUrl' });
   });
 });
 
