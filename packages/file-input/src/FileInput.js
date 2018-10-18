@@ -4,13 +4,16 @@ import { withApollo } from 'react-apollo';
 import * as filestack from 'filestack-js';
 import gql from 'graphql-tag';
 
-type FileInputValue = { fileId: string, filename: string };
+type FileValue = { fileId: string, filename: string };
+
+type FileInputValue = FileValue | FileValue[];
 
 type FileInputProps = {
   client: Object,
   onChange: (value: FileInputValue) => void,
   children: ({ pick: () => Promise<void>, value: ?FileInputValue, error: ?Object }) => React$Node,
   value?: FileInputValue,
+  maxFiles?: number,
 };
 
 type FileInputState = {
@@ -32,6 +35,10 @@ const FILE_UPLOAD_INFO_QUERY = gql`
 class FileInput extends React.Component<FileInputProps, FileInputState> {
   filestack: Object;
   filestackPromise: Promise<void>;
+
+  static defaultProps = {
+    maxFiles: 1,
+  };
 
   constructor(props) {
     super(props);
@@ -72,15 +79,22 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   }
 
   onUploadDone = ({ filesUploaded }) => {
-    const value = {
-      fileId: filesUploaded[0].handle,
-      filename: filesUploaded[0].filename,
-    };
+    let value = filesUploaded.map(({ handle, filename }) => ({
+      fileId: handle,
+      filename,
+    }));
+
+    const { maxFiles } = this.props;
+
+    if (maxFiles === 1) {
+      value = value[0];
+    }
 
     this.props.onChange(value);
   };
 
   collectPickerOptions = () => {
+    const { maxFiles } = this.props;
     const { path } = this.state;
 
     return {
@@ -88,6 +102,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       storeTo: {
         path,
       },
+      maxFiles,
     };
   };
 
