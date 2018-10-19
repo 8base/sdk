@@ -121,7 +121,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
         path,
       },
       maxFiles,
-      accept,
+      ...(accept ? { accept } : {}),
     };
   };
 
