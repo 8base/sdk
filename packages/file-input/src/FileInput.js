@@ -4,18 +4,28 @@ import { withApollo } from 'react-apollo';
 import * as filestack from 'filestack-js';
 import gql from 'graphql-tag';
 
-type FileInputValue = { fileId: string, filename: string };
+type FileValue = {
+  fileId: string,
+  filename: string,
+  id?: string,
+  downloadUrl?: string,
+};
+
+type FileInputValue = FileValue | FileValue[];
 
 type FileInputProps = {
   client: Object,
   onChange: (value: FileInputValue) => void,
   children: ({ pick: () => Promise<void>, value: ?FileInputValue, error: ?Object }) => React$Node,
   value?: FileInputValue,
+  maxFiles?: number,
+  onUploadFinish?: (value: FileInputValue) => Promise<FileInputValue>,
 };
 
 type FileInputState = {
   path: ?string,
   error: ?Object,
+  value: ?FileInputValue,
 };
 
 const FILE_UPLOAD_INFO_QUERY = gql`
@@ -33,12 +43,18 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   filestack: Object;
   filestackPromise: Promise<void>;
 
+  static defaultProps = {
+    maxFiles: 1,
+    value: null,
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
       path: null,
       error: null,
+      value: props.value,
     };
   }
 
@@ -71,16 +87,31 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     });
   }
 
-  onUploadDone = ({ filesUploaded }) => {
-    const value = {
-      fileId: filesUploaded[0].handle,
-      filename: filesUploaded[0].filename,
-    };
+  onUploadDone = async ({ filesUploaded }) => {
+    let value = filesUploaded.map(({ handle, filename }) => ({
+      fileId: handle,
+      filename,
+    }));
 
-    this.props.onChange(value);
+    const { maxFiles, onUploadFinish } = this.props;
+
+    if (maxFiles === 1) {
+      value = value[0];
+    }
+
+    if (typeof onUploadFinish === 'function') {
+      value = await onUploadFinish(value);
+    }
+
+    this.setState({ value });
+
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(value);
+    }
   };
 
   collectPickerOptions = () => {
+    const { maxFiles } = this.props;
     const { path } = this.state;
 
     return {
@@ -88,6 +119,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       storeTo: {
         path,
       },
+      maxFiles,
     };
   };
 
@@ -100,9 +132,9 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   };
 
   render() {
-    const { children, value } = this.props;
+    const { children } = this.props;
 
-    const { error } = this.state;
+    const { error, value } = this.state;
 
     return children({ pick: this.pick, value, error });
   }
