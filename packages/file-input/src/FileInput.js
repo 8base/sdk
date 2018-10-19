@@ -25,6 +25,7 @@ type FileInputProps = {
 type FileInputState = {
   path: ?string,
   error: ?Object,
+  value: ?FileInputValue,
 };
 
 const FILE_UPLOAD_INFO_QUERY = gql`
@@ -44,6 +45,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
 
   static defaultProps = {
     maxFiles: 1,
+    value: null,
   };
 
   constructor(props) {
@@ -52,6 +54,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     this.state = {
       path: null,
       error: null,
+      value: props.value,
     };
   }
 
@@ -100,7 +103,11 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       value = await onUploadFinish(value);
     }
 
-    this.props.onChange(value);
+    this.setState({ value });
+
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(value);
+    }
   };
 
   collectPickerOptions = () => {
@@ -125,9 +132,9 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   };
 
   render() {
-    const { children, value } = this.props;
+    const { children } = this.props;
 
-    const { error } = this.state;
+    const { error, value } = this.state;
 
     return children({ pick: this.pick, value, error });
   }
