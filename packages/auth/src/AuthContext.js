@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import * as R from 'ramda';
+import auth0 from 'auth0-js';
 
 import * as localStorageAccessor from './localStorageAccessor';
 import type { AuthState } from './localStorageAccessor';
@@ -9,17 +10,15 @@ import type { AuthContextProps } from './withAuth';
 
 type AuthProviderProps = {
   children: React$Node,
+  domain: string,
+  clientID: string,
+  redirectUri: string,
 };
 
-const checkIsEmptyOrNil: (?string) => boolean = R.either(R.isNil, R.isEmpty);
+const isEmptyOrNil: (?string) => boolean = R.either(R.isNil, R.isEmpty);
 
-const checkIsAuthorized = ({ workspaceId, idToken }: AuthState): boolean =>
-  R.not(
-    R.or(
-      checkIsEmptyOrNil(workspaceId),
-      checkIsEmptyOrNil(idToken),
-    ),
-  );
+const checkIsAuthorized = ({ idToken }: AuthState): boolean =>
+  R.not(isEmptyOrNil(idToken));
 
 const { Provider, Consumer } = React.createContext({
   isAuthorized: false,
@@ -30,6 +29,57 @@ const { Provider, Consumer } = React.createContext({
  * Provides access to the authentication state.
  */
 class AuthProvider extends Component<AuthProviderProps> {
+  auth0: auth0.WebAuth;
+
+  constructor(props: AuthProviderProps) {
+    super(props);
+
+    const { domain, clientID, redirectUri } = this.props;
+
+    this.auth0 = new auth0.WebAuth({
+      domain,
+      clientID,
+      redirectUri,
+      mustAcceptTerms: true,
+      responseType: 'token id_token',
+      scope: 'openid email profile offline_access',
+    });
+  }
+
+  authorize = (...args: Array<any>): void => {
+    this.auth0.authorize(...args);
+  };
+
+  logout = (options: any): void => {
+    localStorageAccessor.purgeAuthState();
+
+    this.auth0.logout({
+      ...options,
+    });
+  };
+
+  checkSession = (options: any): Promise<any> => new Promise((resolve, reject) => {
+    this.auth0.checkSession(options, (error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      resolve(result);
+    });
+  });
+
+  parseHash = (): Promise<any> => new Promise((resolve, reject) => {
+    this.auth0.parseHash((error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      resolve(result);
+    });
+  });
+
   setAuthState = (state: AuthState) => {
     localStorageAccessor.setAuthState(state);
 
@@ -48,16 +98,22 @@ class AuthProvider extends Component<AuthProviderProps> {
 
   render() {
     const { children } = this.props;
-    const { workspaceId, idToken } = this.getAuthState();
-    const isAuthorized = checkIsAuthorized({ workspaceId, idToken });
+    const { idToken } = this.getAuthState();
+    const isAuthorized = checkIsAuthorized({ idToken });
 
     return (
-      <Provider value={{
-        isAuthorized,
-        setAuthState: this.setAuthState,
-        getAuthState: this.getAuthState,
-        purgeAuthState: this.purgeAuthState,
-      }}>
+      <Provider
+        value={{
+          isAuthorized,
+          setAuthState: this.setAuthState,
+          getAuthState: this.getAuthState,
+          purgeAuthState: this.purgeAuthState,
+          authorize: this.authorize,
+          parseHash: this.parseHash,
+          logout: this.logout,
+          checkSession: this.checkSession,
+        }}
+      >
         { children }
       </Provider>
     );

@@ -21,10 +21,8 @@ type GraphQLError = {
 };
 
 export type TokenRefreshLinkParameters = {
-  getRefreshTokenParameters: () => RefreshTokenQueryInput;
-  onAuthSuccess: (RefreshTokenQueryResult) => void;
   onAuthError?: (error?: {}) => void;
-  onIdTokenExpired?: () => void;
+  onIdTokenExpired?: () => Promise<*>;
 };
 
 export type ErrorLinkParameters = {

@@ -51,5 +51,8 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "auth0-js": "^9.8.0"
+  }
 }
