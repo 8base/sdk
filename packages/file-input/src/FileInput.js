@@ -19,6 +19,7 @@ type FileInputProps = {
   children: ({ pick: () => Promise<void>, value: ?FileInputValue, error: ?Object }) => React$Node,
   value?: FileInputValue,
   maxFiles?: number,
+  accept?: string | string[],
   onUploadFinish?: (value: FileInputValue) => Promise<FileInputValue>,
 };
 
@@ -111,7 +112,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   };
 
   collectPickerOptions = () => {
-    const { maxFiles } = this.props;
+    const { maxFiles, accept } = this.props;
     const { path } = this.state;
 
     return {
@@ -120,6 +121,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
         path,
       },
       maxFiles,
+      accept,
     };
   };
 
