@@ -20,16 +20,16 @@ const getFieldPartOfTheQuery = createSelector(
   tableSelectors.getFieldById,
   tableSelectors.isRelationField,
   tableSelectors.isFileField,
-  tableSelectors.isCustomField,
+  tableSelectors.isSmartField,
   tableSelectors.isListField,
-  (field, isRelation, isFile, isCustom, isList) => {
+  (field, isRelation, isFile, isSmart, isList) => {
     let postfix = '';
 
     if (isRelation) {
       postfix = '{ id _description }';
     } else if (isFile) {
       postfix = '{ id fileId filename downloadUrl shareUrl }';
-    } else if (isCustom) {
+    } else if (isSmart) {
       postfix = `{ ${field.fieldTypeAttributes.innerFields.map(({ name }) => name).join(' ')} }`;
     }
 

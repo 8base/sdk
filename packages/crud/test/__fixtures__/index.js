@@ -65,8 +65,8 @@ export const TABLE_SCHEMA_WITH_FILES = {
   ],
 };
 
-export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
-  name: 'CustomFields',
+export const TABLE_SCHEMA_WITH_SMART_FIELDS = {
+  name: 'SmartFields',
   fields: [
     {
       id: '5bac9e032cb41016073279c1',
@@ -151,7 +151,7 @@ export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
       name: 'phone',
       displayName: 'Phone',
       description: null,
-      fieldType: 'CUSTOM',
+      fieldType: 'SMART',
       fieldTypeAttributes: {
         id: '5bac9eaf2cb4106c25327a38',
         innerFields: [
@@ -196,7 +196,7 @@ export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
       name: 'address',
       displayName: 'Address',
       description: null,
-      fieldType: 'CUSTOM',
+      fieldType: 'SMART',
       fieldTypeAttributes: {
         id: '5bac9eb02cb41046bd327a4f',
         innerFields: [
@@ -280,7 +280,7 @@ export const TABLE_SCHEMA_WITH_CUSTOM_FIELDS = {
       name: 'phoneList',
       displayName: 'Phone List',
       description: null,
-      fieldType: 'CUSTOM',
+      fieldType: 'SMART',
       fieldTypeAttributes: {
         id: '5bac9eaf2cb4106c25327a38',
         innerFields: [
