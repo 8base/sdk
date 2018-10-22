@@ -1,2 +1,3 @@
-# sdk
-Easy-to-use JavaScript SDK for working with 8base
+# 8base SDK
+
+Set of JavaScript SDK packages for easy working with 8base.
