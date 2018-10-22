@@ -34,7 +34,7 @@ const TABLES_SCHEMA_QUERY = gql`
       ...FileFieldTypeAttributes
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
-      ...CustomFieldTypesAttributes
+      ...SmartFieldTypesAttributes
     }
   }
 
@@ -96,7 +96,7 @@ const TABLES_SCHEMA_QUERY = gql`
     typeRestrictions
   }
 
-  fragment CustomFieldTypesAttributes on CustomFieldTypeAttributes {
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
     format
     innerFields {
       name
