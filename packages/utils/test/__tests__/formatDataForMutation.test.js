@@ -655,6 +655,41 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Data with file object.', () => {
+    const file = {
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+    };
+
+    const data = {
+      file,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        create: file,
+      },
+    });
+  });
+
+  it('Data with file object with existed id.', () => {
+    const file = {
+      id: '5b32159b66a4500f96285626',
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+    };
+
+    const data = {
+      file,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: {
+        reconnect: { id: file.id },
+      },
+    });
+  });
+
   it('Data with file reference.', () => {
     const data = {
       file: '5b32159b66a4500f96285626',

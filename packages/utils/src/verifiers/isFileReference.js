@@ -9,7 +9,13 @@ const isFileReference = (fieldSchema: FieldSchema, data: any) => (
   &&
   !R.isNil(data)
   &&
-  (typeof data === 'string' || data.length === 0 || typeof data[0] === 'string')
+  (
+    typeof data === 'string'
+    ||
+    (data.length === 0 || typeof data[0] === 'string')
+    ||
+    (data && typeof data.id === 'string')
+  )
 );
 
 export { isFileReference };
