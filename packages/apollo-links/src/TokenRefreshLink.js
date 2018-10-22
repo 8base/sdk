@@ -42,20 +42,20 @@ export class TokenRefreshLink extends ApolloLink {
       const handleTokenRefresh = () => {
         this.handleTokenExpired()
           .then(() => {
-            handling = false;
-
             const observable = forward(operation);
 
             if (subscription) {
               subscription.unsubscribe();
             }
 
+            handling = false;
+
             subscription = observable.subscribe(subscriber);
           })
           .catch((err) => {
-            handling = false;
-
             this.handleAuthFailed(err);
+
+            handling = false;
 
             observer.complete();
           });
