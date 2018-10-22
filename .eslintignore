@@ -1,7 +1,7 @@
 coverage
 node_modules
 lib
-packages/*/build
-packages/*/es
+build
+es
 flow-typed
 packages/local-*
