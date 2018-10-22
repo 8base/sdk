@@ -8,7 +8,7 @@ export const FIELD_TYPE = {
   RELATION: 'RELATION',
   SWITCH: 'SWITCH',
   TEXT: 'TEXT',
-  CUSTOM: 'CUSTOM',
+  SMART: 'SMART',
 };
 
 export const SWITCH_FORMATS = {
@@ -17,7 +17,7 @@ export const SWITCH_FORMATS = {
   TRUE_FALSE: 'TRUE_FALSE',
   ACTIVE_INACTIVE: 'ACTIVE_INACTIVE',
   HIGH_LOW: 'HIGH_LOW',
-  CUSTOM: 'CUSTOM',
+  SMART: 'SMART',
 };
 
 export const TEXT_FORMATS = {

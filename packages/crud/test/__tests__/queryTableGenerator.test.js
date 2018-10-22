@@ -28,8 +28,8 @@ describe('As a developer, I can generate graphql query for list by table schema'
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for the table content by table schema with custom fields', () => {
-    const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+  it('should generate graphql tag for the table content by table schema with smart fields', () => {
+    const tag = createTableFilterGraphqlTag(fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS);
 
     expect(tag).toMatchSnapshot();
   });
@@ -54,13 +54,13 @@ describe('As a developer, I can generate graphql mutation for create entity by t
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for create mutation by table schema with custom fields', () => {
-    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
+    const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS);
 
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for create mutation by table schema with custom fields', () => {
+  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
     const tag = createTableRowCreateTag(fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS);
 
     expect(tag).toMatchSnapshot();
@@ -86,8 +86,8 @@ describe('As a developer, I can generate graphql query for read entity by table 
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for row query by table schema with custom fields', () => {
-    const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+  it('should generate graphql tag for row query by table schema with smart fields', () => {
+    const tag = createTableRowQueryTag(fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS);
 
     expect(tag).toMatchSnapshot();
   });
@@ -112,8 +112,8 @@ describe('As a developer, I can generate graphql mutation for update entity by t
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for update mutation by table schema with custom fields', () => {
-    const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+  it('should generate graphql tag for update mutation by table schema with smart fields', () => {
+    const tag = createTableRowUpdateTag(fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS);
 
     expect(tag).toMatchSnapshot();
   });
@@ -138,8 +138,8 @@ describe('As a developer, I can generate graphql mutation for delete entity by t
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for delete mutation by table schema with custom fields', () => {
-    const tag = createTableRowDeleteTag(fixtures.TABLE_SCHEMA_WITH_CUSTOM_FIELDS);
+  it('should generate graphql tag for delete mutation by table schema with smart fields', () => {
+    const tag = createTableRowDeleteTag(fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS);
 
     expect(tag).toMatchSnapshot();
   });
