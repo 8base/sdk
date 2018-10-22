@@ -5,37 +5,15 @@ import {
   Operation,
   NextLink,
   FetchResult,
-  createOperation,
 } from 'apollo-link';
-import gql from 'graphql-tag';
 import * as R from 'ramda';
 
-import type {
-  TokenRefreshLinkParameters,
-  RefreshTokenQueryInput,
-  RefreshTokenQueryResult,
-} from './types';
-import { hasIdTokenExpiredError, hasRefreshTokenExpiredError } from './utils';
+import {
+  hasIdTokenExpiredError,
+  hasRefreshTokenExpiredError,
+} from './utils';
 
-const USER_REFRESH_TOKEN_QUERY = `
-  mutation UserRefreshToken($refreshToken: String!, $email: String!) {
-    userRefreshToken(data: {
-      refreshToken: $refreshToken,
-      email: $email,
-    }) {
-      refreshToken
-      idToken
-    }
-  }
-`;
-
-class RefreshTokenInvalidError extends Error {
-  constructor() {
-    super('Can\'t refresh token.');
-  }
-}
-
-const userRefreshTokenPath = ['userRefreshToken'];
+import type { TokenRefreshLinkParameters } from './types';
 
 /**
  * Token Refresh Link renew authentication token when it's expired.
@@ -47,40 +25,40 @@ const userRefreshTokenPath = ['userRefreshToken'];
  */
 export class TokenRefreshLink extends ApolloLink {
   constructor({
-    getRefreshTokenParameters,
-    onAuthSuccess,
-    onAuthError,
     onIdTokenExpired,
+    onAuthError,
   } : TokenRefreshLinkParameters) {
     super();
 
-    this.getRefreshTokenParameters = getRefreshTokenParameters;
-    this.onAuthSuccess = onAuthSuccess;
     this.onAuthError = onAuthError;
     this.onIdTokenExpired = onIdTokenExpired;
-    this.fetching = false;
   }
 
   request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     return new Observable(observer => {
       let subscription = null;
+      let handling = false;
 
       const handleTokenRefresh = () => {
-        this.refreshToken(operation, forward).then(() => {
-          const observable = forward(operation);
+        this.handleTokenExpired()
+          .then(() => {
+            handling = false;
 
-          if (subscription) {
-            subscription.unsubscribe();
-          }
+            const observable = forward(operation);
 
-          subscription = observable.subscribe(subscriber);
-        }).catch((err) => {
-          if (err instanceof RefreshTokenInvalidError) {
+            if (subscription) {
+              subscription.unsubscribe();
+            }
+
+            subscription = observable.subscribe(subscriber);
+          })
+          .catch((err) => {
+            handling = false;
+
             this.handleAuthFailed(err);
-          } else {
-            observer.error(err);
-          }
-        });
+
+            observer.complete();
+          });
       };
 
       const subscriber = {
@@ -88,8 +66,7 @@ export class TokenRefreshLink extends ApolloLink {
           const dataErrors = data.errors || [];
 
           if (hasIdTokenExpiredError(dataErrors)) {
-            this.handleTokenExpired();
-
+            handling = true;
             handleTokenRefresh();
           } else if (hasRefreshTokenExpiredError(dataErrors)) {
             this.handleAuthFailed();
@@ -101,8 +78,7 @@ export class TokenRefreshLink extends ApolloLink {
           const batchedErrors = R.pathOr([error], ['response', 'parsed', 'errors'], error);
 
           if (hasIdTokenExpiredError(batchedErrors)) {
-            this.handleTokenExpired();
-
+            handling = true;
             handleTokenRefresh();
           } else if (hasRefreshTokenExpiredError(batchedErrors)) {
             this.handleAuthFailed();
@@ -111,7 +87,7 @@ export class TokenRefreshLink extends ApolloLink {
           }
         },
         complete: () => {
-          if (!this.fetching) {
+          if (!handling) {
             observer.complete();
           }
         },
@@ -125,8 +101,10 @@ export class TokenRefreshLink extends ApolloLink {
 
   handleTokenExpired() {
     if (typeof this.onIdTokenExpired === 'function') {
-      this.onIdTokenExpired();
+      return this.onIdTokenExpired();
     }
+
+    return Promise.reject();
   }
 
   handleAuthFailed(err?: Object) {
@@ -134,43 +112,5 @@ export class TokenRefreshLink extends ApolloLink {
       this.onAuthError(err);
     }
   }
-
-  refreshToken (operation: Operation, forward: NextLink): Promise<void> {
-    this.fetching = true;
-
-    const operationContext = operation.getContext();
-    operationContext.isRefreshingToken = true;
-
-    const mutate = (req: *) => forward(
-      createOperation(
-        operationContext,
-        req,
-      ),
-    );
-
-    return new Promise((resolve, reject) => {
-      const refreshTokenParameters: RefreshTokenQueryInput = this.getRefreshTokenParameters();
-
-      mutate({
-        query: gql(USER_REFRESH_TOKEN_QUERY),
-        variables: refreshTokenParameters,
-      }).subscribe({
-        error: reject,
-        next: ({ data }) => {
-          if (data === null || R.path(userRefreshTokenPath, data) === null) {
-            reject(new RefreshTokenInvalidError());
-          } else {
-            const { refreshToken, idToken }: RefreshTokenQueryResult = R.pathOr({}, userRefreshTokenPath, data);
-
-            this.onAuthSuccess({ refreshToken, idToken });
-
-            resolve();
-          }
-        },
-        complete: () => {
-          this.fetching = false;
-        },
-      });
-    });
-  }
 }
+

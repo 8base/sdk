@@ -7,8 +7,9 @@ const withLogOut = compose(
   withApollo,
   withAuth,
   withHandlers({
-    logOut: ({ auth: { purgeAuthState }, client }) => () => {
+    logOut: ({ auth: { purgeAuthState, logout }, client }) => () => {
       purgeAuthState();
+      logout();
 
       client.resetStore();
     },

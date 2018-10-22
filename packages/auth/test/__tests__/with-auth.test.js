@@ -22,7 +22,7 @@ const EnhancedStubComponent = withAuth(StubComponent);
 
 const getTestInstance = ({ foo }) => {
   const testRenderer = TestRenderer.create(
-    <AuthProvider>
+    <AuthProvider domain="domain" clientID="clientID" redirectUri="redirectUri">
       <EnhancedStubComponent foo={ foo } />
     </AuthProvider>,
   );

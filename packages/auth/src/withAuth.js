@@ -15,6 +15,10 @@ interface AuthContextProps {
   getAuthState: () => AuthState,
   setAuthState: (AuthState) => void,
   purgeAuthState: () => void,
+  authorize: () => void,
+  parseHash: () => Promise<*>,
+  checkSession: () => Promise<*>,
+  logout: () => void,
 }
 
 interface WithAuthProps {
@@ -22,6 +26,10 @@ interface WithAuthProps {
   authState: AuthState,
   setAuthState: (AuthState) => void,
   purgeAuthState: () => void,
+  authorize: () => void,
+  parseHash: () => Promise<*>,
+  checkSession: () => Promise<*>,
+  logout: () => void,
 }
 
 interface AuthProps {
@@ -41,12 +49,25 @@ const withAuth: any = <InputProps: {}>(
       return (
         <AuthConsumer>
           {
-            ({ isAuthorized, getAuthState, setAuthState, purgeAuthState }: AuthContextProps) => (
+            ({
+              isAuthorized,
+              getAuthState,
+              setAuthState,
+              purgeAuthState,
+              authorize,
+              parseHash,
+              checkSession,
+              logout,
+            }: AuthContextProps) => (
               <WrappedComponent { ...this.props } auth={{
                 isAuthorized,
                 setAuthState,
                 purgeAuthState,
                 authState: getAuthState(),
+                authorize,
+                parseHash,
+                checkSession,
+                logout,
               }} />
             )
           }
