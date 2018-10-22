@@ -13,6 +13,12 @@ const isRelationReference = (fieldSchema: FieldSchema, data: any) => (
       &&
       (data.length === 0 || typeof data[0] === 'string')
     )
+    ||
+    (
+      Array.isArray(data)
+      &&
+      (data.length === 0 || typeof data[0].id === 'string')
+    )
   )
 );
 

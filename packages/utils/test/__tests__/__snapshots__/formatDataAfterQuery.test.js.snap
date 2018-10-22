@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As developer, I can format for create mutation, Compelex data. 1`] = `
+Object {
+  "relationList": Array [
+    Object {
+      "nestedRelation": "5b32159b66a450c047285628",
+      "scalar": "Relation List Scalar Value",
+      "scalarList": Array [
+        "Relation List Scalar List Value",
+      ],
+    },
+  ],
+}
+`;

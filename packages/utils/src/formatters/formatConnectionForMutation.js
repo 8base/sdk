@@ -6,7 +6,9 @@ const formatConnectionForMutation = (type: MutationType, data: Object) => {
   let formatedData = data;
 
   if (Array.isArray(formatedData)) {
-    formatedData = formatedData.map((id) => ({ id }));
+    formatedData = formatedData.map((item) => ({
+      id: typeof item === 'string' ? item : (item.id || item),
+    }));
   } else {
     formatedData = {
       id: typeof formatedData === 'string' ? formatedData : (formatedData.id || formatedData),
