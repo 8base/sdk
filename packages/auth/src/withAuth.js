@@ -15,10 +15,10 @@ interface AuthContextProps {
   getAuthState: () => AuthState,
   setAuthState: (AuthState) => void,
   purgeAuthState: () => void,
-  authorize: () => void,
+  authorize: (Array<any>) => void,
   parseHash: () => Promise<*>,
-  checkSession: () => Promise<*>,
-  logout: () => void,
+  checkSession: (any) => Promise<*>,
+  logout: (any) => void,
 }
 
 interface WithAuthProps {
@@ -26,10 +26,10 @@ interface WithAuthProps {
   authState: AuthState,
   setAuthState: (AuthState) => void,
   purgeAuthState: () => void,
-  authorize: () => void,
+  authorize: (Array<any>) => void,
   parseHash: () => Promise<*>,
-  checkSession: () => Promise<*>,
-  logout: () => void,
+  checkSession: (any) => Promise<*>,
+  logout: (any) => void,
 }
 
 interface AuthProps {

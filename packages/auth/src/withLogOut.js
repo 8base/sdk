@@ -8,7 +8,6 @@ const withLogOut = compose(
   withAuth,
   withHandlers({
     logOut: ({ auth: { purgeAuthState, logout }, client }) => () => {
-      purgeAuthState();
       logout();
 
       client.resetStore();
