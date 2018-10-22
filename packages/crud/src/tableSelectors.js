@@ -53,3 +53,9 @@ export const hasUserFields = R.pipe(
   R.prop('fields'),
   R.any(R.propEq('isSystem', false)),
 );
+
+export const isSettingsRefTable = createSelector(
+  getFieldById,
+  R.pathEq(['relation', 'refTable', 'name'], 'Settings'),
+);
+

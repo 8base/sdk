@@ -22,10 +22,13 @@ const getFieldPartOfTheQuery = createSelector(
   tableSelectors.isFileField,
   tableSelectors.isSmartField,
   tableSelectors.isListField,
-  (field, isRelation, isFile, isSmart, isList) => {
+  tableSelectors.isSettingsRefTable,
+  (field, isRelation, isFile, isSmart, isList, isSettingsRefTable) => {
     let postfix = '';
 
-    if (isRelation) {
+    if (isSettingsRefTable) {
+      postfix = '{ _description }';
+    } else if (isRelation) {
       postfix = '{ id _description }';
     } else if (isFile) {
       postfix = '{ id fileId filename downloadUrl shareUrl }';
