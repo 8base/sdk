@@ -49,9 +49,9 @@ export const getFieldNameById = createSelector(
   R.prop('name'),
 );
 
-export const hasUserFields = R.pipe(
+export const hasNonMetaFields = R.pipe(
   R.prop('fields'),
-  R.any(R.propEq('isSystem', false)),
+  R.any(R.propEq('isMeta', false)),
 );
 
 export const isSettingsRefTable = createSelector(
