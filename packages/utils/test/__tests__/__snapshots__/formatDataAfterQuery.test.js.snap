@@ -2,6 +2,17 @@
 
 exports[`As developer, I can format for create mutation, Compelex data. 1`] = `
 Object {
+  "address": Object {
+    "city": "Kenia Urhahn",
+    "state": "Scottie Swailes",
+    "street1": "Pamelia Quall",
+    "street2": "Lasonya Friedly",
+    "zip": "Timothy Ingleton",
+  },
+  "meta": "meta",
+  "relation": Object {
+    "scalar": "Relation Scalar Value",
+  },
   "relationList": Array [
     Object {
       "nestedRelation": "5b32159b66a450c047285628",
@@ -10,6 +21,10 @@ Object {
         "Relation List Scalar List Value",
       ],
     },
+  ],
+  "scalar": "Scalar Value",
+  "scalarList": Array [
+    "Scalar List Value",
   ],
 }
 `;

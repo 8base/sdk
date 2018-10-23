@@ -29,6 +29,8 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
       if (data[fieldName]) {
         result = R.assoc(fieldName, data[fieldName].items, result);
       }
+    } else {
+      result = R.assoc(fieldName, data[fieldName], result);
     }
 
     return result;
