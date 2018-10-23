@@ -71,9 +71,9 @@ export const createTableFilterGraphqlTag = (table: TableSchema) => `
   }`;
 
 export const createTableRowCreateTag = (table: TableSchema) => {
-  const hasUserFields = tableSelectors.hasUserFields(table);
+  const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
 
-  if (hasUserFields) {
+  if (hasNonMetaFields) {
     return `
   mutation DataViewer${upperFirst(table.name)}RowCreate($data: ${SchemaNameGenerator.getCreateInputName(table.name)}) {
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {

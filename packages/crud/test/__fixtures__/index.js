@@ -1,19 +1,19 @@
 export const COMMON_TABLE_SCHEMA = {
   name: 'commons',
   fields: [
-    { name: 'field1', id: '1', isSystem: false },
-    { name: 'field2', id: '2', isSystem: false },
-    { name: 'field3', id: '3', isSystem: false },
+    { name: 'field1', id: '1', isMeta: false, isSystem: false },
+    { name: 'field2', id: '2', isMeta: false, isSystem: false },
+    { name: 'field3', id: '3', isMeta: false, isSystem: false },
   ],
 };
 
 export const TABLE_SCHEMA_WITH_RELATION = {
   name: 'Relation',
   fields: [
-    { name: 'field1', isSystem: false, id: '1', fieldType: 'RELATION' },
-    { name: 'field2', isSystem: false, id: '2' },
-    { name: 'field3', isSystem: false, id: '3' },
-    { name: 'field4', isSystem: false, id: '4', fieldType: 'RELATION', isList: true },
+    { name: 'field1', isMeta: false, isSystem: false, id: '1', fieldType: 'RELATION' },
+    { name: 'field2', isMeta: false, isSystem: false, id: '2' },
+    { name: 'field3', isMeta: false, isSystem: false, id: '3' },
+    { name: 'field4', isMeta: false, isSystem: false, id: '4', fieldType: 'RELATION', isList: true },
   ],
 };
 
