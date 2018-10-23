@@ -24,7 +24,7 @@ class Form extends React.Component<FormProps> {
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, type, schema, onSubmit, ...restProps } = this.props;
+    const { mutators, tableSchema, type, schema, onSubmit, onSuccess, ...restProps } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
@@ -35,18 +35,28 @@ class Form extends React.Component<FormProps> {
 
     if (type && tableSchema && schema) {
       collectedProps.onSubmit = async (data, ...rest) => {
+        let result = null;
+
         try {
-          await onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), ...rest);
+          result = await onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), ...rest);
         } catch (e) {
-          if (e.graphQLErrors) {
-            const error = e.graphQLErrors[0];
+          result = R.assoc('errors', e.graphQLErrors, result);
+        }
 
-            if (error.code === errorCodes.ValidationErrorCode) {
-              return error.details;
-            }
+        const errors = R.pathOr([], ['errors'], result);
 
-            return { [FORM_ERROR]: error.message };
+        if (errors.length > 0) {
+          const error = errors[0];
+
+          if (error.code === errorCodes.ValidationErrorCode) {
+            return error.details;
           }
+
+          return { [FORM_ERROR]: error.message };
+        }
+
+        if (typeof onSuccess === 'function') {
+          onSuccess(result, ...rest);
         }
       };
     }
