@@ -1,4 +1,5 @@
 // @flow
+import type { FormApi } from 'final-form';
 import type { FormProps as FinalFormProps, FieldProps as FinalFieldProps } from 'react-final-form';
 import type { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
 import type { FieldType } from '@8base/utils';
@@ -41,6 +42,7 @@ type FormProps = {
   tableSchema?: TableSchema,
   schema?: Schema,
   type?: 'CREATE' | 'UPDATE',
+  onSuccess: (result: any, form: FormApi) => void,
 } & FinalFormProps;
 
 type FieldsetProps = {
