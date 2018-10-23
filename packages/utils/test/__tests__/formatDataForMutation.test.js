@@ -138,11 +138,8 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
-  it('Data with list of the file objects.', () => {
-    const fileList = [{
-      fileId: 'file-id',
-      filename: 'Screenshot at авг. 13 15-22-49.png',
-    }];
+  it('Data with list of files null .', () => {
+    const fileList = [null];
 
     const data = {
       fileList,
@@ -150,7 +147,24 @@ describe('As developer, I can format for create mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       fileList: {
-        create: fileList,
+        create: [],
+      },
+    });
+  });
+
+  it('Data with list of the file objects.', () => {
+    const fileList = [{
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+    }, null, null];
+
+    const data = {
+      fileList,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      fileList: {
+        create: fileList.slice(0, 1),
       },
     });
   });
