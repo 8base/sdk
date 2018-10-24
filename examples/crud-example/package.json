@@ -1,12 +1,12 @@
 {
   "name": "crud-example",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "private": true,
   "dependencies": {
-    "@8base/app-provider": "^0.4.10",
-    "@8base/auth": "^0.4.10",
+    "@8base/app-provider": "^0.4.11",
+    "@8base/auth": "^0.4.11",
     "@8base/boost": "^0.5.19",
-    "@8base/forms": "^0.4.10",
+    "@8base/forms": "^0.4.11",
     "apollo-client": "^2.4.2",
     "emotion": "^9.2.8",
     "graphql": "^0.13.2",
