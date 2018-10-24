@@ -52,3 +52,14 @@ export const MUTATION_TYPE = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
 };
+
+export const SYSTEM_TABLES = {
+  USERS: 'Users',
+  FILES: 'Files',
+  SETTINGS: 'Settings',
+  ROLES: 'Roles',
+  INVITATIONS: 'Invitations',
+  PERMISSIONS: 'Permissions',
+  API_TOKENS: 'ApiTokens',
+  ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
+};
