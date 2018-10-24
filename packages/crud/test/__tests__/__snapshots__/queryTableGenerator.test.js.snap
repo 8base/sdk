@@ -2,7 +2,7 @@
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by common table schema  1`] = `
 "
-  mutation DataViewerCommonsRowCreate($data: CommonCreateInput) {
+  mutation DataViewerCommonsRowCreate($data: CommonCreateInput!) {
     commonCreate(data: $data) {
       field1
       field2
@@ -14,7 +14,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
 "
-  mutation DataViewerSmartFieldsRowCreate($data: SmartFieldCreateInput) {
+  mutation DataViewerSmartFieldsRowCreate($data: SmartFieldCreateInput!) {
     smartFieldCreate(data: $data) {
       phone { code number }
       address { street1 street2 zip city state }
@@ -36,7 +36,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
 "
-  mutation DataViewerFilesRowCreate($data: FileCreateInput) {
+  mutation DataViewerFilesRowCreate($data: FileCreateInput!) {
     fileCreate(data: $data) {
       file { id fileId filename downloadUrl shareUrl }
       fileList { items { id fileId filename downloadUrl shareUrl } }
@@ -47,7 +47,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
 "
-  mutation DataViewerRelationRowCreate($data: RelationCreateInput) {
+  mutation DataViewerRelationRowCreate($data: RelationCreateInput!) {
     relationCreate(data: $data) {
       field1 { id _description }
       field2
@@ -60,7 +60,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
 "
-  mutation DataViewerCommonsRowDelete($data: CommonDeleteInput) {
+  mutation DataViewerCommonsRowDelete($data: CommonDeleteInput!) {
     commonDelete(data: $data) {
       success
     }
@@ -69,7 +69,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
 "
-  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput) {
+  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput!) {
     smartFieldDelete(data: $data) {
       success
     }
@@ -78,7 +78,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
 "
-  mutation DataViewerFilesRowDelete($data: FileDeleteInput) {
+  mutation DataViewerFilesRowDelete($data: FileDeleteInput!) {
     fileDelete(data: $data) {
       success
     }
@@ -87,7 +87,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
 "
-  mutation DataViewerRelationRowDelete($data: RelationDeleteInput) {
+  mutation DataViewerRelationRowDelete($data: RelationDeleteInput!) {
     relationDelete(data: $data) {
       success
     }
@@ -96,7 +96,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
 "
-  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput) {
+  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!) {
     commonUpdate(data: $data) {
       field1
       field2
@@ -108,7 +108,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
 "
-  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput) {
+  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!) {
     smartFieldUpdate(data: $data) {
       phone { code number }
       address { street1 street2 zip city state }
@@ -120,7 +120,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
 "
-  mutation DataViewerFilesRowUpdate($data: FileUpdateInput) {
+  mutation DataViewerFilesRowUpdate($data: FileUpdateInput!) {
     fileUpdate(data: $data) {
       file { id fileId filename downloadUrl shareUrl }
       fileList { items { id fileId filename downloadUrl shareUrl } }
@@ -131,7 +131,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
 "
-  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput) {
+  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!) {
     relationUpdate(data: $data) {
       field1 { id _description }
       field2

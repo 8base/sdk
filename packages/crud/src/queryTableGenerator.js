@@ -75,7 +75,7 @@ export const createTableRowCreateTag = (table: TableSchema) => {
 
   if (hasNonMetaFields) {
     return `
-  mutation DataViewer${upperFirst(table.name)}RowCreate($data: ${SchemaNameGenerator.getCreateInputName(table.name)}) {
+  mutation DataViewer${upperFirst(table.name)}RowCreate($data: ${SchemaNameGenerator.getCreateInputName(table.name)}!) {
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
       ${createQueryStringWithoutMetaFields(table)}
       id
@@ -93,7 +93,7 @@ export const createTableRowCreateTag = (table: TableSchema) => {
 };
 
 export const createTableRowUpdateTag = (table: TableSchema) => `
-  mutation DataViewer${upperFirst(table.name)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(table.name)}) {
+  mutation DataViewer${upperFirst(table.name)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(table.name)}!) {
     ${SchemaNameGenerator.getUpdateItemFieldName(table.name)}(data: $data) {
       ${createQueryStringWithoutMetaFields(table)}
       id
@@ -108,7 +108,7 @@ export const createTableRowQueryTag = (table: TableSchema) => `
   }`;
 
 export const createTableRowDeleteTag = (table: TableSchema) => `
-  mutation DataViewer${upperFirst(table.name)}RowDelete($data: ${SchemaNameGenerator.getDeleteInputName(table.name)}) {
+  mutation DataViewer${upperFirst(table.name)}RowDelete($data: ${SchemaNameGenerator.getDeleteInputName(table.name)}!) {
     ${SchemaNameGenerator.getDeleteItemFieldName(table.name)}(data: $data) {
       success
     }
