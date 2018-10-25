@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
