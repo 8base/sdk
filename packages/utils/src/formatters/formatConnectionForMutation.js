@@ -1,4 +1,6 @@
 //@flow
+import * as R from 'ramda';
+
 import { MUTATION_TYPE } from '../constants';
 import type { MutationType } from '../types';
 
@@ -6,6 +8,8 @@ const formatConnectionForMutation = (type: MutationType, data: Object) => {
   let formatedData = data;
 
   if (Array.isArray(formatedData)) {
+    formatedData = R.reject(R.isNil, formatedData);
+
     formatedData = formatedData.map((item) => ({
       id: typeof item === 'string' ? item : (item.id || item),
     }));

@@ -370,6 +370,26 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Data with list of the file objects.', () => {
+    const fileList = [{
+      id: '1234',
+      fileId: 'file-id',
+      filename: 'Screenshot at авг. 13 15-22-49.png',
+    }, null, null];
+
+    const data = {
+      fileList,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      fileList: {
+        reconnect: [{
+          id: fileList[0].id,
+        }],
+      },
+    });
+  });
+
   it('Compelex data.', () => {
     const data = {
       meta: 'meta',

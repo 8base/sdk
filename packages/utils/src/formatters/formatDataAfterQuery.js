@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
-import { isRelationField, isListField } from '../verifiers';
+import { isRelationField, isFileField, isListField } from '../verifiers';
 import type { FieldSchema, TableSchema, Schema } from '../types';
 
 /**
@@ -25,7 +25,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
       return result;
     }
 
-    if (isRelationField(fieldSchema) && isListField(fieldSchema)) {
+    if ((isRelationField(fieldSchema) || isFileField(fieldSchema)) && isListField(fieldSchema)) {
       if (data[fieldName]) {
         result = R.assoc(fieldName, data[fieldName].items, result);
       }
