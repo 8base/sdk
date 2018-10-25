@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { withAuth, type AuthContextProps } from '@8base/auth';
@@ -139,7 +140,7 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
     if (loading) return children({ loading });
 
     return (
-      <TableSchemaContext.Provider value={ data.tablesList.items }>
+      <TableSchemaContext.Provider value={ R.pathOr([], ['tablesList', 'items'], data) }>
         { children({ loading }) }
       </TableSchemaContext.Provider>
     );
