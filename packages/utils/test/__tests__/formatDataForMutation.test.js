@@ -57,6 +57,16 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
+  it('Data with null file.', () => {
+    const data = {
+      file: null,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: null,
+    });
+  });
+
   it('Data with file reference.', () => {
     const data = {
       file: '5b32159b66a4500f96285626',
@@ -248,6 +258,16 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relation: null,
+    });
+  });
+
+  it('Data with null file.', () => {
+    const data = {
+      file: null,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      file: null,
     });
   });
 
