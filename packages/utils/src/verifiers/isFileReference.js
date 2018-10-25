@@ -12,9 +12,19 @@ const isFileReference = (fieldSchema: FieldSchema, data: any) => (
   (
     typeof data === 'string'
     ||
-    (data.length === 0 || typeof data[0] === 'string')
+    (
+      data && typeof data.id === 'string'
+    )
     ||
-    (data && typeof data.id === 'string')
+    (
+      Array.isArray(data)
+      &&
+      (
+        data.length === 0
+        ||
+        isFileReference(fieldSchema, data[0])
+      )
+    )
   )
 );
 
