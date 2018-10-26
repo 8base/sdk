@@ -25,7 +25,6 @@ Object {
       "shareUrl": "https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqop0000601qnytfd866c",
     },
   ],
-  "meta": "meta",
   "relation": Object {
     "scalar": "Relation Scalar Value",
   },
