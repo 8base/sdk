@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
-import { isRelationField, isFileField, isListField } from '../verifiers';
+import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';
 import type { FieldSchema, TableSchema, Schema } from '../types';
 
 /**
@@ -29,7 +29,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
       if (data[fieldName]) {
         result = R.assoc(fieldName, data[fieldName].items, result);
       }
-    } else {
+    } else if (!isMetaField(fieldSchema)) {
       result = R.assoc(fieldName, data[fieldName], result);
     }
 
