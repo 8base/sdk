@@ -251,6 +251,26 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Data with relation with existed id.', () => {
+    const data = {
+      relation: {
+        id: 'id',
+        scalar: 'Relation Scalar Value',
+        scalarList: [
+          'Relation Scalar List Value',
+        ],
+      },
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      relation: {
+        reconnect: {
+          id: 'id',
+        },
+      },
+    });
+  });
+
   it('Data with null relation.', () => {
     const data = {
       relation: null,
