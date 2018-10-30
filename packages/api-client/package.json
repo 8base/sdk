@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "0.4.16",
+  "version": "0.4.17",
   "main": "lib/api-client.js",
   "scripts": {
     "build": "webpack --env prod",
@@ -9,7 +9,7 @@
     "watch": "webpack --progress --colors --watch --env dev"
   },
   "devDependencies": {
-    "@8base/webpack-configuration": "0.4.16",
+    "@8base/webpack-configuration": "^0.4.17",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
