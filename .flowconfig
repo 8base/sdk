@@ -1,6 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/packages/local-*
 <PROJECT_ROOT>/examples/crud-example
+<PROJECT_ROOT>/.*/node_modules/graphql/.*js.flow
 
 [include]
 
