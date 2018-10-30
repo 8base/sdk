@@ -3,12 +3,13 @@
   "version": "0.4.16",
   "main": "lib/api-client.js",
   "scripts": {
-    "build": "webpack --env dev && webpack --env build",
+    "build": "webpack --env prod",
     "docs": "documentation readme src/Client.js --section=API",
     "test": "NODE_ENV=test jest",
     "watch": "webpack --progress --colors --watch --env dev"
   },
   "devDependencies": {
+    "@8base/webpack-configuration": "0.4.16",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -17,7 +18,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "documentation": "^8.0.0",
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "graphql-tag": "^2.9.2",
     "jest": "^23.5.0",
     "nock": "^9.3.3",
@@ -32,7 +33,7 @@
     "graphql-tag": "^2.9.2"
   },
   "peerDependencies": {
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "ramda": "^0.25.0"
   },
   "jest": {
