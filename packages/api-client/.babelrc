@@ -11,7 +11,8 @@
     "flow"
   ],
   "plugins": [
-    "babel-plugin-add-module-exports",
-    "babel-plugin-transform-class-properties"
+    "add-module-exports",
+    "transform-class-properties",
+    "syntax-object-rest-spread"
   ]
 }

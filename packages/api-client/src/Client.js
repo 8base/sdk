@@ -131,8 +131,8 @@ class Client {
     if (hasIdTokenExpiredError(R.pathOr([], ['response', 'errors'], err))) {
       return this.tryToRefreshToken(err);
     }
-    throw err;
 
+    throw err;
   };
 
   /**

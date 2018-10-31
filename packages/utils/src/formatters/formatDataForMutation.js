@@ -14,7 +14,7 @@ import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
  * @param {Object} data - The entity data for format.
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  */
-const formatDataForMutation = (type: MutationType, tableName: string, data: Object, schema: Schema) => {
+const formatDataForMutation = (type: MutationType, tableName: string, data: Object, schema: Schema, options: Object = {}) => {
   if (R.not(type in MUTATION_TYPE)) {
     throw new Error(`Invalid mutation type: ${type}`);
   }
@@ -33,16 +33,31 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: Obje
     const fieldSchema: ?FieldSchema = getFieldSchemaByName(fieldName, tableSchema);
 
     if (!fieldSchema) {
-      throw new Error(`Field schema with ${fieldName} name not found in table schema with ${tableSchema.name} name.`);
+      // throw new Error(`Field schema with ${fieldName} name not found in table schema with ${tableSchema.name} name.`);
+      return result;
+    }
+
+    const { skip } = options;
+
+    if (typeof skip === 'function' && skip(data[fieldName], fieldSchema)) {
+      return result;
     }
 
     if (isMetaField(fieldSchema)) {
       return result;
     }
 
+    let formatedFieldData = formatFieldDataForMutation(type, fieldSchema, data[fieldName], schema);
+
+    const { mutate } = options;
+
+    if (typeof mutate === 'function') {
+      formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);
+    }
+
     return {
       ...result,
-      [fieldName]: formatFieldDataForMutation(type, fieldSchema, data[fieldName], schema),
+      [fieldName]: formatedFieldData,
     };
   }, {}, R.keys(data));
 

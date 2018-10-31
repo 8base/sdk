@@ -1,0 +1,474 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can export schema of the user tables. 1`] = `
+Array [
+  Object {
+    "body": Object {
+      "query": "
+  query TableList($filter: TableListFilter) {
+    tablesList(filter: $filter) {
+      items {
+        ...TableFragment
+      }
+    }
+  }
+
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...SmartFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
+    id
+    name
+    displayName
+    description
+    fieldType
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+    }
+    isList
+    isRequired
+    isUnique
+    defaultValue
+    isSystem
+    isMeta
+    relation {
+      refFieldName
+      refFieldDisplayName
+      relationTableName
+      relationFieldName
+      refTable {
+        id
+        name
+      }
+      refFieldIsList
+      refFieldIsRequired
+    }
+  }
+
+  fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
+    format
+  }
+
+  fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
+    format
+    fieldSize
+  }
+
+  fragment NumberFieldTypeAttributes on NumberFieldTypeAttributes {
+    format
+    precision
+    currency
+    minValue
+    maxValue
+  }
+
+  fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
+    format
+    showTitle
+    showUrl
+    maxSize
+    typeRestrictions
+  }
+
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
+    format
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+  }
+
+  fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
+    format
+    listOptions
+  }
+",
+      "variables": Object {
+        "filter": Object {
+          "onlyUserTables": false,
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "2352",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation create($data: ClientCreateInput!) {
+          field: clientCreate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {
+          "fullName": "Jacalyn Mccarrel",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "213",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation create($data: OrderCreateInput!) {
+          field: orderCreate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {},
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "182",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation create($data: OrderCreateInput!) {
+          field: orderCreate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {},
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "182",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query User {
+    user {
+      id
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "79",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation update($data: ClientUpdateInput!) {
+          field: clientUpdate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {
+          "id": "remote-client-1",
+          "orders": Object {
+            "connect": Array [
+              Object {
+                "id": "remote-order-1",
+              },
+              Object {
+                "id": "remote-order-2",
+              },
+            ],
+          },
+          "user": Object {
+            "connect": Object {
+              "id": "USER_ID",
+            },
+          },
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "313",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation update($data: OrderUpdateInput!) {
+          field: orderUpdate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {
+          "client": Object {
+            "connect": Object {
+              "id": "remote-client-1",
+            },
+          },
+          "id": "remote-order-1",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "249",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+        mutation update($data: OrderUpdateInput!) {
+          field: orderUpdate(data: $data) {
+            id
+          }
+        }
+      ",
+      "variables": Object {
+        "data": Object {
+          "client": Object {
+            "connect": Object {
+              "id": "remote-client-1",
+            },
+          },
+          "id": "remote-order-2",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "249",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+]
+`;

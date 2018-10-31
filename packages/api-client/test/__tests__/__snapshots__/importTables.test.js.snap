@@ -1,0 +1,418 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can export schema of the user tables. 1`] = `
+Array [
+  Object {
+    "body": Object {
+      "query": "
+  mutation TableCreate($data: TableCreateInput!) {
+    tableCreate(data: $data) {
+      id
+    }
+  }
+",
+      "variables": Object {
+        "data": Object {
+          "displayName": "Clients",
+          "name": "clients",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "184",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  mutation TableCreate($data: TableCreateInput!) {
+    tableCreate(data: $data) {
+      id
+    }
+  }
+",
+      "variables": Object {
+        "data": Object {
+          "displayName": "Orders",
+          "name": "orders",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "182",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query TableList($filter: TableListFilter) {
+    tablesList(filter: $filter) {
+      items {
+        ...TableFragment
+      }
+    }
+  }
+
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...SmartFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
+    id
+    name
+    displayName
+    description
+    fieldType
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+    }
+    isList
+    isRequired
+    isUnique
+    defaultValue
+    isSystem
+    isMeta
+    relation {
+      refFieldName
+      refFieldDisplayName
+      relationTableName
+      relationFieldName
+      refTable {
+        id
+        name
+      }
+      refFieldIsList
+      refFieldIsRequired
+    }
+  }
+
+  fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
+    format
+  }
+
+  fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
+    format
+    fieldSize
+  }
+
+  fragment NumberFieldTypeAttributes on NumberFieldTypeAttributes {
+    format
+    precision
+    currency
+    minValue
+    maxValue
+  }
+
+  fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
+    format
+    showTitle
+    showUrl
+    maxSize
+    typeRestrictions
+  }
+
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
+    format
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+  }
+
+  fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
+    format
+    listOptions
+  }
+",
+      "variables": Object {
+        "filter": Object {
+          "onlyUserTables": false,
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "2352",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  mutation FieldCreate($data: TableFieldCreateInput!) {
+    fieldCreate(data: $data) {
+      id
+    }
+  }
+",
+      "variables": Object {
+        "data": Object {
+          "defaultValue": null,
+          "description": null,
+          "displayName": "User",
+          "fieldType": "RELATION",
+          "fieldTypeAttributes": null,
+          "isList": false,
+          "isRequired": false,
+          "isUnique": null,
+          "name": "user",
+          "relation": Object {
+            "refFieldDisplayName": "Client",
+            "refFieldIsList": true,
+            "refFieldIsRequired": false,
+            "refFieldName": "client",
+            "refTableId": "usersTableId",
+          },
+          "tableId": "clientsTableId",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "494",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  mutation FieldCreate($data: TableFieldCreateInput!) {
+    fieldCreate(data: $data) {
+      id
+    }
+  }
+",
+      "variables": Object {
+        "data": Object {
+          "defaultValue": null,
+          "description": null,
+          "displayName": "Full Name",
+          "fieldType": "TEXT",
+          "fieldTypeAttributes": Object {
+            "fieldSize": 500,
+            "format": "UNFORMATTED",
+          },
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "name": "fullName",
+          "relation": null,
+          "tableId": "clientsTableId",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "407",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  mutation FieldCreate($data: TableFieldCreateInput!) {
+    fieldCreate(data: $data) {
+      id
+    }
+  }
+",
+      "variables": Object {
+        "data": Object {
+          "defaultValue": null,
+          "description": null,
+          "displayName": "Orders",
+          "fieldType": "RELATION",
+          "fieldTypeAttributes": null,
+          "isList": true,
+          "isRequired": false,
+          "isUnique": null,
+          "name": "orders",
+          "relation": Object {
+            "refFieldDisplayName": "Client",
+            "refFieldIsList": false,
+            "refFieldIsRequired": false,
+            "refFieldName": "client",
+            "refTableId": "ordersTableId",
+          },
+          "tableId": "clientsTableId",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "499",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+]
+`;
