@@ -1,6 +1,6 @@
 {
   "name": "@8base/validate",
-  "version": "0.4.20",
+  "version": "0.4.21",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "jest": "^23.1.0"
   },
   "dependencies": {
-    "@8base/utils": "^0.4.20",
+    "@8base/utils": "^0.4.21",
     "ramda": "^0.25.0"
   }
 }
