@@ -14,6 +14,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
@@ -29,7 +30,9 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
-    "graphql-request": "^1.6.0",
+    "@8base/sdk": "^0.0.72",
+    "@8base/utils": "^0.4.18",
+    "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2"
   },
   "peerDependencies": {

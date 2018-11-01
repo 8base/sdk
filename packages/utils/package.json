@@ -6,7 +6,7 @@
     "build": "webpack --env prod",
     "docs": "NODE_ENV=test documentation readme src/formatters/formatDataForMutation.js --section=API",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --progress --colors --watch --env dev"
   },
   "jest": {
     "setupFiles": [

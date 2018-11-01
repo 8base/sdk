@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can export schema of the user tables. 1`] = `
+Array [
+  Object {
+    "displayName": "Users",
+    "fields": Array [
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "Client",
+        "fieldType": "RELATION",
+        "fieldTypeAttributes": null,
+        "id": "5bd9b58e7bc6e85182df1886",
+        "isList": true,
+        "isMeta": false,
+        "isRequired": false,
+        "isSystem": false,
+        "isUnique": null,
+        "name": "client",
+        "relation": Object {
+          "refFieldDisplayName": "User",
+          "refFieldIsList": false,
+          "refFieldIsRequired": false,
+          "refFieldName": "user",
+          "refTable": Object {
+            "id": "clientsTableId",
+            "name": "clients",
+          },
+          "relationFieldName": "aid",
+          "relationTableName": "y16z0t27",
+        },
+      },
+    ],
+    "id": "usersTableId",
+    "isSystem": true,
+    "name": "Users",
+  },
+  Object {
+    "displayName": "Clients",
+    "fields": Array [
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "ID",
+        "fieldType": "ID",
+        "fieldTypeAttributes": null,
+        "id": "clientsIdFieldId",
+        "isList": false,
+        "isMeta": true,
+        "isRequired": true,
+        "isSystem": true,
+        "isUnique": true,
+        "name": "id",
+        "relation": null,
+      },
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "User",
+        "fieldType": "RELATION",
+        "fieldTypeAttributes": null,
+        "id": "clientsUserFieldId",
+        "isList": false,
+        "isMeta": false,
+        "isRequired": false,
+        "isSystem": false,
+        "isUnique": null,
+        "name": "user",
+        "relation": Object {
+          "refFieldDisplayName": "Client",
+          "refFieldIsList": true,
+          "refFieldIsRequired": false,
+          "refFieldName": "client",
+          "refTable": Object {
+            "id": "usersTableId",
+            "name": "Users",
+          },
+          "relationFieldName": "aid",
+          "relationTableName": "y16z0t27",
+        },
+      },
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "Full Name",
+        "fieldType": "TEXT",
+        "fieldTypeAttributes": Object {
+          "fieldSize": 500,
+          "format": "UNFORMATTED",
+        },
+        "id": "clientsFullNameFieldId",
+        "isList": false,
+        "isMeta": false,
+        "isRequired": false,
+        "isSystem": false,
+        "isUnique": false,
+        "name": "fullName",
+        "relation": null,
+      },
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "Orders",
+        "fieldType": "RELATION",
+        "fieldTypeAttributes": null,
+        "id": "clientsUserFieldId",
+        "isList": true,
+        "isMeta": false,
+        "isRequired": false,
+        "isSystem": false,
+        "isUnique": null,
+        "name": "orders",
+        "relation": Object {
+          "refFieldDisplayName": "Client",
+          "refFieldIsList": false,
+          "refFieldIsRequired": false,
+          "refFieldName": "client",
+          "refTable": Object {
+            "id": "ordersTableId",
+            "name": "orders",
+          },
+          "relationFieldName": "aid",
+          "relationTableName": "y16z0t27",
+        },
+      },
+    ],
+    "id": "clientsTableId",
+    "isSystem": false,
+    "name": "clients",
+  },
+  Object {
+    "displayName": "Orders",
+    "fields": Array [
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "ID",
+        "fieldType": "ID",
+        "fieldTypeAttributes": null,
+        "id": "ordersIdFieldId",
+        "isList": false,
+        "isMeta": true,
+        "isRequired": true,
+        "isSystem": true,
+        "isUnique": true,
+        "name": "id",
+        "relation": null,
+      },
+      Object {
+        "defaultValue": null,
+        "description": null,
+        "displayName": "Clients",
+        "fieldType": "RELATION",
+        "fieldTypeAttributes": null,
+        "id": "clientsUserFieldId",
+        "isList": false,
+        "isMeta": false,
+        "isRequired": false,
+        "isSystem": false,
+        "isUnique": null,
+        "name": "client",
+        "relation": Object {
+          "refFieldDisplayName": "Order",
+          "refFieldIsList": true,
+          "refFieldIsRequired": false,
+          "refFieldName": "order",
+          "refTable": Object {
+            "id": "clientsTableId",
+            "name": "clients",
+          },
+          "relationFieldName": "aid",
+          "relationTableName": "y16z0t27",
+        },
+      },
+    ],
+    "id": "ordersTableId",
+    "isSystem": false,
+    "name": "orders",
+  },
+]
+`;
+
+exports[`As a developer, I can export schema of the user tables. 2`] = `
+Object {
+  "body": Object {
+    "query": "
+  query TableList($filter: TableListFilter) {
+    tablesList(filter: $filter) {
+      items {
+        ...TableFragment
+      }
+    }
+  }
+
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...SmartFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
+    id
+    name
+    displayName
+    description
+    fieldType
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+    }
+    isList
+    isRequired
+    isUnique
+    defaultValue
+    isSystem
+    isMeta
+    relation {
+      refFieldName
+      refFieldDisplayName
+      relationTableName
+      relationFieldName
+      refTable {
+        id
+        name
+      }
+      refFieldIsList
+      refFieldIsRequired
+    }
+  }
+
+  fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
+    format
+  }
+
+  fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
+    format
+    fieldSize
+  }
+
+  fragment NumberFieldTypeAttributes on NumberFieldTypeAttributes {
+    format
+    precision
+    currency
+    minValue
+    maxValue
+  }
+
+  fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
+    format
+    showTitle
+    showUrl
+    maxSize
+    typeRestrictions
+  }
+
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
+    format
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+  }
+
+  fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
+    format
+    listOptions
+  }
+",
+    "variables": Object {
+      "filter": Object {
+        "onlyUserTables": true,
+      },
+    },
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "authorization": Array [
+      "Bearer idToken",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "2351",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
+    ],
+  },
+}
+`;
