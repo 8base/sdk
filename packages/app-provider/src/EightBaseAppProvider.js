@@ -7,6 +7,9 @@ import { ApolloContainer } from './ApolloContainer';
 type EightBaseAppProviderProps = {
   uri: string,
   children: ({ loading: boolean }) => React$Node,
+  authDomain: string,
+  authClientId: string,
+  authRedirectUri: string,
 };
 
 /**
@@ -14,8 +17,8 @@ type EightBaseAppProviderProps = {
  * @prop {string} [uri] - The 8base API field schema.
  * @prop {Function} [children] - The render function.
  */
-const EightBaseAppProvider = ({ uri, children }: EightBaseAppProviderProps) => (
-  <AuthProvider>
+const EightBaseAppProvider = ({ uri, authDomain, authClientId, authRedirectUri, children }: EightBaseAppProviderProps) => (
+  <AuthProvider domain={ authDomain } clientID={ authClientId } redirectUri={ authRedirectUri }>
     <ApolloContainer uri={ uri }>
       <TableSchemaProvider>
         { children }

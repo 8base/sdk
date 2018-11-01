@@ -8,42 +8,53 @@ import { withAuth } from '@8base/auth';
 
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
+const getIdToken = R.path(['idToken']);
+
 class ApolloContainer extends React.Component {
-  getRefreshTokenParameters = () => {
-    const { auth: { authState: { email, refreshToken }}} = this.props;
+  onIdTokenExpired = () => {
+    const {
+      auth: {
+        setAuthState,
+        checkSession,
+      },
+    } = this.props;
 
-    return { email, refreshToken };
-  };
+    return checkSession({}).then((authResult) => {
+      const idToken = getIdToken(authResult);
 
-  onAuthSuccess = ({ refreshToken, idToken }) => {
-    const { auth: { setAuthState }} = this.props;
-
-    setAuthState({
-      idToken,
-      refreshToken,
+      setAuthState({ idToken });
     });
   };
 
   onAuthError = () => {
-    const { auth: { purgeAuthState }} = this.props;
+    const { auth: { logout }} = this.props;
 
-    purgeAuthState();
+    logout({
+      returnTo: `${window.location.origin}/auth`,
+    });
   };
 
   getAuthState = () => {
-    const { auth: { authState: { idToken, workspaceId }}} = this.props;
+    const {
+      auth: {
+        authState,
+      },
+    } = this.props;
 
-    return {
-      idToken,
-      workspaceId,
-    };
+    if (authState) {
+      return R.pick([
+        'idToken',
+        'workspaceId',
+      ])(authState);
+    }
+
+    return null;
   };
 
   createClient = R.memoize((fragmentsSchema) => {
     return new EightBaseApolloClient({
       getAuthState: this.getAuthState,
       getRefreshTokenParameters: this.getRefreshTokenParameters,
-      onAuthSuccess: this.onAuthSuccess,
       onAuthError: this.onAuthError,
       uri: this.props.uri,
       cache: new InMemoryCache({ fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData: fragmentsSchema }) }),
