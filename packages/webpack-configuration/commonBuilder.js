@@ -33,11 +33,7 @@ const commonBuilder = (ROOT_DIR, LIBRARY_NAME) => ({
     new PeerDepsExternalsPlugin(),
     // new BundleAnalyzerPlugin(),
   ],
-  externals: {
-    '@8base/sdk': '@8base/sdk',
-    ramda: 'ramda',
-    lodash: 'lodash',
-  },
+  externals: {},
   node: {
     fs: 'empty',
     tls: 'empty',
