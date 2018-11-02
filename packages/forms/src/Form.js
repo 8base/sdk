@@ -6,7 +6,7 @@ import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
 import type { FormProps as FinalFormProps } from 'react-final-form';
-import { formatDataForMutation } from '@8base/utils';
+import { formatDataForMutation, formatDataAfterQuery, MUTATION_TYPE } from '@8base/utils';
 import errorCodes from '@8base/error-codes';
 
 import { FormContext } from './FormContext';
@@ -24,16 +24,21 @@ class Form extends React.Component<FormProps> {
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, type, schema, onSubmit, onSuccess, ...restProps } = this.props;
+    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, ...restProps } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
       tableSchema,
       onSubmit,
+      initialValues,
       ...restProps,
     };
 
     if (type && tableSchema && schema) {
+      if (type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
+        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema);
+      }
+
       collectedProps.onSubmit = async (data, ...rest) => {
         let result = null;
 
