@@ -65,7 +65,30 @@ describe('should call onChange when file is uploaded', async () => {
     await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename' });
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: false });
+  });
+
+  it('for single file input with public modifier', async() => {
+    const renderFileInputView = jest.fn(() => null);
+    const onChange = jest.fn();
+
+    renderer.create(
+      <FileInput onChange={ onChange } public>
+        { renderFileInputView }
+      </FileInput>,
+    );
+
+    expect(renderFileInputView).toHaveBeenCalledTimes(1);
+
+    await renderFileInputView.mock.calls[0][0].pick();
+
+    expect(mock_client.query).toHaveBeenCalledTimes(1);
+    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: true });
   });
 
   it('for multiple files input', async() => {
@@ -96,9 +119,9 @@ describe('should call onChange when file is uploaded', async () => {
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual(
       [
-        { fileId: 'handle1', filename: 'filename1' },
-        { fileId: 'handle2', filename: 'filename2' },
-        { fileId: 'handle3', filename: 'filename3' },
+        { fileId: 'handle1', filename: 'filename1', public: false },
+        { fileId: 'handle2', filename: 'filename2', public: false },
+        { fileId: 'handle3', filename: 'filename3', public: false },
       ],
     );
   });
@@ -129,7 +152,7 @@ describe('should call onChange when file is uploaded', async () => {
     await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', id: 'id', downloadUrl: 'downloadUrl' });
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', id: 'id', downloadUrl: 'downloadUrl', public: false });
   });
 });
 

@@ -20,6 +20,7 @@ type FileInputProps = {
   value?: FileInputValue,
   maxFiles?: number,
   accept?: string | string[],
+  public?: boolean,
   onUploadFinish?: (value: FileInputValue) => Promise<FileInputValue>,
 };
 
@@ -92,6 +93,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     let value = filesUploaded.map(({ handle, filename }) => ({
       fileId: handle,
       filename,
+      public: !!this.props.public,
     }));
 
     const { maxFiles, onUploadFinish } = this.props;
