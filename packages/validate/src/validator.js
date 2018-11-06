@@ -65,7 +65,13 @@ const checkRequired: PreparedValidator = R.ifElse(
 );
 
 const checkIsNumber: PreparedValidator = R.ifElse(
-  R.pipe(Number, R.complement(Number.isNaN)),
+  R.pipe(
+    R.cond([
+      [R.isNil, R.always(0)],
+      [R.T, Number],
+    ]),
+    R.complement(Number.isNaN)
+  ),
   R.always(undefined),
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
