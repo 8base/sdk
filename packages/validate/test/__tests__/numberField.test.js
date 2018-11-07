@@ -54,7 +54,7 @@ describe('As developer, i can create number field vaidator', () => {
 
     expect(validate(null)).toBeUndefined();
   });
-  
+
   it('should check undefined value by number format and return undefined', () => {
     const numberField: NumberField = mockNumberField();
     const validate: PreparedValidator = validator(numberField);

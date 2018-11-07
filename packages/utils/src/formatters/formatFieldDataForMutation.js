@@ -1,22 +1,28 @@
 //@flow
-import { isRelationReference, isRelationInstance, isFileReference, isFileInstance } from '../verifiers';
-import { formatConnectionForMutation } from './formatConnectionForMutation';
-import { formatRelationCreationForMutation } from './formatRelationCreationForMutation';
-import { formatFileCreationForMutation } from './formatFileCreationForMutation';
+import * as R from 'ramda';
+
+import { isListField, isFileField, isRelationField } from '../verifiers';
+import { formatFieldDataList } from './formatFieldDataList';
+import { formatFieldData } from './formatFieldData';
+
 import type { MutationType, FieldSchema, Schema } from '../types';
 
-const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: Object, schema: Schema) => {
-  let formatedData = data;
+const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
+  let nextData = data;
 
-  if (isRelationReference(fieldSchema, data) || isFileReference(fieldSchema, data)) {
-    formatedData = formatConnectionForMutation(type, data);
-  } else if (isRelationInstance(fieldSchema, data)) {
-    formatedData = formatRelationCreationForMutation(type, fieldSchema, data, schema);
-  } else if (isFileInstance(fieldSchema, data)) {
-    formatedData = formatFileCreationForMutation(type, data);
+  if (R.isNil(data)) {
+    return nextData;
   }
 
-  return formatedData;
+  if (isFileField(fieldSchema) || isRelationField(fieldSchema)) {
+    if (isListField(fieldSchema)) {
+      nextData = formatFieldDataList(type, fieldSchema, data, schema);
+    } else {
+      nextData = formatFieldData(type, fieldSchema, data, schema);
+    }
+  }
+
+  return nextData;
 };
 
 export { formatFieldDataForMutation };
