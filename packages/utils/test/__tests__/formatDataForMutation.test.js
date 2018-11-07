@@ -387,6 +387,18 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Data with empty relation list.', () => {
+    const data = {
+      relationList: [],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      relationList: {
+        reconnect: [],
+      },
+    });
+  });
+
   it('Data with relation list with existed id.', () => {
     const data = {
       relationList: [{
