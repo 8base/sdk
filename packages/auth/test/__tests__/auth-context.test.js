@@ -107,7 +107,7 @@ describe('As a developer, i can use AuthContext to get authorization state in an
       redirectUri: 'redirectUri',
       mustAcceptTerms: true,
       responseType: 'token id_token',
-      scope: 'openid email profile offline_access',
+      scope: 'openid email profile',
     });
   });
 
