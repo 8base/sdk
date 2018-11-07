@@ -17,9 +17,17 @@ type EightBaseAppProviderProps = {
  * @prop {string} [uri] - The 8base API field schema.
  * @prop {Function} [children] - The render function.
  */
-const EightBaseAppProvider = ({ uri, authDomain, authClientId, authRedirectUri, children }: EightBaseAppProviderProps) => (
+const EightBaseAppProvider = ({
+  uri,
+  authDomain,
+  authClientId,
+  authRedirectUri,
+  onRequestSuccess,
+  onRequestError,
+  children,
+}: EightBaseAppProviderProps) => (
   <AuthProvider domain={ authDomain } clientID={ authClientId } redirectUri={ authRedirectUri }>
-    <ApolloContainer uri={ uri }>
+    <ApolloContainer uri={ uri } onRequestSuccess={ onRequestSuccess } onRequestError={ onRequestError }>
       <TableSchemaProvider>
         { children }
       </TableSchemaProvider>

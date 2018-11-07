@@ -5,7 +5,8 @@ import { type ApolloClientOptions, ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { AuthLink, SubscriptionLink } from '@8base/apollo-links';
+import { AuthLink, SubscriptionLink, SuccessLink } from '@8base/apollo-links';
+import { onError as createErrorLink } from 'apollo-link-error';
 
 type EightBaseApolloClientOptions = {
   uri: string,
@@ -14,6 +15,8 @@ type EightBaseApolloClientOptions = {
   onAuthSuccess: Function,
   onAuthError?: Function,
   onIdTokenExpired?: Function,
+  onRequestSuccess?: Function,
+  onRequestError?: Function,
 } & ApolloClientOptions;
 
 /**
@@ -26,6 +29,8 @@ type EightBaseApolloClientOptions = {
  * @param {Function} config.onAuthSuccess - The callback which called when attempt to refresh authentication is success.
  * @param {Function} [config.onAuthError] - The callback which called when attempt to refresh authentication is failed.
  * @param {Function} [config.onIdTokenExpired] - The callback which called when id token is expired.
+ * @param {Function} [config.onRequestSuccess] - The callback which called when request is success.
+ * @param {Function} [config.onRequestError] - The callback which called when request is success.
  *
  * @return instance of the Apollo Client
  */
@@ -38,6 +43,8 @@ class EightBaseApolloClient extends ApolloClient {
       onAuthSuccess,
       onAuthError,
       onIdTokenExpired,
+      onRequestSuccess,
+      onRequestError,
       ...rest
     } = config;
 
@@ -59,11 +66,21 @@ class EightBaseApolloClient extends ApolloClient {
 
     const batchHttpLink = new BatchHttpLink({ uri });
 
-    const link = ApolloLink.from([
+    let links = [
       authLink,
       subscriptionLink,
       batchHttpLink,
-    ]);
+    ];
+
+    if (typeof onRequestSuccess === 'function') {
+      links = [new SuccessLink({ successHandler: onRequestSuccess }), ...links];
+    }
+
+    if (typeof onRequestError === 'function') {
+      links = [createErrorLink(onRequestError), ...links];
+    }
+
+    const link = ApolloLink.from(links);
 
     super({ cache, link, ...rest });
   }
