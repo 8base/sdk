@@ -25,7 +25,7 @@ Object {
       "shareUrl": "https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqop0000601qnytfd866c",
     },
   ],
-  "relation": "id",
+  "relation": null,
   "relationList": Array [
     "id",
   ],

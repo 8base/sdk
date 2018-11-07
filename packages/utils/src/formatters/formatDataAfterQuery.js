@@ -34,7 +34,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
       result = R.assoc(fieldName, data[fieldName], result);
     }
 
-    if (isRelationField(fieldSchema) && !isFileField(fieldSchema)) {
+    if (isRelationField(fieldSchema) && !isFileField(fieldSchema) && result[fieldName]) {
       if (isListField(fieldSchema)) {
         result = R.assoc(fieldName, result[fieldName].map(({ id }) => id), result);
       } else {
