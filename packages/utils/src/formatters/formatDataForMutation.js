@@ -3,20 +3,25 @@ import * as R from 'ramda';
 
 import { MUTATION_TYPE } from '../constants';
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
-import { isMetaField } from '../verifiers';
+import { isMetaField, isFileField, isRelationField, isListField } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
-import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 
+import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 /**
+
  * Formats entity data for create or update mutation based on passed schema.
  * @param {MutationType} type - The type of the mutation.
  * @param {string} tableName - The name of the table from the 8base API.
  * @param {Object} data - The entity data for format.
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  */
-const formatDataForMutation = (type: MutationType, tableName: string, data: Object, schema: Schema, options: Object = {}) => {
+const formatDataForMutation = (type: MutationType, tableName: string, data: any, schema: Schema, options: Object = {}) => {
   if (R.not(type in MUTATION_TYPE)) {
     throw new Error(`Invalid mutation type: ${type}`);
+  }
+
+  if (R.isNil(data)) {
+    return data;
   }
 
   const tableSchema: ?TableSchema = getTableSchemaByName(tableName, schema);
@@ -47,7 +52,17 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: Obje
       return result;
     }
 
-    let formatedFieldData = formatFieldDataForMutation(type, fieldSchema, data[fieldName], schema);
+    let formatedFieldData = data[fieldName];
+
+    if ((isFileField(fieldSchema) || isRelationField(fieldSchema)) && isListField(fieldSchema)) {
+      formatedFieldData = R.reject(R.isNil, formatedFieldData);
+
+      if (formatedFieldData.length === 0) {
+        return result;
+      }
+    }
+
+    formatedFieldData = formatFieldDataForMutation(type, fieldSchema, formatedFieldData, schema);
 
     const { mutate } = options;
 

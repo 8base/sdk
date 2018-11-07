@@ -24,6 +24,7 @@ describe('As developer, I can format for create mutation,', () => {
       },
       relationList: {
         items: [{
+          id: 'id',
           scalar: 'Relation List Scalar Value',
           scalarList: [
             'Relation List Scalar List Value',

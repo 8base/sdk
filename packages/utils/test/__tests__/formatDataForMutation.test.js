@@ -148,18 +148,14 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
-  it('Data with list of files null .', () => {
+  it('Data with list of files null.', () => {
     const fileList = [null];
 
     const data = {
       fileList,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
-      fileList: {
-        create: [],
-      },
-    });
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({});
   });
 
   it('Data with list of the file objects.', () => {
@@ -386,6 +382,7 @@ describe('As developer, I can format for update mutation,', () => {
             'Relation List Scalar List Value',
           ],
         }],
+        reconnect: [],
       },
     });
   });
@@ -447,6 +444,14 @@ describe('As developer, I can format for update mutation,', () => {
       relation: {
         scalar: 'Relation Scalar Value',
       },
+      fileList: [{
+        id: '1234',
+        fileId: 'file-id',
+        filename: 'Screenshot at авг. 13 15-22-49.png',
+      }, null, {
+        fileId: 'file-id',
+        filename: 'Screenshot at авг. 13 15-22-49.png',
+      }],
       relationList: [{
         scalar: 'Relation List Scalar Value',
         scalarList: [

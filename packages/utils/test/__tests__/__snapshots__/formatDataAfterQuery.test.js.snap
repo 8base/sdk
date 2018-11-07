@@ -27,13 +27,7 @@ Object {
   ],
   "relation": "id",
   "relationList": Array [
-    Object {
-      "nestedRelation": "5b32159b66a450c047285628",
-      "scalar": "Relation List Scalar Value",
-      "scalarList": Array [
-        "Relation List Scalar List Value",
-      ],
-    },
+    "id",
   ],
   "scalar": "Scalar Value",
   "scalarList": Array [
