@@ -55,7 +55,11 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     let formatedFieldData = data[fieldName];
 
     if ((isFileField(fieldSchema) || isRelationField(fieldSchema)) && isListField(fieldSchema)) {
-      formatedFieldData = R.reject(R.isNil, formatedFieldData);
+      if (R.isNil(formatedFieldData)) {
+        formatedFieldData = [];
+      } else {
+        formatedFieldData = R.reject(R.isNil, formatedFieldData);
+      }
 
       if (formatedFieldData.length === 0 && type === MUTATION_TYPE.CREATE) {
         return result;
