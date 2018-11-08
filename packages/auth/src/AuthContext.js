@@ -42,7 +42,7 @@ class AuthProvider extends Component<AuthProviderProps> {
       redirectUri,
       mustAcceptTerms: true,
       responseType: 'token id_token',
-      scope: 'openid email profile offline_access',
+      scope: 'openid email profile',
     });
   }
 
