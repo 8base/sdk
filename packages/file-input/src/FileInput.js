@@ -64,6 +64,16 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     this.filestackPromise = this.initFilestack();
   }
 
+  static getDerivedStateFromProps(props, state) {
+    let nextState = null;
+
+    if (props.value !== state.value) {
+      nextState = { value: props.value };
+    }
+
+    return nextState;
+  }
+
   async initFilestack() {
     const { client } = this.props;
 
