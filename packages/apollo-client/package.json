@@ -1,31 +1,40 @@
 {
   "name": "@8base/apollo-client",
   "version": "0.4.27",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/apollo-client.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build": "webpack --env production --mode production",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=EightBaseApolloClient",
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "devDependencies": {
+    "@8base/apollo-links": "^0.4.25",
+    "@8base/webpack-configuration": "^0.4.27",
+    "apollo-client": "^2.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "7",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-app": "^3.1.2",
     "babel-runtime": "^6.26.0",
-    "documentation": "^8.1.2"
+    "documentation": "^8.1.2",
+    "graphql": "0.13.2",
+    "graphql-tag": "^2.10.0",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@8base/apollo-links": "^0.4.27",
     "apollo-cache-inmemory": "^1.2.10",
-    "apollo-client": "^2.4.2",
     "apollo-link": "^1.2.2",
     "apollo-link-batch-http": "^1.2.2",
-    "apollo-link-error": "^1.1.1",
+    "apollo-link-error": "^1.1.1"
+  },
+  "peerDependencies": {
+    "@8base/apollo-links": "^0.4.25",
+    "apollo-client": "^2.4.2",
     "graphql": "0.13.2",
-    "graphql-tag": "^2.9.2"
+    "graphql-tag": "^2.10.0"
   },
   "license": "MIT"
 }

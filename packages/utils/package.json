@@ -3,7 +3,7 @@
   "version": "0.4.27",
   "main": "lib/utils.js",
   "scripts": {
-    "build": "webpack --env prod",
+    "build": "webpack --env production --mode production",
     "docs": "NODE_ENV=test documentation readme src/formatters/formatDataForMutation.js --section=API",
     "test": "NPM_ENV=test jest",
     "watch": "webpack --progress --colors --watch --env dev"
