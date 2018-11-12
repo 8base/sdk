@@ -1,32 +1,50 @@
 {
   "name": "@8base/table-schema-provider",
   "version": "0.4.27",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/table-schema-provider.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build": "webpack --env production --mode production",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/TableSchemaProvider.js --section=TableSchemaProvider",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --env dev --watch"
   },
   "peerDependencies": {
+    "@8base/auth": "^0.4.25",
+    "@8base/utils": "^0.4.25",
+    "apollo-client": "^2.4.1",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.6",
     "react-dom": "^16.4.1"
   },
+  "dependencies": {
+    "reselect": "^3.0.1"
+  },
   "devDependencies": {
+    "@8base/auth": "^0.4.25",
+    "@8base/utils": "^0.4.25",
+    "@8base/webpack-configuration": "^0.4.27",
+    "apollo-client": "^2.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "7",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "jest": "^23.1.0",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.6",
     "react-dom": "^16.4.1",
-    "react-test-renderer": "^16.4.1"
+    "react-test-renderer": "^16.4.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -34,14 +52,5 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT",
-  "dependencies": {
-    "@8base/auth": "^0.4.27",
-    "@8base/utils": "^0.4.27",
-    "apollo-client": "^2.4.1",
-    "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
-    "react-apollo": "^2.1.6",
-    "reselect": "^3.0.1"
-  }
+  "license": "MIT"
 }
