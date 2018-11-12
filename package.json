@@ -5,6 +5,8 @@
     "flow": "flow check",
     "postinstall": "lerna bootstrap",
     "build-packages": "lerna run build",
+    "link-packages": "./bin/link-packages.sh",
+    "unlink-packages": "./bin/unlink-packages.sh",
     "test": "./bin/test.sh",
     "bump": "lerna version --force-publish"
   },
