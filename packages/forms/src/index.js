@@ -4,3 +4,4 @@ export { Field } from './Field';
 export { Fieldset } from './Fieldset';
 export { FieldArray } from './FieldArray';
 export { FormContext } from './FormContext';
+export { FormSpy } from 'react-final-form';
