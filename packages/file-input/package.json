@@ -1,28 +1,42 @@
 {
   "name": "@8base/file-input",
   "version": "0.5.0",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/file-input.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d es --ignore __tests__",
+    "build": "webpack --env production --mode production",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --env dev --watch"
   },
   "peerDependencies": {
+    "apollo-client": "^2.4.1",
+    "graphql": "^0.13.0",
+    "graphql-tag": "^2.9.2",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.6",
     "react-dom": "^16.4.1"
   },
+  "dependencies": {
+    "filestack-js": "^1.7.2"
+  },
   "devDependencies": {
+    "@8base/webpack-configuration": "^0.5.0",
+    "apollo-client": "^2.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "7",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
+    "graphql": "^0.13.0",
+    "graphql-tag": "^2.9.2",
     "jest": "^23.1.0",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.6",
     "react-dom": "^16.4.1",
-    "react-test-renderer": "^16.4.1"
+    "react-test-renderer": "^16.4.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -30,12 +44,5 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT",
-  "dependencies": {
-    "apollo-client": "^2.4.1",
-    "filestack-js": "^1.7.2",
-    "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
-    "react-apollo": "^2.1.6"
-  }
+  "license": "MIT"
 }
