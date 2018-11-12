@@ -6,7 +6,7 @@
     "postinstall": "lerna bootstrap",
     "build-packages": "lerna run build",
     "test": "./bin/test.sh",
-    "bump": "lerna publish --skip-npm"
+    "bump": "lerna version --force-publish"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
