@@ -6,7 +6,7 @@
     "build": "webpack --env production --mode production",
     "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --env dev --watch"
   },
   "devDependencies": {
     "@8base/error-codes": "^1.0.5",
@@ -21,7 +21,7 @@
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "jest": "^23.1.0",
     "ramda": "^0.25.0",
     "webpack": "^4.25.1",
@@ -45,7 +45,7 @@
   "peerDependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.71",
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "ramda": "^0.25.0"
   }
 }

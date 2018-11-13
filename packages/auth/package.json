@@ -1,12 +1,11 @@
 {
   "name": "@8base/auth",
   "version": "0.5.0",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/auth.js",
   "scripts": {
     "build": "yarn build:es && yarn build:flow",
-    "build:es": "NODE_ENV=production babel src -d es --ignore __tests__",
-    "build:flow": "flow-copy-source src es",
+    "build:es": "webpack --env production --mode production",
+    "build:flow": "flow-copy-source src lib",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=AuthProvider",
     "test": "NPM_ENV=test jest",
@@ -14,7 +13,7 @@
   },
   "peerDependencies": {
     "apollo-client": "^2.4.2",
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
@@ -22,16 +21,21 @@
     "react-dom": "^16.4.1",
     "recompose": "0.27.1"
   },
+  "dependencies": {
+    "auth0-js": "^9.8.0"
+  },
   "devDependencies": {
+    "@8base/webpack-configuration": "^0.5.0",
     "apollo-client": "^2.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-loader": "7",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.0",
     "graphql-tag": "^2.9.2",
     "jest": "^23.1.0",
     "jest-localstorage-mock": "^2.2.0",
@@ -40,7 +44,9 @@
     "react-apollo": "^2.1.11",
     "react-dom": "^16.4.1",
     "react-test-renderer": "^16.4.1",
-    "recompose": "0.27.1"
+    "recompose": "0.27.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   },
   "jest": {
     "setupFiles": [
@@ -51,8 +57,5 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT",
-  "dependencies": {
-    "auth0-js": "^9.8.0"
-  }
+  "license": "MIT"
 }

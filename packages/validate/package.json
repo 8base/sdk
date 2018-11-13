@@ -6,7 +6,7 @@
     "build": "webpack --env production --mode production",
     "docs": "NODE_ENV=test documentation readme src/validator.js --section=API",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --env dev --watch"
   },
   "jest": {
     "setupFiles": [
@@ -34,7 +34,7 @@
     "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
-    "@8base/utils": "^0.4.25",
+    "@8base/utils": "^0.5.0",
     "ramda": "^0.25.0"
   }
 }
