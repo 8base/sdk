@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "lib/apollo-links.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -11,7 +11,7 @@
   "devDependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.71",
-    "@8base/webpack-configuration": "^0.5.0",
+    "@8base/webpack-configuration": "^0.5.1",
     "apollo-link": "^1.2.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
