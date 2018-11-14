@@ -3,7 +3,7 @@ import * as R from 'ramda';
 
 class FragmentsSchemaContainer extends React.Component {
   state = {
-    loading: false,
+    loading: true,
     fragmentsSchema: null,
   };
 
