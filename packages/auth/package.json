@@ -9,7 +9,7 @@
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=AuthProvider",
     "test": "NPM_ENV=test jest",
-    "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
+    "watch": "webpack --env dev --watch"
   },
   "peerDependencies": {
     "apollo-client": "^2.4.2",
