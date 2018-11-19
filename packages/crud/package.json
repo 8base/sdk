@@ -1,8 +1,7 @@
 {
   "name": "@8base/crud",
   "version": "0.5.3",
-  "main": "es/index.js",
-  "module": "es/index.js",
+  "main": "lib/crud.js",
   "scripts": {
     "build": "yarn build:es && yarn build:flow",
     "build:es": "webpack --env production --mode production",
