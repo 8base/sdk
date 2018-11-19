@@ -166,20 +166,6 @@ Object {
                             },
                           },
                         },
-                        Object {
-                          "kind": "ObjectField",
-                          "name": Object {
-                            "kind": "Name",
-                            "value": "email",
-                          },
-                          "value": Object {
-                            "kind": "Variable",
-                            "name": Object {
-                              "kind": "Name",
-                              "value": "email",
-                            },
-                          },
-                        },
                       ],
                       "kind": "ObjectValue",
                     },
@@ -238,38 +224,16 @@ Object {
                 },
               },
             },
-            Object {
-              "kind": "VariableDefinition",
-              "type": Object {
-                "kind": "NonNullType",
-                "type": Object {
-                  "kind": "NamedType",
-                  "name": Object {
-                    "kind": "Name",
-                    "value": "String",
-                  },
-                },
-              },
-              "variable": Object {
-                "kind": "Variable",
-                "name": Object {
-                  "kind": "Name",
-                  "value": "email",
-                },
-              },
-            },
           ],
         },
       ],
       "kind": "Document",
       "loc": Object {
-        "end": 209,
+        "end": 171,
         "start": 0,
       },
     },
-    "variables": Object {
-      "email": "test@site.com",
-    },
+    "variables": Object {},
   },
   "headers": Object {
     "accept": Array [
@@ -282,7 +246,7 @@ Object {
       "close",
     ],
     "content-length": Array [
-      "1418",
+      "1068",
     ],
     "content-type": Array [
       "application/json",
