@@ -5,6 +5,8 @@ import { GraphQLClient } from 'graphql-request';
 import errorCodes from '@8base/error-codes';
 import * as R from 'ramda';
 
+import { importWorkspace } from './importWorkspace';
+
 const USER_REFRESH_TOKEN_QUERY = gql`
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
     userRefreshToken(data: {
@@ -143,6 +145,10 @@ class Client {
    */
   request(query: string | DocumentNode, variables: Object = {}) {
     return this.gqlc.request(query, variables).catch(this.handleRequestErrors);
+  }
+
+  importWorkspace(workspace: Object) {
+    return importWorkspace(this.request.bind(this), workspace);
   }
 }
 
