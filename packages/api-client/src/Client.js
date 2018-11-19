@@ -5,11 +5,12 @@ import { GraphQLClient } from 'graphql-request';
 import errorCodes from '@8base/error-codes';
 import * as R from 'ramda';
 
+import { importWorkspace } from './importWorkspace';
+
 const USER_REFRESH_TOKEN_QUERY = gql`
-  mutation UserRefreshToken($refreshToken: String!, $email: String!) {
+  mutation UserRefreshToken($refreshToken: String!) {
     userRefreshToken(data: {
       refreshToken: $refreshToken,
-      email: $email,
     }) {
       refreshToken
       idToken
@@ -54,7 +55,6 @@ class Client {
   gqlc: GraphQLClient;
 
   workspaceId: string;
-  email: string;
   idToken: ?string;
   refreshToken: string;
 
@@ -85,14 +85,6 @@ class Client {
   }
 
   /**
-   * Update user email.
-   * @param email - The user email.
-   */
-  setEmail(email: string) {
-    this.email = email;
-  }
-
-  /**
    * Update workspace identifier.
    * @param workspaceId - The workspace identifier.
    */
@@ -102,7 +94,7 @@ class Client {
   }
 
   async tryToRefreshToken(err: GraphQLClientError) {
-    const { refreshToken, email } = this;
+    const { refreshToken } = this;
 
     this.setIdToken(null);
 
@@ -111,7 +103,6 @@ class Client {
     try {
       response = await this.gqlc.request(USER_REFRESH_TOKEN_QUERY, {
         refreshToken,
-        email,
       });
     } catch (err) {
       throw new RefreshTokenInvalidError();
@@ -143,6 +134,10 @@ class Client {
    */
   request(query: string | DocumentNode, variables: Object = {}) {
     return this.gqlc.request(query, variables).catch(this.handleRequestErrors);
+  }
+
+  importWorkspace(workspace: Object) {
+    return importWorkspace(this.request.bind(this), workspace);
   }
 }
 

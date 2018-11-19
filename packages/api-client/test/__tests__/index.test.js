@@ -87,7 +87,6 @@ it('When client receive token expired error, it should refresh token and repeat 
 
   client.setIdToken('idToken');
   client.setWorkspaceId('workspaceId');
-  client.setEmail('test@site.com');
 
   await client.request('query { companyName }');
 
@@ -114,7 +113,6 @@ it('When client receive other errors, it should throw that error.', async () => 
 
   client.setIdToken('idToken');
   client.setWorkspaceId('workspaceId');
-  client.setEmail('test@site.com');
 
   let error = null;
 
@@ -136,7 +134,6 @@ it('When client receive network errors, it should throw that error.', async () =
 
   client.setIdToken('idToken');
   client.setWorkspaceId('workspaceId');
-  client.setEmail('test@site.com');
 
   let error = null;
 
@@ -190,7 +187,6 @@ it('When client receive refresh token expired error, it should throw cant refres
 
   client.setIdToken('idToken');
   client.setWorkspaceId('workspaceId');
-  client.setEmail('test@site.com');
 
   let error = null;
 
