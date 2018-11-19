@@ -1,6 +1,6 @@
 {
   "name": "@8base/forms",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "lib/forms.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "@8base/error-codes": "^1.0.8",
-    "@8base/table-schema-provider": "^0.5.1",
-    "@8base/utils": "^0.5.1",
-    "@8base/validate": "^0.5.1",
-    "@8base/webpack-configuration": "^0.5.1",
+    "@8base/table-schema-provider": "^0.5.2",
+    "@8base/utils": "^0.5.2",
+    "@8base/validate": "^0.5.2",
+    "@8base/webpack-configuration": "^0.5.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",

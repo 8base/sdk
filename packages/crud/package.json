@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -20,15 +20,15 @@
     "react-dom": "^16.4.1"
   },
   "dependencies": {
-    "@8base/utils": "^0.5.1",
+    "@8base/utils": "^0.5.2",
     "apollo-client": "^2.4.5",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@8base/auth": "^0.5.1",
+    "@8base/auth": "^0.5.2",
     "@8base/sdk": "^0.0.71",
-    "@8base/table-schema-provider": "^0.5.1",
-    "@8base/webpack-configuration": "^0.5.1",
+    "@8base/table-schema-provider": "^0.5.2",
+    "@8base/webpack-configuration": "^0.5.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
