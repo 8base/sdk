@@ -1,6 +1,6 @@
 {
   "name": "@8base/utils",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "lib/utils.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@8base/webpack-configuration": "^0.5.6",
+    "@8base/webpack-configuration": "^0.5.7",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
