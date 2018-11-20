@@ -1,4 +1,6 @@
 //@flow
+import * as R from 'ramda';
+
 import { isRelationField } from '../verifiers';
 import { getTableSchemaById } from '../selectors';
 import { MUTATION_TYPE } from '../constants';
@@ -9,7 +11,12 @@ import type { MutationType, FieldSchema, Schema, TableSchema } from '../types';
 export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
   let nextData = data;
 
-  if (typeof nextData === 'string') {
+  if (R.isNil(nextData)) {
+    return {
+      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
+      data: {},
+    };
+  } else if (typeof nextData === 'string') {
     return {
       type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
       data: { id: nextData },
