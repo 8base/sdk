@@ -1,6 +1,4 @@
 //@flow
-import * as R from 'ramda';
-
 import { isListField, isFileField, isRelationField } from '../verifiers';
 import { formatFieldDataList } from './formatFieldDataList';
 import { formatFieldData } from './formatFieldData';
@@ -9,10 +7,6 @@ import type { MutationType, FieldSchema, Schema } from '../types';
 
 const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
   let nextData = data;
-
-  if (R.isNil(data)) {
-    return nextData;
-  }
 
   if (isFileField(fieldSchema) || isRelationField(fieldSchema)) {
     if (isListField(fieldSchema)) {

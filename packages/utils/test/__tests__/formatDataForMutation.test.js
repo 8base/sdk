@@ -53,7 +53,9 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
-      relation: null,
+      relation: {
+        connect: {},
+      },
     });
   });
 
@@ -63,7 +65,9 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
-      file: null,
+      file: {
+        connect: {},
+      },
     });
   });
 
@@ -273,7 +277,9 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
-      relation: null,
+      relation: {
+        reconnect: {},
+      },
     });
   });
 
@@ -283,7 +289,9 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
-      file: null,
+      file: {
+        reconnect: {},
+      },
     });
   });
 
