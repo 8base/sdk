@@ -10,7 +10,7 @@
     "watch": "webpack --env dev --watch"
   },
   "peerDependencies": {
-    "@8base/auth": "^0.5.0",
+    "@8base/auth": "^0.5.5",
     "@8base/utils": "^0.5.0",
     "apollo-client": "^2.4.1",
     "graphql": "^0.13.0",

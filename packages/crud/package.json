@@ -13,6 +13,7 @@
   },
   "peerDependencies": {
     "@8base/auth": "^0.5.1",
+    "@8base/table-schema-provider": "^0.5.5",
     "@8base/sdk": "^0.0.71",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
