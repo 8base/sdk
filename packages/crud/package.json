@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "main": "lib/crud.js",
   "scripts": {
     "build": "yarn build:es && yarn build:flow",
@@ -13,22 +13,22 @@
   },
   "peerDependencies": {
     "@8base/auth": "^0.5.1",
-    "@8base/table-schema-provider": "^0.5.5",
     "@8base/sdk": "^0.0.71",
+    "@8base/table-schema-provider": "^0.5.5",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "dependencies": {
-    "@8base/utils": "^0.5.5",
+    "@8base/utils": "^0.5.6",
     "apollo-client": "^2.4.5",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@8base/auth": "^0.5.5",
+    "@8base/auth": "^0.5.6",
     "@8base/sdk": "^0.0.71",
-    "@8base/table-schema-provider": "^0.5.5",
-    "@8base/webpack-configuration": "^0.5.5",
+    "@8base/table-schema-provider": "^0.5.6",
+    "@8base/webpack-configuration": "^0.5.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
