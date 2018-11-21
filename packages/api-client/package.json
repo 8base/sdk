@@ -9,7 +9,6 @@
     "watch": "webpack --progress --colors --watch --env dev"
   },
   "devDependencies": {
-    "@8base/sdk": "^0.0.72",
     "@8base/webpack-configuration": "^0.5.8",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -28,13 +27,13 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
+    "@8base/sdk": "^0.0.72",
     "@8base/utils": "^0.5.8",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0"
   },
   "peerDependencies": {
-    "@8base/sdk": "^0.0.72",
     "graphql": "^0.13.0"
   },
   "jest": {
