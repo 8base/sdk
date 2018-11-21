@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { compose } from 'recompose';
 import { ApolloProvider } from 'react-apollo';
 import { EightBaseApolloClient } from '@8base/apollo-client';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
@@ -88,8 +87,6 @@ class ApolloContainer extends React.Component {
   }
 }
 
-ApolloContainer = compose(
-  withAuth,
-)(ApolloContainer);
+ApolloContainer = withAuth(ApolloContainer);
 
 export { ApolloContainer };
