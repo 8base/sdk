@@ -8,11 +8,13 @@
     "test": "NPM_ENV=test jest",
     "watch": "webpack --env dev --watch"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@8base/error-codes": "^1.0.8",
-    "@8base/table-schema-provider": "^0.5.5",
     "@8base/utils": "^0.5.0",
-    "@8base/validate": "^0.5.0",
+    "@8base/validate": "^0.5.0"
+  },
+  "peerDependencies": {
+    "@8base/table-schema-provider": "^0.5.5",
     "final-form": "^4.10.0",
     "final-form-arrays": "^1.1.0",
     "prop-types": "^15.6.1",
@@ -24,10 +26,7 @@
     "recompose": "^0.27.1"
   },
   "devDependencies": {
-    "@8base/error-codes": "^1.0.8",
     "@8base/table-schema-provider": "^0.5.9",
-    "@8base/utils": "^0.5.9",
-    "@8base/validate": "^0.5.9",
     "@8base/webpack-configuration": "^0.5.9",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
