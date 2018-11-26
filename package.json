@@ -3,7 +3,7 @@
   "scripts": {
     "eslint": "eslint .",
     "flow": "flow check",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap --mutex file:/tmp/.yarn-mutex --concurrency=1",
     "build-packages": "lerna run build",
     "link-packages": "./bin/link-packages.sh",
     "unlink-packages": "./bin/unlink-packages.sh",
