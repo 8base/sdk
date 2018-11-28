@@ -28,9 +28,7 @@ class ApolloContainer extends React.Component {
   onAuthError = () => {
     const { auth: { logout }} = this.props;
 
-    logout({
-      returnTo: `${window.location.origin}/auth`,
-    });
+    logout();
   };
 
   getAuthState = () => {

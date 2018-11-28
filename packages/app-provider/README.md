@@ -19,6 +19,9 @@ Universal 8base App Provider loads fragments schema and provides Apollo client w
 ### Properties
 
 -   `uri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The 8base API field schema.
+-   `authClient` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The 8base auth client.
+-   `onRequestSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is success.
+-   `onRequestError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is fail.
 -   `children` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The render function.
 
 # Usage
@@ -27,14 +30,21 @@ Universal 8base App Provider loads fragments schema and provides Apollo client w
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { EightBaseAppProvider } from '@8base/app-provider';
+import { AuthZeroWebClient } from '@8base/auth';
 import { EightBaseBoostProvider, Loader } from '@8base/boost';
 
 import { Routes } from './routes';
 
+const authZeroWebClient = new AuthZeroWebClient({
+  domain: AUTH_DOMAIN,
+  clientID: AUTH_CLIENT_ID,
+  redirectUri: `${window.location.origin}/auth/callback`,
+});
+
 const Application = () => (
   <BrowserRouter>
     <EightBaseBoostProvider>
-      <EightBaseAppProvider uri={ process.env.REACT_APP_8BASE_API_URL }>
+      <EightBaseAppProvider uri={ process.env.REACT_APP_8BASE_API_URL } authClient={ authZeroWebClient }>
         {
           ({ loading }) => loading ? <Loader /> : <Routes />
         }

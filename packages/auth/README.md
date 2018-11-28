@@ -1,4 +1,4 @@
-# 8base Auth 
+# 8base Auth
 
 The 8base Auth package contains provider with authentication state and auth helpers.
 
@@ -9,9 +9,8 @@ The 8base Auth package contains provider with authentication state and auth help
 #### Table of Contents
 
 -   [AuthProvider](#authprovider)
--   [AuthContextProps](#authcontextprops)
     -   [Properties](#properties)
--   [withAuth](#withauth)
+-   [AuthZeroWebClient](#authzerowebclient)
     -   [Parameters](#parameters)
 
 ### AuthProvider
@@ -20,35 +19,39 @@ The 8base Auth package contains provider with authentication state and auth help
 
 Provides access to the authentication state.
 
-### AuthContextProps
-
-Authentication context
-
 #### Properties
 
--   `isAuthorized` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** 
--   `authState` **AuthState?** 
--   `setAuthState` **function (AuthState): void?** 
+-   `children` **React$Node** Children of the provider.
+-   `authClient` **AuthClient** Instance of the auth client.
 
-### withAuth
+### AuthZeroWebClient
 
-Hoc to pass auth state to the component
+Create instacne of the auth web zero0 client.
 
 #### Parameters
 
--   `WrappedComponent` **React$ComponentType&lt;any>** 
--   `auth` **[AuthContextProps](#authcontextprops)** Auth state passed by the props.
-
-Returns **React$ComponentType&lt;InputProps>** 
+-   `options` **AuthClientOptions** 
+-   `workspaceId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Identifier of the 8base app workspace.
+-   `domain` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Domain. See auth0 documentation.
+-   `clientID` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Client id. See auth0 documentation.
+-   `redirectUri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Redurect uri. See auth0 documentation.
 
 ## Usage
 
 ### Simple Usage
 
 ```js
-import { AuthProvider, AuthConsumer } from '@8base/auth';
+import { AuthProvider, AuthZeroWebClient, AuthConsumer } from '@8base/auth';
 
-  <AuthProvider>
+  const authZeroWebClient = new AuthZeroWebClient({
+    domain: 'domain',
+    clientID: 'client-id',
+    redirectUri: `${window.location.origin}/auth/callback`,
+    logoutRedirectUri: `${window.location.origin}/auth`,
+    workspaceId: 'workspace-id',
+  });
+
+  <AuthProvider authClient={ authZeroWebClient }>
     ...
       <AuthConsumer>
         {
@@ -57,72 +60,4 @@ import { AuthProvider, AuthConsumer } from '@8base/auth';
       </AuthConsumer>
     ...  
   </AuthProvider>
-```
-
-### Usage with @8base/apollo-client
-
-```js
-import React, { Component } from 'react';
-import { withAuth } from '@8base/auth-provider';
-import { EightBaseApolloClient } from '@8base/apollo-client';
-import { ApolloProvider } from 'react-apollo';
-
-class Foo extends Component {
-  constructor(props) {
-    super(props);
-
-    this.client = createApolloClient({
-      getAuthState: this.getAuthState,
-      getRefreshTokenParameters: this.getRefreshTokenParameters,
-      onAuthSuccess: this.onAuthSuccess,
-      onAuthError: this.onAuthError,
-      uri: process.env.REACT_APP_SERVER_URL
-    });
-  }
-
-  getRefreshTokenParameters = () => {
-    const { auth: { authState: { email, refreshToken }}} = this.props;
-
-    return { email, refreshToken };
-  };
-
-  onAuthSuccess = ({ refreshToken, idToken }) => {
-    const { auth: { setAuthState }} = this.props;
-
-    setAuthState({
-      idToken,
-      refreshToken,
-    });
-  };
-
-  onAuthError = (err) => {
-    const { auth: { setAuthState }} = this.props;
-
-    setAuthState({
-      idToken: '',
-      refreshToken: '',
-    });
-  };
-
-  getAuthState = () => {
-    const { auth: { authState: { idToken, workspaceId }}} = this.props;
-
-    return {
-      idToken,
-      workspaceId,
-    };
-  };
-
-  render() {
-    const { children } = this.props;
-
-    return (
-      <ApolloProvider client={ this.client } >
-        <div />
-      </ApolloProvider>
-    );
-  }
-}
-
-Foo = withAuth(Foo);
 ```

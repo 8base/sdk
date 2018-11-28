@@ -3,7 +3,7 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import { AuthProvider, AuthConsumer } from '../../src';
+import { AuthProvider, AuthConsumer, AuthZeroWebClient } from '../../src';
 
 jest.mock('auth0-js', () => {
   const authorize = jest.fn();
@@ -43,8 +43,14 @@ const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => (
 );
 
 const getTestInstance = () => {
+  const authClient = new AuthZeroWebClient({
+    domain: 'domain',
+    clientID: 'clientID',
+    redirectUri: 'redirectUri',
+  });
+
   const testRenderer = TestRenderer.create(
-    <AuthProvider domain="domain" clientID="clientID" redirectUri="redirectUri">
+    <AuthProvider authClient={ authClient }>
       <AuthConsumer>
         {
           (auth: any) => (
@@ -119,23 +125,23 @@ describe('As a developer, i can use AuthContext to get authorization state in an
     expect(auth0.authorize).toHaveBeenCalled();
   });
 
-  it('passes \'parseHash\' function that calls auth0\'s parseHash and resolves promise on success', (done) => {
+  it('passes \'getAuthorizedData\' function that calls auth0\'s getAuthorizedData and resolves promise on success', (done) => {
     const testInstance = getTestInstance();
-    const { parseHash } = testInstance.findByType(StubComponent).props.auth;
+    const { getAuthorizedData } = testInstance.findByType(StubComponent).props.auth;
     auth0.parseHash.mockImplementation((callback) => callback(null, 'hash'));
 
-    parseHash().then(() => {
+    getAuthorizedData().then(() => {
       expect(auth0.parseHash).toHaveBeenCalled();
       done();
     });
   });
 
-  it('passes \'parseHash\' function that calls auth0\'s parseHash and rejects promise on error', (done) => {
+  it('passes \'getAuthorizedData\' function that calls auth0\'s getAuthorizedData and rejects promise on error', (done) => {
     const testInstance = getTestInstance();
-    const { parseHash } = testInstance.findByType(StubComponent).props.auth;
+    const { getAuthorizedData } = testInstance.findByType(StubComponent).props.auth;
     auth0.parseHash.mockImplementation((callback) => callback('error'));
 
-    parseHash().catch(() => {
+    getAuthorizedData().catch(() => {
       expect(auth0.parseHash).toHaveBeenCalled();
       done();
     });
