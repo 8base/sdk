@@ -15,6 +15,7 @@ export const importTables = async (request: (query: string | DocumentNode, varia
         },
       });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(`Can't create table "${table.name}"`);
     }
   }
@@ -106,6 +107,7 @@ export const importTables = async (request: (query: string | DocumentNode, varia
           data: field,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.warn(`Can't create field "${field.name}"`);
       }
     }

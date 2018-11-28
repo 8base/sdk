@@ -1,32 +1,33 @@
 import React from 'react';
 import { TableSchemaProvider } from '@8base/table-schema-provider';
-import { AuthProvider } from '@8base/auth';
+import { AuthProvider, type AuthClient } from '@8base/auth';
 
 import { ApolloContainer } from './ApolloContainer';
 
 type EightBaseAppProviderProps = {
   uri: string,
   children: ({ loading: boolean }) => React$Node,
-  authDomain: string,
-  authClientId: string,
-  authRedirectUri: string,
+  onRequestSuccess: (Object) => void,
+  onRequestError: (Object) => void,
+  authClient: AuthClient,
 };
 
 /**
  * `EightBaseAppProvider` universal provider which loads fragments schema and provides Apollo client with it, authentication and table schema.
  * @prop {string} [uri] - The 8base API field schema.
+ * @prop {Object} [authClient] - The 8base auth client.
+ * @prop {Function} [onRequestSuccess] - The callback which called when request is success.
+ * @prop {Function} [onRequestError] - The callback which called when request is fail.
  * @prop {Function} [children] - The render function.
  */
 const EightBaseAppProvider = ({
   uri,
-  authDomain,
-  authClientId,
-  authRedirectUri,
+  authClient,
   onRequestSuccess,
   onRequestError,
   children,
 }: EightBaseAppProviderProps) => (
-  <AuthProvider domain={ authDomain } clientID={ authClientId } redirectUri={ authRedirectUri }>
+  <AuthProvider authClient={ authClient }>
     <ApolloContainer uri={ uri } onRequestSuccess={ onRequestSuccess } onRequestError={ onRequestError }>
       <TableSchemaProvider>
         { children }

@@ -1,12 +1,8 @@
 // @flow
 
-type PossibleAuthItems = 'email' | 'userId' | 'workspaceId' | 'refreshToken' | 'idToken';
+import type { AuthState } from './types';
 
 const AUTH_LOCALSTORAGE_KEY = 'auth';
-
-type AuthState = {
-  [PossibleAuthItems]: string,
-}
 
 const getAuthState = (): AuthState => {
   const auth = JSON.parse(localStorage.getItem(AUTH_LOCALSTORAGE_KEY) || '{}');

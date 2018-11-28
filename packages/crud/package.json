@@ -13,7 +13,7 @@
   },
   "peerDependencies": {
     "@8base/auth": "^0.5.1",
-    "@8base/sdk": "^0.0.71",
+    "@8base/sdk": "^0.0.74",
     "@8base/table-schema-provider": "^0.5.5",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@8base/auth": "^0.5.10",
-    "@8base/sdk": "^0.0.71",
+    "@8base/sdk": "^0.0.74",
     "@8base/table-schema-provider": "^0.5.10",
     "@8base/webpack-configuration": "^0.5.10",
     "babel-cli": "^6.26.0",

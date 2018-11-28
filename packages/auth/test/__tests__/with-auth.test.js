@@ -1,8 +1,10 @@
+// @flow
+
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { getDisplayName } from 'recompose';
 
-import { AuthProvider, withAuth } from '../../src';
+import { AuthProvider, AuthZeroWebClient, withAuth } from '../../src';
 
 type StubComponentProps = {
   auth: {
@@ -20,9 +22,15 @@ const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
 
 const EnhancedStubComponent = withAuth(StubComponent);
 
+const authClient = new AuthZeroWebClient({
+  domain: 'domain',
+  clientID: 'clientID',
+  redirectUri: 'redirectUri',
+});
+
 const getTestInstance = ({ foo }) => {
   const testRenderer = TestRenderer.create(
-    <AuthProvider domain="domain" clientID="clientID" redirectUri="redirectUri">
+    <AuthProvider authClient={ authClient }>
       <EnhancedStubComponent foo={ foo } />
     </AuthProvider>,
   );

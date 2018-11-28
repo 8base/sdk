@@ -4,43 +4,17 @@ import React from 'react';
 import { setDisplayName, wrapDisplayName } from 'recompose';
 
 import { AuthConsumer } from './AuthContext';
-import type { AuthState } from './localStorageAccessor';
+import type { AuthState, AuthContextProps } from './types';
 
 
-/**
- * Authentication context
- */
-interface AuthContextProps {
-  isAuthorized: boolean,
-  getAuthState: () => AuthState,
-  setAuthState: (AuthState) => void,
-  purgeAuthState: () => void,
-  authorize: (Array<any>) => void,
-  parseHash: () => Promise<*>,
-  checkSession: (any) => Promise<*>,
-  logout: (any) => void,
-}
-
-interface WithAuthProps {
-  isAuthorized: boolean,
+type WithAuthProps = {
   authState: AuthState,
-  setAuthState: (AuthState) => void,
-  purgeAuthState: () => void,
-  authorize: (Array<any>) => void,
-  parseHash: () => Promise<*>,
-  checkSession: (any) => Promise<*>,
-  logout: (any) => void,
-}
+} & AuthContextProps
 
 interface AuthProps {
   auth: WithAuthProps,
 }
 
-/**
- * Hoc to pass auth state to the component
- *
- * @param {AuthContextProps} auth Auth state passed by the props.
- */
 const withAuth: any = <InputProps: {}>(
   WrappedComponent: React$ComponentType<AuthProps & InputProps>,
 ): React$ComponentType<InputProps> => {
@@ -55,7 +29,7 @@ const withAuth: any = <InputProps: {}>(
               setAuthState,
               purgeAuthState,
               authorize,
-              parseHash,
+              getAuthorizedData,
               checkSession,
               logout,
             }: AuthContextProps) => (
@@ -63,9 +37,10 @@ const withAuth: any = <InputProps: {}>(
                 isAuthorized,
                 setAuthState,
                 purgeAuthState,
+                getAuthState,
                 authState: getAuthState(),
                 authorize,
-                parseHash,
+                getAuthorizedData,
                 checkSession,
                 logout,
               }} />

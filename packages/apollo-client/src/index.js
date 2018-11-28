@@ -30,7 +30,7 @@ type EightBaseApolloClientOptions = {
  * @param {Function} [config.onAuthError] - The callback which called when attempt to refresh authentication is failed.
  * @param {Function} [config.onIdTokenExpired] - The callback which called when id token is expired.
  * @param {Function} [config.onRequestSuccess] - The callback which called when request is success.
- * @param {Function} [config.onRequestError] - The callback which called when request is success.
+ * @param {Function} [config.onRequestError] - The callback which called when request is fail.
  *
  * @return instance of the Apollo Client
  */

@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.71",
+    "@8base/sdk": "^0.0.74",
     "@8base/webpack-configuration": "^0.5.10",
     "apollo-link": "^1.2.2",
     "babel-cli": "^6.26.0",
@@ -44,7 +44,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.71",
+    "@8base/sdk": "^0.0.74",
     "graphql": "^0.13.0",
     "ramda": "^0.25.0"
   }
