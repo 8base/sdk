@@ -5,7 +5,7 @@ export type AuthState = {
   [PossibleAuthItems]: string,
 }
 
-export interface AuthZeroWebClientOptions {
+export interface Auth0WebClientOptions {
   domain: string,
   clientID: string,
   redirectUri: string,

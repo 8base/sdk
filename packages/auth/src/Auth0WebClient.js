@@ -2,7 +2,7 @@
 import { path, equals, pipe } from 'ramda';
 import auth0 from 'auth0-js';
 import * as localStorageAccessor from './localStorageAccessor';
-import type { AuthState, AuthClient, AuthZeroWebClientOptions } from './types';
+import type { AuthState, AuthClient, Auth0WebClientOptions } from './types';
 
 
 const isEmailVerified = pipe(
@@ -20,12 +20,12 @@ const getIdToken = path(['idToken']);
  * @param {string} clientID Client id. See auth0 documentation.
  * @param {string} redirectUri Redurect uri. See auth0 documentation.
  */
-class AuthZeroWebClient implements AuthClient {
+class Auth0WebClient implements AuthClient {
   auth0: auth0.WebAuth;
   workspaceId: string | void;
   logoutRedirectUri: string | void;
 
-  constructor({ domain, clientID, redirectUri, workspaceId, logoutRedirectUri }: AuthZeroWebClientOptions) {
+  constructor({ domain, clientID, redirectUri, workspaceId, logoutRedirectUri }: Auth0WebClientOptions) {
 
     this.workspaceId = workspaceId;
     this.logoutRedirectUri = logoutRedirectUri;
@@ -90,7 +90,6 @@ class AuthZeroWebClient implements AuthClient {
     });
   }
 
-
   setAuthState = (state: AuthState) => {
     localStorageAccessor.setAuthState(state);
   };
@@ -106,5 +105,5 @@ class AuthZeroWebClient implements AuthClient {
 
 
 export {
-  AuthZeroWebClient,
+  Auth0WebClient,
 };
