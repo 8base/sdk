@@ -10,7 +10,7 @@ The 8base Auth package contains provider with authentication state and auth help
 
 -   [AuthProvider](#authprovider)
     -   [Properties](#properties)
--   [AuthZeroWebClient](#authzerowebclient)
+-   [Auth0WebClient](#Auth0WebClient)
     -   [Parameters](#parameters)
 
 ### AuthProvider
@@ -24,7 +24,7 @@ Provides access to the authentication state.
 -   `children` **React$Node** Children of the provider.
 -   `authClient` **AuthClient** Instance of the auth client.
 
-### AuthZeroWebClient
+### Auth0WebClient
 
 Create instacne of the auth web zero0 client.
 
@@ -41,9 +41,9 @@ Create instacne of the auth web zero0 client.
 ### Simple Usage
 
 ```js
-import { AuthProvider, AuthZeroWebClient, AuthConsumer } from '@8base/auth';
+import { AuthProvider, Auth0WebClient, AuthConsumer } from '@8base/auth';
 
-  const authZeroWebClient = new AuthZeroWebClient({
+  const auth0WebClient = new Auth0WebClient({
     domain: 'domain',
     clientID: 'client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
@@ -51,7 +51,7 @@ import { AuthProvider, AuthZeroWebClient, AuthConsumer } from '@8base/auth';
     workspaceId: 'workspace-id',
   });
 
-  <AuthProvider authClient={ authZeroWebClient }>
+  <AuthProvider authClient={ auth0WebClient }>
     ...
       <AuthConsumer>
         {

@@ -4,7 +4,7 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { getDisplayName } from 'recompose';
 
-import { AuthProvider, AuthZeroWebClient, withAuth } from '../../src';
+import { AuthProvider, Auth0WebClient, withAuth } from '../../src';
 
 type StubComponentProps = {
   auth: {
@@ -22,7 +22,7 @@ const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
 
 const EnhancedStubComponent = withAuth(StubComponent);
 
-const authClient = new AuthZeroWebClient({
+const authClient = new Auth0WebClient({
   domain: 'domain',
   clientID: 'clientID',
   redirectUri: 'redirectUri',

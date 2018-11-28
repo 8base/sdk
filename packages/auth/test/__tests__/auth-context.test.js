@@ -3,7 +3,7 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import { AuthProvider, AuthConsumer, AuthZeroWebClient } from '../../src';
+import { AuthProvider, AuthConsumer, Auth0WebClient } from '../../src';
 
 jest.mock('auth0-js', () => {
   const authorize = jest.fn();
@@ -43,7 +43,7 @@ const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => (
 );
 
 const getTestInstance = () => {
-  const authClient = new AuthZeroWebClient({
+  const authClient = new Auth0WebClient({
     domain: 'domain',
     clientID: 'clientID',
     redirectUri: 'redirectUri',

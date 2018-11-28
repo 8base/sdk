@@ -1,7 +1,7 @@
 // @flow
 
 export { AuthProvider, AuthConsumer } from './AuthContext';
-export { AuthZeroWebClient } from './AuthZeroWebClient';
+export { Auth0WebClient } from './Auth0WebClient';
 export { withAuth } from './withAuth';
 export { withLogOut } from './withLogOut';
 
