@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.72",
+    "@8base/sdk": "^0.0.74",
     "@8base/utils": "^0.5.10",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
