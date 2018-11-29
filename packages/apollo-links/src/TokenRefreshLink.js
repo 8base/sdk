@@ -11,6 +11,7 @@ import * as R from 'ramda';
 import {
   hasIdTokenExpiredError,
   hasRefreshTokenExpiredError,
+  hasTokenInvalidError,
 } from './utils';
 
 import type { TokenRefreshLinkParameters } from './types';
@@ -68,7 +69,7 @@ export class TokenRefreshLink extends ApolloLink {
           if (hasIdTokenExpiredError(dataErrors)) {
             handling = true;
             handleTokenRefresh();
-          } else if (hasRefreshTokenExpiredError(dataErrors)) {
+          } else if (hasRefreshTokenExpiredError(dataErrors) || hasTokenInvalidError(dataErrors)) {
             this.handleAuthFailed();
           } else {
             observer.next(data);
@@ -80,7 +81,7 @@ export class TokenRefreshLink extends ApolloLink {
           if (hasIdTokenExpiredError(batchedErrors)) {
             handling = true;
             handleTokenRefresh();
-          } else if (hasRefreshTokenExpiredError(batchedErrors)) {
+          } else if (hasRefreshTokenExpiredError(batchedErrors) || hasTokenInvalidError(batchedErrors)) {
             this.handleAuthFailed();
           } else {
             observer.error(error);
