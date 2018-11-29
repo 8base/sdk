@@ -34,7 +34,7 @@
     "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
-    "@8base/utils": "^0.5.0",
+    "@8base/utils": "^0.6.1",
     "ramda": "^0.25.0"
   }
 }

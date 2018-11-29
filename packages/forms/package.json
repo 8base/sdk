@@ -14,7 +14,7 @@
     "@8base/validate": "^0.6.2"
   },
   "peerDependencies": {
-    "@8base/table-schema-provider": "^0.5.5",
+    "@8base/table-schema-provider": "^0.6.1",
     "final-form": "^4.10.0",
     "final-form-arrays": "^1.1.0",
     "prop-types": "^15.6.1",
