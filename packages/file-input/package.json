@@ -1,6 +1,6 @@
 {
   "name": "@8base/file-input",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "lib/file-input.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -19,7 +19,7 @@
     "filestack-js": "^1.7.2"
   },
   "devDependencies": {
-    "@8base/webpack-configuration": "^0.6.2",
+    "@8base/webpack-configuration": "^0.6.3",
     "apollo-client": "^2.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
