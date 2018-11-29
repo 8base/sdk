@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "main": "lib/auth.js",
   "scripts": {
     "build": "yarn build:es && yarn build:flow",
@@ -25,7 +25,7 @@
     "auth0-js": "^9.8.0"
   },
   "devDependencies": {
-    "@8base/webpack-configuration": "^0.6.3",
+    "@8base/webpack-configuration": "^0.6.4",
     "apollo-client": "^2.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
