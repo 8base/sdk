@@ -9,8 +9,18 @@ const isEmailVerified = pipe(
   path(['idTokenPayload', 'email_verified']),
   equals(true),
 );
+
 const getEmail = path(['idTokenPayload', 'email']);
+
 const getIdToken = path(['idToken']);
+
+const getState = ({ state }) => {
+  try {
+    return JSON.parse(state);
+  } catch (e) {
+    return state;
+  }
+};
 
 
 /**
@@ -82,6 +92,7 @@ class Auth0WebClient implements AuthClient {
         }
 
         resolve({
+          state: getState(authResult),
           email: getEmail(authResult),
           idToken: getIdToken(authResult),
           isEmailVerified: isEmailVerified(authResult),
