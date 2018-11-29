@@ -8,8 +8,8 @@
     "watch": "webpack --env dev --watch"
   },
   "peerDependencies": {
-    "@8base/auth": "^0.5.9",
-    "@8base/table-schema-provider": "^0.5.9",
+    "@8base/auth": "^0.6.1",
+    "@8base/table-schema-provider": "^0.6.1",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.4.2"
@@ -18,7 +18,7 @@
     "@8base/apollo-client": "^0.6.2",
     "@8base/apollo-links": "^0.6.2",
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.74",
+    "@8base/sdk": "^0.0.75",
     "apollo-cache-inmemory": "^1.3.5",
     "apollo-client": "^2.4.2",
     "graphql": "^0.13.0",

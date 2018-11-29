@@ -18,7 +18,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "documentation": "^8.0.0",
-    "graphql": "^0.13.0",
+    "graphql": "0.13.0",
     "jest": "^23.5.0",
     "nock": "^9.3.3",
     "webpack": "^4.17.1",
@@ -27,14 +27,14 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.74",
+    "@8base/sdk": "^0.0.75",
     "@8base/utils": "^0.6.2",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0"
   },
   "peerDependencies": {
-    "graphql": "^0.13.0"
+    "graphql": "0.13.0"
   },
   "jest": {
     "setupFiles": [

@@ -19,21 +19,21 @@
     "babel-preset-react-app": "^3.1.2",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.1.2",
-    "graphql": "0.13.2",
+    "graphql": "0.13.0",
     "graphql-tag": "^2.10.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.2.10",
-    "apollo-link": "^1.2.2",
+    "apollo-link": "1.2.1",
     "apollo-link-batch-http": "^1.2.2",
     "apollo-link-error": "^1.1.1"
   },
   "peerDependencies": {
-    "@8base/apollo-links": "^0.5.5",
+    "@8base/apollo-links": "^0.6.1",
     "apollo-client": "^2.4.2",
-    "graphql": "0.13.2",
+    "graphql": "0.13.0",
     "graphql-tag": "^2.10.0"
   },
   "license": "MIT"

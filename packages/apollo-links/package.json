@@ -10,9 +10,8 @@
   },
   "devDependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.74",
     "@8base/webpack-configuration": "^0.6.2",
-    "apollo-link": "^1.2.2",
+    "apollo-link": "1.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
@@ -21,14 +20,15 @@
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "^6.26.0",
     "documentation": "^8.0.0",
-    "graphql": "^0.13.0",
+    "graphql": "0.13.0",
     "jest": "^23.1.0",
     "ramda": "^0.25.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "apollo-link": "^1.2.2",
+    "@8base/sdk": "^0.0.75",
+    "apollo-link": "1.2.1",
     "apollo-link-error": "^1.1.0",
     "graphql-tag": "^2.9.2"
   },
@@ -44,8 +44,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.74",
-    "graphql": "^0.13.0",
+    "graphql": "0.13.0",
     "ramda": "^0.25.0"
   }
 }
