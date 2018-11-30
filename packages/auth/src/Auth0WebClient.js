@@ -83,6 +83,23 @@ class Auth0WebClient implements AuthClient {
     });
   });
 
+
+  changePassword = (): Promise<{ email: string }> => new Promise((resolve, reject) => {
+    const { email } = this.getAuthState();
+
+    this.auth0.changePassword({
+      connection: 'Username-Password-Authentication',
+      email,
+    }, (error) => {
+      if (error) {
+        reject(error || {});
+        return;
+      }
+
+      resolve({ email });
+    });
+  });
+
   getAuthorizedData = (): Promise<{ isEmailVerified: boolean, idToken: string, email: string }> => {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((error, authResult) => {

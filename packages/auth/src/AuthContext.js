@@ -39,7 +39,7 @@ class AuthProvider extends Component<AuthProviderProps> {
 
   render() {
     const { children, authClient } = this.props;
-    const { getAuthState, authorize, getAuthorizedData, logout, checkSession } = authClient;
+    const { getAuthState, authorize, getAuthorizedData, logout, checkSession, changePassword } = authClient;
     const { idToken } = getAuthState();
     const isAuthorized = checkIsAuthorized({ idToken });
 
@@ -54,6 +54,7 @@ class AuthProvider extends Component<AuthProviderProps> {
           getAuthorizedData,
           logout,
           checkSession,
+          changePassword,
         }}
       >
         { children }

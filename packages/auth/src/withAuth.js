@@ -32,6 +32,7 @@ const withAuth: any = <InputProps: {}>(
               getAuthorizedData,
               checkSession,
               logout,
+              changePassword,
             }: AuthContextProps) => (
               <WrappedComponent { ...this.props } auth={{
                 isAuthorized,
@@ -43,6 +44,7 @@ const withAuth: any = <InputProps: {}>(
                 getAuthorizedData,
                 checkSession,
                 logout,
+                changePassword,
               }} />
             )
           }
