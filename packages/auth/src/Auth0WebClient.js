@@ -14,6 +14,8 @@ const getEmail = path(['idTokenPayload', 'email']);
 
 const getIdToken = path(['idToken']);
 
+const getCode = path(['code']);
+
 const getState = ({ state }) => {
   try {
     return JSON.parse(state);
@@ -95,6 +97,7 @@ class Auth0WebClient implements AuthClient {
           state: getState(authResult),
           email: getEmail(authResult),
           idToken: getIdToken(authResult),
+          code: getCode(authResult),
           isEmailVerified: isEmailVerified(authResult),
         });
       });
