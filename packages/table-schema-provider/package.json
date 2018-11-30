@@ -1,6 +1,6 @@
 {
   "name": "@8base/table-schema-provider",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "main": "lib/table-schema-provider.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -24,9 +24,9 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@8base/auth": "^0.6.4",
-    "@8base/utils": "^0.6.4",
-    "@8base/webpack-configuration": "^0.6.4",
+    "@8base/auth": "^0.6.5",
+    "@8base/utils": "^0.6.5",
+    "@8base/webpack-configuration": "^0.6.5",
     "apollo-client": "^2.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

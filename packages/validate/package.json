@@ -1,6 +1,6 @@
 {
   "name": "@8base/validate",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "main": "lib/validate.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -19,8 +19,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@8base/utils": "^0.6.4",
-    "@8base/webpack-configuration": "^0.6.4",
+    "@8base/utils": "^0.6.5",
+    "@8base/webpack-configuration": "^0.6.5",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
