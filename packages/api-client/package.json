@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "main": "lib/api-client.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -9,7 +9,7 @@
     "watch": "webpack --progress --colors --watch --env dev"
   },
   "devDependencies": {
-    "@8base/webpack-configuration": "^0.6.5",
+    "@8base/webpack-configuration": "^0.6.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -28,7 +28,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.75",
-    "@8base/utils": "^0.6.5",
+    "@8base/utils": "^0.6.6",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0"
