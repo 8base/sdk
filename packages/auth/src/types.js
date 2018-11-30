@@ -21,6 +21,7 @@ export interface AuthClient {
   getAuthState(): AuthState,
   setAuthState(state: AuthState): void,
   purgeAuthState(): void,
+  changePassword(): Promise<{ email: string }>,
 }
 
 export type AuthContextProps = {
