@@ -76,17 +76,21 @@ const checkIsNumber: PreparedValidator = R.ifElse(
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
 
+const getPrecision = (value: ?string) => {
+  value = value || '';
+
+  const dotIndex = value.indexOf('.') + 1;
+
+  return dotIndex === -1 ? 0 : value.length - dotIndex;
+};
+
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
 // will be resolved.
 const checkMaxPrecision: Validator<number> = (maxPrecision) => (value) => {
-  if (isEmpty(value)) {
-    return undefined;
-  }
+  const precision = getPrecision(value);
 
-  return R.test(new RegExp(`^\\d*\\.?\\d{0,${maxPrecision}}$`), value || '') ?
-    undefined :
-    VALIDATION_ERROR.MAX_PRECISION(maxPrecision);
+  return precision <= maxPrecision ? undefined : VALIDATION_ERROR.MAX_PRECISION(maxPrecision);
 };
 
 const checkMinValue: Validator<number> = (minValue) => R.ifElse(
@@ -152,7 +156,7 @@ const getNumberFieldValidators: ValidatorsGetter<NumberField> = (field) => {
   const minValue = getMinValue(field);
   const maxValue = getMaxValue(field);
 
-  if (maxPrecision) {
+  if (maxPrecision || maxPrecision === 0) {
     validators.push(checkMaxPrecision(maxPrecision));
   }
 

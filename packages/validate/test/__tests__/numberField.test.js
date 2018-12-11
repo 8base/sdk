@@ -70,7 +70,19 @@ describe('As developer, i can create number field vaidator', () => {
   });
 
   it(
-    `should check invalid value by "precision" attribute
+    `should check invalid value by "precision" = 0 attribute
+    and provide error message with allowed maximum precision`,
+    () => {
+      const precision = 0;
+      const numberField: NumberField = mockNumberField({ precision });
+      const validate: PreparedValidator = validator(numberField);
+
+      expect(validate('1.2')).toBe(VALIDATION_ERROR.MAX_PRECISION(precision));
+    },
+  );
+
+  it(
+    `should check invalid value by "precision" = 1 attribute
     and provide error message with allowed maximum precision`,
     () => {
       const precision = 1;
