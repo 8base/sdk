@@ -76,12 +76,16 @@ const checkIsNumber: PreparedValidator = R.ifElse(
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
 
-const getPrecision = (value: ?string) => {
-  value = value || '';
+const getPrecision = (value: ?string | ?number) => {
+  if (R.isNil(value)) {
+    return 0;
+  } else {
+    value = String(value);
+  }
 
-  const dotIndex = value.indexOf('.') + 1;
+  const dotIndex = value.indexOf('.');
 
-  return dotIndex === -1 ? 0 : value.length - dotIndex;
+  return dotIndex === -1 ? 0 : (value.length - dotIndex - 1);
 };
 
 // TODO: replace ternary operator by R.ifElse
