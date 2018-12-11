@@ -46,8 +46,8 @@ export type Fields = NumberField |
 
 const getFieldTypeAttributes: (Fields => {}) = R.prop('fieldTypeAttributes');
 const getMaxPrecision: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'precision'));
-const getMinValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'minValue'));
-const getMaxValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'maxValue'));
+const getMinValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(-2147483648, 'minValue'));
+const getMaxValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(2147483647, 'maxValue'));
 const getMaxFieldSize: (TextField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'fieldSize'));
 const getFormat: ((TextField | DateField) => (Format)) = R.pipe(getFieldTypeAttributes, R.prop('format'));
 
