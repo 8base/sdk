@@ -70,7 +70,19 @@ describe('As developer, i can create number field vaidator', () => {
   });
 
   it(
-    `should check invalid value by "precision" attribute
+    `should check invalid value by "precision" = 0 attribute
+    and provide error message with allowed maximum precision`,
+    () => {
+      const precision = 0;
+      const numberField: NumberField = mockNumberField({ precision });
+      const validate: PreparedValidator = validator(numberField);
+
+      expect(validate('1.2')).toBe(VALIDATION_ERROR.MAX_PRECISION(precision));
+    },
+  );
+
+  it(
+    `should check invalid value by "precision" = 1 attribute
     and provide error message with allowed maximum precision`,
     () => {
       const precision = 1;
@@ -96,6 +108,18 @@ describe('As developer, i can create number field vaidator', () => {
 
     expect(validate('1.2')).toBeUndefined();
   });
+
+  it(
+    `should check invalid value by default "minValue" attribute
+    and provide error message with allowed minimum value`,
+    () => {
+      const minValue = -2147483648;
+      const numberField: NumberField = mockNumberField();
+      const validate: PreparedValidator = validator(numberField);
+
+      expect(validate('-2147483650')).toBe(VALIDATION_ERROR.MIN_VALUE(minValue));
+    },
+  );
 
   it(
     `should check invalid value by "minValue" attribute
@@ -124,6 +148,18 @@ describe('As developer, i can create number field vaidator', () => {
 
     expect(validate('10')).toBeUndefined();
   });
+
+  it(
+    `should check invalid value by default "maxValue" attribute
+    and provide error message with allowed maximum value`,
+    () => {
+      const maxValue = 2147483647;
+      const numberField: NumberField = mockNumberField({ maxValue });
+      const validate: PreparedValidator = validator(numberField);
+
+      expect(validate('2147483648')).toBe(VALIDATION_ERROR.MAX_VALUE(maxValue));
+    },
+  );
 
   it(
     `should check invalid value by "maxValue" attribute
