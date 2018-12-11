@@ -1,6 +1,6 @@
 {
   "name": "@8base/webpack-configuration",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
