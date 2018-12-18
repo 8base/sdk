@@ -91,8 +91,6 @@ const TABLES_SCHEMA_QUERY = gql`
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
     format
-    showTitle
-    showUrl
     maxSize
     typeRestrictions
   }

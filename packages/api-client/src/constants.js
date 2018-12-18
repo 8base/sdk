@@ -94,8 +94,6 @@ export const TABLES_LIST_QUERY = `
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
     format
-    showTitle
-    showUrl
     maxSize
     typeRestrictions
   }

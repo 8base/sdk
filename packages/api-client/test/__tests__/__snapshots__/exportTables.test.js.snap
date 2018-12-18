@@ -267,8 +267,6 @@ Object {
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
     format
-    showTitle
-    showUrl
     maxSize
     typeRestrictions
   }
@@ -318,7 +316,7 @@ Object {
       "close",
     ],
     "content-length": Array [
-      "2351",
+      "2323",
     ],
     "content-type": Array [
       "application/json",

@@ -20,8 +20,6 @@ fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
 export const FileFieldTypeAttributes = gql`
 fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
   format
-  showTitle
-  showUrl
   maxSize
   typeRestrictions
 }

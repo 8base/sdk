@@ -63,8 +63,6 @@ export const importTables = async (request: (query: string | DocumentNode, varia
           'currency',
           'minValue',
           'maxValue',
-          'showTitle',
-          'showUrl',
           'maxSize',
           'typeRestrictions',
         ], field.fieldTypeAttributes);

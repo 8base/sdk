@@ -28,8 +28,6 @@ export const TABLE_SCHEMA_WITH_FILES = {
       fieldType: 'FILE',
       fieldTypeAttributes: {
         format: 'FILE',
-        showTitle: null,
-        showUrl: null,
         maxSize: null,
         typeRestrictions: null,
       },
@@ -49,8 +47,6 @@ export const TABLE_SCHEMA_WITH_FILES = {
       fieldType: 'FILE',
       fieldTypeAttributes: {
         format: 'FILE',
-        showTitle: null,
-        showUrl: null,
         maxSize: null,
         typeRestrictions: null,
       },
