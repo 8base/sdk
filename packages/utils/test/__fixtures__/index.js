@@ -124,8 +124,6 @@ export const SCHEMA = [{
       fieldType: 'FILE',
       fieldTypeAttributes: {
         format: 'FILE',
-        showTitle: null,
-        showUrl: null,
         maxSize: null,
         typeRestrictions: null,
       },
@@ -144,8 +142,6 @@ export const SCHEMA = [{
       fieldType: 'FILE',
       fieldTypeAttributes: {
         format: 'FILE',
-        showTitle: null,
-        showUrl: null,
         maxSize: null,
         typeRestrictions: null,
       },
