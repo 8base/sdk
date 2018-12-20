@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@8base/error-codes/-/error-codes-1.0.10.tgz#baf553f04c03119db83cbe4306d4a01c2c6b7dc1"
   integrity sha512-NAMZpmnaiUlJyDJKSAWODnJSGkV3c1UH5d3DTa6Amv70ypqIjZIGyKj5qHW+1wmr4q5Gb2uIO5+sdIeR7OPcBw==
 
-"@8base/sdk@^0.0.75":
-  version "0.0.75"
-  resolved "https://registry.yarnpkg.com/@8base/sdk/-/sdk-0.0.75.tgz#df365c9386164d5b942ac6b9b08fad4ecc467bd1"
-  integrity sha512-sl/G20x1zPF/2z0MmAO1ZPMLKeZddRBGAdCiVsF74ikTBsULVWZy3K8Uremi9GAjhroMdxqjrJbs32U/UOyVIg==
+"@8base/sdk@^0.0.76":
+  version "0.0.76"
+  resolved "https://registry.yarnpkg.com/@8base/sdk/-/sdk-0.0.76.tgz#e802b811cd94c8397b8b19fc791db7304fe4908b"
+  integrity sha512-6V3Z8Bx7CRVi7HADnj7AztuCmGS5agGBMb4keoFFjndTBsAkVGvzl0RWz1iDri9VquTDlQhVdtu/xkKcYSWpPw==
   dependencies:
     "@8base/error-codes" "^1.0.6"
     apollo-link "1.2.1"

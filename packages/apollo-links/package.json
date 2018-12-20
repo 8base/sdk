@@ -27,7 +27,7 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@8base/sdk": "^0.0.75",
+    "@8base/sdk": "^0.0.76",
     "apollo-link": "1.2.1",
     "apollo-link-error": "^1.1.0",
     "graphql-tag": "^2.9.2"
