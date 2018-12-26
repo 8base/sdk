@@ -43,6 +43,11 @@ export const FILE_FORMATS = {
   IMAGE: 'IMAGE',
 };
 
+export const SMART_FORMATS = {
+  ADDRESS: 'ADDRESS',
+  PHONE: 'PHONE',
+};
+
 export const DATE_FORMATS = {
   DATE: 'DATE',
   DATETIME: 'DATE/TIME',

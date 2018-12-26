@@ -79,9 +79,9 @@ const checkIsNumber: PreparedValidator = R.ifElse(
 const getPrecision = (value: ?string | ?number) => {
   if (R.isNil(value)) {
     return 0;
-  } else {
-    value = String(value);
   }
+  value = String(value);
+
 
   const dotIndex = value.indexOf('.');
 
