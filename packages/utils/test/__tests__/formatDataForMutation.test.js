@@ -179,6 +179,46 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
+  it('Empty address', () => {
+    const data = {
+      address: {
+        street1: '',
+        street2: '',
+        zip: '',
+        city: '',
+        state: '',
+        country: '',
+      },
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      address: null,
+    });
+  });
+
+  it('List of addresses', () => {
+    const data = {
+      addresses: [{
+        street1: '',
+        street2: '',
+        zip: '',
+        city: '',
+        state: '',
+        country: '',
+      }, {
+        street1: 'Pamelia Quall',
+        street2: 'Lasonya Friedly',
+        zip: 'Timothy Ingleton',
+        city: 'Kenia Urhahn',
+        state: 'Scottie Swailes',
+      }],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      addresses: [data.addresses[1]],
+    });
+  });
+
   it('Compelex data.', () => {
     const data = {
       scalar: 'Scalar Value',
@@ -456,6 +496,46 @@ describe('As developer, I can format for update mutation,', () => {
           id: fileList[0].id,
         }],
       },
+    });
+  });
+
+  it('Empty address', () => {
+    const data = {
+      address: {
+        street1: '',
+        street2: '',
+        zip: '',
+        city: '',
+        state: '',
+        country: '',
+      },
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      address: null,
+    });
+  });
+
+  it('List of addresses', () => {
+    const data = {
+      addresses: [{
+        street1: '',
+        street2: '',
+        zip: '',
+        city: '',
+        state: '',
+        country: '',
+      }, {
+        street1: 'Pamelia Quall',
+        street2: 'Lasonya Friedly',
+        zip: 'Timothy Ingleton',
+        city: 'Kenia Urhahn',
+        state: 'Scottie Swailes',
+      }],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      addresses: [data.addresses[1]],
     });
   });
 
