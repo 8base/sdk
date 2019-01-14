@@ -2,6 +2,7 @@
 
 export { AuthProvider, AuthConsumer } from './AuthContext';
 export { Auth0WebClient } from './Auth0WebClient';
+export { ApiTokenClient } from './ApiTokenClient';
 export { withAuth } from './withAuth';
 export { withLogOut } from './withLogOut';
 

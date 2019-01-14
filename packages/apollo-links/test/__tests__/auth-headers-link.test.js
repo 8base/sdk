@@ -20,7 +20,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
     }
   `;
   const workspaceId: string = 'some workspace id';
-  const idToken: string = 'some id token';
+  const token: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
   const getAuthState = jest.fn();
   const authHeadersLink: ApolloLink = new AuthHeadersLink({ getAuthState });
@@ -34,7 +34,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
     () => new Promise((resolve, reject) => {
       getAuthState.mockReturnValueOnce({
         workspaceId,
-        idToken,
+        token,
       });
 
       execute(
@@ -51,7 +51,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
           expect(context).toStrictEqual({
             headers: {
               workspace: workspaceId,
-              authorization: `Bearer ${idToken}`,
+              authorization: `Bearer ${token}`,
             },
           });
 
@@ -68,7 +68,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
 
       getAuthState.mockReturnValueOnce({
         workspaceId: '',
-        idToken: 'some-id-token',
+        token: 'some-id-token',
       });
 
       execute(

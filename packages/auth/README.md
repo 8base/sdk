@@ -26,7 +26,7 @@ Provides access to the authentication state.
 
 ### Auth0WebClient
 
-Create instacne of the auth web zero0 client.
+Create instacne of the auth0 client
 
 #### Parameters
 
@@ -36,9 +36,16 @@ Create instacne of the auth web zero0 client.
 -   `clientID` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Client id. See auth0 documentation.
 -   `redirectUri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Redurect uri. See auth0 documentation.
 
+### ApiTokenClient
+
+Create instance of the API Token client
+
+#### Parameters
+-   `apiToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Generated API Token
+
 ## Usage
 
-### Simple Usage
+### Auth0WebClient
 
 ```js
 import { AuthProvider, Auth0WebClient, AuthConsumer } from '@8base/auth';
@@ -61,3 +68,24 @@ import { AuthProvider, Auth0WebClient, AuthConsumer } from '@8base/auth';
     ...  
   </AuthProvider>
 ```
+
+### ApiTokenClient
+
+```js
+import { AuthProvider, ApiTokenClient, AuthConsumer } from '@8base/auth';
+
+  const apiTokenClient = new ApiTokenClient({
+    apiToken: 'api-token',
+  });
+
+  <AuthProvider authClient={ apiTokenClient }>
+    ...
+      <AuthConsumer>
+        {
+          (auth: AuthContextProps) => (<div />)
+        }
+      </AuthConsumer>
+    ...  
+  </AuthProvider>
+```
+

@@ -54,7 +54,7 @@ const getAuthState = () => ({
   workaspace: '',
   email: '',
   userId: '',
-  idToken: '',
+  token: '',
   refreshToken: '',
 });
 
@@ -63,8 +63,8 @@ const getRefreshTokenParameters = () => ({
   refreshToken: '',
 });
 
-const authSuccessHandler = ({ idToken, refreshToken}) => {
-  conolse.log({ idToken, refreshToken });
+const authSuccessHandler = ({ token, refreshToken}) => {
+  conolse.log({ token, refreshToken });
 }
 
 const authErrorHandler = () => {

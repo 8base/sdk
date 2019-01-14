@@ -19,9 +19,9 @@ class ApolloContainer extends React.Component {
     } = this.props;
 
     return checkSession({}).then((authResult) => {
-      const idToken = getIdToken(authResult);
+      const token = getIdToken(authResult);
 
-      setAuthState({ idToken });
+      setAuthState({ token });
     });
   };
 
@@ -40,7 +40,7 @@ class ApolloContainer extends React.Component {
 
     if (authState) {
       return R.pick([
-        'idToken',
+        'token',
         'workspaceId',
       ])(authState);
     }

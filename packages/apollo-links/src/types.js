@@ -4,11 +4,6 @@ export type ErrorObject = {
   message: string,
 };
 
-export type RefreshTokenQueryResult = {
-  refreshToken: string,
-  idToken: string,
-};
-
 export type RefreshTokenQueryInput = {
   refreshToken: string,
   email: string,
@@ -32,7 +27,7 @@ export type ErrorLinkParameters = {
 
 export type AuthState = {
   workspaceId?: string,
-  idToken?: string,
+  token?: string,
 };
 
 export type AuthHeadersLinkParameters = {

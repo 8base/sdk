@@ -80,7 +80,7 @@ describe('As a developer, i can use AuthContext to get authorization state in an
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ workspaceId, idToken });
+    setAuthState({ workspaceId, token: idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(true);
   });
 
@@ -90,7 +90,7 @@ describe('As a developer, i can use AuthContext to get authorization state in an
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ workspaceId, idToken });
+    setAuthState({ workspaceId, token: idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
   });
 
@@ -100,7 +100,7 @@ describe('As a developer, i can use AuthContext to get authorization state in an
     const testInstance = getTestInstance();
     const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
 
-    setAuthState({ workspaceId, idToken });
+    setAuthState({ workspaceId, token: idToken });
     expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
   });
 
