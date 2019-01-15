@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-client",
-  "version": "0.6.12",
+  "version": "0.7.0",
   "main": "lib/apollo-client.js",
   "scripts": {
     "build": "webpack --env production --mode production",
@@ -9,8 +9,8 @@
     "watch": "NODE_ENV=development babel src -d es --watch --ignore __tests__"
   },
   "devDependencies": {
-    "@8base/apollo-links": "^0.6.12",
-    "@8base/webpack-configuration": "^0.6.12",
+    "@8base/apollo-links": "^0.7.0",
+    "@8base/webpack-configuration": "^0.7.0",
     "apollo-client": "^2.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
