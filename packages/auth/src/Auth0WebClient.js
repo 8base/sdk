@@ -1,18 +1,24 @@
 // @flow
-import { path, equals, pipe } from 'ramda';
 import auth0 from 'auth0-js';
 import * as localStorageAccessor from './localStorageAccessor';
-import type { AuthState, AuthClient, Auth0WebClientOptions } from './types';
+import * as R from 'ramda';
 
+import { isEmptyOrNil } from './utils';
+import type {
+  AuthState,
+  Auth0WebClientOptions,
+  AuthClient,
+  Authorizable,
+} from './types';
 
-const isEmailVerified = pipe(
-  path(['idTokenPayload', 'email_verified']),
-  equals(true),
+const isEmailVerified = R.pipe(
+  R.path(['idTokenPayload', 'email_verified']),
+  R.equals(true),
 );
 
-const getEmail = path(['idTokenPayload', 'email']);
+const getEmail = R.path(['idTokenPayload', 'email']);
 
-const getIdToken = path(['idToken']);
+const getIdToken = R.path(['idToken']);
 
 const getState = ({ state }) => {
   try {
@@ -30,7 +36,7 @@ const getState = ({ state }) => {
  * @param {string} clientID Client id. See auth0 documentation.
  * @param {string} redirectUri Redurect uri. See auth0 documentation.
  */
-class Auth0WebClient implements AuthClient {
+class Auth0WebClient implements AuthClient, Authorizable {
   auth0: auth0.WebAuth;
   workspaceId: string | void;
   logoutRedirectUri: string | void;
@@ -122,16 +128,19 @@ class Auth0WebClient implements AuthClient {
     localStorageAccessor.setAuthState(state);
   };
 
-  getAuthState = (): AuthState => {
-    return localStorageAccessor.getAuthState();
-  };
+  getAuthState = (): AuthState => localStorageAccessor.getAuthState();
 
   purgeAuthState = (): void => {
     localStorageAccessor.purgeAuthState();
   };
+
+  checkIsAuthorized = (): boolean => {
+    const { token } = this.getAuthState();
+
+    return R.not(isEmptyOrNil(token));
+  };
 }
 
 
-export {
-  Auth0WebClient,
-};
+export { Auth0WebClient };
+

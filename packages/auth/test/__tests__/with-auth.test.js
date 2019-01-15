@@ -52,7 +52,7 @@ describe('As a developer, i can use withAuth HOC to get auth context', () => {
 
     const { auth } = testInstance.findByType(StubComponent).props;
 
-    auth.setAuthState({ workspaceId, idToken });
+    auth.setAuthState({ workspaceId, token: idToken });
 
     const updatedProps = testInstance.findByType(StubComponent).props;
 
@@ -60,7 +60,8 @@ describe('As a developer, i can use withAuth HOC to get auth context', () => {
     expect(updatedProps.auth.isAuthorized).toBeTruthy();
     expect(updatedProps.auth.authState).toEqual({
       workspaceId,
-      idToken,
+      token: idToken,
     });
   });
 });
+

@@ -26,11 +26,11 @@ export class AuthHeadersLink extends ApolloLink {
   }
 
   request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    const { idToken, workspaceId }: AuthState = this.getAuthState();
+    const { token, workspaceId }: AuthState = this.getAuthState();
 
     operation.setContext(
       R.over(R.lensProp('headers'), R.pipe(
-        assocWhenNotEmpty('authorization', idToken ? `Bearer ${idToken}` : null),
+        assocWhenNotEmpty('authorization', token ? `Bearer ${token}` : null),
         assocWhenNotEmpty('workspace', workspaceId),
       )),
     );

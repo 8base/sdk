@@ -20,13 +20,13 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
     }
   `;
   const workspaceId: string = 'some workspace id';
-  const idToken: string = 'some id token';
+  const token: string = 'some id token';
   const stubLink = jest.fn(() => Observable.of());
   const onIdTokenExpired = jest.fn();
   const authLink: ApolloLink = new AuthLink({
     getAuthState: () => ({
       workspaceId,
-      idToken,
+      token,
     }),
     onIdTokenExpired,
   });
@@ -49,7 +49,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           expect(context).toStrictEqual({
             headers: {
               workspace: workspaceId,
-              authorization: `Bearer ${idToken}`,
+              authorization: `Bearer ${token}`,
             },
           });
 

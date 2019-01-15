@@ -6,14 +6,13 @@ import { setDisplayName, wrapDisplayName } from 'recompose';
 import { AuthConsumer } from './AuthContext';
 import type { AuthState, AuthContextProps } from './types';
 
-
 type WithAuthProps = {
   authState: AuthState,
 } & AuthContextProps
 
-interface AuthProps {
+type AuthProps = {
   auth: WithAuthProps,
-}
+};
 
 const withAuth: any = <InputProps: {}>(
   WrappedComponent: React$ComponentType<AuthProps & InputProps>,
@@ -22,32 +21,15 @@ const withAuth: any = <InputProps: {}>(
     render() {
       return (
         <AuthConsumer>
-          {
-            ({
-              isAuthorized,
-              getAuthState,
-              setAuthState,
-              purgeAuthState,
-              authorize,
-              getAuthorizedData,
-              checkSession,
-              logout,
-              changePassword,
-            }: AuthContextProps) => (
-              <WrappedComponent { ...this.props } auth={{
-                isAuthorized,
-                setAuthState,
-                purgeAuthState,
-                getAuthState,
-                authState: getAuthState(),
-                authorize,
-                getAuthorizedData,
-                checkSession,
-                logout,
-                changePassword,
-              }} />
-            )
-          }
+          { (contextProps: AuthContextProps) => (
+            <WrappedComponent
+              { ...this.props }
+              auth={{
+                ...contextProps,
+                authState: contextProps.getAuthState(),
+              }}
+            />
+          ) }
         </AuthConsumer>
       );
     }

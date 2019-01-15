@@ -1,19 +1,17 @@
 // @flow
 
 import React, { Component } from 'react';
-import * as R from 'ramda';
 
-import type { AuthState, AuthClient, AuthContextProps } from './types';
+import type {
+  AuthState,
+  AuthClient,
+  AuthContextProps,
+} from './types';
 
 type AuthProviderProps = {
   children: React$Node,
   authClient: AuthClient,
 };
-
-const isEmptyOrNil: (?string) => boolean = R.either(R.isNil, R.isEmpty);
-
-const checkIsAuthorized = ({ idToken }: AuthState): boolean =>
-  R.not(isEmptyOrNil(idToken));
 
 const { Provider, Consumer } = React.createContext({
   isAuthorized: false,
@@ -39,22 +37,15 @@ class AuthProvider extends Component<AuthProviderProps> {
 
   render() {
     const { children, authClient } = this.props;
-    const { getAuthState, authorize, getAuthorizedData, logout, checkSession, changePassword } = authClient;
-    const { idToken } = getAuthState();
-    const isAuthorized = checkIsAuthorized({ idToken });
+    const isAuthorized = authClient.checkIsAuthorized();
 
     return (
       <Provider
         value={{
-          isAuthorized,
+          ...authClient,
           setAuthState: this.setAuthState,
           purgeAuthState: this.purgeAuthState,
-          getAuthState,
-          authorize,
-          getAuthorizedData,
-          logout,
-          checkSession,
-          changePassword,
+          isAuthorized,
         }}
       >
         { children }
