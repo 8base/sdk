@@ -20,6 +20,8 @@ const getEmail = R.path(['idTokenPayload', 'email']);
 
 const getIdToken = R.path(['idToken']);
 
+const getVisitorId = R.pathOr(null, ['idTokenPayload', 'https://8base.com/visitor_id']);
+
 const getState = ({ state }) => {
   try {
     return JSON.parse(state);
@@ -119,6 +121,7 @@ class Auth0WebClient implements AuthClient, Authorizable {
           email: getEmail(authResult),
           idToken: getIdToken(authResult),
           isEmailVerified: isEmailVerified(authResult),
+          visitorId: getVisitorId(authResult),
         });
       });
     });
