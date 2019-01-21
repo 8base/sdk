@@ -1,33 +1,39 @@
 {
   "name": "@8base/apollo-links",
   "version": "0.7.3",
-  "main": "lib/apollo-links.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
-    "build": "webpack --env production --mode production",
+    "build": "yarn run build:clean && yarn run build:cjs && yarn run build:mjs && yarn run build:flow",
+    "build:clean": "rm -rf ./dist && mkdir ./dist",
+    "build:js": "babel src --ignore 'src/__fixtures__,**/__tests__'",
+    "build:cjs": "yarn run build:js --env-name cjs --out-dir dist/",
+    "build:mjs": "yarn run build:js --env-name mjs --out-dir dist/module && for file in $(find dist/module -name '*.js'); do mv \"$file\" `echo \"$file\" | sed 's/dist\\/module/dist/g; s/.js$/.mjs/g'`; done && rm -rf dist/module",
+    "build:flow": "yarn flow-copy-source src dist",
     "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
-    "test": "NPM_ENV=test jest",
-    "watch": "webpack --env dev --watch"
+    "test": "NPM_ENV=test jest"
   },
   "devDependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/webpack-configuration": "^0.7.3",
     "apollo-link": "1.2.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "7",
-    "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
+    "flow-copy-source": "^2.0.2",
     "graphql": "0.13.0",
     "jest": "^23.1.0",
-    "ramda": "^0.25.0",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "ramda": "^0.25.0"
   },
   "dependencies": {
     "@8base/sdk": "^0.0.78",
+    "@babel/runtime": "^7.2.0",
     "apollo-link": "1.2.1",
     "apollo-link-error": "^1.1.0",
     "graphql-tag": "^2.9.2"
@@ -41,10 +47,5 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT",
-  "peerDependencies": {
-    "@8base/error-codes": "^1.0.5",
-    "graphql": "0.13.0",
-    "ramda": "^0.25.0"
-  }
+  "license": "MIT"
 }

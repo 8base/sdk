@@ -1,12 +1,12 @@
-import React from "react";
-import renderer from "react-test-renderer";
+import React from 'react';
+import renderer from 'react-test-renderer';
 
 import {
   IfAllowed,
   PermissionsProvider,
   isAllowed,
-  PermissionContext
-} from "../../src";
+  PermissionContext,
+} from '../../src';
 
 const mockDATA = {
   user: {
@@ -16,94 +16,94 @@ const mockDATA = {
           permissions: {
             items: [
               {
-                resource: "Users",
-                resourceType: "data",
+                resource: 'Users',
+                resourceType: 'data',
                 permission: {
                   create: {
-                    allow: true
+                    allow: true,
                   },
                   delete: {
-                    allow: true
+                    allow: true,
                   },
                   read: {
-                    allow: true
+                    allow: true,
                   },
                   update: {
                     allow: true,
                     filter: {
                       id: {
-                        equals: "__loggedInUserId"
-                      }
-                    }
-                  }
-                }
+                        equals: '__loggedInUserId',
+                      },
+                    },
+                  },
+                },
               },
               {
-                resource: "schema",
-                resourceType: "custom",
+                resource: 'schema',
+                resourceType: 'custom',
                 permission: {
                   edit: {
-                    allow: false
-                  }
-                }
-              }
-            ]
-          }
+                    allow: false,
+                  },
+                },
+              },
+            ],
+          },
         },
         {
           permissions: {
             items: [
               {
-                resource: "Users",
-                resourceType: "data",
+                resource: 'Users',
+                resourceType: 'data',
                 permission: {
                   create: {
-                    allow: true
+                    allow: true,
                   },
                   delete: {
-                    allow: true
+                    allow: true,
                   },
                   read: {
-                    allow: true
+                    allow: true,
                   },
                   update: {
                     allow: true,
                     filter: {
                       id: {
-                        equals: "__loggedInUserId"
-                      }
-                    }
-                  }
-                }
+                        equals: '__loggedInUserId',
+                      },
+                    },
+                  },
+                },
               },
               {
-                resource: "schema",
-                resourceType: "custom",
+                resource: 'schema',
+                resourceType: 'custom',
                 permission: {
                   edit: {
-                    allow: false
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ]
-    }
-  }
+                    allow: false,
+                  },
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
 };
 
-jest.mock("@8base/auth", () => ({
+jest.mock('@8base/auth', () => ({
   withAuth: Component => props => (
-    <Component {...props} auth={{ isAuthorized: true }} />
-  )
+    <Component { ...props } auth={{ isAuthorized: true }} />
+  ),
 }));
 
-jest.mock("react-apollo", () => ({
-  Query: ({ children }) => children({ data: mockDATA, loading: false })
+jest.mock('react-apollo', () => ({
+  Query: ({ children }) => children({ data: mockDATA, loading: false }),
 }));
 
-it("As a developer, I can use `IfAllowed` component for conditional rendering based user permissions.", () => {
+it('As a developer, I can use `IfAllowed` component for conditional rendering based user permissions.', () => {
   const testRenderFn = jest.fn(() => (
     <IfAllowed resource="Users" type="data" permission="create">
       Allowed
@@ -111,38 +111,38 @@ it("As a developer, I can use `IfAllowed` component for conditional rendering ba
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{testRenderFn}</PermissionsProvider>
+    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
   );
 
-  expect(tree.toJSON()).toMatchInlineSnapshot(`"Allowed"`);
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed"');
 });
 
-it("As a developer, I can use `IfAllowed` component for pass permission check result via render props.", () => {
+it('As a developer, I can use `IfAllowed` component for pass permission check result via render props.', () => {
   const testRenderFn = jest.fn(() => (
     <IfAllowed resource="Users" type="data" permission="create">
-      {allowed => `Allowed = ${allowed}`}
+      { allowed => `Allowed = ${allowed}` }
     </IfAllowed>
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{testRenderFn}</PermissionsProvider>
+    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
   );
 
-  expect(tree.toJSON()).toMatchInlineSnapshot(`"Allowed = true"`);
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
 });
 
-it("As a developer, I can use `isAllowed` for check access via context.", () => {
+it('As a developer, I can use `isAllowed` for check access via context.', () => {
   class TestComponent extends React.Component {
     static contextType = PermissionContext;
 
     render() {
       const allowed = isAllowed(
         {
-          resource: "schema",
-          type: "custom",
-          permission: "edit"
+          resource: 'schema',
+          type: 'custom',
+          permission: 'edit',
         },
-        this.context
+        this.context,
       );
 
       return `Allowed = ${allowed}`;
@@ -151,9 +151,9 @@ it("As a developer, I can use `isAllowed` for check access via context.", () => 
 
   const tree = renderer.create(
     <PermissionsProvider name="tableName">
-      {() => <TestComponent />}
-    </PermissionsProvider>
+      { () => <TestComponent /> }
+    </PermissionsProvider>,
   );
 
-  expect(tree.toJSON()).toMatchInlineSnapshot(`"Allowed = false"`);
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = false"');
 });

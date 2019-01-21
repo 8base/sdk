@@ -25,6 +25,7 @@ export class AuthHeadersLink extends ApolloLink {
     this.getAuthState = getAuthState;
   }
 
+
   request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     const { token, workspaceId }: AuthState = this.getAuthState();
 
@@ -38,3 +39,4 @@ export class AuthHeadersLink extends ApolloLink {
     return forward(operation);
   }
 }
+

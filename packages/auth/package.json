@@ -1,15 +1,18 @@
 {
   "name": "@8base/auth",
   "version": "0.7.3",
-  "main": "lib/auth.js",
+  "main": "dist/index.js",
+  "nodule": "dist/index.mjs",
   "scripts": {
-    "build": "yarn build:es && yarn build:flow",
-    "build:es": "webpack --env production --mode production",
-    "build:flow": "flow-copy-source src lib",
+    "build": "yarn run build:clean && yarn run build:cjs && yarn run build:mjs && yarn run build:flow",
+    "build:clean": "rm -rf ./dist && mkdir ./dist",
+    "build:js": "babel src --ignore 'src/__fixtures__,**/__tests__'",
+    "build:cjs": "yarn run build:js --env-name cjs --out-dir dist/",
+    "build:mjs": "yarn run build:js --env-name mjs --out-dir dist/module && for file in $(find dist/module -name '*.js'); do mv \"$file\" `echo \"$file\" | sed 's/dist\\/module/dist/g; s/.js$/.mjs/g'`; done && rm -rf dist/module",
+    "build:flow": "yarn flow-copy-source src dist",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=AuthProvider",
-    "test": "NPM_ENV=test jest",
-    "watch": "webpack --env dev --watch"
+    "test": "NPM_ENV=test jest"
   },
   "peerDependencies": {
     "apollo-client": "^2.4.2",
@@ -22,17 +25,23 @@
     "recompose": "0.27.1"
   },
   "dependencies": {
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.2.0",
     "auth0-js": "^9.8.0"
   },
   "devDependencies": {
-    "@8base/webpack-configuration": "^0.7.3",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
     "apollo-client": "^2.4.2",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "7",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
+    "apollo-link": "1.2.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
     "graphql": "0.13.0",
