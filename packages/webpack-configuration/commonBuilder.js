@@ -20,7 +20,6 @@ const commonBuilder = (ROOT_DIR, LIBRARY_NAME) => ({
       },
       {
         test: /\.mjs$/,
-        include: /node_modules/,
         type: 'javascript/auto',
       },
     ],
