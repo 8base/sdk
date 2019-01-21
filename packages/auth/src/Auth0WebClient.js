@@ -9,6 +9,7 @@ import type {
   Auth0WebClientOptions,
   AuthClient,
   Authorizable,
+  AuthData,
 } from './types';
 
 const isEmailVerified = R.pipe(
@@ -20,7 +21,7 @@ const getEmail = R.path(['idTokenPayload', 'email']);
 
 const getIdToken = R.path(['idToken']);
 
-const getVisitorId = R.pathOr(null, ['idTokenPayload', 'https://8base.com/visitor_id']);
+const getIdTokenPayload = R.prop('idTokenPayload');
 
 const getState = ({ state }) => {
   try {
@@ -80,14 +81,20 @@ class Auth0WebClient implements AuthClient, Authorizable {
     });
   };
 
-  checkSession = (options?: Object = {}): Promise<{ idToken: string }> => new Promise((resolve, reject) => {
-    this.auth0.checkSession(options, (error, result: { idToken: string }) => {
+  checkSession = (options?: Object = {}): Promise<AuthData> => new Promise((resolve, reject) => {
+    this.auth0.checkSession(options, (error, result) => {
       if (error) {
         reject(error || {});
         return;
       }
 
-      resolve(result || {});
+      resolve({
+        state: getState(result),
+        email: getEmail(result),
+        idToken: getIdToken(result),
+        isEmailVerified: isEmailVerified(result),
+        idTokenPayload: getIdTokenPayload(result),
+      });
     });
   });
 
@@ -108,7 +115,7 @@ class Auth0WebClient implements AuthClient, Authorizable {
     });
   });
 
-  getAuthorizedData = (): Promise<{ isEmailVerified: boolean, idToken: string, email: string }> => {
+  getAuthorizedData = (): Promise<AuthData> => {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((error, authResult) => {
         if (error) {
@@ -121,7 +128,7 @@ class Auth0WebClient implements AuthClient, Authorizable {
           email: getEmail(authResult),
           idToken: getIdToken(authResult),
           isEmailVerified: isEmailVerified(authResult),
-          visitorId: getVisitorId(authResult),
+          idTokenPayload: getIdTokenPayload(authResult),
         });
       });
     });

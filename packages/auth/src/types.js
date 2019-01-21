@@ -13,6 +13,14 @@ export type Auth0WebClientOptions = {
   logoutRedirectUri?: string,
 };
 
+export type AuthData = {
+  state: Object,
+  isEmailVerified: boolean,
+  idToken: string,
+  email: string,
+  idTokenPayload: Object,
+};
+
 export type ApiTokenClientOptions = {
   apiToken: string,
 };
@@ -27,12 +35,8 @@ export interface AuthClient {
 export interface Authorizable {
   authorize(options: Object): void,
   logout(options: Object): void,
-  checkSession(options?: Object): Promise<{ idToken: string }>,
-  getAuthorizedData(): Promise<{
-    isEmailVerified: boolean,
-    email: string,
-    idToken: string,
-  }>,
+  checkSession(options?: Object): Promise<AuthData>,
+  getAuthorizedData(): Promise<AuthData>,
   changePassword(): Promise<{ email: string }>,
 }
 
