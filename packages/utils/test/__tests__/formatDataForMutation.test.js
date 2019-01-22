@@ -13,6 +13,26 @@ describe('As developer, I can format for create mutation,', () => {
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual(data);
   });
 
+  it('Data with empty number.', () => {
+    const data = {
+      number: '',
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      number: null,
+    });
+  });
+
+  it('Data with empty numbers.', () => {
+    const data = {
+      numberList: ['', null],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      numberList: [],
+    });
+  });
+
   it('Data with relation reference.', () => {
     const data = {
       relation: '5b32159b66a4500f96285626',
@@ -542,6 +562,8 @@ describe('As developer, I can format for update mutation,', () => {
   it('Compelex data.', () => {
     const data = {
       meta: 'meta',
+      number: 1,
+      numberList: [1, '2', null, ''],
       address: {
         street1: 'Pamelia Quall',
         street2: 'Lasonya Friedly',
