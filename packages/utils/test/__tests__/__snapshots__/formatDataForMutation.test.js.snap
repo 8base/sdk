@@ -61,6 +61,11 @@ Object {
       },
     ],
   },
+  "number": 1,
+  "numberList": Array [
+    1,
+    2,
+  ],
   "relation": Object {
     "create": Object {
       "scalar": "Relation Scalar Value",
