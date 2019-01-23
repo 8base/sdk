@@ -1,40 +1,34 @@
 {
   "name": "@8base/api-client",
+
   "version": "0.8.2",
-  "main": "lib/api-client.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
-    "build": "webpack --env production --mode production",
+    "build": "../../bin/build-package.sh",
     "docs": "documentation readme src/Client.js --section=API",
-    "test": "NODE_ENV=test jest",
-    "watch": "webpack --progress --colors --watch --env dev"
-  },
-  "devDependencies": {
-    "@8base/webpack-configuration": "^0.8.2",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-flow": "^6.23.0",
-    "documentation": "^8.0.0",
-    "graphql": "0.13.0",
-    "jest": "^23.5.0",
-    "nock": "^9.3.3",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0",
-    "yargs": "^12.0.1"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.78",
     "@8base/utils": "^0.8.2",
+    "@babel/runtime": "^7.3.1",
+    "graphql": "0.13.0",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.25.0"
   },
-  "peerDependencies": {
-    "graphql": "0.13.0"
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "documentation": "^8.0.0",
+    "flow-copy-source": "^2.0.2",
+    "jest": "^23.5.0",
+    "nock": "^9.3.3",
+    "yargs": "^12.0.1"
   },
   "jest": {
     "setupFiles": [

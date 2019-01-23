@@ -4,39 +4,29 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
-    "build": "yarn run build:clean && yarn run build:cjs && yarn run build:mjs && yarn run build:flow",
-    "build:clean": "rm -rf ./dist && mkdir ./dist",
-    "build:js": "babel src --ignore 'src/__fixtures__,**/__tests__'",
-    "build:cjs": "yarn run build:js --env-name cjs --out-dir dist/",
-    "build:mjs": "yarn run build:js --env-name mjs --out-dir dist/module && for file in $(find dist/module -name '*.js'); do mv \"$file\" `echo \"$file\" | sed 's/dist\\/module/dist/g; s/.js$/.mjs/g'`; done && rm -rf dist/module",
-    "build:flow": "yarn flow-copy-source src dist",
+    "build": "../../bin/build-package.sh",
     "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
     "test": "NPM_ENV=test jest"
   },
-  "devDependencies": {
-    "@8base/error-codes": "^1.0.5",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
-    "apollo-link": "1.2.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
-    "documentation": "^8.0.0",
-    "flow-copy-source": "^2.0.2",
-    "graphql": "0.13.0",
-    "jest": "^23.1.0",
-    "ramda": "^0.25.0"
-  },
   "dependencies": {
+    "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.78",
+    "@8base/utils": "^0.8.2",
     "@babel/runtime": "^7.2.0",
     "apollo-link": "1.2.1",
     "apollo-link-error": "^1.1.0",
-    "graphql-tag": "^2.9.2"
+    "graphql": "0.13.0",
+    "graphql-tag": "^2.9.2",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "documentation": "^8.1.2",
+    "flow-copy-source": "^2.0.2",
+    "jest": "^23.6.0"
   },
   "jest": {
     "setupFiles": [
@@ -45,7 +35,10 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
-    ]
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   },
   "license": "MIT"
 }
