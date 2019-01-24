@@ -12,6 +12,30 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
   }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
+"
+  mutation DataViewerFilesRowCreate($data: FileCreateInput!) {
+    fileCreate(data: $data) {
+      file { id fileId filename downloadUrl shareUrl meta }
+      fileList { items { id fileId filename downloadUrl shareUrl meta } }
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowCreate($data: RelationCreateInput!) {
+    relationCreate(data: $data) {
+      field1 { id _description }
+      field2
+      field3
+      field4 { items { id _description } }
+      id
+    }
+  }"
+`;
+
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
 "
   mutation DataViewerSmartFieldsRowCreate($data: SmartFieldCreateInput!) {
@@ -34,43 +58,10 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
   }"
 `;
 
-exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
-"
-  mutation DataViewerFilesRowCreate($data: FileCreateInput!) {
-    fileCreate(data: $data) {
-      file { id fileId filename downloadUrl shareUrl }
-      fileList { items { id fileId filename downloadUrl shareUrl } }
-      id
-    }
-  }"
-`;
-
-exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
-"
-  mutation DataViewerRelationRowCreate($data: RelationCreateInput!) {
-    relationCreate(data: $data) {
-      field1 { id _description }
-      field2
-      field3
-      field4 { items { id _description } }
-      id
-    }
-  }"
-`;
-
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
 "
   mutation DataViewerCommonsRowDelete($data: CommonDeleteInput!) {
     commonDelete(data: $data) {
-      success
-    }
-  }"
-`;
-
-exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
-"
-  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput!) {
-    smartFieldDelete(data: $data) {
       success
     }
   }"
@@ -94,6 +85,15 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
   }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput!) {
+    smartFieldDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
 "
   mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!) {
@@ -106,24 +106,12 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
   }"
 `;
 
-exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
-"
-  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!) {
-    smartFieldUpdate(data: $data) {
-      phone { code number }
-      address { street1 street2 zip city state }
-      phoneList { code number }
-      id
-    }
-  }"
-`;
-
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
 "
   mutation DataViewerFilesRowUpdate($data: FileUpdateInput!) {
     fileUpdate(data: $data) {
-      file { id fileId filename downloadUrl shareUrl }
-      fileList { items { id fileId filename downloadUrl shareUrl } }
+      file { id fileId filename downloadUrl shareUrl meta }
+      fileList { items { id fileId filename downloadUrl shareUrl meta } }
       id
     }
   }"
@@ -142,6 +130,18 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
   }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!) {
+    smartFieldUpdate(data: $data) {
+      phone { code number }
+      address { street1 street2 zip city state }
+      phoneList { code number }
+      id
+    }
+  }"
+`;
+
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
 "
   query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
@@ -150,6 +150,36 @@ exports[`As a developer, I can generate graphql query for list by table schema s
         field1
         field2
         field3
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
+"
+  query DataViewerTableFilesContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        file { id fileId filename downloadUrl shareUrl meta }
+        fileList { items { id fileId filename downloadUrl shareUrl meta } }
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
+"
+  query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        field1 { id _description }
+        field2
+        field3
+        field4 { items { id _description } }
         _description
       }
       count
@@ -176,36 +206,6 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   }"
 `;
 
-exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
-"
-  query DataViewerTableFilesContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      items {
-        file { id fileId filename downloadUrl shareUrl }
-        fileList { items { id fileId filename downloadUrl shareUrl } }
-        _description
-      }
-      count
-    }
-  }"
-`;
-
-exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
-"
-  query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      items {
-        field1 { id _description }
-        field2
-        field3
-        field4 { items { id _description } }
-        _description
-      }
-      count
-    }
-  }"
-`;
-
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema  1`] = `
 "
   query DataViewerCommonsRow($id: ID!) {
@@ -213,6 +213,28 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       field1
       field2
       field3
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
+"
+  query DataViewerFilesRow($id: ID!) {
+    file(id: $id) {
+      file { id fileId filename downloadUrl shareUrl meta }
+      fileList { items { id fileId filename downloadUrl shareUrl meta } }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
+"
+  query DataViewerRelationRow($id: ID!) {
+    relation(id: $id) {
+      field1 { id _description }
+      field2
+      field3
+      field4 { items { id _description } }
     }
   }"
 `;
@@ -228,28 +250,6 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       phone { code number }
       address { street1 street2 zip city state }
       phoneList { code number }
-    }
-  }"
-`;
-
-exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
-"
-  query DataViewerFilesRow($id: ID!) {
-    file(id: $id) {
-      file { id fileId filename downloadUrl shareUrl }
-      fileList { items { id fileId filename downloadUrl shareUrl } }
-    }
-  }"
-`;
-
-exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
-"
-  query DataViewerRelationRow($id: ID!) {
-    relation(id: $id) {
-      field1 { id _description }
-      field2
-      field3
-      field4 { items { id _description } }
     }
   }"
 `;

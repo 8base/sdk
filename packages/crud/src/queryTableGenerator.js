@@ -31,7 +31,7 @@ const getFieldPartOfTheQuery = createSelector(
     } else if (isRelation) {
       postfix = '{ id _description }';
     } else if (isFile) {
-      postfix = '{ id fileId filename downloadUrl shareUrl }';
+      postfix = '{ id fileId filename downloadUrl shareUrl meta }';
     } else if (isSmart) {
       postfix = `{ ${field.fieldTypeAttributes.innerFields.map(({ name }) => name).join(' ')} }`;
     }
