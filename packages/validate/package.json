@@ -1,12 +1,26 @@
 {
   "name": "@8base/validate",
   "version": "0.8.2",
-  "main": "lib/validate.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
-    "build": "webpack --env production --mode production",
+    "build": "../../bin/build-package.sh",
     "docs": "NODE_ENV=test documentation readme src/validator.js --section=API",
-    "test": "NPM_ENV=test jest",
-    "watch": "webpack --env dev --watch"
+    "test": "NPM_ENV=test jest"
+  },
+  "dependencies": {
+    "@8base/utils": "^0.8.2",
+    "@babel/runtime": "^7.3.1",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "documentation": "^8.0.0",
+    "flow-copy-source": "^2.0.2",
+    "jest": "^23.1.0"
   },
   "jest": {
     "setupFiles": [
@@ -17,24 +31,5 @@
       "!<rootDir>/**/__tests__/**"
     ]
   },
-  "license": "MIT",
-  "devDependencies": {
-    "@8base/utils": "^0.8.2",
-    "@8base/webpack-configuration": "^0.8.2",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "7",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
-    "documentation": "^8.0.0",
-    "jest": "^23.1.0",
-    "ramda": "^0.25.0",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
-  },
-  "peerDependencies": {
-    "@8base/utils": "^0.6.1",
-    "ramda": "^0.25.0"
-  }
+  "license": "MIT"
 }

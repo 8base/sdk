@@ -1,49 +1,36 @@
 {
   "name": "@8base/permissions-provider",
   "version": "0.8.2",
-  "main": "lib/permissions-provider.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
-    "build": "webpack --env production --mode production",
+    "build": "../../bin/build-package.sh",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/PermissionsProvider.js --section=API",
-    "test": "NPM_ENV=test jest",
-    "watch": "webpack --env dev --watch"
-  },
-  "peerDependencies": {
-    "@8base/auth": "^0.6.1",
-    "apollo-client": "^2.4.1",
-    "graphql": "0.13.0",
-    "graphql-tag": "^2.9.2",
-    "ramda": "^0.25.0",
-    "react": "^16.4.1",
-    "react-apollo": "^2.1.6",
-    "react-dom": "^16.4.1"
+    "test": "NPM_ENV=test jest"
   },
   "dependencies": {
+    "@8base/auth": "^0.6.1",
+    "@babel/runtime": "^7.2.0",    
+    "apollo-client": "^2.4.1",
+    "graphql-tag": "^2.9.2",
+    "graphql": "0.13.0",
+    "ramda": "^0.25.0",
+    "react-apollo": "^2.1.6",
+    "react-dom": "^16.4.1",
+    "react": "^16.4.1",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@8base/auth": "^0.8.2",
-    "@8base/webpack-configuration": "^0.8.2",
-    "apollo-client": "^2.4.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "7",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
-    "graphql": "0.13.0",
-    "graphql-tag": "^2.9.2",
-    "jest": "^23.6.0",
+    "flow-copy-source": "^2.0.2",
+    "jest": "^23.1.0",
     "prettier": "^1.15.3",
-    "ramda": "^0.25.0",
-    "react": "^16.4.1",
-    "react-apollo": "^2.1.6",
-    "react-dom": "^16.4.1",
-    "react-test-renderer": "^16.4.1",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "react-test-renderer": "^16.4.1"
   },
   "jest": {
     "collectCoverageFrom": [
