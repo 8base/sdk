@@ -1,6 +1,6 @@
 {
   "name": "@8base/file-input",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
@@ -9,14 +9,14 @@
     "watch": "webpack --env dev --watch"
   },
   "dependencies": {
-    "@babel/runtime": "^7.2.0",    
+    "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.4.1",
     "filestack-js": "^1.7.2",
-    "graphql-tag": "^2.9.2",
     "graphql": "0.13.0",
+    "graphql-tag": "^2.9.2",
+    "react": "^16.4.1",
     "react-apollo": "^2.1.6",
-    "react-dom": "^16.4.1",
-    "react": "^16.4.1"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

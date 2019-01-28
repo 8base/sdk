@@ -1,6 +1,6 @@
 {
   "name": "@8base/validate",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^0.8.2",
+    "@8base/utils": "^0.8.3",
     "@babel/runtime": "^7.3.1",
     "ramda": "^0.25.0"
   },

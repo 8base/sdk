@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@8base/sdk": "^0.0.78",
-    "@8base/utils": "^0.8.2",
-    "@8base/table-schema-provider": "^0.8.2",
+    "@8base/table-schema-provider": "^0.8.3",
+    "@8base/utils": "^0.8.3",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.4.5",
+    "graphql": "0.13.0",
     "graphql-tag": "^2.9.2",
-    "graphql": "0.13.0",    
     "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-apollo": "^2.1.11",
