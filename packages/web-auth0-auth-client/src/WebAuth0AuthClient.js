@@ -1,16 +1,26 @@
 // @flow
 import auth0 from 'auth0-js';
-import * as localStorageAccessor from './localStorageAccessor';
 import * as R from 'ramda';
-
-import { isEmptyOrNil } from './utils';
+import { localStorageAccessor } from '@8base/web-utils';
 import type {
   AuthState,
-  Auth0WebClientOptions,
+  AuthData,
   AuthClient,
   Authorizable,
-  AuthData,
-} from './types';
+} from '@8base/utils';
+
+export type WebAuth0AuthClientOptions = {
+  domain: string,
+  clientId: string,
+  redirectUri: string,
+  workspaceId?: string,
+  logoutRedirectUri?: string,
+};
+
+const isEmptyOrNil = R.either(
+  R.isNil,
+  R.isEmpty,
+);
 
 const isEmailVerified = R.pipe(
   R.path(['idTokenPayload', 'email_verified']),
@@ -23,34 +33,37 @@ const getIdToken = R.path(['idToken']);
 
 const getIdTokenPayload = R.prop('idTokenPayload');
 
-const getState = ({ state }) => {
-  try {
-    return JSON.parse(state);
-  } catch (e) {
-    return state;
-  }
-};
+const getState = R.pipe(
+  R.prop('state'),
+  (state) => {
+    try {
+      return JSON.parse(state);
+    } catch (e) {
+      return state;
+    }
+  },
+);
 
 
 /**
- * Create instacne of the auth web zero0 client.
+ * Create instacne of the web auth0 auth client.
  * @param {string} workspaceId Identifier of the 8base app workspace.
  * @param {string} domain Domain. See auth0 documentation.
- * @param {string} clientID Client id. See auth0 documentation.
+ * @param {string} clientId Client id. See auth0 documentation.
  * @param {string} redirectUri Redurect uri. See auth0 documentation.
  */
-class Auth0WebClient implements AuthClient, Authorizable {
+class WebAuth0AuthClient implements AuthClient, Authorizable {
   auth0: auth0.WebAuth;
   workspaceId: string | void;
   logoutRedirectUri: string | void;
 
-  constructor({ domain, clientID, redirectUri, workspaceId, logoutRedirectUri }: Auth0WebClientOptions) {
+  constructor({ domain, clientId, redirectUri, workspaceId, logoutRedirectUri }: WebAuth0AuthClientOptions) {
 
     this.workspaceId = workspaceId;
     this.logoutRedirectUri = logoutRedirectUri;
     this.auth0 = new auth0.WebAuth({
       domain,
-      clientID,
+      clientID: clientId,
       redirectUri,
       mustAcceptTerms: true,
       responseType: 'token id_token',
@@ -65,15 +78,15 @@ class Auth0WebClient implements AuthClient, Authorizable {
       : undefined;
   }
 
-  authorize = (options: Object): void => {
+  authorize = async (options?: Object = {}): Promise<void> => {
     this.auth0.authorize({
       state: this.getAuthorizeState(),
       ...options,
     });
   };
 
-  logout = (options?: Object = {}): void => {
-    localStorageAccessor.purgeAuthState();
+  logout = async (options?: Object = {}): Promise<void> => {
+    await this.purgeAuthState();
 
     this.auth0.logout({
       returnTo: this.logoutRedirectUri,
@@ -81,7 +94,7 @@ class Auth0WebClient implements AuthClient, Authorizable {
     });
   };
 
-  checkSession = (options?: Object = {}): Promise<AuthData> => new Promise((resolve, reject) => {
+  renewToken = (options?: Object = {}): Promise<AuthData> => new Promise((resolve, reject) => {
     this.auth0.checkSession(options, (error, result) => {
       if (error) {
         reject(error || {});
@@ -99,21 +112,23 @@ class Auth0WebClient implements AuthClient, Authorizable {
   });
 
 
-  changePassword = (): Promise<{ email: string }> => new Promise((resolve, reject) => {
-    const { email } = this.getAuthState();
+  changePassword = async (): Promise<{ email: string }> => {
+    const { email } = await this.getAuthState();
 
-    this.auth0.changePassword({
-      connection: 'Username-Password-Authentication',
-      email,
-    }, (error) => {
-      if (error) {
-        reject(error || {});
-        return;
-      }
+    return new Promise((resolve, reject) => {
+      this.auth0.changePassword({
+        connection: 'Username-Password-Authentication',
+        email,
+      }, (error) => {
+        if (error) {
+          reject(error || {});
+          return;
+        }
 
-      resolve({ email });
+        resolve({ email });
+      });
     });
-  });
+  };
 
   getAuthorizedData = (): Promise<AuthData> => {
     return new Promise((resolve, reject) => {
@@ -134,23 +149,23 @@ class Auth0WebClient implements AuthClient, Authorizable {
     });
   }
 
-  setAuthState = (state: AuthState) => {
+  setAuthState = async (state: AuthState): Promise<void> => {
     localStorageAccessor.setAuthState(state);
   };
 
-  getAuthState = (): AuthState => localStorageAccessor.getAuthState();
+  getAuthState = async (): Promise<AuthState> => localStorageAccessor.getAuthState();
 
-  purgeAuthState = (): void => {
+  purgeAuthState = async (): Promise<void> => {
     localStorageAccessor.purgeAuthState();
   };
 
-  checkIsAuthorized = (): boolean => {
-    const { token } = this.getAuthState();
+  checkIsAuthorized = async (): Promise<boolean> => {
+    const { token } = await this.getAuthState();
 
     return R.not(isEmptyOrNil(token));
   };
 }
 
 
-export { Auth0WebClient };
+export { WebAuth0AuthClient };
 

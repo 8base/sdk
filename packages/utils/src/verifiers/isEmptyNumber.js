@@ -5,3 +5,4 @@ export const isEmptyNumber = R.anyPass([
   R.isEmpty,
   R.isNil,
 ]);
+

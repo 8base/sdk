@@ -5,8 +5,8 @@ import * as R from 'ramda';
 import type {
   AuthState,
   AuthData,
-  AsynAuthClient,
-  AsyncAuthorizable,
+  AuthClient,
+  Authorizable,
 } from '@8base/utils';
 
 import * as asyncStorageAccessor from './asyncStorageAccessor';
@@ -55,7 +55,13 @@ const prepareState = ({ workspaceId }) => workspaceId
   ? JSON.stringify({ workspaceId })
   : undefined;
 
-class ReactNativeAuth0AuthClient implements AsynAuthClient, AsyncAuthorizable {
+/**
+ * Create instacne of the react-native auth0 auth client.
+ * @param {string} workspaceId Identifier of the 8base app workspace.
+ * @param {string} domain Domain. See auth0 documentation.
+ * @param {string} clientId Client id. See auth0 documentation.
+ */
+class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
   clientId: string;
   domain: string;
   workspaceId: string;

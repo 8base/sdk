@@ -1,7 +1,7 @@
 import { ReactNativeAuth0AuthClient } from '../../src';
 
 const ID_TOKEN = 'encoded id token';
-const ANOTHER_API_TOKEN = 'another encoded id token';
+const ANOTHER_ID_TOKEN = 'another encoded id token';
 const WORKSPACE_ID = 'some workspace id';
 const DOMAIN = 'https://test.auth0.com';
 const CLIENT_ID = 'some client id';
@@ -97,12 +97,12 @@ describe('ReactNativeAuth0AuthClient', () => {
 
   it('As a developer, i can rewrite auth state', async () => {
     await client.setAuthState({
-      token: ANOTHER_API_TOKEN,
+      token: ANOTHER_ID_TOKEN,
       workspaceId: WORKSPACE_ID,
     });
 
     expect(await client.getAuthState()).toEqual({
-      token: ANOTHER_API_TOKEN,
+      token: ANOTHER_ID_TOKEN,
       workspaceId: WORKSPACE_ID,
     });
   });

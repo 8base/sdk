@@ -1,10 +1,11 @@
 // @flow
 
-export { AuthProvider, AuthConsumer } from './AuthContext';
-export { Auth0WebClient } from './Auth0WebClient';
-export { ApiTokenClient } from './ApiTokenClient';
+export { AuthContext } from './AuthContext';
+export { AuthProvider } from './AuthProvider';
 export { withAuth } from './withAuth';
 export { withLogOut } from './withLogOut';
 
-export type { AuthProps, WithAuthProps } from './withAuth';
-export type { AuthContextProps, AuthState } from './types';
+export type { AuthProps } from './withAuth';
+export type { AuthContextProps } from './AuthContext';
+export type { AuthState } from '@8base/utils';
+
