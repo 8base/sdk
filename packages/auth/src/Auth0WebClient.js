@@ -72,7 +72,7 @@ class Auth0WebClient implements AuthClient, Authorizable {
     });
   };
 
-  logout = (options: Object): void => {
+  logout = (options?: Object = {}): void => {
     localStorageAccessor.purgeAuthState();
 
     this.auth0.logout({
