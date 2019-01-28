@@ -42,5 +42,5 @@ export interface Authorizable {
 
 export type AuthContextProps = {
   isAuthorized: boolean,
-} & AuthClient;
+} & AuthClient & Authorizable;
 
