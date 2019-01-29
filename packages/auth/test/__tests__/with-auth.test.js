@@ -4,64 +4,71 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { getDisplayName } from 'recompose';
 
-import { AuthProvider, Auth0WebClient, withAuth } from '../../src';
+import { AuthProvider, withAuth, type AuthProps } from '../../src';
+
+const SampleAuthClient = function () {
+  let authState = {};
+
+  const purgeAuthState = jest.fn(async () => {
+    authState = {};
+  });
+  const setAuthState = jest.fn(async (state) => {
+    authState = state;
+  });
+  const getAuthState = jest.fn(async () => {
+    return authState;
+  });
+  const checkIsAuthorized = jest.fn(async () => {
+    return !!authState.token;
+  });
+
+  this.purgeAuthState = purgeAuthState;
+  this.setAuthState = setAuthState;
+  this.getAuthState = getAuthState;
+  this.checkIsAuthorized = checkIsAuthorized;
+};
 
 type StubComponentProps = {
-  auth: {
-    isAuthorized: boolean,
-  },
   foo: number,
-};
+} & AuthProps;
+
+const NotAuthorizedComponent = () => 'I am not authorider';
+
+const AuthorizedComponent = () => 'I am authorized';
 
 const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>
-    { isAuthorized ? 'I am authorized :)' : 'I am not authorized :(' }
+    { isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent /> }
     { foo }
   </div>
 );
 
 const EnhancedStubComponent = withAuth(StubComponent);
 
-const authClient = new Auth0WebClient({
-  domain: 'domain',
-  clientID: 'clientID',
-  redirectUri: 'redirectUri',
-});
-
-const getTestInstance = ({ foo }) => {
+describe('withAuth', () => {
+  const authClient = new SampleAuthClient();
   const testRenderer = TestRenderer.create(
     <AuthProvider authClient={ authClient }>
-      <EnhancedStubComponent foo={ foo } />
+      <EnhancedStubComponent foo={ 42 } />
     </AuthProvider>,
   );
   const testInstance = testRenderer.root;
 
-  return testInstance;
-};
-
-describe('As a developer, i can use withAuth HOC to get auth context', () => {
   it('sets wrapped display name for HOC', () => {
     expect(getDisplayName(EnhancedStubComponent)).toBe('withAuth(StubComponent)');
   });
 
-  it('adds isAuthorized prop', () => {
-    const workspaceId = 'some workspace id';
-    const idToken = 'some id token';
-    const foo = 42;
-    const testInstance = getTestInstance({ foo });
+  it('passes auth props to an enhanced component', () => {
+    const { props } = testInstance.findByType(StubComponent);
 
-    const { auth } = testInstance.findByType(StubComponent).props;
+    expect(props.auth.isAuthorized).toBe(false);
+    expect(props.auth.authState).toEqual({});
+  });
 
-    auth.setAuthState({ workspaceId, token: idToken });
+  it('passes all other props to an enhanced component', () => {
+    const { props } = testInstance.findByType(StubComponent);
 
-    const updatedProps = testInstance.findByType(StubComponent).props;
-
-    expect(updatedProps.foo).toBe(foo);
-    expect(updatedProps.auth.isAuthorized).toBeTruthy();
-    expect(updatedProps.auth.authState).toEqual({
-      workspaceId,
-      token: idToken,
-    });
+    expect(props.foo).toBe(42);
   });
 });
 

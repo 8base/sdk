@@ -7,10 +7,12 @@
   "module": "dist/index.mjs",
   "scripts": {
     "build": "../../bin/build-package.sh",
+    "doc": "NODE_ENV=test documentation readme",
+    "docs": "yarn doc src/index.js --section=ReactNativeAuth0AuthClient",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^0.7.3",
+    "@8base/utils": "^0.8.2",
     "jwt-decode": "^2.2.0",
     "ramda": "^0.26.1"
   },
@@ -31,9 +33,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/test/jest.setup.js"
-    ],
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"

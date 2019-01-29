@@ -9,83 +9,45 @@ The 8base Auth package contains provider with authentication state and auth help
 #### Table of Contents
 
 -   [AuthProvider](#authprovider)
-    -   [Properties](#properties)
--   [Auth0WebClient](#Auth0WebClient)
     -   [Parameters](#parameters)
+    -   [Properties](#properties)
 
 ### AuthProvider
 
-**Extends Component**
+**Extends React.Component**
 
 Provides access to the authentication state.
+
+#### Parameters
+
+-   `props` **AuthProviderProps** 
 
 #### Properties
 
 -   `children` **React$Node** Children of the provider.
 -   `authClient` **AuthClient** Instance of the auth client.
 
-### Auth0WebClient
-
-Create instacne of the auth0 client
-
-#### Parameters
-
--   `options` **AuthClientOptions** 
--   `workspaceId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Identifier of the 8base app workspace.
--   `domain` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Domain. See auth0 documentation.
--   `clientID` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Client id. See auth0 documentation.
--   `redirectUri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Redurect uri. See auth0 documentation.
-
-### ApiTokenClient
-
-Create instance of the API Token client
-
-#### Parameters
--   `apiToken` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Generated API Token
-
 ## Usage
 
-### Auth0WebClient
-
 ```js
-import { AuthProvider, Auth0WebClient, AuthConsumer } from '@8base/auth';
+import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
+import { WebAuth0AuthClient } form '@8base/web-auth0-auth-client';
 
-  const auth0WebClient = new Auth0WebClient({
+  const authClient = new WebAuth0AuthClient({
     domain: 'domain',
-    clientID: 'client-id',
+    clientId: 'client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     logoutRedirectUri: `${window.location.origin}/auth`,
     workspaceId: 'workspace-id',
   });
 
-  <AuthProvider authClient={ auth0WebClient }>
+  <AuthProvider authClient={ authClient }>
     ...
-      <AuthConsumer>
+      <AuthContext.Consumer>
         {
           (auth: AuthContextProps) => (<div />)
         }
-      </AuthConsumer>
+      </AuthContext.Consumer>
     ...  
   </AuthProvider>
 ```
-
-### ApiTokenClient
-
-```js
-import { AuthProvider, ApiTokenClient, AuthConsumer } from '@8base/auth';
-
-  const apiTokenClient = new ApiTokenClient({
-    apiToken: 'api-token',
-  });
-
-  <AuthProvider authClient={ apiTokenClient }>
-    ...
-      <AuthConsumer>
-        {
-          (auth: AuthContextProps) => (<div />)
-        }
-      </AuthConsumer>
-    ...  
-  </AuthProvider>
-```
-

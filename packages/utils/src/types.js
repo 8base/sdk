@@ -75,28 +75,13 @@ export type AuthData = {
 };
 
 export interface AuthClient {
-  getAuthState(): AuthState,
-  setAuthState(state: AuthState): void,
-  purgeAuthState(): void,
-  checkIsAuthorized(): boolean,
-}
-
-export interface Authorizable {
-  authorize(options?: Object): void,
-  logout(options?: Object): void,
-  checkSession(options?: Object): Promise<AuthData>,
-  getAuthorizedData(): Promise<AuthData>,
-  changePassword(): Promise<{ email: string }>,
-}
-
-export interface AsyncAuthClient {
   getAuthState(): Promise<AuthState>,
   setAuthState(state: AuthState): Promise<void>,
   purgeAuthState(): Promise<void>,
   checkIsAuthorized(): Promise<boolean>,
 }
 
-export interface AsyncAuthorizable {
+export interface Authorizable {
   authorize(options?: Object): Promise<AuthData>,
   logout(options?: Object): Promise<void>,
   renewToken(options?: Object): Promise<AuthData>,

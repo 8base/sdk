@@ -1,20 +1,20 @@
 {
-  "name": "@8base/auth",
-  "version": "0.8.5",
+  "name": "@8base/web-api-token-auth-client",
+  "version": "0.8.2",
+  "author": "8base",
+  "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
     "build": "../../bin/build-package.sh",
     "doc": "NODE_ENV=test documentation readme",
-    "docs": "yarn doc src/index.js --section=AuthProvider",
+    "docs": "yarn doc src/index.js --section=WebApiTokenAuthClient",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
     "@8base/utils": "^0.8.2",
-    "@babel/runtime": "^7.2.0",
-    "apollo-client": "^2.4.12",
-    "react-apollo": "^2.1.11",
-    "recompose": "^0.30.0"
+    "@8base/web-utils": "^0.8.2",
+    "@babel/runtime": "^7.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -23,14 +23,9 @@
     "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
-    "graphql": "^14.1.1",
     "jest": "^23.1.0",
     "jest-localstorage-mock": "^2.2.0",
-    "react": "^16.6.0",
-    "react-test-renderer": "^16.6.0"
-  },
-  "peerDependencies": {
-    "react": ">=16.6.0"
+    "prettier": "^1.16.0"
   },
   "jest": {
     "setupFiles": [

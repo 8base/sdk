@@ -3,30 +3,31 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import { AuthProvider, AuthConsumer, Auth0WebClient } from '../../src';
+import { AuthContext, AuthProvider } from '../../src';
 
-jest.mock('auth0-js', () => {
-  const authorize = jest.fn();
-  const parseHash = jest.fn();
-  const logout = jest.fn();
-  const checkSession = jest.fn();
-  const WebAuth = jest.fn(function WebAuth() {
-    this.authorize = authorize;
-    this.parseHash = parseHash;
-    this.logout = logout;
-    this.checkSession = checkSession;
+const TOKEN = 'some token';
+
+const SampleAuthClient = function () {
+  let authState = {};
+
+  const purgeAuthState = jest.fn(async () => {
+    authState = {};
+  });
+  const setAuthState = jest.fn(async (state) => {
+    authState = state;
+  });
+  const getAuthState = jest.fn(async () => {
+    return authState;
+  });
+  const checkIsAuthorized = jest.fn(async () => {
+    return !!authState.token;
   });
 
-  return {
-    authorize,
-    parseHash,
-    logout,
-    checkSession,
-    WebAuth,
-  };
-});
-
-const auth0 = require('auth0-js');
+  this.purgeAuthState = purgeAuthState;
+  this.setAuthState = setAuthState;
+  this.getAuthState = getAuthState;
+  this.checkIsAuthorized = checkIsAuthorized;
+};
 
 type StubComponentProps = {
   auth: {
@@ -36,144 +37,75 @@ type StubComponentProps = {
   },
 };
 
-const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => (
-  <div>
-    { isAuthorized ? 'I am authorized :)' : 'I am not authorized :(' }
-  </div>
-);
+const NotAuthorizedComponent = () => 'I am not authorider';
 
-const getTestInstance = () => {
-  const authClient = new Auth0WebClient({
-    domain: 'domain',
-    clientID: 'clientID',
-    redirectUri: 'redirectUri',
-  });
+const AuthorizedComponent = () => 'I am authorized';
 
+const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => {
+  return isAuthorized ? (
+    <AuthorizedComponent />
+  ) : (
+    <NotAuthorizedComponent />
+  );
+};
+
+describe('AuthContext', () => {
+  const authClient = new SampleAuthClient();
   const testRenderer = TestRenderer.create(
     <AuthProvider authClient={ authClient }>
-      <AuthConsumer>
+      <AuthContext.Consumer>
         {
           (auth: any) => (
             <StubComponent auth={ auth } />
           )
         }
-      </AuthConsumer>
+      </AuthContext.Consumer>
     </AuthProvider>,
   );
   const testInstance = testRenderer.root;
 
-  return testInstance;
-};
+  it('As a developer, i can use AuthContext to check authorization state #1', async () => {
+    const { children, props } = testInstance.findByType(StubComponent);
 
-beforeEach(() => {
-  auth0.WebAuth.mockClear();
-  auth0.authorize.mockClear();
-  auth0.parseHash.mockClear();
-  auth0.logout.mockClear();
-  auth0.checkSession.mockClear();
+    expect(props.auth.isAuthorized).toBe(false);
+    expect(props.auth.authState).toEqual({});
+    expect(children[0].type).toBe(NotAuthorizedComponent);
+  });
+
+  it('As a developer, i can use AuthContext to update authorization state', async () => {
+    const { props } = testInstance.findByType(StubComponent);
+
+    await props.auth.setAuthState({
+      token: TOKEN,
+    });
+
+    expect(authClient.setAuthState).toHaveBeenCalled();
+  });
+
+  it('As a developer, i can use AuthContext to check authorization state #2', async () => {
+    const { children, props } = testInstance.findByType(StubComponent);
+
+    expect(props.auth.isAuthorized).toBe(true);
+    expect(props.auth.authState).toEqual({
+      token: TOKEN,
+    });
+    expect(children[0].type).toBe(AuthorizedComponent);
+  });
+
+  it('As a developer, i can use AuthContext to clear authorization state', async () => {
+    const { props } = testInstance.findByType(StubComponent);
+
+    await props.auth.purgeAuthState();
+
+    expect(authClient.purgeAuthState).toHaveBeenCalled();
+  });
+
+  it('As a developer, i can use AuthContext to check authorization state #3', async () => {
+    const { children, props } = testInstance.findByType(StubComponent);
+
+    expect(props.auth.isAuthorized).toBe(false);
+    expect(props.auth.authState).toEqual({});
+    expect(children[0].type).toBe(NotAuthorizedComponent);
+  });
 });
 
-describe('As a developer, i can use AuthContext to get authorization state in any place of react tree', () => {
-  it('sets isAuthorized=true if there are valid workspaceId and idToken', () => {
-    const workspaceId = 'some workspace id';
-    const idToken = 'some id token';
-    const testInstance = getTestInstance();
-    const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
-
-    setAuthState({ workspaceId, token: idToken });
-    expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(true);
-  });
-
-  it('sets isAuthorized=false if there is an invalid prop', () => {
-    const workspaceId = 'some workspace id';
-    const idToken = undefined;
-    const testInstance = getTestInstance();
-    const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
-
-    setAuthState({ workspaceId, token: idToken });
-    expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
-  });
-
-  it('merges new auth state with previously state', () => {
-    const workspaceId = 'some workspace id';
-    const idToken = undefined;
-    const testInstance = getTestInstance();
-    const { setAuthState } = testInstance.findByType(StubComponent).props.auth;
-
-    setAuthState({ workspaceId, token: idToken });
-    expect(testInstance.findByType(StubComponent).props.auth.isAuthorized).toBe(false);
-  });
-
-  it('creates auth0 instance', () => {
-    getTestInstance();
-
-    expect(auth0.WebAuth).toHaveBeenCalledWith({
-      domain: 'domain',
-      clientID: 'clientID',
-      redirectUri: 'redirectUri',
-      mustAcceptTerms: true,
-      responseType: 'token id_token',
-      scope: 'openid email profile',
-    });
-  });
-
-  it('passes \'authorize\' function that calls auth0\'s authorize', () => {
-    const testInstance = getTestInstance();
-    const { authorize } = testInstance.findByType(StubComponent).props.auth;
-
-    authorize();
-    expect(auth0.authorize).toHaveBeenCalled();
-  });
-
-  it('passes \'getAuthorizedData\' function that calls auth0\'s getAuthorizedData and resolves promise on success', (done) => {
-    const testInstance = getTestInstance();
-    const { getAuthorizedData } = testInstance.findByType(StubComponent).props.auth;
-    auth0.parseHash.mockImplementation((callback) => callback(null, 'hash'));
-
-    getAuthorizedData().then(() => {
-      expect(auth0.parseHash).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('passes \'getAuthorizedData\' function that calls auth0\'s getAuthorizedData and rejects promise on error', (done) => {
-    const testInstance = getTestInstance();
-    const { getAuthorizedData } = testInstance.findByType(StubComponent).props.auth;
-    auth0.parseHash.mockImplementation((callback) => callback('error'));
-
-    getAuthorizedData().catch(() => {
-      expect(auth0.parseHash).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('passes \'logout\' function that calls auth0\' logout', () => {
-    const testInstance = getTestInstance();
-    const { logout } = testInstance.findByType(StubComponent).props.auth;
-
-    logout();
-    expect(auth0.logout).toHaveBeenCalled();
-  });
-
-  it('passes \'checkSession\' function that calls auth0\'s checkSession and resolves promise on success', (done) => {
-    const testInstance = getTestInstance();
-    const { checkSession } = testInstance.findByType(StubComponent).props.auth;
-    auth0.checkSession.mockImplementation((options, callback) => callback(null, 'result'));
-
-    checkSession().then(() => {
-      expect(auth0.checkSession).toHaveBeenCalled();
-      done();
-    });
-  });
-
-  it('passes \'checkSession\' function that calls auth0\'s checkSession and rejects promise on error', (done) => {
-    const testInstance = getTestInstance();
-    const { checkSession } = testInstance.findByType(StubComponent).props.auth;
-    auth0.checkSession.mockImplementation((options, callback) => callback('error'));
-
-    checkSession().catch(() => {
-      expect(auth0.checkSession).toHaveBeenCalled();
-      done();
-    });
-  });
-});

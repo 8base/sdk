@@ -1,44 +1,36 @@
 // @flow
 
 import React from 'react';
-import { setDisplayName, wrapDisplayName } from 'recompose';
+import { wrapDisplayName } from 'recompose';
 
-import { AuthConsumer } from './AuthContext';
-import type { AuthState, AuthContextProps } from './types';
+import { AuthContext, type AuthContextProps } from './AuthContext';
 
-type WithAuthProps = {
-  authState: AuthState,
-} & AuthContextProps
-
-type AuthProps = {
-  auth: WithAuthProps,
+export type AuthProps = {
+  auth: AuthContextProps,
 };
 
-const withAuth: any = <InputProps: {}>(
-  WrappedComponent: React$ComponentType<AuthProps & InputProps>,
-): React$ComponentType<InputProps> => {
-  class WithAuth extends React.Component<InputProps> {
+const withAuth = <InputProps: { auth: AuthContextProps }>(
+  WrappedComponent: React$ComponentType<InputProps>,
+): Class<React$Component<$Diff<InputProps, AuthProps>>> => {
+  class WithAuth extends React.Component<$Diff<InputProps, AuthProps>> {
+
+    static contextType: typeof AuthContext;
+
     render() {
       return (
-        <AuthConsumer>
-          { (contextProps: AuthContextProps) => (
-            <WrappedComponent
-              { ...this.props }
-              auth={{
-                ...contextProps,
-                authState: contextProps.getAuthState(),
-              }}
-            />
-          ) }
-        </AuthConsumer>
+        <WrappedComponent
+          { ...this.props }
+          auth={ this.context }
+        />
       );
     }
   }
-  const wrappedDisplayName: string = wrapDisplayName(WrappedComponent, 'withAuth');
 
-  return setDisplayName(wrappedDisplayName)(WithAuth);
+  WithAuth.contextType = AuthContext;
+  WithAuth.displayName = wrapDisplayName(WrappedComponent, 'withAuth');
+
+  return WithAuth;
 };
 
 export { withAuth };
 
-export type { AuthContextProps, AuthProps, WithAuthProps };

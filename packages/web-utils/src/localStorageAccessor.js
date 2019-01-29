@@ -1,6 +1,5 @@
 // @flow
-
-import type { AuthState } from './types';
+import type { AuthState } from '@8base/utils';
 
 const AUTH_LOCALSTORAGE_KEY = 'auth';
 
@@ -27,9 +26,5 @@ export {
   getAuthState,
   setAuthState,
   purgeAuthState,
-};
-
-export type {
-  AuthState,
 };
 

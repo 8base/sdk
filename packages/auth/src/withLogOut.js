@@ -7,8 +7,8 @@ const withLogOut = compose(
   withApollo,
   withAuth,
   withHandlers({
-    logOut: ({ auth: { logout }, client }) => (options) => {
-      logout(options);
+    logOut: ({ auth: { logout }, client }) => async (options) => {
+      await logout(options);
 
       client.resetStore();
     },
@@ -16,3 +16,4 @@ const withLogOut = compose(
 );
 
 export { withLogOut };
+
