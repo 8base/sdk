@@ -17,5 +17,6 @@ status=0
 (./bin/try-publish.sh "validate") || status=1
 (./bin/try-publish.sh "web-api-token-auth-client") || status=1
 (./bin/try-publish.sh "web-auth0-auth-client") || status=1
+(./bin/try-publish.sh "web-utils") || status=1
 
 exit $status
