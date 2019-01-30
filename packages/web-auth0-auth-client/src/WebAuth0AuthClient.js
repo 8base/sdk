@@ -85,15 +85,6 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
     });
   };
 
-  logout = async (options?: Object = {}): Promise<void> => {
-    await this.purgeAuthState();
-
-    this.auth0.logout({
-      returnTo: this.logoutRedirectUri,
-      ...options,
-    });
-  };
-
   renewToken = (options?: Object = {}): Promise<AuthData> => new Promise((resolve, reject) => {
     this.auth0.checkSession(options, (error, result) => {
       if (error) {
@@ -157,6 +148,10 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
 
   purgeAuthState = async (): Promise<void> => {
     localStorageAccessor.purgeAuthState();
+
+    this.auth0.logout({
+      returnTo: this.logoutRedirectUri,
+    });
   };
 
   checkIsAuthorized = async (): Promise<boolean> => {

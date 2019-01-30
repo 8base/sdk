@@ -83,7 +83,6 @@ export interface AuthClient {
 
 export interface Authorizable {
   authorize(options?: Object): Promise<AuthData>,
-  logout(options?: Object): Promise<void>,
   renewToken(options?: Object): Promise<AuthData>,
   changePassword(): Promise<{ email: string }>,
 }
