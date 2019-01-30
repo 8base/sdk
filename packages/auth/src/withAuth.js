@@ -13,20 +13,20 @@ const withAuth = <InputProps: { auth: AuthContextProps }>(
   WrappedComponent: React$ComponentType<InputProps>,
 ): Class<React$Component<$Diff<InputProps, AuthProps>>> => {
   class WithAuth extends React.Component<$Diff<InputProps, AuthProps>> {
-
-    static contextType: typeof AuthContext;
-
     render() {
       return (
-        <WrappedComponent
-          { ...this.props }
-          auth={ this.context }
-        />
+        <AuthContext.Consumer>
+          { (auth) => (
+            <WrappedComponent
+              { ...this.props }
+              auth={ auth }
+            />
+          ) }
+        </AuthContext.Consumer>
       );
     }
   }
 
-  WithAuth.contextType = AuthContext;
   WithAuth.displayName = wrapDisplayName(WrappedComponent, 'withAuth');
 
   return WithAuth;

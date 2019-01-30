@@ -29,9 +29,6 @@
     "react": "^16.6.0",
     "react-test-renderer": "^16.6.0"
   },
-  "peerDependencies": {
-    "react": ">=16.6.0"
-  },
   "jest": {
     "setupFiles": [
       "jest-localstorage-mock"
