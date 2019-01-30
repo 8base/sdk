@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.78",
-    "@8base/utils": "^0.9.2",
+    "@8base/utils": "^0.10.0",
     "@babel/runtime": "^7.3.1",
     "graphql": "0.13.0",
     "graphql-request": "^1.8.2",
