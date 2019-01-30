@@ -112,10 +112,11 @@ describe('ReactNativeAuth0AuthClient', () => {
   });
 
   it('As a developer, i can logout', async () => {
-    await client.logout();
+    await client.purgeAuthState();
 
     expect(await client.checkIsAuthorized()).toBe(false);
     expect(await client.getAuthState()).toEqual({});
+    expect(AuthSession.dismiss).toHaveBeenCalled();
   });
 });
 

@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@8base/utils": "^0.9.2",
-    "@8base/web-utils": "^0.9.2",
     "@babel/runtime": "^7.3.1",
     "auth0-js": "^9.9.1",
     "ramda": "^0.26.1"

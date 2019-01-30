@@ -24,6 +24,7 @@ Create instacne of the react-native auth0 auth client.
 ## Usage
 
 ```js
+...
 import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
 import { ReactNativeAuth0AuthClient } form '@8base/react-native-auth0-auth-client';
 
@@ -32,15 +33,45 @@ import { ReactNativeAuth0AuthClient } form '@8base/react-native-auth0-auth-clien
     clientId: 'client-id',
     workspaceId: 'workspace-id',
   });
+
+  ...
+
+  const renderAuth = (auth) => {
+    const authorize = async () => {
+      const authData = await auth.authorize();
+
+      await auth.setAuthState({
+        token: authData.idToken,
+        email: authData.email,
+      });
+    };
+
+    const logout = async () => {
+      await auth.purgeAuthState();
+    };
+
+    if (auth.isAuthorized) {
+      return (
+        <View>
+          <Text>Hi ${auth.authState.email} !</Text>
+          <Button title='Logout' onPress={ logout } />
+        </View>
+      );
+    }
+
+    return (
+      <View>
+        <Button title='Authorize with auth0' onPress={ authorize } />
+      </View>
+    );
+  };
   
   ...
 
   <AuthProvider authClient={ authClient }>
     ...
       <AuthContext.Consumer>
-        {
-          (auth: AuthContextProps) => (<div />)
-        }
+        { renderAuth }
       </AuthContext.Consumer>
     ...  
   </AuthProvider>

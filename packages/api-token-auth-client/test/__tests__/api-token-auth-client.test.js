@@ -1,4 +1,4 @@
-import { WebApiTokenAuthClient } from '../../src';
+import { ApiTokenAuthClient } from '../../src';
 
 const API_TOKEN = 'api token';
 const ANOTHER_API_TOKEN = 'another api token';
@@ -6,7 +6,13 @@ const WORKSPACE_ID = 'workspace id';
 
 describe('ApiTokenClient', () => {
 
-  const authClient = new WebApiTokenAuthClient({
+  it('Throws an error if apiToken haven\'t provided', () => {
+    expect(() => {
+      new ApiTokenAuthClient({});
+    }).toThrow('apiToken is required');
+  });
+
+  const authClient = new ApiTokenAuthClient({
     apiToken: API_TOKEN,
   });
 

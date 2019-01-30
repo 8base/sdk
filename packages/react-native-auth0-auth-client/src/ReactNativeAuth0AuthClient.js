@@ -80,6 +80,7 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
 
   purgeAuthState = async (): Promise<void> => {
     await asyncStorageAccessor.purgeAuthState();
+    AuthSession.dismiss();
   };
 
   checkIsAuthorized = async (): Promise<boolean> => {
@@ -129,11 +130,6 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
         state: getState(decodedIdToken),
       };
     }
-  };
-
-  logout = async (): Promise<void> => {
-    await asyncStorageAccessor.purgeAuthState();
-    AuthSession.dismiss();
   };
 
   renewToken = () => {
