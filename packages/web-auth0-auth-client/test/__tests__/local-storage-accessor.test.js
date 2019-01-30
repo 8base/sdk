@@ -1,4 +1,4 @@
-import { localStorageAccessor } from '../../src';
+import * as localStorageAccessor from '../../src/localStorageAccessor';
 
 const TOKEN = 'test token';
 const ANOTHER_TOKEN = 'another test token';

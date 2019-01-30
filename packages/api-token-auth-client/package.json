@@ -1,5 +1,5 @@
 {
-  "name": "@8base/web-utils",
+  "name": "@8base/api-token-auth-client",
   "version": "0.9.2",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
@@ -7,6 +7,8 @@
   "module": "dist/index.mjs",
   "scripts": {
     "build": "../../bin/build-package.sh",
+    "doc": "NODE_ENV=test documentation readme",
+    "docs": "yarn doc src/index.js --section=ApiTokenAuthClient",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {

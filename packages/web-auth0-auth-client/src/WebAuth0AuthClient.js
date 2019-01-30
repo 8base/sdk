@@ -1,13 +1,14 @@
 // @flow
 import auth0 from 'auth0-js';
 import * as R from 'ramda';
-import { localStorageAccessor } from '@8base/web-utils';
 import type {
   AuthState,
   AuthData,
   AuthClient,
   Authorizable,
 } from '@8base/utils';
+
+import * as localStorageAccessor from './localStorageAccessor';
 
 export type WebAuth0AuthClientOptions = {
   domain: string,
