@@ -25,6 +25,10 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
   constructor(props: AuthProviderProps) {
     super(props);
 
+    if (props.authClient === undefined || props.authClient === null) {
+      throw new Error('Property authClient in the AuthProvider should be specified');
+    }
+
     this.state = {
       isAuthorized: false,
       authState: {},
