@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/sdk": "^0.0.78",
-    "@8base/utils": "^0.10.1",
+    "@8base/utils": "^0.10.2",
     "@babel/runtime": "^7.2.0",
     "apollo-link": "1.2.1",
     "apollo-link-error": "^1.1.0",

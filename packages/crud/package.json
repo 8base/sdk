@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@8base/sdk": "^0.0.78",
-    "@8base/table-schema-provider": "^0.10.1",
-    "@8base/utils": "^0.10.1",
+    "@8base/table-schema-provider": "^0.10.2",
+    "@8base/utils": "^0.10.2",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.4.5",
     "graphql": "0.13.0",
