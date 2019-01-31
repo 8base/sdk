@@ -4,9 +4,10 @@
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "scripts": {
     "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=ReactNativeAuth0AuthClient",
     "test": "NPM_ENV=test jest"

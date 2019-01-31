@@ -2,9 +2,10 @@
   "name": "@8base/api-client",
   "version": "0.10.1",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "scripts": {
     "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
     "docs": "documentation readme src/Client.js --section=API",
     "test": "NODE_ENV=test jest"
   },
