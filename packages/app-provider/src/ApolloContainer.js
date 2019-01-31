@@ -25,10 +25,10 @@ class ApolloContainer extends React.Component {
     });
   };
 
-  onAuthError = () => {
-    const { auth: { logout }} = this.props;
+  onAuthError = async () => {
+    const { auth: { purgeAuthState }} = this.props;
 
-    logout();
+    await purgeAuthState();
   };
 
   getAuthState = () => {

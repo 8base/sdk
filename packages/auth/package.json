@@ -19,6 +19,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "apollo-cache-inmemory": "^1.4.2",
+    "apollo-link": "^1.2.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",

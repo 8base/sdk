@@ -4,30 +4,9 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
 import { AuthContext, AuthProvider } from '../../src';
+import { SampleAuthClient } from '../utils';
 
 const TOKEN = 'some token';
-
-const SampleAuthClient = function () {
-  let authState = {};
-
-  const purgeAuthState = jest.fn(async () => {
-    authState = {};
-  });
-  const setAuthState = jest.fn(async (state) => {
-    authState = state;
-  });
-  const getAuthState = jest.fn(async () => {
-    return authState;
-  });
-  const checkIsAuthorized = jest.fn(async () => {
-    return !!authState.token;
-  });
-
-  this.purgeAuthState = purgeAuthState;
-  this.setAuthState = setAuthState;
-  this.getAuthState = getAuthState;
-  this.checkIsAuthorized = checkIsAuthorized;
-};
 
 type StubComponentProps = {
   auth: {
