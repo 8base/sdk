@@ -3,17 +3,17 @@ import { withApollo } from 'react-apollo';
 
 import { withAuth } from './withAuth';
 
-const withLogOut = compose(
+const withLogout = compose(
   withApollo,
   withAuth,
   withHandlers({
-    logOut: ({ auth: { logout }, client }) => async (options) => {
-      await logout(options);
+    logout: ({ auth: { purgeAuthState }, client }) => async () => {
+      await purgeAuthState();
 
       client.resetStore();
     },
   }),
 );
 
-export { withLogOut };
+export { withLogout };
 
