@@ -2,11 +2,11 @@
   "name": "@8base/file-input",
   "version": "0.10.1",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "scripts": {
     "build": "../../bin/build-package.sh",
-    "test": "NPM_ENV=test jest",
-    "watch": "webpack --env dev --watch"
+    "watch": "../../bin/watch-package.sh",
+    "test": "NPM_ENV=test jest"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",

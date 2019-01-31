@@ -2,9 +2,10 @@
   "name": "@8base/permissions-provider",
   "version": "0.10.1",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "scripts": {
     "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/PermissionsProvider.js --section=API",
     "test": "NPM_ENV=test jest"
