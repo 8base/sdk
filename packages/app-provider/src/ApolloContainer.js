@@ -7,7 +7,13 @@ import { withAuth } from '@8base/auth';
 
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
+
 class ApolloContainer extends React.Component {
+  static defaultProps = {
+    auth: {},
+    withAuth: true,
+  }
+
   onIdTokenExpired = async () => {
     const {
       auth: {
@@ -54,16 +60,27 @@ class ApolloContainer extends React.Component {
   };
 
   createClient = R.memoize((fragmentsSchema) => {
-    return new EightBaseApolloClient({
-      getAuthState: this.getAuthState,
-      getRefreshTokenParameters: this.getRefreshTokenParameters,
-      onAuthError: this.onAuthError,
+    const { withAuth } = this.props;
+
+    const commonOptions = {
       uri: this.props.uri,
-      extendLinks: this.props.extendLinks,
       onRequestSuccess: this.props.onRequestSuccess,
       onRequestError: this.props.onRequestError,
+      extendLinks: this.props.extendLinks,
       cache: new InMemoryCache({ fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData: fragmentsSchema }) }),
-    });
+    };
+
+    return withAuth
+      ? new EightBaseApolloClient({
+        ...commonOptions,
+        getAuthState: this.getAuthState,
+        onAuthError: this.onAuthError,
+        withAuth: true,
+      })
+      : new EightBaseApolloClient({
+        ...commonOptions,
+        withAuth: false,
+      });
   });
 
   renderContent = ({ loading, fragmentsSchema }) => {

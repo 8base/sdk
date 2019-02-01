@@ -29,20 +29,35 @@ const EightBaseAppProvider = ({
   onRequestError,
   extendLinks,
   children,
-}: EightBaseAppProviderProps) => (
-  <AuthProvider authClient={ authClient }>
-    <ApolloContainer
-      uri={ uri }
-      extendLinks={ extendLinks }
-      onRequestSuccess={ onRequestSuccess }
-      onRequestError={ onRequestError }
-    >
-      <TableSchemaProvider>
-        { children }
-      </TableSchemaProvider>
-    </ApolloContainer>
-  </AuthProvider>
-);
+}: EightBaseAppProviderProps) =>
+  !!authClient
+    ? (
+      <AuthProvider authClient={ authClient }>
+        <ApolloContainer
+          withAuth
+          uri={ uri }
+          extendLinks={ extendLinks }
+          onRequestSuccess={ onRequestSuccess }
+          onRequestError={ onRequestError }
+        >
+          <TableSchemaProvider>
+            { children }
+          </TableSchemaProvider>
+        </ApolloContainer>
+      </AuthProvider>
+    ) : (
+      <ApolloContainer
+        withAuth={ false }
+        uri={ uri }
+        extendLinks={ extendLinks }
+        onRequestSuccess={ onRequestSuccess }
+        onRequestError={ onRequestError }
+      >
+        <TableSchemaProvider>
+          { children }
+        </TableSchemaProvider>
+      </ApolloContainer>
+    );
 
 export { EightBaseAppProvider };
 
