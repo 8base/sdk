@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.78",
     "@8base/utils": "^0.10.4",
     "@babel/runtime": "^7.2.0",
     "apollo-link": "1.2.1",

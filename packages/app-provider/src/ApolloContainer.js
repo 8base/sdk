@@ -59,6 +59,7 @@ class ApolloContainer extends React.Component {
       getRefreshTokenParameters: this.getRefreshTokenParameters,
       onAuthError: this.onAuthError,
       uri: this.props.uri,
+      extendLinks: this.props.extendLinks,
       onRequestSuccess: this.props.onRequestSuccess,
       onRequestError: this.props.onRequestError,
       cache: new InMemoryCache({ fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData: fragmentsSchema }) }),

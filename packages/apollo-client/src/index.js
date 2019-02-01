@@ -5,7 +5,7 @@ import { type ApolloClientOptions, ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { AuthLink, SubscriptionLink, SuccessLink } from '@8base/apollo-links';
+import { AuthLink, SuccessLink } from '@8base/apollo-links';
 import { onError as createErrorLink } from 'apollo-link-error';
 
 type EightBaseApolloClientOptions = {
@@ -17,6 +17,7 @@ type EightBaseApolloClientOptions = {
   onIdTokenExpired?: Function,
   onRequestSuccess?: Function,
   onRequestError?: Function,
+  extendLinks?: (links: Object[]) => Object[],
 } & ApolloClientOptions;
 
 /**
@@ -31,6 +32,7 @@ type EightBaseApolloClientOptions = {
  * @param {Function} [config.onIdTokenExpired] - The callback which called when id token is expired.
  * @param {Function} [config.onRequestSuccess] - The callback which called when request is success.
  * @param {Function} [config.onRequestError] - The callback which called when request is fail.
+ * @param {Function} [config.extendLinks] - Function to extend standart array of the links.
  *
  * @return instance of the Apollo Client
  */
@@ -45,6 +47,7 @@ class EightBaseApolloClient extends ApolloClient {
       onIdTokenExpired,
       onRequestSuccess,
       onRequestError,
+      extendLinks,
       ...rest
     } = config;
 
@@ -62,13 +65,10 @@ class EightBaseApolloClient extends ApolloClient {
       onIdTokenExpired,
     });
 
-    const subscriptionLink = new SubscriptionLink();
-
     const batchHttpLink = new BatchHttpLink({ uri });
 
     let links = [
       authLink,
-      subscriptionLink,
       batchHttpLink,
     ];
 
@@ -78,6 +78,10 @@ class EightBaseApolloClient extends ApolloClient {
 
     if (typeof onRequestError === 'function') {
       links = [createErrorLink(onRequestError), ...links];
+    }
+
+    if (typeof extendLinks === 'function') {
+      links = extendLinks(links);
     }
 
     const link = ApolloLink.from(links);

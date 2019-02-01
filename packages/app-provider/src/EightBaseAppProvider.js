@@ -10,6 +10,7 @@ type EightBaseAppProviderProps = {
   onRequestSuccess: (Object) => void,
   onRequestError: (Object) => void,
   authClient: AuthClient,
+  extendLinks?: (links: Object[]) => Object[],
 };
 
 /**
@@ -18,6 +19,7 @@ type EightBaseAppProviderProps = {
  * @prop {Object} [authClient] - The 8base auth client.
  * @prop {Function} [onRequestSuccess] - The callback which called when request is success.
  * @prop {Function} [onRequestError] - The callback which called when request is fail.
+ * @prop {Function} [extendLinks] - Function to extend standart array of the links.
  * @prop {Function} [children] - The render function.
  */
 const EightBaseAppProvider = ({
@@ -25,10 +27,16 @@ const EightBaseAppProvider = ({
   authClient,
   onRequestSuccess,
   onRequestError,
+  extendLinks,
   children,
 }: EightBaseAppProviderProps) => (
   <AuthProvider authClient={ authClient }>
-    <ApolloContainer uri={ uri } onRequestSuccess={ onRequestSuccess } onRequestError={ onRequestError }>
+    <ApolloContainer
+      uri={ uri }
+      extendLinks={ extendLinks }
+      onRequestSuccess={ onRequestSuccess }
+      onRequestError={ onRequestError }
+    >
       <TableSchemaProvider>
         { children }
       </TableSchemaProvider>

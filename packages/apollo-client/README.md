@@ -26,5 +26,8 @@ Extended Apollo Client by 8base several links.
     -   `config.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The callback which called when attempt to refresh authentication is success.
     -   `config.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when attempt to refresh authentication is failed.
     -   `config.onIdTokenExpired` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when id token is expired.
+    -   `config.onRequestSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is success.
+    -   `config.onRequestError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is fail.
+    -   `config.extendLinks` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Function to extend standart array of the links.
 
 Returns **any** instance of the Apollo Client

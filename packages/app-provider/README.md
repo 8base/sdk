@@ -22,6 +22,7 @@ Universal 8base App Provider loads fragments schema and provides Apollo client w
 -   `authClient` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The 8base auth client.
 -   `onRequestSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is success.
 -   `onRequestError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is fail.
+-   `extendLinks` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Function to extend standart array of the links.
 -   `children` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The render function.
 
 # Usage

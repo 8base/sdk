@@ -6,6 +6,7 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
+    "doc": "NODE_ENV=test documentation readme",
     "docs": "NODE_ENV=test yarn doc src/index.js --section=EightBaseApolloClient"
   },
   "dependencies": {
