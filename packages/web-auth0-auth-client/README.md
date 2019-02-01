@@ -26,7 +26,7 @@ Create instacne of the web auth0 auth client.
 
 ```js
 import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
-import { WebAuth0AuthClient } form '@8base/web-auth0-auth-client';
+import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 
   const authClient = new WebAuth0AuthClient({
     domain: 'domain',
