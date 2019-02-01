@@ -7,28 +7,33 @@ import { withAuth } from '@8base/auth';
 
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
-const getIdToken = R.path(['idToken']);
-
 class ApolloContainer extends React.Component {
-  onIdTokenExpired = () => {
+  onIdTokenExpired = async () => {
     const {
       auth: {
         setAuthState,
-        checkSession,
+        renewToken,
       },
     } = this.props;
 
-    return checkSession({}).then((authResult) => {
-      const token = getIdToken(authResult);
+    const { idToken } = await renewToken({});
 
-      setAuthState({ token });
-    });
+    await setAuthState({ token: idToken });
   };
 
   onAuthError = async () => {
-    const { auth: { purgeAuthState }} = this.props;
+    const {
+      auth: {
+        purgeAuthState,
+        logout,
+      },
+    } = this.props;
 
     await purgeAuthState();
+
+    if (typeof logout === 'function') {
+      await logout();
+    }
   };
 
   getAuthState = () => {
@@ -88,3 +93,4 @@ class ApolloContainer extends React.Component {
 ApolloContainer = withAuth(ApolloContainer);
 
 export { ApolloContainer };
+

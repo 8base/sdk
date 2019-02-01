@@ -30,22 +30,23 @@ Universal 8base App Provider loads fragments schema and provides Apollo client w
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { EightBaseAppProvider } from '@8base/app-provider';
-import { Auth0WebClient } from '@8base/auth';
+import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 import { EightBaseBoostProvider, Loader } from '@8base/boost';
 
 import { Routes } from './routes';
 
-const auth0WebClient = new Auth0WebClient({
+const authClient = new WebAuth0AuthClient({
   domain: AUTH_DOMAIN,
-  clientID: AUTH_CLIENT_ID,
+  clientId: AUTH_CLIENT_ID,
   redirectUri: `${window.location.origin}/auth/callback`,
+  logoutRedirectUri: `${window.location.origin}/auth,
   workspaceId: 'workspace-id',
 });
 
 const Application = () => (
   <BrowserRouter>
     <EightBaseBoostProvider>
-      <EightBaseAppProvider uri={ process.env.REACT_APP_8BASE_API_URL } authClient={ auth0WebClient }>
+      <EightBaseAppProvider uri={ process.env.REACT_APP_8BASE_API_URL } authClient={ authClient }>
         {
           ({ loading }) => loading ? <Loader /> : <Routes />
         }
