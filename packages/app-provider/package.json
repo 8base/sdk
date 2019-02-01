@@ -13,7 +13,6 @@
     "@8base/apollo-links": "^0.10.4",
     "@8base/auth": "^0.10.4",
     "@8base/error-codes": "^1.0.5",
-    "@8base/sdk": "^0.0.78",
     "@8base/table-schema-provider": "^0.10.4",
     "@babel/runtime": "^7.2.0",
     "apollo-cache-inmemory": "^1.3.5",
