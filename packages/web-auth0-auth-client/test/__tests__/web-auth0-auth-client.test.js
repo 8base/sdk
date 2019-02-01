@@ -154,11 +154,16 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can logout', async () => {
+  it('As a developer, i can clear authState', async () => {
     await authClient.purgeAuthState();
 
     expect(await authClient.checkIsAuthorized()).toBe(false);
     expect(await authClient.getAuthState()).toEqual({});
+  });
+
+  it('As a developer, i can logout', async () => {
+    await authClient.logout();
+
     expect(auth0.logout).toHaveBeenCalledWith({
       returnTo: LOGOUT_REDIRECT_URL,
     });

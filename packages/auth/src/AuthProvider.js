@@ -31,19 +31,8 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     };
   }
 
-  async componentDidMount() {
+  updateState = async () => {
     const { authClient } = this.props;
-
-    const isAuthorized = await authClient.checkIsAuthorized();
-    const authState = await authClient.getAuthState();
-
-    this.setState({ isAuthorized, authState });
-  }
-
-  setAuthState = async (state: AuthState): Promise<void> => {
-    const { authClient } = this.props;
-
-    await authClient.setAuthState(state);
 
     const isAuthorized = await authClient.checkIsAuthorized();
     const authState = await authClient.getAuthState();
@@ -51,15 +40,23 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     this.setState({ isAuthorized, authState });
   };
 
+  async componentDidMount() {
+    await this.updateState();
+  }
+
+  setAuthState = async (state: AuthState): Promise<void> => {
+    const { authClient } = this.props;
+
+    await authClient.setAuthState(state);
+    await this.updateState();
+  };
+
   purgeAuthState = async (): Promise<void> => {
     const { authClient } = this.props;
 
     await authClient.purgeAuthState();
 
-    const isAuthorized = await authClient.checkIsAuthorized();
-    const authState = await authClient.getAuthState();
-
-    this.setState({ isAuthorized, authState });
+    await this.updateState();
   };
 
   render() {
