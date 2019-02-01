@@ -85,5 +85,6 @@ export interface Authorizable {
   authorize(options?: Object): Promise<AuthData>,
   renewToken(options?: Object): Promise<AuthData>,
   changePassword(): Promise<{ email: string }>,
+  logout(options?: Object): Promise<void>,
 }
 

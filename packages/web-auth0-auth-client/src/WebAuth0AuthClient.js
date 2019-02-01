@@ -149,16 +149,19 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
 
   purgeAuthState = async (): Promise<void> => {
     localStorageAccessor.purgeAuthState();
-
-    this.auth0.logout({
-      returnTo: this.logoutRedirectUri,
-    });
   };
 
   checkIsAuthorized = async (): Promise<boolean> => {
     const { token } = await this.getAuthState();
 
     return R.not(isEmptyOrNil(token));
+  };
+
+  logout = async (options?: Object = {}): Promise<void> => {
+    this.auth0.logout({
+      returnTo: this.logoutRedirectUri,
+      ...options,
+    });
   };
 }
 

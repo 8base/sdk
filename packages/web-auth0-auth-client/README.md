@@ -36,14 +36,43 @@ import { WebAuth0AuthClient } form '@8base/web-auth0-auth-client';
     workspaceId: 'workspace-id',
   });
 
+  const renderAuth = (auth) => {
+    const authorize = async () => {
+      const authData = await auth.authorize();
+
+      await auth.setAuthState({
+        token: authData.idToken,
+        email: authData.email,
+      });
+    };
+
+    const logout = async () => {
+      await auth.purgeAuthState();
+      await auth.logout();
+    };
+
+    if (auth.isAuthorized) {
+      return (
+        <div>
+          <p>Hi ${auth.authState.email} !</p>
+          <button type='button' onClick={ logout }>Logout</button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <button type='button' onClick={ authorize }>Authorize with auth0<button/>
+      </div>
+    );
+  };
+
   ...
 
   <AuthProvider authClient={ authClient }>
     ...
       <AuthContext.Consumer>
-        {
-          (auth: AuthContextProps) => (<div />)
-        }
+        { renderAuth }
       </AuthContext.Consumer>
     ...  
   </AuthProvider>
