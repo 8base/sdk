@@ -6,8 +6,8 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "doc": "NODE_ENV=test documentation readme",
-    "docs": "NODE_ENV=test yarn doc src/index.js --section=EightBaseApolloClient"
+    "docs": "NODE_ENV=test documentation readme src/index.js --section=EightBaseApolloClient",
+    "test": "NPM_ENV=test jest"
   },
   "dependencies": {
     "@8base/apollo-links": "^0.10.5",
@@ -27,7 +27,18 @@
     "babel-jest": "^23.6.0",
     "documentation": "^8.1.2",
     "flow-copy-source": "^2.0.2",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-fetch-mock": "^2.1.0",
+    "prettier": "^1.16.4"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test/jest.setup.js"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**",
+      "!<rootDir>/**/__tests__/**"
+    ]
   },
   "license": "MIT"
 }

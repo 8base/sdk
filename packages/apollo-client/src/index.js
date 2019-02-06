@@ -8,17 +8,28 @@ import { BatchHttpLink } from 'apollo-link-batch-http';
 import { AuthLink, SuccessLink } from '@8base/apollo-links';
 import { onError as createErrorLink } from 'apollo-link-error';
 
-type EightBaseApolloClientOptions = {
+
+type EightBaseApolloClientCommon = {
   uri: string,
-  getAuthState: Function,
-  getRefreshTokenParameters: Function,
-  onAuthSuccess: Function,
+  extendLinks?: (links: Object[]) => Object[],
   onAuthError?: Function,
   onIdTokenExpired?: Function,
   onRequestSuccess?: Function,
   onRequestError?: Function,
-  extendLinks?: (links: Object[]) => Object[],
-} & ApolloClientOptions;
+} & $Shape<ApolloClientOptions>;
+
+type EightBaseApolloClientWithAuthOptions = {
+  withAuth?: true,
+  getAuthState: Function,
+  getRefreshTokenParameters: Function,
+  onAuthSuccess: Function,
+} & EightBaseApolloClientCommon;
+
+
+type EightBaseApolloClientOptions = {
+  withAuth: false,
+} & EightBaseApolloClientCommon;
+
 
 /**
  * Extended Apollo Client by 8base several links.
@@ -37,7 +48,7 @@ type EightBaseApolloClientOptions = {
  * @return instance of the Apollo Client
  */
 class EightBaseApolloClient extends ApolloClient {
-  constructor(config: EightBaseApolloClientOptions) {
+  constructor(config: EightBaseApolloClientOptions | EightBaseApolloClientWithAuthOptions) {
     const {
       uri,
       getAuthState,
@@ -48,6 +59,7 @@ class EightBaseApolloClient extends ApolloClient {
       onRequestSuccess,
       onRequestError,
       extendLinks,
+      withAuth = true,
       ...rest
     } = config;
 
@@ -57,20 +69,22 @@ class EightBaseApolloClient extends ApolloClient {
       cache = new InMemoryCache();
     }
 
-    const authLink = new AuthLink({
-      getAuthState,
-      getRefreshTokenParameters,
-      onAuthSuccess,
-      onAuthError,
-      onIdTokenExpired,
-    });
-
     const batchHttpLink = new BatchHttpLink({ uri });
 
-    let links = [
-      authLink,
-      batchHttpLink,
-    ];
+
+    let links = [batchHttpLink];
+
+    if (withAuth) {
+      const authLink = new AuthLink({
+        getAuthState,
+        getRefreshTokenParameters,
+        onAuthSuccess,
+        onAuthError,
+        onIdTokenExpired,
+      });
+
+      links = [authLink, ...links];
+    }
 
     if (typeof onRequestSuccess === 'function') {
       links = [new SuccessLink({ successHandler: onRequestSuccess }), ...links];

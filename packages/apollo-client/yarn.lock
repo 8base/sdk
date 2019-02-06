@@ -2,6 +2,33 @@
 # yarn lockfile v1
 
 
+"@8base/apollo-links@^0.10.5":
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/@8base/apollo-links/-/apollo-links-0.10.5.tgz#04cc01ed9fcb687d9799ef4aa1107b8647d63578"
+  integrity sha512-N6MZbWu4oFPNy+en3t1guMPU4MN8gq4VCIR2+sm1ZBr78a72Vnx2338Csxqp4dEJ9nLluxaBP1gmj/tD3QbeBA==
+  dependencies:
+    "@8base/error-codes" "^1.0.5"
+    "@8base/utils" "^0.10.5"
+    "@babel/runtime" "^7.2.0"
+    apollo-link "1.2.1"
+    apollo-link-error "^1.1.0"
+    graphql "0.13.0"
+    graphql-tag "^2.9.2"
+    ramda "^0.25.0"
+
+"@8base/error-codes@^1.0.5":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@8base/error-codes/-/error-codes-1.0.10.tgz#baf553f04c03119db83cbe4306d4a01c2c6b7dc1"
+  integrity sha512-NAMZpmnaiUlJyDJKSAWODnJSGkV3c1UH5d3DTa6Amv70ypqIjZIGyKj5qHW+1wmr4q5Gb2uIO5+sdIeR7OPcBw==
+
+"@8base/utils@^0.10.5":
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.10.5.tgz#794538197d109d70b93c5821edb7d9b4f7256cd2"
+  integrity sha512-9zSKy74kQspvHGFJmxDTlBtIfv530hgVFP+ivVoYy4XGKSDgVirwk3mN04IK8TKvFNDLeyN5ZrxdSvJ9BQKw+g==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    ramda "^0.25.0"
+
 "@babel/cli@^7.2.3":
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.2.3.tgz#1b262e42a3e959d28ab3d205ba2718e1923cfee6"
@@ -103,7 +130,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.3.1.tgz#8f4ffd45f779e6132780835ffa7a215fa0b2d181"
   integrity sha512-ATz6yX/L8LEnC3dtLQnIx4ydcPxhLcoy9Vl6re00zb2w5lG6itY6Vhnr1KFRPq/FHNsgl/gh2mjNN20f9iJTTA==
 
-"@babel/runtime@^7.2.0":
+"@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.1.tgz#574b03e8e8a9898eaf4a872a92ea20b7846f6f2a"
   integrity sha512-7jGW8ppV0ant637pIqAcFfQDDH1orEPGJb8aXfUozuCU3QqX7rX4DA8iwrbPrR1hcH0FTTHz47yQnk+bl5xHQA==
@@ -299,6 +326,14 @@ apollo-link-dedup@^1.0.0:
   dependencies:
     apollo-link "^1.2.6"
 
+apollo-link-error@^1.1.0:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/apollo-link-error/-/apollo-link-error-1.1.7.tgz#6233a339d732def831af2dd417065b2ffd9feb5c"
+  integrity sha512-olPTKr3yFoavFHSXSLqC5QSWrRACN8TK3+E0pVL8uVR0zILJflUSCRb8HizKQmxZWtr9yM+D2gRLu9mStI8qTA==
+  dependencies:
+    apollo-link "^1.2.8"
+    apollo-link-http-common "^0.2.10"
+
 apollo-link-error@^1.1.1:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/apollo-link-error/-/apollo-link-error-1.1.5.tgz#1d600dfa75c4e4bf017f50d60da7b375b53047ab"
@@ -306,6 +341,13 @@ apollo-link-error@^1.1.1:
   dependencies:
     apollo-link "^1.2.6"
     apollo-link-http-common "^0.2.8"
+
+apollo-link-http-common@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.10.tgz#b5bbf502ff40a81cc00281ba3b8543b7ad866dfe"
+  integrity sha512-KY9nhpAurw3z48OIYV0sCZFXrzWp/wjECsveK+Q9GUhhSe1kEbbUjFfmi+qigg+iELgdp5V8ioRJhinl1vPojw==
+  dependencies:
+    apollo-link "^1.2.8"
 
 apollo-link-http-common@^0.2.8:
   version "0.2.8"
@@ -330,6 +372,13 @@ apollo-link@^1.0.0, apollo-link@^1.2.6:
   dependencies:
     apollo-utilities "^1.0.0"
     zen-observable-ts "^0.8.13"
+
+apollo-link@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.8.tgz#0f252adefd5047ac1a9f35ba9439d216587dcd84"
+  integrity sha512-lfzGRxhK9RmiH3HPFi7TIEBhhDY9M5a2ZDnllcfy5QDk7cCQHQ1WQArcw1FK0g1B+mV4Kl72DSrlvZHZJEolrA==
+  dependencies:
+    zen-observable-ts "^0.8.15"
 
 apollo-utilities@1.1.2, apollo-utilities@^1.0.0, apollo-utilities@^1.1.2:
   version "1.1.2"
@@ -1718,6 +1767,14 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
+cross-fetch@^2.2.2:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.3.tgz#e8a0b3c54598136e037f8650f8e823ccdfac198e"
+  integrity sha512-PrWWNH3yL2NYIb/7WF/5vFG3DCQiXDOVf8k3ijatbrtnwNuhMWLC7YF7uqf53tbTFDzHIUD8oITw4Bxt8ST3Nw==
+  dependencies:
+    node-fetch "2.1.2"
+    whatwg-fetch "2.0.4"
+
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -2557,7 +2614,7 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
 
-graphql-tag@^2.10.0:
+graphql-tag@^2.10.0, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
@@ -3353,6 +3410,14 @@ jest-environment-node@^23.4.0:
   dependencies:
     jest-mock "^23.2.0"
     jest-util "^23.4.0"
+
+jest-fetch-mock@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/jest-fetch-mock/-/jest-fetch-mock-2.1.0.tgz#49c16451b82f311158ec897e467d704e0cb118f9"
+  integrity sha512-jrTNlxDsZZCq6tMhdyH7gIbt4iDUHRr6C4Jp+kXItLaaaladOm9/wJjIwU3tCAEohbuW/7/naOSfg2A8H6/35g==
+  dependencies:
+    cross-fetch "^2.2.2"
+    promise-polyfill "^7.1.1"
 
 jest-get-type@^22.1.0:
   version "22.4.3"
@@ -4172,6 +4237,11 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
+node-fetch@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
+  integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
+
 node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
@@ -4712,6 +4782,11 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
+prettier@^1.16.4:
+  version "1.16.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
+  integrity sha512-ZzWuos7TI5CKUeQAtFd6Zhm2s6EpAD/ZLApIhsF9pRvRtM1RFo61dM/4MSRUA0SuLugA/zgrZD8m0BaY46Og7g==
+
 pretty-format@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.6.0.tgz#5eaac8eeb6b33b987b7fe6097ea6a8a146ab5760"
@@ -4734,6 +4809,11 @@ process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
   integrity sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=
+
+promise-polyfill@^7.1.1:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
+  integrity sha512-FuEc12/eKqqoRYIGBrUptCBRhobL19PS2U31vMNTfyck1FxPyMfgsXyW4Mav85y/ZN1hop3hOwRlUDok23oYfQ==
 
 prompts@^0.1.9:
   version "0.1.14"
@@ -4815,6 +4895,11 @@ query-string@^4.1.0:
   dependencies:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
 randomatic@^3.0.0:
   version "3.1.1"
@@ -6203,6 +6288,11 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
+whatwg-fetch@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
+  integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
+
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
@@ -6400,6 +6490,13 @@ zen-observable-ts@^0.8.13, zen-observable-ts@^0.8.6:
   version "0.8.13"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.13.tgz#ae1fd77c84ef95510188b1f8bca579d7a5448fc2"
   integrity sha512-WDb8SM0tHCb6c0l1k60qXWlm1ok3zN9U4VkLdnBKQwIYwUoB9psH7LIFgR+JVCCMmBxUgOjskIid8/N02k/2Bg==
+  dependencies:
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.15:
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.15.tgz#6cf7df6aa619076e4af2f707ccf8a6290d26699b"
+  integrity sha512-sXKPWiw6JszNEkRv5dQ+lQCttyjHM2Iks74QU5NP8mMPS/NrzTlHDr780gf/wOBqmHkPO6NCLMlsa+fAQ8VE8w==
   dependencies:
     zen-observable "^0.8.0"
 

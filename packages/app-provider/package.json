@@ -6,7 +6,8 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "docs": "NODE_ENV=test documentation readme src/EightBaseAppProvider.js --section=API"
+    "docs": "NODE_ENV=test documentation readme src/EightBaseAppProvider.js --section=API",
+    "test": "NPM_ENV=test jest"
   },
   "dependencies": {
     "@8base/apollo-client": "^0.10.5",
@@ -28,14 +29,28 @@
     "recompose": "0.27.1"
   },
   "devDependencies": {
+    "@8base/web-auth0-auth-client": "^0.10.5",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
     "flow-copy-source": "^2.0.2",
     "jest": "^23.6.0",
+    "jest-fetch-mock": "^2.1.0",
+    "prettier": "^1.16.4",
     "prop-types": "^15.6.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test/jest.setup.js"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**",
+      "!<rootDir>/**/__tests__/**"
+    ]
   },
   "license": "MIT"
 }
