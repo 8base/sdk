@@ -14,7 +14,8 @@ import * as asyncStorageAccessor from './asyncStorageAccessor';
 type ReactNativeAuth0AuthClientOptions = {
   clientId: string,
   domain: string,
-  workspaceId: string,
+  workspaceId?: string,
+  profileId?: string,
 };
 
 const toQueryString = R.pipe(
@@ -51,9 +52,11 @@ const getState = R.pipe(
   },
 );
 
-const prepareState = ({ workspaceId }) => workspaceId
-  ? JSON.stringify({ workspaceId })
-  : undefined;
+const prepareState = ({ workspaceId, profileId }) => {
+  const state = JSON.stringify({ workspaceId, profileId });
+
+  return state === '{}' ? undefined : state;
+};
 
 /**
  * Create instacne of the react-native auth0 auth client.
@@ -64,12 +67,14 @@ const prepareState = ({ workspaceId }) => workspaceId
 class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
   clientId: string;
   domain: string;
-  workspaceId: string;
+  workspaceId: string | void;
+  profileId: string | void;
 
-  constructor({ clientId, domain, workspaceId }: ReactNativeAuth0AuthClientOptions) {
+  constructor({ clientId, domain, workspaceId, profileId }: ReactNativeAuth0AuthClientOptions) {
     this.clientId = clientId;
     this.domain = domain;
     this.workspaceId = workspaceId;
+    this.profileId = profileId;
   }
 
   setAuthState = async (state: AuthState): Promise<void> => {
@@ -95,6 +100,7 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
       authUrl: `${this.domain}/authorize?${toQueryString({
         state: prepareState({
           workspaceId: this.workspaceId,
+          profileId: this.profileId,
         }),
         client_id: this.clientId,
         response_type: 'id_token',

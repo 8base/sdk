@@ -3,6 +3,7 @@ import { WebAuth0AuthClient } from '../../src';
 const ID_TOKEN = 'encoded id token';
 const ANOTHER_ID_TOKEN = 'another encoded id token';
 const WORKSPACE_ID = 'some workspace id';
+const PROFILE_ID = 'some profile id';
 const DOMAIN = 'https://test.auth0.com';
 const REDIRECT_URL = 'https://test.com/auth';
 const LOGOUT_REDIRECT_URL = 'https://test.com/logout';
@@ -39,6 +40,7 @@ describe('WebAuth0AuthClient', () => {
     redirectUri: REDIRECT_URL,
     logoutRedirectUri: LOGOUT_REDIRECT_URL,
     workspaceId: WORKSPACE_ID,
+    profileId: PROFILE_ID,
   });
 
   it('As a developer, i can authorize by the client', async () => {
@@ -47,7 +49,7 @@ describe('WebAuth0AuthClient', () => {
     });
 
     expect(auth0.authorize).toHaveBeenCalledWith({
-      state: `{"workspaceId":"${WORKSPACE_ID}"}`,
+      state: `{"workspaceId":"${WORKSPACE_ID}","profileId":"${PROFILE_ID}"}`,
       someProp: 'someValue',
     });
   });
@@ -55,7 +57,7 @@ describe('WebAuth0AuthClient', () => {
   it('As a developer, i can get authorized adata', async () => {
     auth0.parseHash.mockImplementation((callback) => {
       callback(null, {
-        state: `{"workspaceId":"${WORKSPACE_ID}"}`,
+        state: `{"workspaceId":"${WORKSPACE_ID}","profileId":"${PROFILE_ID}"}`,
         idToken: ID_TOKEN,
         idTokenPayload: {
           email: EMAIL,
@@ -71,6 +73,7 @@ describe('WebAuth0AuthClient', () => {
       idToken: ID_TOKEN,
       state: {
         workspaceId: WORKSPACE_ID,
+        profileId: PROFILE_ID,
       },
       email: EMAIL,
       isEmailVerified: true,
@@ -126,6 +129,7 @@ describe('WebAuth0AuthClient', () => {
         idToken: ANOTHER_ID_TOKEN,
         state: {
           workspaceId: WORKSPACE_ID,
+          profileId: PROFILE_ID,
         },
         email: EMAIL,
         isEmailVerified: true,
@@ -142,6 +146,7 @@ describe('WebAuth0AuthClient', () => {
     expect(authData).toEqual({
       state: {
         workspaceId: WORKSPACE_ID,
+        profileId: PROFILE_ID,
       },
       email: EMAIL,
       idToken: ANOTHER_ID_TOKEN,

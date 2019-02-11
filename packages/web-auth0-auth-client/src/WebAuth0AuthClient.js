@@ -14,8 +14,9 @@ export type WebAuth0AuthClientOptions = {
   domain: string,
   clientId: string,
   redirectUri: string,
-  workspaceId?: string,
   logoutRedirectUri?: string,
+  workspaceId?: string,
+  profileId?: string,
 };
 
 const isEmptyOrNil = R.either(
@@ -45,6 +46,11 @@ const getState = R.pipe(
   },
 );
 
+const prepareState = ({ workspaceId, profileId }) => {
+  const state = JSON.stringify({ workspaceId, profileId });
+
+  return state === '{}' ? undefined : state;
+};
 
 /**
  * Create instacne of the web auth0 auth client.
@@ -55,13 +61,22 @@ const getState = R.pipe(
  */
 class WebAuth0AuthClient implements AuthClient, Authorizable {
   auth0: auth0.WebAuth;
-  workspaceId: string | void;
   logoutRedirectUri: string | void;
+  workspaceId: string | void;
+  profileId: string | void;
 
-  constructor({ domain, clientId, redirectUri, workspaceId, logoutRedirectUri }: WebAuth0AuthClientOptions) {
+  constructor({
+    domain,
+    clientId,
+    redirectUri,
+    logoutRedirectUri,
+    workspaceId,
+    profileId,
+  }: WebAuth0AuthClientOptions) {
 
-    this.workspaceId = workspaceId;
     this.logoutRedirectUri = logoutRedirectUri;
+    this.workspaceId = workspaceId;
+    this.profileId = profileId;
     this.auth0 = new auth0.WebAuth({
       domain,
       clientID: clientId,
@@ -69,19 +84,16 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
       mustAcceptTerms: true,
       responseType: 'token id_token',
       scope: 'openid email profile',
-      state: this.getAuthorizeState(),
+      state: prepareState({ workspaceId, profileId }),
     });
-  }
-
-  getAuthorizeState() {
-    return this.workspaceId
-      ? JSON.stringify({ workspaceId: this.workspaceId })
-      : undefined;
   }
 
   authorize = async (options?: Object = {}): Promise<void> => {
     this.auth0.authorize({
-      state: this.getAuthorizeState(),
+      state: prepareState({
+        workspaceId: this.workspaceId,
+        profileId: this.profileId,
+      }),
       ...options,
     });
   };
