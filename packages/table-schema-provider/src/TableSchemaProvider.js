@@ -6,26 +6,7 @@ import { Query } from 'react-apollo';
 
 import { TableSchemaContext } from './TableSchemaContext';
 
-const TABLES_SCHEMA_QUERY = gql`
-  query TablesSchema {
-    tablesList {
-      items {
-        ...TableFragment
-      }
-      count
-    }
-  }
-
-  fragment TableFragment on Table {
-    id
-    name
-    displayName
-    isSystem
-    fields {
-      ...TableFieldFragment
-    }
-  }
-
+export const TABLE_FIELD_FRAGMENT = gql`
   fragment TableFieldFragment on TableField {
     ...CommonTableFieldFragment
     fieldTypeAttributes {
@@ -63,6 +44,10 @@ const TABLES_SCHEMA_QUERY = gql`
       relationTableName
       relationFieldName
       refTable {
+        id
+        name
+      }
+      refField {
         id
         name
       }
@@ -118,6 +103,33 @@ const TABLES_SCHEMA_QUERY = gql`
     format
     listOptions
   }
+`;
+
+export const TABLE_FRAGMENT = gql`
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  ${TABLE_FIELD_FRAGMENT}
+`;
+
+export const TABLES_SCHEMA_QUERY = gql`
+  query TablesSchema {
+    tablesList {
+      items {
+        ...TableFragment
+      }
+      count
+    }
+  }
+
+  ${TABLE_FRAGMENT}
 `;
 
 type TableSchemaProviderProps = {
