@@ -49,7 +49,8 @@ describe('WebAuth0AuthClient', () => {
     });
 
     expect(auth0.authorize).toHaveBeenCalledWith({
-      state: `{"workspaceId":"${WORKSPACE_ID}","profileId":"${PROFILE_ID}"}`,
+      workspaceId: WORKSPACE_ID,
+      profileId: PROFILE_ID,
       someProp: 'someValue',
     });
   });
@@ -57,7 +58,6 @@ describe('WebAuth0AuthClient', () => {
   it('As a developer, i can get authorized adata', async () => {
     auth0.parseHash.mockImplementation((callback) => {
       callback(null, {
-        state: `{"workspaceId":"${WORKSPACE_ID}","profileId":"${PROFILE_ID}"}`,
         idToken: ID_TOKEN,
         idTokenPayload: {
           email: EMAIL,
@@ -71,10 +71,6 @@ describe('WebAuth0AuthClient', () => {
 
     expect(authData).toEqual({
       idToken: ID_TOKEN,
-      state: {
-        workspaceId: WORKSPACE_ID,
-        profileId: PROFILE_ID,
-      },
       email: EMAIL,
       isEmailVerified: true,
       idTokenPayload: {
@@ -127,10 +123,6 @@ describe('WebAuth0AuthClient', () => {
     auth0.checkSession.mockImplementation((options, callback) => {
       callback(null, {
         idToken: ANOTHER_ID_TOKEN,
-        state: {
-          workspaceId: WORKSPACE_ID,
-          profileId: PROFILE_ID,
-        },
         email: EMAIL,
         isEmailVerified: true,
         idTokenPayload: {
@@ -144,10 +136,6 @@ describe('WebAuth0AuthClient', () => {
     const authData = await authClient.renewToken();
 
     expect(authData).toEqual({
-      state: {
-        workspaceId: WORKSPACE_ID,
-        profileId: PROFILE_ID,
-      },
       email: EMAIL,
       idToken: ANOTHER_ID_TOKEN,
       isEmailVerified: true,
