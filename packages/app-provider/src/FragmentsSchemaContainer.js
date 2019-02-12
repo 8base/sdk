@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 
-class FragmentsSchemaContainer extends React.Component {
+class FragmentsSchemaContainer extends React.PureComponent {
   state = {
     loading: true,
     fragmentsSchema: null,
