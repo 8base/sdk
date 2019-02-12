@@ -35,23 +35,6 @@ const getIdToken = R.path(['idToken']);
 
 const getIdTokenPayload = R.prop('idTokenPayload');
 
-const getState = R.pipe(
-  R.prop('state'),
-  (state) => {
-    try {
-      return JSON.parse(state);
-    } catch (e) {
-      return state;
-    }
-  },
-);
-
-const prepareState = ({ workspaceId, profileId }) => {
-  const state = JSON.stringify({ workspaceId, profileId });
-
-  return state === '{}' ? undefined : state;
-};
-
 /**
  * Create instacne of the web auth0 auth client.
  * @param {string} workspaceId Identifier of the 8base app workspace.
@@ -84,16 +67,13 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
       mustAcceptTerms: true,
       responseType: 'token id_token',
       scope: 'openid email profile',
-      state: prepareState({ workspaceId, profileId }),
     });
   }
 
   authorize = async (options?: Object = {}): Promise<void> => {
     this.auth0.authorize({
-      state: prepareState({
-        workspaceId: this.workspaceId,
-        profileId: this.profileId,
-      }),
+      workspaceId: this.workspaceId,
+      profileId: this.profileId,
       ...options,
     });
   };
@@ -106,7 +86,6 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
       }
 
       resolve({
-        state: getState(result),
         email: getEmail(result),
         idToken: getIdToken(result),
         isEmailVerified: isEmailVerified(result),
@@ -143,7 +122,6 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
         }
 
         resolve({
-          state: getState(authResult),
           email: getEmail(authResult),
           idToken: getIdToken(authResult),
           isEmailVerified: isEmailVerified(authResult),

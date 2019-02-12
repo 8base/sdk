@@ -41,23 +41,6 @@ const getEmail = R.path(['email']);
 
 const isEmailVerified = R.path(['email_verified']);
 
-const getState = R.pipe(
-  R.prop('state'),
-  (state) => {
-    try {
-      return JSON.parse(state);
-    } catch (e) {
-      return state;
-    }
-  },
-);
-
-const prepareState = ({ workspaceId, profileId }) => {
-  const state = JSON.stringify({ workspaceId, profileId });
-
-  return state === '{}' ? undefined : state;
-};
-
 /**
  * Create instacne of the react-native auth0 auth client.
  * @param {string} workspaceId Identifier of the 8base app workspace.
@@ -98,10 +81,8 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({
       authUrl: `${this.domain}/authorize?${toQueryString({
-        state: prepareState({
-          workspaceId: this.workspaceId,
-          profileId: this.profileId,
-        }),
+        workspace_id: this.workspaceId,
+        profile_id: this.profileId,
         client_id: this.clientId,
         response_type: 'id_token',
         scope: 'openid email profile',
@@ -133,7 +114,6 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
         idTokenPayload: decodedIdToken,
         email: getEmail(decodedIdToken),
         isEmailVerified: isEmailVerified(decodedIdToken),
-        state: getState(decodedIdToken),
       };
     }
   };

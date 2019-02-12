@@ -25,7 +25,6 @@ jest.mock('jwt-decode', () => jest.fn(
     another_data: 'some data',
     email: 'test@test.com',
     email_verified: true,
-    state: '{"workspaceId":"some workspace id","profileId":"some profile id"}',
   }),
 ));
 
@@ -70,19 +69,15 @@ describe('ReactNativeAuth0AuthClient', () => {
         another_data: 'some data',
         email: 'test@test.com',
         email_verified: true,
-        state: `{"workspaceId":"${WORKSPACE_ID}","profileId":"${PROFILE_ID}"}`,
       },
       email: 'test@test.com',
       isEmailVerified: true,
-      state: {
-        workspaceId: WORKSPACE_ID,
-        profileId: PROFILE_ID,
-      },
     });
 
     expect(AuthSession.startAsync).toHaveBeenCalledWith({
       authUrl: `${DOMAIN}/authorize?`
-        + `${encodeURIComponent('state')}=${encodeURIComponent('{"workspaceId":"some workspace id","profileId":"some profile id"}')}&`
+        + `${encodeURIComponent('workspace_id')}=${encodeURIComponent(WORKSPACE_ID)}&`
+        + `${encodeURIComponent('profile_id')}=${encodeURIComponent(PROFILE_ID)}&`
         + `${encodeURIComponent('client_id')}=${encodeURIComponent(CLIENT_ID)}&`
         + `${encodeURIComponent('response_type')}=${encodeURIComponent('id_token')}&`
         + `${encodeURIComponent('scope')}=${encodeURIComponent('openid email profile')}&`
