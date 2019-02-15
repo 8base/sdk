@@ -14,10 +14,16 @@ export type WebAuth0AuthClientOptions = {
   domain: string,
   clientId: string,
   redirectUri: string,
-  logoutRedirectUri?: string,
+  logoutRedirectUri: string,
   workspaceId?: string,
-  profileId?: string,
+  profile?: {
+    id: string,
+    isDefault: boolean,
+  },
+  apiEndpoint?: string,
 };
+
+const DEFAULT_8BASE_API_ENDPOINT = 'https://api.8base.com/';
 
 const isEmptyOrNil = R.either(
   R.isNil,
@@ -35,6 +41,20 @@ const getIdToken = R.path(['idToken']);
 
 const getIdTokenPayload = R.prop('idTokenPayload');
 
+const get8baseRedirectUri = (
+  originalRedirectUri: string,
+  workspaceId: string,
+  apiEndpoint: string = DEFAULT_8BASE_API_ENDPOINT,
+): string => {
+  const encodedOriginalRedirectUri = encodeURIComponent(originalRedirectUri);
+  const encodedWorkspaceId = encodeURIComponent(workspaceId);
+
+  return (new URL(
+    `/authRedirect?redirectUrl=${encodedOriginalRedirectUri}&workspace=${encodedWorkspaceId}`,
+    apiEndpoint,
+  )).toString();
+};
+
 /**
  * Create instacne of the web auth0 auth client.
  * @param {string} workspaceId Identifier of the 8base app workspace.
@@ -48,18 +68,34 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
   workspaceId: string | void;
   profileId: string | void;
 
-  constructor({
-    domain,
-    clientId,
-    redirectUri,
-    logoutRedirectUri,
-    workspaceId,
-    profileId,
-  }: WebAuth0AuthClientOptions) {
+  constructor(options: WebAuth0AuthClientOptions) {
+    const {
+      domain,
+      clientId,
+      profile,
+      workspaceId,
+      apiEndpoint,
+    } = options;
+    let { redirectUri, logoutRedirectUri } = options;
+
+    if (profile && profile.isDefault) {
+      // add throw on profileId and workspaceId
+      redirectUri = get8baseRedirectUri(
+        redirectUri,
+        workspaceId,
+        apiEndpoint,
+      );
+
+      logoutRedirectUri = get8baseRedirectUri(
+        logoutRedirectUri,
+        workspaceId,
+        apiEndpoint,
+      );
+    }
 
     this.logoutRedirectUri = logoutRedirectUri;
     this.workspaceId = workspaceId;
-    this.profileId = profileId;
+    this.profileId = profile && profile.id;
     this.auth0 = new auth0.WebAuth({
       domain,
       clientID: clientId,
