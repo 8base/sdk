@@ -12,22 +12,23 @@ type FileValue = {
 };
 
 type FileInputValue = FileValue | FileValue[];
+type OriginalFileInputValue = File | File[];
 
 type FileInputProps = {
   client: Object,
-  onChange: (value: FileInputValue) => void,
-  children: ({ pick: () => Promise<void>, value: ?FileInputValue, error: ?Object }) => React$Node,
-  value?: FileInputValue,
+  onChange: (value: FileInputValue, originalFile: OriginalFileInputValue) => void,
+  children: ({ pick: () => Promise<void>, value: ?FileInputValue, originalFile: ?OriginalFileInputValue, error: ?Object }) => React$Node,
   maxFiles?: number,
   accept?: string | string[],
   public?: boolean,
-  onUploadFinish?: (value: FileInputValue) => Promise<FileInputValue>,
+  onUploadFinish?: (value: FileInputValue, originalFile: OriginalFileInputValue) => Promise<FileInputValue>,
 };
 
 type FileInputState = {
   path: ?string,
   error: ?Object,
   value: ?FileInputValue,
+  originalFile: ?OriginalFileInputValue,
 };
 
 const FILE_UPLOAD_INFO_QUERY = gql`
@@ -56,6 +57,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     this.state = {
       path: null,
       error: null,
+      originalFile: null,
       value: props.value,
     };
   }
@@ -106,20 +108,23 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       public: !!this.props.public,
     }));
 
+    let originalFile = filesUploaded.map((item) => item.originalFile);
+
     const { maxFiles, onUploadFinish } = this.props;
 
     if (maxFiles === 1) {
       value = value[0];
+      originalFile = originalFile[0];
     }
 
     if (typeof onUploadFinish === 'function') {
-      value = await onUploadFinish(value);
+      value = await onUploadFinish(value, originalFile);
     }
 
-    this.setState({ value });
+    this.setState({ value, originalFile });
 
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(value);
+      this.props.onChange(value, originalFile);
     }
   };
 
@@ -128,6 +133,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     const { path } = this.state;
 
     return {
+      exposeOriginalFile: true,
       onUploadDone: this.onUploadDone,
       storeTo: {
         path,
@@ -148,9 +154,9 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   render() {
     const { children } = this.props;
 
-    const { error, value } = this.state;
+    const { error, value, originalFile } = this.state;
 
-    return children({ pick: this.pick, value, error });
+    return children({ pick: this.pick, value, originalFile, error });
   }
 }
 
