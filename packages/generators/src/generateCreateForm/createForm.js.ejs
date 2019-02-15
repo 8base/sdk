@@ -1,0 +1,89 @@
+import React from 'react';
+import { Form, Field } from '@8base/forms';
+import { Dialog, Grid, Button, Form, Row, Text, SelectField, InputField, CheckboxField, DateField, ModalContext } from '@8base/boost';
+import { FileInput } from '@8base/file-input';
+import { graphql } from 'react-apollo';
+
+
+const PROPERTY_CREATE_MUTATION = gql`
+  mutation <%= changeCase.pascal(entityName)%>Create($data: <%= SchemaNameGenerator.getCreateInputName(tableName)%>!) {
+    <%= SchemaNameGenerator.getCreateItemFieldName(tableName)%>(data: $data) {
+      id
+    }
+  }
+`;
+
+<%- chunks.fieldsQueries({
+  fields: fields,
+  SchemaNameGenerator: SchemaNameGenerator,
+  changeCase: changeCase,
+}); %>
+
+<%- chunks.fieldsFileInput() %>
+
+
+const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
+  name: '<%= SchemaNameGenerator.getCreateItemFieldName(tableName)%>',
+  options: {
+    refetchQueries: ['<%= SchemaNameGenerator.getTableListFieldName(tableName)%>'],
+    context: {
+      ['TOAST_SUCCESS_MESSAGE']: '<%= changeCase.pascal(entityName)%> successfuly created',
+    },
+  },
+});
+
+const <%= changeCase.pascal(entityName)%>CreateDialog = enhancer(
+  class <%= changeCase.pascal(entityName)%>CreateDialog extends React.PureComponent {
+    static contextType = ModalContext;
+
+    onSubmit = async data => {
+      await this.props.propertyCreate({ variables: { data } });
+
+      this.context.closeModal('<%= changeCase.upper(entityName)%>_CREATE_DIALOG_ID');
+    };
+
+    onClose = () => {
+      this.context.closeModal('<%= changeCase.upper(entityName)%>_CREATE_DIALOG_ID');
+    };
+
+    renderFormContent = ({ handleSubmit, invalid, submitting, pristine }) => (
+      <form onSubmit={handleSubmit}>
+        <Dialog.Header title="New <%= changeCase.pascal(entityName)%>" onClose={this.onClose} />
+        <Dialog.Body scrollable>
+          <Grid.Layout gap="sm" stretch>
+            <%- chunks.fieldsInputsList({ 
+              fields: fields, 
+              changeCase: changeCase,
+              pluralize: pluralize,
+              SchemaNameGenerator: SchemaNameGenerator,
+            }); %>
+          </Grid.Layout>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Button color="neutral" variant="outlined" disabled={submitting} onClick={this.onClose}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit" loading={submitting}>
+            Create <%= changeCase.pascal(entityName)%>
+          </Button>
+        </Dialog.Footer>
+      </form>
+    );
+
+    render() {
+      return (
+        <Dialog id={<%= changeCase.upper(entityName)%>_CREATE_DIALOG_ID} size="sm">
+          <Form 
+            type="CREATE" 
+            tableSchemaName="<%= tableName%>" 
+            onSubmit={this.onSubmit}
+          >
+            {this.renderFormContent}
+          </Form>
+        </Dialog>
+      );
+    }
+  }
+);
+
+export { <%= changeCase.pascal(entityName)%>CreateDialog };

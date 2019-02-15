@@ -1,0 +1,69 @@
+import React from 'react';
+import { compose } from 'recompose';
+import { pathOr } from 'ramda';
+import gql from 'graphql-tag';
+import { TableBuilder, Dropdown, Icon, Menu, withModal } from '@8base/boost';
+import { graphql } from 'react-apollo';
+
+const BROKERS_LIST_QUERY = gql`
+  <%= queryText%>
+`;
+
+const TABLE_COLUMNS = [
+  <% columns.forEach((column) => { %>
+    {
+      name: <%= column.name%>,
+      title: <%= column.title%>,
+    },
+  <% }); %>
+  {
+    name: 'edit',
+    title: '',
+    width: '60px',
+  },
+];
+
+const enhancer = compose(
+  withModal,
+  graphql(<%= entityName.upperCase%>_LIST_QUERY, { name: '<%= tableName.lowerCase%>' })
+);
+
+const <%= entityName.pascalCase%>Table = enhancer(({ (<%= tableName.lowerCase%>, openModal, closeModal }) => (
+  <TableBuilder
+    loading={<%= tableName.lowerCase%>.loading}
+    data={pathOr([], ['<%= queryName%>', 'items'], <%= tableName.lowerCase%>)}
+    columns={TABLE_COLUMNS}
+    renderCell={(column, rowData) => {
+      switch (column.name) {
+        case 'edit':
+          return (
+            <Dropdown defaultOpen={false}>
+              <Dropdown.Head>
+                <Icon name="Dots" size="sm" color="LIGHT_GRAY2" />
+              </Dropdown.Head>
+              <Dropdown.Body pin="right">
+                {({ closeDropdown }) => (
+                  <Menu>
+                    <Menu.Item
+                      onClick={() => {
+                        openModal(<%= entityName.pascalCase%>DeleteDialog.id, { id: rowData.id });
+                        closeDropdown();
+                      }}
+                    >
+                      Delete
+                    </Menu.Item>
+                  </Menu>
+                )}
+              </Dropdown.Body>
+            </Dropdown>
+          );
+        default:
+          return <div>{pathOr('', column.name.split('.'), rowData)}</div>;
+      }
+    }}
+    action="Create <%= entityName.pascalCase%>"
+    onActionClick={() => openModal(<%= entityName.pascalCase%>CreateDialog.id)}
+  />
+));
+
+export { <%= entityName.pascalCase%>Table };

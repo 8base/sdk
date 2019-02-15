@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should generate table by the table name 1`] = `
+"import React from 'react';
+import { compose } from 'recompose';
+import { pathOr } from 'ramda';
+import gql from 'graphql-tag';
+import { TableBuilder, Dropdown, Icon, Menu, withModal } from '@8base/boost';
+import { graphql } from 'react-apollo';
+
+const BROKERS_LIST_QUERY = gql\`
+  
+  query DataViewerTablePropertiesContent($filter: PropertyFilter, $orderBy: [PropertyOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: propertiesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        pictures {
+          items {
+            id
+            fileId
+            filename
+            downloadUrl
+            shareUrl
+            meta
+          }
+          count
+        }
+        bedrooms
+        title
+        description
+        sqFootage
+        bathrooms
+        garage
+        pool
+        listings {
+          items {
+            documents {
+              items {
+                id
+                fileId
+                filename
+                downloadUrl
+                shareUrl
+                meta
+              }
+              count
+            }
+            status
+            closingDate
+            price
+          }
+          count
+        }
+        _description
+      }
+      count
+    }
+  }
+\`;
+
+const TABLE_COLUMNS = [
+  
+    {
+      name: bedrooms,
+      title: Bedrooms,
+    },
+  
+    {
+      name: title,
+      title: Title,
+    },
+  
+    {
+      name: description,
+      title: Description,
+    },
+  
+    {
+      name: sqFootage,
+      title: SqFootage,
+    },
+  
+    {
+      name: bathrooms,
+      title: Bathrooms,
+    },
+  
+    {
+      name: garage,
+      title: Garage,
+    },
+  
+    {
+      name: pool,
+      title: Pool,
+    },
+  
+    {
+      name: listings,
+      title: Listings,
+    },
+  
+  {
+    name: 'edit',
+    title: '',
+    width: '60px',
+  },
+];
+
+const enhancer = compose(
+  withModal,
+  graphql(PROPERTY_LIST_QUERY, { name: 'properties' })
+);
+
+const PropertyTable = enhancer(({ (properties, openModal, closeModal }) => (
+  <TableBuilder
+    loading={properties.loading}
+    data={pathOr([], ['propertiesList', 'items'], properties)}
+    columns={TABLE_COLUMNS}
+    renderCell={(column, rowData) => {
+      switch (column.name) {
+        case 'edit':
+          return (
+            <Dropdown defaultOpen={false}>
+              <Dropdown.Head>
+                <Icon name=\\"Dots\\" size=\\"sm\\" color=\\"LIGHT_GRAY2\\" />
+              </Dropdown.Head>
+              <Dropdown.Body pin=\\"right\\">
+                {({ closeDropdown }) => (
+                  <Menu>
+                    <Menu.Item
+                      onClick={() => {
+                        openModal(PropertyDeleteDialog.id, { id: rowData.id });
+                        closeDropdown();
+                      }}
+                    >
+                      Delete
+                    </Menu.Item>
+                  </Menu>
+                )}
+              </Dropdown.Body>
+            </Dropdown>
+          );
+        default:
+          return <div>{pathOr('', column.name.split('.'), rowData)}</div>;
+      }
+    }}
+    action=\\"Create Property\\"
+    onActionClick={() => openModal(PropertyCreateDialog.id)}
+  />
+));
+
+export { PropertyTable };
+"
+`;

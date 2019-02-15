@@ -52,8 +52,3 @@ export const getRelationTableName = createSelector(
   getTableField,
   R.path(['relation', 'refTable', 'name']),
 );
-
-export const isSettingsRefTable = createSelector(
-  getTableField,
-  R.pathEq(['relation', 'refTable', 'name'], 'Settings'),
-);

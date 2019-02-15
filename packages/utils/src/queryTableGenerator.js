@@ -1,10 +1,10 @@
 // @flow
 import * as R from 'ramda';
-import { createSelector } from 'reselect';
 import { SchemaNameGenerator } from '@8base/sdk';
 
 import * as tableSelectors from './selectors/tableSelectors';
 import * as tableFieldSelectors from './selectors/tableFieldSelectors';
+import { SYSTEM_TABLES } from './constants';
 import type { TableSchema } from './types';
 
 export const TABLE_CONTENT_NAME = 'tableContent';
@@ -18,7 +18,7 @@ export type CheckedRule = {
 type QueryObjectConfig = {
   deep?: number,
   withMeta?: boolean,
-  includeColumns?: string[],
+  includeColumns?: null | string[],
 }
 
 type QueryStringConfig = {
@@ -33,6 +33,9 @@ const upperFirst = (str: string) => R.toUpper(R.head(str)) + R.tail(str);
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
 
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 const emptyRelation = {
   id: 'id',
@@ -46,6 +49,7 @@ const emptyRelationList = {
   },
   count: 'count',
 };
+
 
 export const getQueryObject = (tablesList: TableSchema[], tableName: string, queryObjectConfig: QueryObjectConfig = {}, prevKey?: string = '') => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
@@ -66,9 +70,9 @@ export const getQueryObject = (tablesList: TableSchema[], tableName: string, que
       const isFile = tableFieldSelectors.isFileField(field);
       const isSmart = tableFieldSelectors.isSmartField(field);
       const isList = tableFieldSelectors.isListField(field);
-      const isSettingsRefTable = tableFieldSelectors.isSettingsRefTable(field);
       const refTableName = tableFieldSelectors.getRelationTableName(field);
       const refTable = getTableByName(tablesList, refTableName);
+      const isSettingsRefTable = tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
       const currentKeyString = prevKey ? `${prevKey}.${field.name}` : field.name;
 
       if (isSettingsRefTable) {
@@ -76,10 +80,9 @@ export const getQueryObject = (tablesList: TableSchema[], tableName: string, que
           _description: '_description',
         };
       } else if (isRelation) {
-
         if (deep > 1) {
           if (!!refTableName && !!refTable) {
-            const includeAllrelationFields = R.contains(currentKeyString, includeColumns);
+            const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
             const relationIncludeColumns = includeAllrelationFields
               ? null
               : includeColumns;
@@ -127,8 +130,6 @@ export const getQueryObject = (tablesList: TableSchema[], tableName: string, que
         ? R.contains(currentKeyString, includeColumns)
         : true;
 
-      console.log(currentKeyString, needsInclude, isNotEmptyrelation, includeColumns);
-
       if (fieldContent !== null && (needsInclude || isNotEmptyrelation)) {
         queryObject[field.name] = fieldContent;
       }
@@ -137,9 +138,6 @@ export const getQueryObject = (tablesList: TableSchema[], tableName: string, que
   return queryObject;
 };
 
-const capitalizeFirstLetter = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 const transformQueryObjectToString = (queryObject: Object, spacesParams: *) => {
   const { prevSpaceCount = 4, spaceCount = 2, initSpaceCount = 2 } = spacesParams || {};
@@ -205,7 +203,7 @@ export const createQueryColumnsList = (tablesList: TableSchema[], tableName: str
       } else if (isRelation && refTableName && refTable && deep > 1) {
         const innerKeys = createQueryColumnsList(tablesList, refTableName, { deep: deep - 1, withMeta, includeColumns });
 
-        return innerKeys.map(({ name, ...rest }) => ({ ...rest, name: `${fieldName}.${name}` }));
+        return innerKeys.map(({ name, ...rest }: Object) => ({ ...rest, name: `${fieldName}.${name}` }));
       } else if (isRelation) {
         return [{
           name: fieldName, title, meta,
@@ -216,8 +214,8 @@ export const createQueryColumnsList = (tablesList: TableSchema[], tableName: str
       }];
     });
 
-  return R.flatten(transformedList)
-    .filter(({ name }) => !!includeColumns
+  return (R.flatten(transformedList): any)
+    .filter(({ name }: Object) => !!includeColumns
       ? R.contains(name, includeColumns)
       : true,
     );
@@ -257,7 +255,7 @@ export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableName
     }
   }`;
 
-export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: string) => {
+export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: string, config: * = {}) => {
   const table = getTableByName(tablesList, tableName);
   const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
 
@@ -265,7 +263,7 @@ export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: st
     return `
   mutation DataViewer${upperFirst(tableName)}RowCreate($data: ${SchemaNameGenerator.getCreateInputName(tableName)}!) {
     ${SchemaNameGenerator.getCreateItemFieldName(tableName)}(data: $data) {
-      id${createQueryStringWithoutMetaFields(tablesList, tableName)}
+      id${createQueryStringWithoutMetaFields(tablesList, tableName, config)}
     }
   }`;
   }
@@ -273,21 +271,21 @@ export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: st
   return `
   mutation DataViewer${upperFirst(tableName)}RowCreate {
     ${SchemaNameGenerator.getCreateItemFieldName(tableName)} {
-      id${createQueryStringWithoutMetaFields(tablesList, tableName)}
+      id${createQueryStringWithoutMetaFields(tablesList, tableName, config)}
     }
   }`;
 };
 
-export const createTableRowUpdateTag = (tablesList: TableSchema[], tableName: string) => `
+export const createTableRowUpdateTag = (tablesList: TableSchema[], tableName: string, config: * = {}) => `
   mutation DataViewer${upperFirst(tableName)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(tableName)}!) {
     ${SchemaNameGenerator.getUpdateItemFieldName(tableName)}(data: $data) {
-      id${createQueryStringWithoutMetaFields(tablesList, tableName)}
+      id${createQueryStringWithoutMetaFields(tablesList, tableName, config)}
     }
   }`;
 
-export const createTableRowQueryTag = (tablesList: TableSchema[], tableName: string) => `
+export const createTableRowQueryTag = (tablesList: TableSchema[], tableName: string, config: * = {}) => `
   query DataViewer${upperFirst(tableName)}Row($id: ID!) {
-    ${SchemaNameGenerator.getTableItemFieldName(tableName)}(id: $id) {${createQueryString(tablesList, tableName)}
+    ${SchemaNameGenerator.getTableItemFieldName(tableName)}(id: $id) {${createQueryString(tablesList, tableName, config)}
     }
   }`;
 

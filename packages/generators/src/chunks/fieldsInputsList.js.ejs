@@ -1,0 +1,44 @@
+        <% fields.forEach(({ fieldType, name, displayName, fieldTypeAttributes }) => { %>
+          <Grid.Box>
+            <% if (fieldType === 'TEXT') { 
+              %><Field name="<%= name%>" label="<%= displayName%>" type="text" component={InputField} /><%
+            } else if (fieldType === 'NUMBER') { 
+              %><Field name="<%= name%>" label="<%= displayName%>" type="number" component={InputField} /><%
+            } else if (fieldType === 'SWITCH' && fieldTypeAttributes.format === 'CUSTOM') { 
+              %><Field 
+                name="<%= name%>"
+                label="<%= displayName%>"
+                component={SelectField}
+                options={ [
+                    <% fieldTypeAttributes.listOptions.map(option => {
+                      %>  { label: '<%= changeCase.pascal(option)%>', value: '<%= option%>' },
+                    <%});
+                %>] }
+              /><%
+            } else if (fieldType === 'SWITCH') { 
+              %><Field name="<%= name%>" label="<%= displayName%>" component={CheckboxField} /><%
+            } else if (fieldType === 'DATE') {
+              %><Field name="<%= name%>" label="<%= displayName%>" withTime={<%= fieldTypeAttributes.format==='DATETIME'%>} component={DateField} /><%
+            } else if (fieldType === 'FILE') { 
+              %><Field name="<%= name%>" label="<%= displayName%>" type="text" component={FileInputField} /><%
+            } else if (fieldType === 'RELATION') {
+              %><Query query={<%= changeCase.upper(name)%>_LIST_QUERY}>
+                {({ data, loading }) => (
+                  <Field
+                    name="<%= name%>" 
+                    label="<%= displayName%>"
+                    placeholder="Select a <%= changeCase.lower(pluralize.singular(name))%>"
+                    component={SelectField}
+                    loading={loading}
+                    options={
+                      loading
+                        ? []
+                        : getRelationOptions(data.<%= SchemaNameGenerator.getTableListFieldName(name)%>.items)
+                    }
+                    stretch
+                  />
+                )}
+              </Query><%
+            } %>
+          </Grid.Box>
+        <% }); %>

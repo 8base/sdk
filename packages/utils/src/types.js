@@ -49,7 +49,7 @@ export type TableSchema = {
   id: string,
   name: string,
   displayName?: string,
-  isSystem: boolean,
+  isSystem?: boolean,
   fields: Array<FieldSchema>,
 };
 

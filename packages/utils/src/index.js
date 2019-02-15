@@ -1,5 +1,3 @@
-// @flow
-
 import * as tableSelectors from './selectors/tableSelectors';
 
 export * from './constants';

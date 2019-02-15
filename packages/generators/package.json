@@ -1,0 +1,38 @@
+{
+  "name": "@8base/generators",
+  "version": "0.11.0",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "scripts": {
+    "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
+    "docs": "NODE_ENV=test documentation readme src/index.js --section=API",
+    "test": "NPM_ENV=test jest"
+  },
+  "dependencies": {
+    "@8base/sdk": "^0.0.78",
+    "@8base/utils": "^0.11.0",
+    "@babel/runtime": "^7.3.1",
+    "change-case": "^3.1.0",
+    "ejs": "^2.6.1",
+    "pluralize": "^7.0.0",
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "documentation": "^8.0.0",
+    "flow-copy-source": "^2.0.2",
+    "jest": "^23.1.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/src/**",
+      "!<rootDir>/**/__tests__/**"
+    ]
+  },
+  "license": "MIT"
+}
