@@ -2,8 +2,8 @@
 
 import * as R from 'ramda';
 import { createSelector, type Selector } from 'reselect';
-import { FIELD_TYPE } from '@8base/utils';
-import type { TableSchema, FieldSchema } from '@8base/utils';
+import { FIELD_TYPE } from '../constants';
+import type { TableSchema, FieldSchema } from './';
 
 export const getTable = (table?: TableSchema): TableSchema | void => table;
 
@@ -18,6 +18,7 @@ export const getFieldTypeById = createSelector(
   getFieldById,
   R.prop('fieldType'),
 );
+
 
 export const isRelationField = createSelector(
   getFieldTypeById,

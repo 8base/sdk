@@ -7,8 +7,7 @@
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
     "doc": "NODE_ENV=test documentation readme",
-    "docs": "yarn doc src/index.js --section=API",
-    "test": "NPM_ENV=test jest"
+    "docs": "yarn doc src/index.js --section=API"
   },
   "dependencies": {
     "@8base/sdk": "^0.0.78",

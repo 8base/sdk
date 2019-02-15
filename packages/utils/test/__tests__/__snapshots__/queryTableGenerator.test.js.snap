@@ -1,0 +1,709 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowCreate($data: CommonCreateInput!) {
+    commonCreate(data: $data) {
+      id
+      field1
+      field2
+      field3
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
+"
+  mutation DataViewerFilesRowCreate($data: FileCreateInput!) {
+    fileCreate(data: $data) {
+      id
+      file {
+        id
+        fileId
+        filename
+        downloadUrl
+        shareUrl
+        meta
+      }
+      fileList {
+        items {
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowCreate($data: RelationCreateInput!) {
+    relationCreate(data: $data) {
+      id
+      field1 {
+        id
+        _description
+      }
+      field2
+      field3
+      field4 {
+        items {
+          id
+          _description
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowCreate($data: SmartFieldCreateInput!) {
+    smartFieldCreate(data: $data) {
+      id
+      phone {
+        code
+        number
+      }
+      address {
+        street1
+        street2
+        zip
+        city
+        state
+      }
+      phoneList {
+        code
+        number
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
+"
+  mutation DataViewerTableWithoutUserFieldsRowCreate {
+    tableWithoutUserFieldCreate {
+      id
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowDelete($data: CommonDeleteInput!) {
+    commonDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
+"
+  mutation DataViewerFilesRowDelete($data: FileDeleteInput!) {
+    fileDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowDelete($data: RelationDeleteInput!) {
+    relationDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput!) {
+    smartFieldDelete(data: $data) {
+      success
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!) {
+    commonUpdate(data: $data) {
+      id
+      field1
+      field2
+      field3
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
+"
+  mutation DataViewerFilesRowUpdate($data: FileUpdateInput!) {
+    fileUpdate(data: $data) {
+      id
+      file {
+        id
+        fileId
+        filename
+        downloadUrl
+        shareUrl
+        meta
+      }
+      fileList {
+        items {
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!) {
+    relationUpdate(data: $data) {
+      id
+      field1 {
+        id
+        _description
+      }
+      field2
+      field3
+      field4 {
+        items {
+          id
+          _description
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!) {
+    smartFieldUpdate(data: $data) {
+      id
+      phone {
+        code
+        number
+      }
+      address {
+        street1
+        street2
+        zip
+        city
+        state
+      }
+      phoneList {
+        code
+        number
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
+"
+  query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        field1
+        field2
+        field3
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
+"
+  query DataViewerTableFilesContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        file {
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
+        }
+        fileList {
+          items {
+            id
+            fileId
+            filename
+            downloadUrl
+            shareUrl
+            meta
+          }
+          count
+        }
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
+"
+  query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        field1 {
+          id
+          _description
+        }
+        field2
+        field3
+        field4 {
+          items {
+            id
+            _description
+          }
+          count
+        }
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with smart fields 1`] = `
+"
+  query DataViewerTableSmartFieldsContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: smartFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        id
+        createdAt
+        updatedAt
+        createdBy {
+          id
+          _description
+        }
+        phone {
+          code
+          number
+        }
+        address {
+          street1
+          street2
+          zip
+          city
+          state
+        }
+        phoneList {
+          code
+          number
+        }
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate query object  1`] = `
+Object {
+  "address": Object {
+    "city": "city",
+    "state": "state",
+    "street1": "street1",
+    "street2": "street2",
+    "zip": "zip",
+  },
+  "addresses": Object {
+    "city": "city",
+    "state": "state",
+    "street1": "street1",
+    "street2": "street2",
+    "zip": "zip",
+  },
+  "file": Object {
+    "downloadUrl": "downloadUrl",
+    "fileId": "fileId",
+    "filename": "filename",
+    "id": "id",
+    "meta": "meta",
+    "shareUrl": "shareUrl",
+  },
+  "fileList": Object {
+    "count": "count",
+    "items": Object {
+      "downloadUrl": "downloadUrl",
+      "fileId": "fileId",
+      "filename": "filename",
+      "id": "id",
+      "meta": "meta",
+      "shareUrl": "shareUrl",
+    },
+  },
+  "meta": "meta",
+  "number": "number",
+  "numberList": "numberList",
+  "relation": Object {
+    "_description": "_description",
+    "id": "id",
+    "nestedRelation": Object {
+      "_description": "_description",
+      "id": "id",
+    },
+    "nestedRelationList": Object {
+      "count": "count",
+      "items": Object {
+        "_description": "_description",
+        "id": "id",
+      },
+    },
+    "relation": Object {
+      "_description": "_description",
+      "id": "id",
+    },
+    "relationList": Object {
+      "count": "count",
+      "items": Object {
+        "_description": "_description",
+        "id": "id",
+      },
+    },
+    "scalar": "scalar",
+    "scalarList": "scalarList",
+  },
+  "relationList": Object {
+    "count": "count",
+    "items": Object {
+      "_description": "_description",
+      "id": "id",
+      "nestedRelation": Object {
+        "_description": "_description",
+        "id": "id",
+      },
+      "nestedRelationList": Object {
+        "count": "count",
+        "items": Object {
+          "_description": "_description",
+          "id": "id",
+        },
+      },
+      "relation": Object {
+        "_description": "_description",
+        "id": "id",
+      },
+      "relationList": Object {
+        "count": "count",
+        "items": Object {
+          "_description": "_description",
+          "id": "id",
+        },
+      },
+      "scalar": "scalar",
+      "scalarList": "scalarList",
+    },
+  },
+  "scalar": "scalar",
+  "scalarList": "scalarList",
+}
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate query string  1`] = `
+"
+  query DataViewerTableTableSchemaContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
+    tableContent: tableSchemasList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        number
+        numberList
+        relation {
+          id
+          scalarList
+          relationList {
+            items {
+              id
+              _description
+            }
+            count
+          }
+          _description
+        }
+        relationList {
+          items {
+            id
+            scalar
+            scalarList
+            relation {
+              id
+              _description
+            }
+            relationList {
+              items {
+                id
+                _description
+              }
+              count
+            }
+            nestedRelation {
+              id
+              _description
+            }
+            nestedRelationList {
+              items {
+                id
+                _description
+              }
+              count
+            }
+            _description
+          }
+          count
+        }
+        _description
+      }
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema  1`] = `
+"
+  query DataViewerCommonsRow($id: ID!) {
+    common(id: $id) {
+      field1
+      field2
+      field3
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
+"
+  query DataViewerFilesRow($id: ID!) {
+    file(id: $id) {
+      file {
+        id
+        fileId
+        filename
+        downloadUrl
+        shareUrl
+        meta
+      }
+      fileList {
+        items {
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
+"
+  query DataViewerRelationRow($id: ID!) {
+    relation(id: $id) {
+      field1 {
+        id
+        _description
+      }
+      field2
+      field3
+      field4 {
+        items {
+          id
+          _description
+        }
+        count
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with smart fields 1`] = `
+"
+  query DataViewerSmartFieldsRow($id: ID!) {
+    smartField(id: $id) {
+      id
+      createdAt
+      updatedAt
+      createdBy {
+        id
+        _description
+      }
+      phone {
+        code
+        number
+      }
+      address {
+        street1
+        street2
+        zip
+        city
+        state
+      }
+      phoneList {
+        code
+        number
+      }
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate table columns  by table schema should generate table columns list  1`] = `
+Array [
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "isList": false,
+    },
+    "name": "number",
+    "title": "Number",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "isList": true,
+    },
+    "name": "numberList",
+    "title": "NumberList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "SMART",
+      "isList": false,
+    },
+    "name": "address",
+    "title": "Address",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "SMART",
+      "isList": true,
+    },
+    "name": "addresses",
+    "title": "Addresses",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "TEXT",
+      "isList": false,
+    },
+    "name": "scalar",
+    "title": "Scalar",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "TEXT",
+      "isList": true,
+    },
+    "name": "scalarList",
+    "title": "ScalarList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "TEXT",
+      "isList": false,
+    },
+    "name": "relation.scalar",
+    "title": "Scalar",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "TEXT",
+      "isList": true,
+    },
+    "name": "relation.scalarList",
+    "title": "ScalarList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": false,
+    },
+    "name": "relation.relation",
+    "title": "Relation",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": true,
+    },
+    "name": "relation.relationList",
+    "title": "RelationList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": false,
+    },
+    "name": "relation.nestedRelation",
+    "title": "NestedRelation",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": true,
+    },
+    "name": "relation.nestedRelationList",
+    "title": "NestedRelationList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": true,
+    },
+    "name": "relationList",
+    "title": "RelationList",
+  },
+]
+`;
+
+exports[`As a developer, I can generate table columns  by table schema should generate table columns list with included columns 1`] = `
+Array [
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "isList": false,
+    },
+    "name": "number",
+    "title": "Number",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": true,
+    },
+    "name": "relation.relationList",
+    "title": "RelationList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "isList": true,
+    },
+    "name": "relationList",
+    "title": "RelationList",
+  },
+]
+`;
