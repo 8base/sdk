@@ -62,10 +62,13 @@ describe('should call onChange when file is uploaded', async () => {
     expect(mock_client.query).toHaveBeenCalledTimes(1);
     expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+    const originalFile = new File([''], 'filename');
+
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: false });
+    expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
   it('for single file input with public modifier', async() => {
@@ -85,10 +88,13 @@ describe('should call onChange when file is uploaded', async () => {
     expect(mock_client.query).toHaveBeenCalledTimes(1);
     expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+    const originalFile = new File([''], 'filename');
+
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: true });
+    expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
   it('for multiple files input', async() => {
@@ -108,11 +114,15 @@ describe('should call onChange when file is uploaded', async () => {
     expect(mock_client.query).toHaveBeenCalledTimes(1);
     expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
 
+    const originalFile1 = new File([''], 'filename1');
+    const originalFile2 = new File([''], 'filename2');
+    const originalFile3 = new File([''], 'filename3');
+
     await mock_onUploadDone({
       filesUploaded: [
-        { handle: 'handle1', filename: 'filename1' },
-        { handle: 'handle2', filename: 'filename2' },
-        { handle: 'handle3', filename: 'filename3' },
+        { handle: 'handle1', filename: 'filename1', originalFile: originalFile1 },
+        { handle: 'handle2', filename: 'filename2', originalFile: originalFile2 },
+        { handle: 'handle3', filename: 'filename3', originalFile: originalFile3 },
       ],
     });
 
@@ -122,6 +132,13 @@ describe('should call onChange when file is uploaded', async () => {
         { fileId: 'handle1', filename: 'filename1', public: false },
         { fileId: 'handle2', filename: 'filename2', public: false },
         { fileId: 'handle3', filename: 'filename3', public: false },
+      ],
+    );
+    expect(onChange.mock.calls[0][1]).toEqual(
+      [
+        originalFile1,
+        originalFile2,
+        originalFile3,
       ],
     );
   });
