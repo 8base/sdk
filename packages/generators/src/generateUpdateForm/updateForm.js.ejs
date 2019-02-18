@@ -1,0 +1,96 @@
+import React from 'react';
+import * as R from 'ramda';
+import { Form, Field } from '@8base/forms';
+import { Dialog, Grid, Button, InputField, SelectField, ModalContext } from '@8base/boost';
+import { graphql, Query } from 'react-apollo';
+
+
+const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
+  mutation <%= changeCase.pascal(entityName)%>Update($data: <%= SchemaNameGenerator.getUpdateInputName(tableName)%>!) {
+    <%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>(data: $data) {
+      id
+    }
+  }
+`;
+
+<%- chunks.fieldsQueries({
+    fields: fields,
+    SchemaNameGenerator: SchemaNameGenerator,
+    changeCase: changeCase,
+}); %>
+
+<%- chunks.fieldsFileInput() %>
+
+const ehnhancer = graphql( <%= changeCase.upper(entityName)%>_UPDATE_MUTATION, {
+  name: '<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>',
+  options: {
+    refetchQueries: ['<%= SchemaNameGenerator.getTableListFieldName(tableName)%>'],
+    context: {
+      ['TOAST_SUCCESS_MESSAGE']: '<%= changeCase.pascal(entityName)%> successfuly updated',
+    },
+  },
+});
+
+
+const <%= changeCase.pascal(entityName)%>EditDialog = (
+  class ListingEditDialog extends React.PureComponent {
+    static contextType = ModalContext;
+
+    createOnSubmit = R.memoizeWith(R.identity, id => async data => {
+      await this.props.listingUpdate({ variables: { data: { ...data, id } } });
+
+      this.context.closeModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID');
+    });
+
+    onClose = () => {
+      this.context.closeModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID');
+    };
+
+    renderFormContent = ({ handleSubmit, invalid, submitting, pristine }) => (
+      <form onSubmit={handleSubmit}>
+        <Dialog.Header title="Edit <%= changeCase.pascal(entityName)%>" onClose={this.onClose} />
+        <Dialog.Body scrollable>
+          <Grid.Layout gap="sm" stretch>
+            <%- chunks.fieldsInputsList({ 
+              fields: fields, 
+              changeCase: changeCase,
+              pluralize: pluralize,
+              SchemaNameGenerator: SchemaNameGenerator,
+            }); %>
+          </Grid.Layout>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Button color="neutral" variant="outlined" disabled={submitting} onClick={this.onClose}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit" disabled={pristine || invalid} loading={submitting}>
+            Update Listing
+          </Button>
+        </Dialog.Footer>
+      </form>
+    );
+
+    renderForm = ({ args }) => {
+      return (
+        <Form
+          type="UPDATE"
+          tableSchemaName="<%= tableName%>"
+          onSubmit={this.createOnSubmit(args.initialValues.id)}
+          initialValues={args.initialValues}
+        >
+          {this.renderFormContent}
+        </Form>
+      );
+    };
+
+    render() {
+      return (
+        <Dialog id={'<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID'} size="sm">
+          {this.renderForm}
+        </Dialog>
+      );
+    }
+  }
+);
+
+export { <%= changeCase.pascal(entityName)%>EditDialog };

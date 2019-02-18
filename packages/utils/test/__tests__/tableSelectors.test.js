@@ -1,5 +1,5 @@
 // @flow
-import * as selectors from '../../src/tableSelectors';
+import * as selectors from '../../src/selectors/tableSelectors';
 
 const tableState = {
   id: 't-1',

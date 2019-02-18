@@ -5,9 +5,9 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { SchemaNameGenerator } from '@8base/sdk';
 import type { TableSchema } from '@8base/utils';
+import { createTableRowQueryTag } from '@8base/utils';
 
 import type { QueryResult } from './types';
-import { createTableRowQueryTag } from './queryTableGenerator';
 
 type RecordDataProps = {
   tableName?: string,
@@ -29,7 +29,7 @@ export class RecordData extends Component<RecordDataProps> {
     return (
       <Query
         { ...rest }
-        query={ gql(createTableRowQueryTag(tableMeta)) }
+        query={ gql(createTableRowQueryTag([tableMeta], tableMeta.name)) }
         variables={{ id: recordId }}
       >
         { ({ data, ...rest }) => children({

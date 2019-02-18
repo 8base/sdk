@@ -5,7 +5,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { TableConsumer } from '@8base/table-schema-provider';
 
-import { createTableFilterGraphqlTag } from './queryTableGenerator';
+import { createTableFilterGraphqlTag } from '@8base/utils';
 
 type RecordsListProps = {
   tableName?: string,
@@ -65,7 +65,7 @@ export class RecordsList extends Component<RecordsListProps> {
         { (tableMetaResult) => (
           <Query
             { ...rest }
-            query={ gql(createTableFilterGraphqlTag(tableMetaResult)) }
+            query={ gql(createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.name)) }
           >
             { (recordsListResult) => children({
               ...recordsListResult,

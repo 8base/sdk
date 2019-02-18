@@ -1,11 +1,9 @@
-// @flow
-
 import * as R from 'ramda';
 import { createSelector, type Selector } from 'reselect';
-import { FIELD_TYPE } from '@8base/utils';
-import type { TableSchema, FieldSchema } from '@8base/utils';
+import { FIELD_TYPE } from '../constants';
+import type { TableSchema, FieldSchema } from '../types';
 
-export const getTable = (table?: TableSchema): TableSchema | void => table;
+export const getTable = (table?: TableSchema) => table;
 
 export const getFieldById: Selector<TableSchema, string, $Shape<FieldSchema>> =
   ({ fields } : TableSchema, fieldId: string) =>
@@ -18,6 +16,7 @@ export const getFieldTypeById = createSelector(
   getFieldById,
   R.prop('fieldType'),
 );
+
 
 export const isRelationField = createSelector(
   getFieldTypeById,
@@ -50,12 +49,7 @@ export const getFieldNameById = createSelector(
 );
 
 export const hasNonMetaFields = R.pipe(
-  R.prop('fields'),
+  R.propOr([], 'fields'),
+  // $FlowIgnore
   R.any(R.propEq('isMeta', false)),
 );
-
-export const isSettingsRefTable = createSelector(
-  getFieldById,
-  R.pathEq(['relation', 'refTable', 'name'], 'Settings'),
-);
-

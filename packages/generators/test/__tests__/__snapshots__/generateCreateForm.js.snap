@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should generate create form by the table name 1`] = `
+"import React from 'react';
+import { Form, Field } from '@8base/forms';
+import { Dialog, Grid, Button, Form, Row, Text, SelectField, InputField, CheckboxField, DateField, ModalContext } from '@8base/boost';
+import { FileInput } from '@8base/file-input';
+import { graphql } from 'react-apollo';
+
+
+const PROPERTY_CREATE_MUTATION = gql\`
+  mutation PropertyCreate($data: PropertyCreateInput!) {
+    propertyCreate(data: $data) {
+      id
+    }
+  }
+\`;
+
+const LISTINGS_LIST_QUERY = gql\`
+  query ListingsListList {
+    listingsList {
+      items {
+        id
+        _description
+      }
+    }
+  }
+\`;
+
+
+
+const getRelationOptions = (items = []) =>
+  items.map(item => ({ value: item.id, label: item._description }));
+
+
+const FileInputField = ({ input, meta, maxFiles, label, ...rest }) => (
+  <Form.Field label={label} input={input} meta={meta}>
+    <FileInput onChange={input.onChange} value={input.value} maxFiles={maxFiles} public={rest.public}>
+      {({ pick, value }) => (
+        <Row stretch alignItems=\\"center\\">
+          <Button type=\\"button\\" onClick={pick} stretch color=\\"neutral\\">
+            Choose Files
+          </Button>
+          <Text size=\\"sm\\" style={{ whiteSpace: 'nowrap' }}>
+            {value ? (Array.isArray(value) ? \`\${value.length} files selected\` : value.filename) : 'No files selected'}
+          </Text>
+        </Row>
+      )}
+    </FileInput>
+  </Form.Field>
+);
+
+
+
+const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
+  name: 'propertyCreate',
+  options: {
+    refetchQueries: ['propertiesList'],
+    context: {
+      ['TOAST_SUCCESS_MESSAGE']: 'Property successfuly created',
+    },
+  },
+});
+
+const PropertyCreateDialog = enhancer(
+  class PropertyCreateDialog extends React.PureComponent {
+    static contextType = ModalContext;
+
+    onSubmit = async data => {
+      await this.props.propertyCreate({ variables: { data } });
+
+      this.context.closeModal('PROPERTY_CREATE_DIALOG_ID');
+    };
+
+    onClose = () => {
+      this.context.closeModal('PROPERTY_CREATE_DIALOG_ID');
+    };
+
+    renderFormContent = ({ handleSubmit, invalid, submitting, pristine }) => (
+      <form onSubmit={handleSubmit}>
+        <Dialog.Header title=\\"New Property\\" onClose={this.onClose} />
+        <Dialog.Body scrollable>
+          <Grid.Layout gap=\\"sm\\" stretch>
+            
+              <Grid.Box>
+                <Field name=\\"pictures\\" label=\\"Pictures\\" type=\\"text\\" component={FileInputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"bedrooms\\" label=\\"Bedrooms\\" type=\\"number\\" component={InputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"title\\" label=\\"title\\" type=\\"text\\" component={InputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"description\\" label=\\"Description\\" type=\\"text\\" component={InputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"sqFootage\\" label=\\"Sq Footage\\" type=\\"number\\" component={InputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"bathrooms\\" label=\\"Bathrooms\\" type=\\"number\\" component={InputField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"garage\\" label=\\"Garage\\" component={CheckboxField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Field name=\\"pool\\" label=\\"Pool\\" component={CheckboxField} />
+              </Grid.Box>
+            
+              <Grid.Box>
+                <Query query={LISTINGS_LIST_QUERY}>
+                    {({ data, loading }) => (
+                      <Field
+                        name=\\"listings\\" 
+                        label=\\"Listings\\"
+                        placeholder=\\"Select a listing\\"
+                        component={SelectField}
+                        loading={loading}
+                        options={
+                          loading
+                            ? []
+                            : getRelationOptions(data.listingsList.items)
+                        }
+                        stretch
+                      />
+                    )}
+                  </Query>
+              </Grid.Box>
+            
+          </Grid.Layout>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Button color=\\"neutral\\" variant=\\"outlined\\" disabled={submitting} onClick={this.onClose}>
+            Cancel
+          </Button>
+          <Button color=\\"primary\\" type=\\"submit\\" loading={submitting}>
+            Create Property
+          </Button>
+        </Dialog.Footer>
+      </form>
+    );
+
+    render() {
+      return (
+        <Dialog id={PROPERTY_CREATE_DIALOG_ID} size=\\"sm\\">
+          <Form 
+            type=\\"CREATE\\" 
+            tableSchemaName=\\"Properties\\" 
+            onSubmit={this.onSubmit}
+          >
+            {this.renderFormContent}
+          </Form>
+        </Dialog>
+      );
+    }
+  }
+);
+
+export { PropertyCreateDialog };
+"
+`;

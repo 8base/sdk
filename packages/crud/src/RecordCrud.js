@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import type { TableSchema } from '@8base/utils';
-
 import type { QueryResult } from './types';
 import {
   createTableRowCreateTag,
   createTableRowUpdateTag,
   createTableRowDeleteTag,
-} from './queryTableGenerator';
+} from '@8base/utils';
 
 type CrudModes = 'create' | 'update' | 'delete'
 
@@ -25,9 +24,9 @@ type RecordCrudProps = {
 
 const createRecordTag = (tableMeta: *, mode: CrudModes) => {
   switch (mode) {
-    case 'create': return createTableRowCreateTag(tableMeta);
-    case 'update': return createTableRowUpdateTag(tableMeta);
-    case 'delete': return createTableRowDeleteTag(tableMeta);
+    case 'create': return createTableRowCreateTag([tableMeta], tableMeta.name);
+    case 'update': return createTableRowUpdateTag([tableMeta], tableMeta.name);
+    case 'delete': return createTableRowDeleteTag([tableMeta], tableMeta.name);
     default: return null;
   }
 };
