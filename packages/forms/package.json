@@ -21,7 +21,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "prop-types": "^15.6.1",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.1",
     "react": "^16.4.1",
     "react-apollo": "^2.4.0",
     "react-dom": "^16.4.1",

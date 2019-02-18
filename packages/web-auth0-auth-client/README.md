@@ -24,6 +24,7 @@ Create instacne of the web auth0 auth client.
 
 ## Usage
 
+### Withouth authentication profile
 ```js
 import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
@@ -33,7 +34,6 @@ import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
     clientId: 'client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     logoutRedirectUri: `${window.location.origin}/auth`,
-    workspaceId: 'workspace-id',
   });
 
   const renderAuth = (auth) => {
@@ -77,3 +77,49 @@ import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
     ...  
   </AuthProvider>
 ```
+
+### With custom authentication profile
+```js
+
+...
+
+import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
+
+  const authClient = new WebAuth0AuthClient({
+    domain: 'domain',
+    clientId: 'client-id',
+    redirectUri: `${window.location.origin}/auth/callback`,
+    logoutRedirectUri: `${window.location.origin}/auth`,
+    workspaceId: 'workspace-id',
+    profile: {
+      id: 'profile-id',
+    },
+  });
+
+...
+
+```
+
+### With default authentication profile
+```js
+
+...
+
+import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
+
+  const authClient = new WebAuth0AuthClient({
+    domain: 'domain',
+    clientId: 'client-id',
+    redirectUri: `${window.location.origin}/auth/callback`,
+    logoutRedirectUri: `${window.location.origin}/auth`,
+    workspaceId: 'workspace-id',
+    profile: {
+      id: 'profile-id',
+      isDefault: true,
+    },
+  });
+
+...
+
+```
+

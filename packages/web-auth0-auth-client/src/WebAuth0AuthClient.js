@@ -1,6 +1,8 @@
 // @flow
 import auth0 from 'auth0-js';
 import * as R from 'ramda';
+import { throwIfMissingRequiredOption } from '@8base/utils';
+
 import type {
   AuthState,
   AuthData,
@@ -69,6 +71,10 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
   profileId: string | void;
 
   constructor(options: WebAuth0AuthClientOptions) {
+    throwIfMissingRequiredOption([
+      'domain', 'clientId', 'redirectUri', 'logoutRedirectUri',
+    ], options);
+
     const {
       domain,
       clientId,
@@ -78,24 +84,31 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
     } = options;
     let { redirectUri, logoutRedirectUri } = options;
 
-    if (profile && profile.isDefault) {
-      // add throw on profileId and workspaceId
-      redirectUri = get8baseRedirectUri(
-        redirectUri,
-        workspaceId,
-        apiEndpoint,
-      );
+    if (profile) {
+      throwIfMissingRequiredOption([
+        'workspaceId',
+        ['profile', 'id'],
+      ], options);
 
-      logoutRedirectUri = get8baseRedirectUri(
-        logoutRedirectUri,
-        workspaceId,
-        apiEndpoint,
-      );
+      this.workspaceId = workspaceId;
+      this.profileId = profile.id;
+
+      if (profile.isDefault && workspaceId) {
+        redirectUri = get8baseRedirectUri(
+          redirectUri,
+          workspaceId,
+          apiEndpoint,
+        );
+
+        logoutRedirectUri = get8baseRedirectUri(
+          logoutRedirectUri,
+          workspaceId,
+          apiEndpoint,
+        );
+      }
     }
 
     this.logoutRedirectUri = logoutRedirectUri;
-    this.workspaceId = workspaceId;
-    this.profileId = profile && profile.id;
     this.auth0 = new auth0.WebAuth({
       domain,
       clientID: clientId,
