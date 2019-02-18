@@ -13,6 +13,7 @@ const BROKERS_LIST_QUERY = gql\`
   query DataViewerTablePropertiesContent($filter: PropertyFilter, $orderBy: [PropertyOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: propertiesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         pictures {
           items {
             id
@@ -33,6 +34,7 @@ const BROKERS_LIST_QUERY = gql\`
         pool
         listings {
           items {
+            id
             documents {
               items {
                 id
@@ -47,6 +49,7 @@ const BROKERS_LIST_QUERY = gql\`
             status
             closingDate
             price
+            _description
           }
           count
         }

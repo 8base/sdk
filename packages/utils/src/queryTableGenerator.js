@@ -248,7 +248,8 @@ export const createQueryStringWithoutMetaFields =
 export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableName: string, config: * = {}) => `
   query DataViewerTable${upperFirst(tableName)}Content($filter: ${SchemaNameGenerator.getFilterInputTypeName(tableName)}, $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(tableName)}], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     ${TABLE_CONTENT_NAME}: ${SchemaNameGenerator.getTableListFieldName(tableName)}(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-      items {${createQueryString(tablesList, tableName, { ...config, prevSpaceCount: 6 })}
+      items {
+        id${createQueryString(tablesList, tableName, { ...config, prevSpaceCount: 6 })}
         _description
       }
       count

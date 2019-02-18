@@ -5,6 +5,7 @@ status=0
 (./bin/run.sh "api-client" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "apollo-links" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "forms" "test" "yarn test --verbose") || status=1
+(./bin/run.sh "generators" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "permissions-provider" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "utils" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "validate" "test" "yarn test --verbose") || status=1

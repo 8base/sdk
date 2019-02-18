@@ -222,6 +222,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         field1
         field2
         field3
@@ -237,6 +238,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   query DataViewerTableFilesContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         file {
           id
           fileId
@@ -268,6 +270,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         field1 {
           id
           _description
@@ -293,6 +296,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   query DataViewerTableSmartFieldsContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: smartFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         id
         createdAt
         updatedAt
@@ -429,6 +433,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   query DataViewerTableTableSchemaContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
     tableContent: tableSchemasList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
+        id
         number
         numberList
         relation {
