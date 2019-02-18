@@ -81,59 +81,60 @@ const PropertyCreateDialog = enhancer(
         <Dialog.Header title=\\"New Property\\" onClose={this.onClose} />
         <Dialog.Body scrollable>
           <Grid.Layout gap=\\"sm\\" stretch>
-            
-              <Grid.Box>
-                <Field name=\\"pictures\\" label=\\"Pictures\\" type=\\"text\\" component={FileInputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"bedrooms\\" label=\\"Bedrooms\\" type=\\"number\\" component={InputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"title\\" label=\\"title\\" type=\\"text\\" component={InputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"description\\" label=\\"Description\\" type=\\"text\\" component={InputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"sqFootage\\" label=\\"Sq Footage\\" type=\\"number\\" component={InputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"bathrooms\\" label=\\"Bathrooms\\" type=\\"number\\" component={InputField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"garage\\" label=\\"Garage\\" component={CheckboxField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Field name=\\"pool\\" label=\\"Pool\\" component={CheckboxField} />
-              </Grid.Box>
-            
-              <Grid.Box>
-                <Query query={LISTINGS_LIST_QUERY}>
-                    {({ data, loading }) => (
-                      <Field
-                        name=\\"listings\\" 
-                        label=\\"Listings\\"
-                        placeholder=\\"Select a listing\\"
-                        component={SelectField}
-                        loading={loading}
-                        options={
-                          loading
-                            ? []
-                            : getRelationOptions(data.listingsList.items)
-                        }
-                        stretch
-                      />
-                    )}
-                  </Query>
-              </Grid.Box>
-            
+                    
+          <Grid.Box>
+            <Field name=\\"pictures\\" label=\\"Pictures\\" type=\\"text\\" component={FileInputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"bedrooms\\" label=\\"Bedrooms\\" type=\\"number\\" component={InputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"title\\" label=\\"title\\" type=\\"text\\" component={InputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"description\\" label=\\"Description\\" type=\\"text\\" component={InputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"sqFootage\\" label=\\"Sq Footage\\" type=\\"number\\" component={InputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"bathrooms\\" label=\\"Bathrooms\\" type=\\"number\\" component={InputField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"garage\\" label=\\"Garage\\" component={CheckboxField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Field name=\\"pool\\" label=\\"Pool\\" component={CheckboxField} />
+          </Grid.Box>
+        
+          <Grid.Box>
+            <Query query={LISTINGS_LIST_QUERY}>
+                {({ data, loading }) => (
+                  <Field
+                    name=\\"listings\\" 
+                    label=\\"Listings\\"
+                    placeholder=\\"Select a listing\\"
+                    component={SelectField}
+                    loading={loading}
+                    options={
+                      loading
+                        ? []
+                        : getRelationOptions(data.listingsList.items)
+                    }
+                    stretch
+                  />
+                )}
+              </Query>
+          </Grid.Box>
+        
+
           </Grid.Layout>
         </Dialog.Body>
         <Dialog.Footer>
