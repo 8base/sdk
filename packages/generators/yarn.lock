@@ -28,14 +28,6 @@
     typed-graphql "^1.0.2"
     zen-observable "^0.6.0"
 
-"@8base/utils@^0.11.0":
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.11.3.tgz#89b8ed6f94ef81fb9bdf6a050a4280e0bac1af35"
-  integrity sha512-7wGJfi1eqUT34LUTOpDORhwsOQUwkHz2A7qnlyokEJ5aMUgn3KnXGImqna4Yn9/8ZtjSHt41WNqxNvwtpMnEqA==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    ramda "^0.25.0"
-
 "@babel/cli@^7.2.3":
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.2.3.tgz#1b262e42a3e959d28ab3d205ba2718e1923cfee6"
@@ -5208,11 +5200,6 @@ querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
-
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
 ramda@^0.26.1:
   version "0.26.1"

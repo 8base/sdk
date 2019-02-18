@@ -1,5 +1,5 @@
-// flow-typed signature: 762f69211a57db6e2c9e87d2050ce28d
-// flow-typed version: e8036a1607/ramda_v0.x.x/flow_>=v0.62.x
+// flow-typed signature: 39ce4846a62b88b72c4e6e20fa13fe8c
+// flow-typed version: 790e6eabe1/ramda_v0.26.x/flow_>=v0.76.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -10,6 +10,8 @@ type Transformer<A, B> = {
 };
 
 declare type $npm$ramda$Placeholder = { "@@functional/placeholder": true };
+
+declare opaque type $npm$ramda$Reduced<T>;
 
 declare module ramda {
   declare type UnaryFn<A, R> = (a: A) => R;
@@ -312,37 +314,52 @@ declare module ramda {
       args: [A, B, C, D, E, F, G, H, I]
     ) => () => R);
 
-  declare type Pipe = (<A, B, C, D, E, F, G>(
-    ab: UnaryFn<A, B>,
-    bc: UnaryFn<B, C>,
-    cd: UnaryFn<C, D>,
-    de: UnaryFn<D, E>,
-    ef: UnaryFn<E, F>,
-    fg: UnaryFn<F, G>,
-  ) => UnaryFn<A, G>) &
-    (<A, B, C, D, E, F>(
-      ab: UnaryFn<A, B>,
-      bc: UnaryFn<B, C>,
-      cd: UnaryFn<C, D>,
-      de: UnaryFn<D, E>,
-      ef: UnaryFn<E, F>,
-    ) => UnaryFn<A, F>) &
-    (<A, B, C, D, E>(
-      ab: UnaryFn<A, B>,
-      bc: UnaryFn<B, C>,
-      cd: UnaryFn<C, D>,
-      de: UnaryFn<D, E>,
-    ) => UnaryFn<A, E>) &
-    (<A, B, C, D>(
-      ab: UnaryFn<A, B>,
-      bc: UnaryFn<B, C>,
-      cd: UnaryFn<C, D>,
-    ) => UnaryFn<A, D>) &
-    (<A, B, C>(
-      ab: UnaryFn<A, B>,
-      bc: UnaryFn<B, C>,
-    ) => UnaryFn<A, C>) &
-    (<A, B>(ab: UnaryFn<A, B>) => UnaryFn<A, B>);
+  declare var pipe: {
+    <A, B, C, D, E, F, G>(ab: UnaryFn<A, B>, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): UnaryFn<A, G>,
+    <A0, A1, B, C, D, E, F, G>(ab: (A0, A1) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): (A0, A1) => G,
+    <A0, A1, A2, B, C, D, E, F, G>(ab: (A0, A1, A2) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): (A0, A1, A2) => G,
+    <A0, A1, A2, A3, B, C, D, E, F, G>(ab: (A0, A1, A2, A3) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): (A0, A1, A2, A3) => G,
+    <A0, A1, A2, A3, A4, B, C, D, E, F, G>(ab: (A0, A1, A2, A3, A4) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): (A0, A1, A2, A3, A4) => G,
+    <A0, A1, A2, A3, A4, A5, B, C, D, E, F, G>(ab: (A0, A1, A2, A3, A4, A5) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>, fg: UnaryFn<F, G>): (A0, A1, A2, A3, A4, A5) => G,
+
+    <A, B, C, D, E, F>(ab: UnaryFn<A, B>, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): UnaryFn<A, F>,
+    <A0, A1, B, C, D, E, F>(ab: (A0, A1) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): (A0, A1) => F,
+    <A0, A1, A2, B, C, D, E, F>(ab: (A0, A1, A2) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): (A0, A1, A2) => F,
+    <A0, A1, A2, A3, B, C, D, E, F>(ab: (A0, A1, A2, A3) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): (A0, A1, A2, A3) => F,
+    <A0, A1, A2, A3, A4, B, C, D, E, F>(ab: (A0, A1, A2, A3, A4) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): (A0, A1, A2, A3, A4) => F,
+    <A0, A1, A2, A3, A4, A5, B, C, D, E, F>(ab: (A0, A1, A2, A3, A4, A5) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>, ef: UnaryFn<E, F>): (A0, A1, A2, A3, A4, A5) => F,
+
+    <A, B, C, D, E>(ab: UnaryFn<A, B>, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): UnaryFn<A, E>,
+    <A0, A1, B, C, D, E>(ab: (A0, A1) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): (A0, A1) => E,
+    <A0, A1, A2, B, C, D, E>(ab: (A0, A1, A2) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): (A0, A1, A2) => E,
+    <A0, A1, A2, A3, B, C, D, E>(ab: (A0, A1, A2, A3) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): (A0, A1, A2, A3) => E,
+    <A0, A1, A2, A3, A4, B, C, D, E>(ab: (A0, A1, A2, A3, A4) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): (A0, A1, A2, A3, A4) => E,
+    <A0, A1, A2, A3, A4, A5, B, C, D, E>(ab: (A0, A1, A2, A3, A4, A5) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>, de: UnaryFn<D, E>): (A0, A1, A2, A3, A4, A5) => E,
+
+    <A, B, C, D>(ab: UnaryFn<A, B>, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): UnaryFn<A, D>,
+    <A0, A1, B, C, D>(ab: (A0, A1) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): (A0, A1) => D,
+    <A0, A1, A2, B, C, D>(ab: (A0, A1, A2) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): (A0, A1, A2) => D,
+    <A0, A1, A2, A3, B, C, D>(ab: (A0, A1, A2, A3) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): (A0, A1, A2, A3) => D,
+    <A0, A1, A2, A3, A4, B, C, D>(ab: (A0, A1, A2, A3, A4) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): (A0, A1, A2, A3, A4) => D,
+    <A0, A1, A2, A3, A4, A5, B, C, D>(ab: (A0, A1, A2, A3, A4, A5) => B, bc: UnaryFn<B, C>, cd: UnaryFn<C, D>): (A0, A1, A2, A3, A4, A5) => D,
+
+    <A, B, C>(ab: UnaryFn<A, B>, bc: UnaryFn<B, C>): UnaryFn<A, C>,
+    <A0, A1, B, C>(ab: (A0, A1) => B, bc: UnaryFn<B, C>): (A0, A1) => C,
+    <A0, A1, A2, B, C>(ab: (A0, A1, A2) => B, bc: UnaryFn<B, C>): (A0, A1, A2) => C,
+    <A0, A1, A2, A3, B, C>(ab: (A0, A1, A2, A3) => B, bc: UnaryFn<B, C>): (A0, A1, A2, A3) => C,
+    <A0, A1, A2, A3, A4, B, C>(ab: (A0, A1, A2, A3, A4) => B, bc: UnaryFn<B, C>): (A0, A1, A2, A3, A4) => C,
+    <A0, A1, A2, A3, A4, A5, B, C>(ab: (A0, A1, A2, A3, A4, A5) => B, bc: UnaryFn<B, C>): (A0, A1, A2, A3, A4, A5) => C,
+
+
+    <A, B>(ab: UnaryFn<A, B>): UnaryFn<A, B>,
+    <A0, A1, B>(ab: (A0, A1) => B): (A0, A1) => B,
+    <A0, A1, A2, B>(ab: (A0, A1, A2) => B): (A0, A1, A2) => B,
+    <A0, A1, A2, A3, B>(ab: (A0, A1, A2, A3) => B): (A0, A1, A2, A3) => B,
+    <A0, A1, A2, A3, A4, B>(ab: (A0, A1, A2, A3, A4) => B): (A0, A1, A2, A3, A4) => B,
+    <A0, A1, A2, A3, A4, A5, B>(ab: (A0, A1, A2, A3, A4, A5) => B): (A0, A1, A2, A3, A4, A5) => B,
+  };
+
+  declare type Pipe = typeof pipe;
 
   declare type PipeP = (<A, B, C, D, E, F, G>(
     ab: UnaryPromiseFn<A, B>,
@@ -410,16 +427,21 @@ declare module ramda {
     ) => UnaryFn<A, C>) &
     (<A, B>(ab: UnaryFn<A, B>) => UnaryFn<A, B>);
 
-  declare type Filter = (<K, V, T: Array<V> | { [key: K]: V }>(
-    fn: UnaryPredicateFn<V>,
-    xs: T
-  ) => T) &
-    (<K, V, T: Array<V> | { [key: K]: V }>(
-      fn: UnaryPredicateFn<V>
-    ) => (xs: T) => T);
+  // This kind of filter allows us to do type refinement on the result, but we
+  // still need Filter so that non-refining predicates still pass a type check.
+  declare type RefineFilter =
+    & (<K, V, P: $Pred<1>, T: Array<V> | $ReadOnlyArray<V>> (fn: P, xs: T) => Array<$Refine<V, P, 1>>)
+    & (<K, V, P: $Pred<1>, T: Array<V> | $ReadOnlyArray<V>> (fn: P) => (xs: T) => Array<$Refine<V, P, 1>>);
 
-  declare class Monad<T> {
-    chain: Function;
+  declare type Filter =
+    & (<K, V, T: $ReadOnlyArray<V> | { +[key: K]: V }>  (fn: UnaryPredicateFn<V>, xs: T) => T)
+    & (<K, V, T: { [key: K]: V } | Array<V>>   (fn: UnaryPredicateFn<V>, xs: T) => T)
+
+    & (<K, V, T: $ReadOnlyArray<V> | { +[key: K]: V }>  (fn: UnaryPredicateFn<V>) =>(xs: T) => T)
+    & (<K, V, T: Array<V> | { [key: K]: V }>   (fn: UnaryPredicateFn<V>) =>(xs: T) => T)
+
+  declare interface Monad<A> {
+    chain<B>(f: A => Monad<B>): Monad<B>;
   }
 
   declare class Semigroup<T> {}
@@ -450,7 +472,7 @@ declare module ramda {
    */
 
   declare var compose: Compose;
-  declare var pipe: Pipe;
+  declare var pipeK: PipeK;
   declare var pipeP: PipeP;
   declare var curry: Curry;
   declare function curryN(
@@ -474,7 +496,15 @@ declare module ramda {
   declare var sum: UnaryFn<Array<number>, number>;
 
   // Filter
-  declare var filter: Filter;
+  // To refine with filter, be sure to import the RefineFilter type, and cast
+  // filter to a RefineFilter.
+  // ex:
+  // import { type RefineFilter, filter } from 'ramda'
+  // const notNull = (x): bool %checks => x != null
+  // const ns: Array<number> = (filter: RefineFilter)(notNull, [1, 2, null])
+  declare var filter: RefineFilter & Filter;
+  // reject doesn't get RefineFilter since it performs the opposite work of
+  // filter, and we don't have a kind of $NotPred type.
   declare var reject: Filter;
 
   // *String
@@ -510,22 +540,21 @@ declare module ramda {
   declare function is<T>(t: T, v: any): boolean;
   declare var propIs: CurriedFunction3<any, string, Object, boolean>;
   declare function type(x: ?any): string;
-  declare function isArrayLike(x: any): boolean;
 
   declare function isNil(x: mixed): boolean %checks(x === undefined ||
     x === null);
 
   // *List
   declare function adjust<T>(
-    fn: (a: T) => T,
-  ): (index: number) => (src: Array<T>) => Array<T>;
-  declare function adjust<T>(
-    fn: (a: T) => T,
     index: number,
+  ): (fn: (a: T) => T) => (src: Array<T>) => Array<T>;
+  declare function adjust<T>(
+    index: number,
+    fn: (a: T) => T,
   ): (src: Array<T>) => Array<T>;
   declare function adjust<T>(
-    fn: (a: T) => T,
     index: number,
+    fn: (a: T) => T,
     src: Array<T>
   ): Array<T>;
 
@@ -554,13 +583,21 @@ declare module ramda {
     x: E,
   ): (xs: Array<E>) => Array<E>;
 
-  declare function concat<V, T: Array<V> | string>(x: T, y: T): T;
-  declare function concat<V, T: Array<V> | string>(x: T): (y: T) => T;
+  declare function chain<A, B>(f: (x: A) => B[], xs: A[]): B[]
+  declare function chain<A, B>(f: (x: A) => B[]): (xs: A[]) => B[]
 
-  declare function contains<E, T: Array<E> | string>(x: E, xs: T): boolean;
-  declare function contains<E, T: Array<E> | string>(
-    x: E,
-  ): (xs: T) => boolean;
+  declare function concat<V, T: Array<V>>(x: T, y: T): T;
+  declare function concat<V, T: Array<V>>(x: T): (y: T) => T;
+
+  declare function concat(x: string, y: string): string;
+  declare function concat(x: string): (y: string) => string;
+
+  declare type Includes =
+  (<A, T: Array<A> | string>(a: A) => (b: T) => boolean) &
+  (<A, T: Array<A> | string>(a: A, b: T) => boolean);
+
+  declare var contains: Includes;
+  declare var includes: Includes;
 
   declare function drop<V, T: Array<V> | string>(
     n: number,
@@ -729,19 +766,22 @@ declare module ramda {
     x: E,
   ): (xs: Array<E>) => number;
 
-  declare function map<T, R>(fn: (x: T) => R, xs: Array<T>): Array<R>;
-  declare function map<T, R, S: { map: Function }>(fn: (x: T) => R, xs: S): S;
-  declare function map<T, R>(
-    fn: (x: T) => R,
-  ): ((xs: { [key: string]: T }) => { [key: string]: R }) &
-    ((xs: Array<T>) => Array<R>);
-  declare function map<T, R, S: { map: Function }>(
-    fn: (x: T) => R,
-  ): ((xs: S) => S) & ((xs: S) => S);
-  declare function map<T, R>(
-    fn: (x: T) => R,
-    xs: { [key: string]: T }
-  ): { [key: string]: R };
+  declare var map: {
+    <T, R, R, FN: (x: T) => R, SR, S: { +map: FN => SR }>(fn: FN, xs: S): SR,
+
+    <T, R, FN: (x: T) => R>(fn: FN):
+      (<SR, S: { +map: FN => SR }>(xs: S) => SR) &
+      ((xs: { [key: string]: T }) => { [key: string]: R }) &
+      ((xs: { +[key: string]: T }) => { +[key: string]: R }) &
+      ((xs: Array<T>) => Array<R>) &
+      ((xs: $ReadOnlyArray<T>) => $ReadOnlyArray<R>),
+
+    <T, R>(fn: (x: T) => R, xs: Array<T>): Array<R>,
+    <T, R>(fn: (x: T) => R, xs: $ReadOnlyArray<T>): $ReadOnlyArray<R>,
+    <T, R>(fn: (x: T) => R, xs: { [key: string]: T }): { [key: string]: R },
+    <T, R>(fn: (x: T) => R, xs: { +[key: string]: T }): { +[key: string]: R }
+  };
+
 
   declare type AccumIterator<A, B, R> = (acc: R, x: A) => [R, B];
   declare function mapAccum<A, B, R>(
@@ -790,6 +830,8 @@ declare module ramda {
   >(k: K): (xs: T) => Array<V>;
 
   declare var range: CurriedFunction2<number, number, Array<number>>;
+
+  declare function reduced<T>(x: T | $npm$ramda$Reduced<T>): $npm$ramda$Reduced<T>;
 
   declare function remove<T>(
     from: number,
@@ -920,20 +962,20 @@ declare module ramda {
 
   declare function init<T, V: Array<T> | string>(xs: V): V;
 
-  declare function length<T>(xs: Array<T>): number;
+  declare function length<T>(xs: Array<T> | string | {length: number}): number;
 
   declare function reverse<T, V: Array<T> | string>(xs: V): V;
 
   declare type Reduce = (<A, B>(
-    fn: (acc: A, elm: B) => A
+    fn: (acc: A, elm: B) => $npm$ramda$Reduced<A> | A
   ) => ((init: A) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
     ((init: A, xs: Array<B> | $ReadOnlyArray<B>) => A)) &
     (<A, B>(
-      fn: (acc: A, elm: B) => A,
+      fn: (acc: A, elm: B) => $npm$ramda$Reduced<A> | A,
       init: A
     ) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
     (<A, B>(
-      fn: (acc: A, elm: B) => A,
+      fn: (acc: A, elm: B) => $npm$ramda$Reduced<A> | A,
       init: A,
       xs: Array<B> | $ReadOnlyArray<B>
     ) => A);
@@ -1101,15 +1143,15 @@ declare module ramda {
     (<T>(prop: number, val: mixed, obj: Array<*>) => boolean);
   declare var propEq: PropEq;
 
-  declare function pathEq(
-    path: Array<string>,
-  ): ((val: any, o: Object) => boolean) &
-    ((val: any) => (o: Object) => boolean);
-  declare function pathEq(
-    path: Array<string>,
-    val: any,
+  declare function pathEq<T: string | number>(
+    path: Array<T>,
+  ): ((val: mixed) => (o: Object) => boolean) &
+    ((val: mixed, o: Object) => boolean);
+  declare function pathEq<T: string | number>(
+    path: Array<T>,
+    val: mixed,
   ): (o: Object) => boolean;
-  declare function pathEq(path: Array<string>, val: any, o: Object): boolean;
+  declare function pathEq<T: string | number>(path: Array<T>, val: mixed, o: Object): boolean;
 
   declare function clamp<T: number | string | Date>(
     min: T,
@@ -1178,20 +1220,6 @@ declare module ramda {
 
   declare function intersection<T>(x: Array<T>, y: Array<T>): Array<T>;
   declare function intersection<T>(x: Array<T>): (y: Array<T>) => Array<T>;
-
-  declare function intersectionWith<T>(
-    fn: BinaryPredicateFn<T>,
-  ): ((x: Array<T>, y: Array<T>) => Array<T>) &
-    ((x: Array<T>) => (y: Array<T>) => Array<T>);
-  declare function intersectionWith<T>(
-    fn: BinaryPredicateFn<T>,
-    x: Array<T>,
-  ): (y: Array<T>) => Array<T>;
-  declare function intersectionWith<T>(
-    fn: BinaryPredicateFn<T>,
-    x: Array<T>,
-    y: Array<T>
-  ): Array<T>;
 
   declare function lt<T>(x: T): (y: T) => boolean;
   declare function lt<T>(x: T, y: T): boolean;
@@ -1264,37 +1292,37 @@ declare module ramda {
   ): Array<T>;
 
   // *Object
-  declare function assoc<T, S>(
-    key: string,
-    ...args: Array<void>
-  ): ((val: T) => (src: S) => { [k: string]: T }) &
-    ((val: T, src: S) => { [k: string]: T } & S);
-  declare function assoc<T, S>(
-    key: string,
-    val: T,
-    ...args: Array<void>
-  ): (src: S) => { [k: string]: T } & S;
-  declare function assoc<T, S>(
-    key: string,
-    val: T,
-    src: S
-  ): { [k: string]: T } & S;
+  declare var assoc: {
+    <T, S>(
+      key: string,
+      ...args: Array<void>
+    ):
+      & ((val: T) => (src: S) => ({ [k: string]: T }))
+      & ((val: T, src: S) => ({ [k: string]: T } & S)),
+    <T, S>(
+      key: string,
+      val: T,
+      ...args: Array<void>
+    ): (src: S) => ({ [k: string]: T } & S),
+    <T, S: Object, K: $Subtype<$Keys<S>>> (key: K, val: T, src: S):      ({ [k: string]: T } & S),
+    <T, S: Object>                        (key: string, val: T, src: S): ({ [k: string]: T, ...$Exact<S> })
+  };
 
-  declare function assocPath<T, S>(
-    key: Array<string>,
+  declare function assocPath<T: string | number, S, V>(
+    key: Array<T>,
     ...args: Array<void>
-  ): ((val: T) => (src: S) => { [k: string]: T }) &
-    ((val: T) => (src: S) => { [k: string]: T } & S);
-  declare function assocPath<T, S>(
-    key: Array<string>,
-    val: T,
+  ): ((val: V) => (src: S) => { [k: string]: V }) &
+    ((val: V) => (src: S) => { [k: string]: V } & S);
+  declare function assocPath<T: string | number, S, V>(
+    key: Array<T>,
+    val: V,
     ...args: Array<void>
-  ): (src: S) => { [k: string]: T } & S;
-  declare function assocPath<T, S>(
-    key: Array<string>,
-    val: T,
+  ): (src: S) => { [k: string]: V } & S;
+  declare function assocPath<T: string | number, S, V>(
+    key: Array<T>,
+    val: V,
     src: S
-  ): { [k: string]: T } & S;
+  ): { [k: string]: V } & S;
 
   declare function clone<T>(src: T): $Shape<T>;
 
@@ -1307,17 +1335,17 @@ declare module ramda {
     src: { [k: string]: T }
   ): { [k: string]: T };
 
-  declare function dissocPath<T>(
-    key: Array<string>,
+  declare function dissocPath<T: string | number, U>(
+    key: Array<T>,
     ...args: Array<void>
-  ): (src: { [k: string]: T }) => { [k: string]: T };
-  declare function dissocPath<T>(
-    key: Array<string>,
-    src: { [k: string]: T }
-  ): { [k: string]: T };
+  ): (src: { [k: string]: U }) => { [k: string]: U };
+  declare function dissocPath<T: string | number, U>(
+    key: Array<T>,
+    src: { [k: string]: U }
+  ): { [k: string]: U };
 
-  declare function evolve<A: Object>(NestedObject<Function>, A): A;
   declare function evolve<A: Object>(NestedObject<Function>): A => A;
+  declare function evolve<A: Object>(NestedObject<Function>, A): A;
 
   declare function eqProps(
     key: string,
@@ -1331,8 +1359,11 @@ declare module ramda {
   ): (o2: Object) => boolean;
   declare function eqProps(key: string, o1: Object, o2: Object): boolean;
 
-  declare function has(key: string, o: Object): boolean;
   declare function has(key: string): (o: Object) => boolean;
+  declare function has(key: string, o: Object): boolean;
+
+  declare function hasPath<T: string | number>(path: Array<T>): (o: Object) => boolean;
+  declare function hasPath<T: string | number>(path: Array<T>, o: Object): boolean;
 
   declare function hasIn(key: string, o: Object): boolean;
   declare function hasIn(key: string): (o: Object) => boolean;
@@ -1340,7 +1371,7 @@ declare module ramda {
   declare function invert(o: Object): { [k: string]: Array<string> };
   declare function invertObj(o: Object): { [k: string]: string };
 
-  declare function keys(o: Object): Array<string>;
+  declare function keys(o: ?Object): Array<string>;
 
   declare type Lens = <T, V>(x: T) => V;
 
@@ -1367,21 +1398,23 @@ declare module ramda {
     ...args: Array<void>
   ): (o: { [key: string]: A }) => { [key: string]: B };
 
-  declare type Merge = (<A, B>(a: A, b: B) => A & B) &
-    (<A, B>(a: A) => (b: B) => A & B);
+  declare type Merge =
+    (<A, B>(a: A) => (b: B) => A & B) &
+    (<A, B>(a: A, b: B) => A & B);
 
   declare var merge: Merge;
+  declare var mergeLeft: Merge;
+  declare var mergeDeepLeft: Merge;
+  declare var mergeRight: Merge;
 
   declare function mergeAll<T>(
     os: Array<{ [k: string]: T }>
   ): { [k: string]: T };
 
-  declare var mergeDeepLeft: Merge;
-
   declare var mergeDeepRight: (<A, B>(a: A, b: B) => B & A) &
     (<A, B>(a: A) => (b: B) => B & A);
 
-  declare type MergeWith = (<A: { [k: string]: T }, B: { [k: string]: T }, T>(
+  declare type MergeWith = (<A, B, T: $Values<A> & $Values<B>>(
     fn: (a: T, b: T) => T,
     a: A,
     b: B
@@ -1398,22 +1431,22 @@ declare module ramda {
     ) => (b: B) => A & B);
 
   declare type MergeWithKey = (<
-    S: string,
-    A: { [k: string]: T },
-    B: { [k: string]: T },
-    T
+    A,
+    B,
+    S: $Keys<A> & $Keys<B>,
+    T: $ElementType<A, $Keys<A>> & $ElementType<B, $Keys<B>>,
   >(
     fn: (s: S, a: T, b: T) => T,
     a: A,
     b: B
   ) => A & B) &
-    (<S: string, A: { [k: string]: T }, B: { [k: string]: T }, T>(
+    (<S, T, A, B>(
       fn: (s: S, a: T, b: T) => T,
     ) => (a: A, b: B) => A & B) &
-    (<S: string, A: { [k: string]: T }, B: { [k: string]: T }, T>(
+    (<S, T, A, B>(
       fn: (s: S, a: T, b: T) => T,
     ) => (a: A) => (b: B) => A & B) &
-    (<S: string, A: { [k: string]: T }, B: { [k: string]: T }, T>(
+    (<S, T, A, B>(
       fn: (s: S, a: T, b: T) => T,
       a: A,
     ) => (b: B) => A & B);
@@ -1441,18 +1474,18 @@ declare module ramda {
     lens: Lens,
   ): ((x: (any) => mixed) => (val: V) => U) & ((x: (any) => mixed, val: V) => U);
 
-  declare function path<V>(
-    p: Array<mixed>,
+  declare function path<T: string | number, V>(
+    p: Array<T>,
   ): (o: NestedObject<V>) => V;
-  declare function path<V>(
-    p: Array<mixed>,
+  declare function path<T: string | number, V>(
+    p: Array<T>,
   ): (o: null | void) => void;
-  declare function path<V>(
-    p: Array<mixed>,
+  declare function path<T: string | number, V>(
+    p: Array<T>,
   ): (o: mixed) => ?V;
-  declare function path<V, A: NestedObject<V>>(p: Array<mixed>, o: A): V;
-  declare function path<V, A: null | void>(p: Array<mixed>, o: A): void;
-  declare function path<V, A: mixed>(p: Array<mixed>, o: A): ?V;
+  declare function path<T: string | number, V, A: NestedObject<V>>(p: Array<T>, o: A): V;
+  declare function path<T: string | number, V, A: null | void>(p: Array<T>, o: A): void;
+  declare function path<T: string | number, V, A>(p: Array<T>, o: A): ?V;
 
   declare function path<V>(
     p: Array<string>,
@@ -1467,17 +1500,17 @@ declare module ramda {
   declare function path<V, A: null | void>(p: Array<string>, o: A): void;
   declare function path<V, A: mixed>(p: Array<string>, o: A): ?V;
 
-  declare function pathOr<T, V, A: NestedObject<V>>(
+  declare function pathOr<T, U: string | number, V, A: NestedObject<V>>(
     or: T,
-  ): ((p: Array<string>) => (o: ?A) => V | T) &
-    ((p: Array<string>, o: ?A) => V | T);
-  declare function pathOr<T, V, A: NestedObject<V>>(
+  ): ((p: Array<U>) => (o: ?A) => V | T) &
+    ((p: Array<U>, o: ?A) => V | T);
+  declare function pathOr<T, U: string | number, V, A: NestedObject<V>>(
     or: T,
-    p: Array<string>,
+    p: Array<U>,
   ): (o: ?A) => V | T;
-  declare function pathOr<T, V, A: NestedObject<V>>(
+  declare function pathOr<T, U: string | number, V, A: NestedObject<V>>(
     or: T,
-    p: Array<string>,
+    p: Array<U>,
     o: ?A
   ): V | T;
 
@@ -1689,8 +1722,6 @@ declare module ramda {
 
   // TODO liftN
 
-  declare function memoize<A, B, T: (...args: Array<A>) => B>(fn: T): T;
-
   declare function memoizeWith<A, B, C>(
     keyFn: (...args: Array<A>) => C
   ): (...args: Array<A>) => (...args: Array<A>) => B;
@@ -1724,7 +1755,83 @@ declare module ramda {
 
   declare var partial: Partial;
   // TODO partialRight
-  // TODO pipeK
+
+  declare type UnaryMonadFn<A, R> = UnaryFn<A, Monad<R>>;
+  declare type PipeK = (<A, B, C, D, E, F, G, H, I, J, K, L: Monad<K>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: UnaryMonadFn<E, F>,
+        fg: UnaryMonadFn<F, G>,
+        gh: UnaryMonadFn<G, H>,
+        hi: UnaryMonadFn<H, I>,
+        ij: UnaryMonadFn<I, J>,
+        jk: J => L,
+    ) => A => L) &
+    (<A, B, C, D, E, F, G, H, I, J, K: Monad<J>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: UnaryMonadFn<E, F>,
+        fg: UnaryMonadFn<F, G>,
+        gh: UnaryMonadFn<G, H>,
+        hi: UnaryMonadFn<H, I>,
+        ij: I => K,
+    ) => A => K) &
+    (<A, B, C, D, E, F, G, H, I, J: Monad<I>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: UnaryMonadFn<E, F>,
+        fg: UnaryMonadFn<F, G>,
+        gh: UnaryMonadFn<G, H>,
+        hi: H => J,
+    ) => A => J) &
+    (<A, B, C, D, E, F, G, H, I: Monad<H>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: UnaryMonadFn<E, F>,
+        fg: UnaryMonadFn<F, G>,
+        gh: G => I,
+    ) => A => I) &
+    (<A, B, C, D, E, F, G, H: Monad<G>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: UnaryMonadFn<E, F>,
+        fg: F => H,
+    ) => A => H) &
+    (<A, B, C, D, E, F, G: Monad<F>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: UnaryMonadFn<D, E>,
+        ef: E => G,
+    ) => A => G) &
+    (<A, B, C, D, E, F: Monad<E>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: UnaryMonadFn<C, D>,
+        de: D => F,
+    ) => A => F) &
+    (<A, B, C, D, E: Monad<D>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: UnaryMonadFn<B, C>,
+        cd: C => E,
+    ) => A => E) &
+    (<A, B, C, D: Monad<C>>(
+        ab: UnaryMonadFn<A, B>,
+        bc: B => D,
+    ) => A => D) &
+    (<A, B, C: Monad<B>>(
+        ab: A => C
+    ) => A => C);
 
   declare function tap<T>(fn: (x: T) => any): (x: T) => T;
   declare function tap<T>(fn: (x: T) => any, x: T): T;
@@ -1770,11 +1877,6 @@ declare module ramda {
     ) => (A, B, C, D, E, F, G, H) => I);
 
   //TODO useWith
-
-  declare function wrap<A, B, C, D, F: (...args: Array<A>) => B>(
-    fn: F,
-    fn2: (fn: F, ...args: Array<C>) => D
-  ): (...args: Array<A | C>) => D;
 
   // *Logic
 
@@ -1840,7 +1942,7 @@ declare module ramda {
 
   declare var pathSatisfies: CurriedFunction3<
     UnaryPredicateFn<any>,
-    string[],
+    Array<string | number>,
     Object,
     boolean
   >;

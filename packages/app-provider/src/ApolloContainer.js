@@ -59,7 +59,7 @@ class ApolloContainer extends React.Component {
     return null;
   };
 
-  createClient = R.memoize((fragmentsSchema) => {
+  createClient = R.memoizeWith(R.identity, (fragmentsSchema) => {
     const { withAuth } = this.props;
 
     const commonOptions = {
