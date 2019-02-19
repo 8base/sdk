@@ -29,23 +29,30 @@ jest.mock('react-apollo', () => {
   };
 });
 
-jest.mock('filestack-js', () => ({
-  init: () => ({
-    picker: ({ onUploadDone }) => ({
-      open: () => {
-        mock_onUploadDone = onUploadDone;
-      },
+jest.mock('filestack-js', () => {
+  const picker = jest.fn(({ onUploadDone }) => ({
+    open: () => {
+      mock_onUploadDone = onUploadDone;
+    },
+  }));
+
+  return {
+    mock_picker: picker,
+    init: () => ({
+      picker,
+      session: {},
     }),
-    session: {},
-  }),
-}));
+  };
+});
+
+const filestack = require('filestack-js');
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('should call onChange when file is uploaded', async () => {
-  it('for single file input', async() => {
+describe('should call onChange when file is uploaded', () => {
+  it('for single file input', async () => {
     const renderFileInputView = jest.fn(() => null);
     const onChange = jest.fn();
 
@@ -147,14 +154,14 @@ describe('should call onChange when file is uploaded', async () => {
     const renderFileInputView = jest.fn(() => null);
     const onChange = jest.fn();
 
-    const onUploadFinish = (value) => new Promise((resolve) => {
+    const onUploadDone = (value) => new Promise((resolve) => {
       setTimeout(() => {
         resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
       }, 50);
     });
 
     renderer.create(
-      <FileInput onChange={ onChange } onUploadFinish={ onUploadFinish }>
+      <FileInput onChange={ onChange } onUploadDone={ onUploadDone }>
         { renderFileInputView }
       </FileInput>,
     );
@@ -170,6 +177,66 @@ describe('should call onChange when file is uploaded', async () => {
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', id: 'id', downloadUrl: 'downloadUrl', public: false });
+  });
+});
+
+describe('FileInput', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('allows to pass custom options to pick method', async () => {
+    const renderFileInputView = jest.fn(() => null);
+
+    renderer.create(
+      <FileInput>
+        { renderFileInputView }
+      </FileInput>,
+    );
+
+    await renderFileInputView.mock.calls[0][0].pick({
+      accept: ['image/*'],
+      fromSources: ['dropbox'],
+    });
+
+    expect(filestack.mock_picker).toHaveBeenCalledWith({
+      exposeOriginalFile: true,
+      onUploadDone: expect.any(Function),
+      storeTo: {
+        path: 'path',
+      },
+      maxFiles: 1,
+      accept: ['image/*'],
+      fromSources: ['dropbox'],
+    });
+  });
+
+  it('doesn\'t allow to rewrite maxFiles and onUploadDone options', async () => {
+    const renderFileInputView = jest.fn(() => null);
+
+    renderer.create(
+      <FileInput maxFiles={ 3 }>
+        { renderFileInputView }
+      </FileInput>,
+    );
+
+    await renderFileInputView.mock.calls[0][0].pick({
+      accept: ['image/*'],
+      fromSources: ['dropbox'],
+      maxFiles: 2,
+      onUploadDone: 'not function',
+    });
+
+    expect(filestack.mock_picker).toHaveBeenCalledWith({
+      exposeOriginalFile: true,
+      onUploadDone: expect.any(Function),
+      storeTo: {
+        path: 'path',
+      },
+      maxFiles: 3,
+      accept: ['image/*'],
+      fromSources: ['dropbox'],
+    });
   });
 });
 
