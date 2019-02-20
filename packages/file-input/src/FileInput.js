@@ -17,11 +17,10 @@ type OriginalFileInputValue = File | File[];
 type FileInputProps = {
   client: Object,
   onChange: (value: FileInputValue, originalFile: OriginalFileInputValue) => void,
-  children: ({ pick: () => Promise<void>, value: ?FileInputValue, originalFile: ?OriginalFileInputValue, error: ?Object }) => React$Node,
-  maxFiles?: number,
-  accept?: string | string[],
+  children: ({ pick: (options: {}) => Promise<void>, value: ?FileInputValue, originalFile: ?OriginalFileInputValue, error: ?Object }) => React$Node,
   public?: boolean,
-  onUploadFinish?: (value: FileInputValue, originalFile: OriginalFileInputValue) => Promise<FileInputValue>,
+  maxFiles?: number,
+  onUploadDone?: (value: FileInputValue, originalFile: OriginalFileInputValue) => Promise<FileInputValue>,
 };
 
 type FileInputState = {
@@ -110,26 +109,26 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
 
     let originalFile = filesUploaded.map((item) => item.originalFile);
 
-    const { maxFiles, onUploadFinish } = this.props;
+    const { maxFiles, onUploadDone, onChange } = this.props;
 
     if (maxFiles === 1) {
       value = value[0];
       originalFile = originalFile[0];
     }
 
-    if (typeof onUploadFinish === 'function') {
-      value = await onUploadFinish(value, originalFile);
+    if (typeof onUploadDone === 'function') {
+      value = await onUploadDone(value, originalFile);
     }
 
     this.setState({ value, originalFile });
 
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(value, originalFile);
+    if (typeof onChange === 'function') {
+      onChange(value, originalFile);
     }
   };
 
   collectPickerOptions = () => {
-    const { maxFiles, accept } = this.props;
+    const { maxFiles } = this.props;
     const { path } = this.state;
 
     return {
@@ -139,16 +138,26 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
         path,
       },
       maxFiles,
-      ...(accept ? { accept } : {}),
     };
   };
 
-  pick = async () => {
+  pick = async (options = {}) => {
     await this.filestackPromise;
+
+    if ('maxFiles' in options) {
+      console.warn('Specify "maxFiles" as a prop for FileInput component');
+    }
+
+    if ('onUploadDone' in options) {
+      console.warn('Specify "onUploadDone" as a prop for FileInput component');
+    }
 
     const pickerOptions = this.collectPickerOptions();
 
-    this.filestack.picker(pickerOptions).open();
+    this.filestack.picker({
+      ...options,
+      ...pickerOptions,
+    }).open();
   };
 
   render() {

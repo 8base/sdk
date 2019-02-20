@@ -34,7 +34,7 @@ rules:
   no-multi-spaces: 'warn'
   no-trailing-spaces: 'warn'
   eol-last:  ['warn', 'always']
-  no-console: 'warn'
+  no-console: ['warn', { allow: ['warn', 'error']}]
 
   #badcode
   no-unused-vars: ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }]
