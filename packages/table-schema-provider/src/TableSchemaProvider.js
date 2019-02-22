@@ -134,7 +134,6 @@ export const TABLES_SCHEMA_QUERY = gql`
 
 type TableSchemaProviderProps = {
   children: ({ loading?: boolean }) => React$Node,
-  notifyOnNetworkStatusChange: boolean,
 };
 
 /**
@@ -142,10 +141,8 @@ type TableSchemaProviderProps = {
  * @property {Function} children Children of the provider. Could be either react node or function with loading state.
  */
 class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
-  renderContent = ({ data, loading }: *) => {
+  renderContent = ({ data, loading }: * = {}) => {
     const { children } = this.props;
-
-    if (loading) return children({ loading });
 
     return (
       <TableSchemaContext.Provider value={ R.pathOr([], ['tablesList', 'items'], data) }>
@@ -156,22 +153,17 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
 
   render() {
     const {
-      notifyOnNetworkStatusChange,
+      children,
+      ...rest
     } = this.props;
 
-    let rendered = null;
-
-    rendered = (
-      <Query
-        query={ TABLES_SCHEMA_QUERY }
-        notifyOnNetworkStatusChange={ notifyOnNetworkStatusChange }
-      >
+    return (
+      <Query query={ TABLES_SCHEMA_QUERY } { ...rest } >
         { this.renderContent }
       </Query>
     );
-
-    return rendered;
   }
 }
 
 export { TableSchemaProvider };
+
