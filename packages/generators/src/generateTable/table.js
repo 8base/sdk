@@ -6,6 +6,7 @@ import changeCase from 'change-case';
 import { SchemaNameGenerator } from '@8base/sdk';
 import { createTableFilterGraphqlTag, createQueryColumnsList } from '@8base/utils';
 import type { TableSchema } from '@8base/utils';
+import type { GeneratorsConfig } from '../types';
 
 import { chunks } from '../chunks';
 
@@ -13,26 +14,21 @@ import { chunks } from '../chunks';
 import table from './table.js.ejs';
 
 
-export const generateTable = (tablesList: TableSchema, tableName: string) => {
+export const generateTable = (tablesList: TableSchema, tableName: string, config: GeneratorsConfig | void = { deep: 2 }) => {
   const entityName = pluralize.singular(tableName);
 
-  const queryText = createTableFilterGraphqlTag(tablesList, tableName, { deep: 2, withMeta: false });
-  const columns = createQueryColumnsList(tablesList, tableName);
+  const queryText = createTableFilterGraphqlTag(tablesList, tableName, { ...config, withMeta: false });
+  const columns = createQueryColumnsList(tablesList, tableName, { ...config, withMeta: false });
 
   const tableGenerated = ejs.render(table, {
     chunks,
     queryText,
     columns,
-    queryName: SchemaNameGenerator.getTableListFieldName(tableName),
-    tableName: {
-      original: tableName,
-      lowerCase: changeCase.lower(tableName),
-    },
-    entityName: {
-      lowerCase: changeCase.lower(entityName),
-      pascalCase: changeCase.pascal(entityName),
-      upperCase: changeCase.upper(entityName),
-    },
+    changeCase,
+    pluralize,
+    SchemaNameGenerator,
+    tableName,
+    entityName,
   });
 
   return tableGenerated;

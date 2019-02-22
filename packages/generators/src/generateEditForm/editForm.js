@@ -10,16 +10,16 @@ import type { TableSchema } from '@8base/utils';
 import { chunks } from '../chunks';
 
 // $FlowIgnore
-import updateForm from './updateForm.js.ejs';
+import editForm from './editForm.js.ejs';
 
 
-export const generateUpdateForm = (tablesList: TableSchema, tableName: string) => {
+export const generateEditForm = (tablesList: TableSchema, tableName: string) => {
   const table = tablesList.find(({ name }) => tableName === name) || {};
   const fields = table.fields.filter(({ isMeta }) => !isMeta);
   const entityName = pluralize.singular(tableName);
   const mutationText = createTableRowUpdateTag(tablesList, tableName);
 
-  const tableGenerated = ejs.render(updateForm, {
+  const tableGenerated = ejs.render(editForm, {
     chunks,
     mutationText,
     fields,

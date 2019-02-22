@@ -6,7 +6,7 @@ const FileInputField = ({ input, meta, maxFiles, label, ...rest }) => (
           <Button type="button" onClick={pick} stretch color="neutral">
             Choose Files
           </Button>
-          <Text size="sm" style={{ whiteSpace: 'nowrap' }}>
+          <Text size="sm">
             {value ? (Array.isArray(value) ? `${value.length} files selected` : value.filename) : 'No files selected'}
           </Text>
         </Row>

@@ -1,0 +1,24 @@
+import React from 'react';
+import { Card, Heading } from '@8base/boost';
+
+import { <%= changeCase.pascal(entityName)%>CreateDialog } from './<%= changeCase.pascal(entityName)%>CreateDialog';
+import { <%= changeCase.pascal(entityName)%>EditDialog } from './<%= changeCase.pascal(entityName)%>EditDialog';
+import { <%= changeCase.pascal(entityName)%>DeleteDialog } from './<%= changeCase.pascal(entityName)%>DeleteDialog';
+import { <%= changeCase.pascal(tableName)%>Table } from './<%= changeCase.pascal(tableName)%>Table';
+
+const <%= changeCase.pascal(tableName)%> = () => (
+  <Card padding="md" stretch>
+    <Card.Header>
+      <Heading type="h4" text=" <%= changeCase.pascal(tableName)%>" />
+    </Card.Header>
+
+    <<%= changeCase.pascal(entityName)%>CreateDialog />
+    <<%= changeCase.pascal(entityName)%>EditDialog />
+    <<%= changeCase.pascal(entityName)%>DeleteDialog />
+    <Card.Body padding="none" stretch>
+      <<%= changeCase.pascal(tableName)%>Table />
+    </Card.Body>
+  </Card>
+);
+
+export { <%= changeCase.pascal(tableName)%> };
