@@ -13,6 +13,11 @@ export const getFieldType = createSelector(
   R.prop('fieldType'),
 );
 
+export const getFieldTypesAttributes = createSelector(
+  getTableField,
+  R.prop('fieldTypeAttributes'),
+);
+
 export const isRelationField = createSelector(
   getFieldType,
   R.equals(FIELD_TYPE.RELATION),

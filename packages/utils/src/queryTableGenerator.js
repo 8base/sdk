@@ -7,7 +7,6 @@ import * as tableFieldSelectors from './selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from './constants';
 import type { TableSchema } from './types';
 
-export const TABLE_CONTENT_NAME = 'tableContent';
 
 export type CheckedRule = {
   id: string,
@@ -80,7 +79,7 @@ export const getQueryObject = (tablesList: TableSchema[], tableName: string, que
           _description: '_description',
         };
       } else if (isRelation) {
-        if (deep > 1) {
+        if (deep > 0) {
           if (!!refTableName && !!refTable) {
             const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
             const relationIncludeColumns = includeAllrelationFields
@@ -181,6 +180,7 @@ export const createQueryColumnsList = (tablesList: TableSchema[], tableName: str
     .map((field) => {
       const fieldName = tableFieldSelectors.getFieldName(field);
       const fieldType = tableFieldSelectors.getFieldType(field);
+      const fieldTypeAttributes = tableFieldSelectors.getFieldTypesAttributes(field);
       const isRelation = tableFieldSelectors.isRelationField(field);
       const isFile = tableFieldSelectors.isFileField(field);
       const isList = tableFieldSelectors.isListField(field);
@@ -192,10 +192,13 @@ export const createQueryColumnsList = (tablesList: TableSchema[], tableName: str
       const meta = {
         isList,
         fieldType,
+        fieldTypeAttributes,
       };
 
       if (isFile) {
-        return [];
+        return [{
+          name: fieldName, title, meta,
+        }];
       } else if (isRelation && isList) {
         return [{
           name: fieldName, title, meta,
@@ -246,8 +249,24 @@ export const createQueryStringWithoutMetaFields =
   };
 
 export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableName: string, config: * = {}) => `
-  query DataViewerTable${upperFirst(tableName)}Content($filter: ${SchemaNameGenerator.getFilterInputTypeName(tableName)}, $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(tableName)}], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    ${TABLE_CONTENT_NAME}: ${SchemaNameGenerator.getTableListFieldName(tableName)}(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query ${upperFirst(tableName)}TableContent(
+    $filter: ${SchemaNameGenerator.getFilterInputTypeName(tableName)}
+    $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(tableName)}]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    ${config.tableContentName ? `${config.tableContentName}: ` : ''}${SchemaNameGenerator.getTableListFieldName(tableName)}(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id${createQueryString(tablesList, tableName, { ...config, prevSpaceCount: 6 })}
         _description

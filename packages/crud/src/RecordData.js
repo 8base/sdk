@@ -29,7 +29,7 @@ export class RecordData extends Component<RecordDataProps> {
     return (
       <Query
         { ...rest }
-        query={ gql(createTableRowQueryTag([tableMeta], tableMeta.name)) }
+        query={ gql(createTableRowQueryTag([tableMeta], tableMeta.name, { tableContentName: 'tableContent' })) }
         variables={{ id: recordId }}
       >
         { ({ data, ...rest }) => children({
