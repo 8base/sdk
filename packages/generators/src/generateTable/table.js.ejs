@@ -85,64 +85,76 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
       }
     };
 
-    renderScalar = (column, rowData) => {
-      return this.renderItems(column, rowData, item => item);
-    };
-
-    renderDate = (column, rowData) => {
-      const dateFormat =
-        column.meta.fieldTypeAttributes.format === DATE_FORMATS.DATE ? DateTime.DATE_SHORT : DateTime.DATETIME_SHORT;
-
-      return this.renderItems(column, rowData, item => DateTime.fromISO(item).toLocaleString(dateFormat));
-    };
-
-    renderSwitch = (column, rowData) => {
-      if (column.meta.fieldTypeAttributes.format === SWITCH_FORMATS.CUSTOM) {
+    <% if(tableSelectors.hasScalarFields(table)) {%>
+      renderScalar = (column, rowData) => {
         return this.renderItems(column, rowData, item => item);
-      } else {
-        return this.renderItems(column, rowData, item => SWITCH_VALUES[column.meta.fieldTypeAttributes.format][item]);
-      }
-    };
+      };
+    <% }; %>
 
-    renderRelation = (column, rowData) => {
-      const dataPath = column.name.split('.');
+    <% if(tableSelectors.hasDateFields(table)) {%>
+      renderDate = (column, rowData) => {
+        const dateFormat =
+          column.meta.fieldTypeAttributes.format === DATE_FORMATS.DATE ? DateTime.DATE_SHORT : DateTime.DATETIME_SHORT;
 
-      if (column.meta.isList) {
-        return pathOr('', [...dataPath, 'count'], rowData);
-      } else {
-        return pathOr('', [...dataPath, '_description'], rowData);
-      }
-    };
+        return this.renderItems(column, rowData, item => DateTime.fromISO(item).toLocaleString(dateFormat));
+      };
+    <% }; %>
 
-    renderFile = (column, rowData) => {
-      if (column.meta.fieldTypeAttributes.format === FILE_FORMATS.IMAGE && !column.meta.isList) {
-        const cellData = pathOr('', column.name.split('.'), rowData);
-
-        return cellData && <img src={cellData.downloadUrl} alt="filename" style={{ width: '5rem' }} />;
-      } else {
-        return this.renderItems(column, rowData, item => (
-          <div>
-            <Link key={item.downloadUrl} target="_blank" href={item.downloadUrl} size="sm">
-              {item.filename}
-            </Link>
-          </div>
-        ));
-      }
-    };
-
-    renderSmart = (column, rowData) => {
-      return this.renderItems(column, rowData, item => {
-        if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.ADDRESS) {
-          const address = [item.street1, item.street2, item.city, item.state, item.zip].filter(item=> !!item);
-
-          return join(', ', address);
-        } else if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.PHONE) {
-          const phone = [item.code, item.number].filter(item=> !!item);
-
-          return join(' ', phone);
+    <% if(tableSelectors.hasSwitchFields(table)) {%>
+      renderSwitch = (column, rowData) => {
+        if (column.meta.fieldTypeAttributes.format === SWITCH_FORMATS.CUSTOM) {
+          return this.renderItems(column, rowData, item => item);
+        } else {
+          return this.renderItems(column, rowData, item => SWITCH_VALUES[column.meta.fieldTypeAttributes.format][item]);
         }
-      });
-    };
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasRelationFields(table)) {%>
+      renderRelation = (column, rowData) => {
+        const dataPath = column.name.split('.');
+
+        if (column.meta.isList) {
+          return pathOr('', [...dataPath, 'count'], rowData);
+        } else {
+          return pathOr('', [...dataPath, '_description'], rowData);
+        }
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasFileFields(table)) {%>
+      renderFile = (column, rowData) => {
+        if (column.meta.fieldTypeAttributes.format === FILE_FORMATS.IMAGE && !column.meta.isList) {
+          const cellData = pathOr('', column.name.split('.'), rowData);
+
+          return cellData && <img src={cellData.downloadUrl} alt="filename" style={{ width: '5rem' }} />;
+        } else {
+          return this.renderItems(column, rowData, item => (
+            <div>
+              <Link key={item.downloadUrl} target="_blank" href={item.downloadUrl} size="sm">
+                {item.filename}
+              </Link>
+            </div>
+          ));
+        }
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasSmartFields(table)) {%>
+      renderSmart = (column, rowData) => {
+        return this.renderItems(column, rowData, item => {
+          if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.ADDRESS) {
+            const address = [item.street1, item.street2, item.city, item.state, item.zip].filter(item => !!item);
+
+            return join(', ', address);
+          } else if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.PHONE) {
+            const phone = [item.code, item.number].filter(item => !!item);
+
+            return join(' ', phone);
+          }
+        });
+      };
+    <% }; %>
 
     renderCell = (column, rowData) => {
       if (column.name === 'edit') {
@@ -150,21 +162,33 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
       }
 
       switch (column.meta.fieldType) {
-        case FIELD_TYPE.TEXT:
-        case FIELD_TYPE.NUMBER:
-          return this.renderScalar(column, rowData);
-        case FIELD_TYPE.DATE:
-          return this.renderDate(column, rowData);
-        case FIELD_TYPE.SWITCH:
-          return this.renderSwitch(column, rowData);
-        case FIELD_TYPE.FILE:
-          return this.renderFile(column, rowData);
-        case FIELD_TYPE.RELATION:
-          return this.renderRelation(column, rowData);
-        case FIELD_TYPE.SMART:
-          return this.renderSmart(column, rowData);
-        default:
-          return null;
+        <% if(tableSelectors.hasScalarFields(table)) {%>
+          case FIELD_TYPE.TEXT:
+          case FIELD_TYPE.NUMBER:
+            return this.renderScalar(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasDateFields(table)) {%>
+          case FIELD_TYPE.DATE:
+            return this.renderDate(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasSwitchFields(table)) {%>
+          case FIELD_TYPE.SWITCH:
+            return this.renderSwitch(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasFileFields(table)) {%>
+          case FIELD_TYPE.FILE:
+            return this.renderFile(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasRelationFields(table)) {%>
+          case FIELD_TYPE.RELATION:
+            return this.renderRelation(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasSmartFields(table)) {%>
+          case FIELD_TYPE.SMART:
+            return this.renderSmart(column, rowData);
+        <% }; %>
+          default:
+            return null;
       }
     };
 

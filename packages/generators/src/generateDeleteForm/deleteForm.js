@@ -5,14 +5,17 @@ import pluralize from 'pluralize';
 import changeCase from 'change-case';
 import { SchemaNameGenerator } from '@8base/sdk';
 import type { TableSchema } from '@8base/utils';
-
+import { formatCode } from '../formatCode';
 import { chunks } from '../chunks';
 
 // $FlowIgnore
 import deleteForm from './deleteForm.js.ejs';
 
 export const generateDeleteForm = (tablesList: TableSchema, tableName: string) => {
-  const table = tablesList.find(({ name }) => tableName === name) || {};
+  const table = tablesList.find(({ name }) => tableName === name);
+
+  if (!table) { throw new Error(`Can't find a table ${tableName}`); }
+
   const fields = table.fields.filter(({ isMeta }) => !isMeta);
 
   const entityName = pluralize.singular(tableName);
@@ -27,6 +30,6 @@ export const generateDeleteForm = (tablesList: TableSchema, tableName: string) =
     pluralize,
   });
 
-  return tableGenerated;
+  return formatCode(tableGenerated);
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { memoizeWith, identity } from 'ramda';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 import { COUNTRY_CODE_OPTIONS } from '@8base/utils';
@@ -29,16 +28,14 @@ const PROPERTY_CREATE_MUTATION = gql`
     }
   }
 `;
-<%- chunks.fieldsQueries({
-  fields: fields,
-  SchemaNameGenerator: SchemaNameGenerator,
-  changeCase: changeCase,
-});%>
-<%- chunks.fieldsFileInput()%>
-<%- chunks.fieldsList() %>
-<%- chunks.addressField() %>
-<%- chunks.phoneField() %>
-
+<%- chunks.createEditComponents({
+    fields: fields,
+    SchemaNameGenerator: SchemaNameGenerator,
+    changeCase: changeCase,
+    chunks: chunks,
+    tableSelectors: tableSelectors,
+    table: table,
+}); %>
 const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
   name: '<%= SchemaNameGenerator.getCreateItemFieldName(tableName)%>',
   options: {

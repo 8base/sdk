@@ -4,24 +4,29 @@ import ejs from 'ejs';
 import pluralize from 'pluralize';
 import changeCase from 'change-case';
 import { SchemaNameGenerator } from '@8base/sdk';
-import { createTableFilterGraphqlTag, createQueryColumnsList } from '@8base/utils';
+import { createTableFilterGraphqlTag, createQueryColumnsList, tableSelectors } from '@8base/utils';
 import type { TableSchema } from '@8base/utils';
 import type { GeneratorsConfig } from '../types';
-
+import { formatCode } from '../formatCode';
 import { chunks } from '../chunks';
 
 // $FlowIgnore
-import table from './table.js.ejs';
+import tableTemplate from './table.js.ejs';
 
 
-export const generateTable = (tablesList: TableSchema, tableName: string, config: GeneratorsConfig | void = { deep: 2 }) => {
+export const generateTable = (tablesList: TableSchema, tableName: string, config: GeneratorsConfig | void = { deep: 2, withMeta: false }) => {
+  const table = tablesList.find(({ name }) => tableName === name);
+
+  if (!table) { throw new Error(`Can't find a table ${tableName}`); }
+
   const entityName = pluralize.singular(tableName);
+  const queryText = createTableFilterGraphqlTag(tablesList, tableName, config);
+  const columns = createQueryColumnsList(tablesList, tableName, config);
 
-  const queryText = createTableFilterGraphqlTag(tablesList, tableName, { ...config, withMeta: false });
-  const columns = createQueryColumnsList(tablesList, tableName, { ...config, withMeta: false });
-
-  const tableGenerated = ejs.render(table, {
+  const tableGenerated = ejs.render(tableTemplate, {
     chunks,
+    tableSelectors,
+    table,
     queryText,
     columns,
     changeCase,
@@ -31,6 +36,6 @@ export const generateTable = (tablesList: TableSchema, tableName: string, config
     entityName,
   });
 
-  return tableGenerated;
+  return formatCode(tableGenerated);
 };
 

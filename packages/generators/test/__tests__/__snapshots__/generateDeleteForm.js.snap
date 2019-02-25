@@ -2,11 +2,11 @@
 
 exports[`should generate delete form by the table name 1`] = `
 "import React from 'react';
-import * as R from 'ramda';
-import { Form } from '@8base/forms';
+import gql from 'graphql-tag';
+import { memoizeWith, identity } from 'ramda';
+import { Form as FormLogic } from '@8base/forms';
 import { Dialog, Button, ModalContext } from '@8base/boost';
 import { graphql } from 'react-apollo';
-
 
 const PROPERTY_DELETE_MUTATION = gql\`
   mutation PropertyDelete($id: ID!) {
@@ -19,9 +19,9 @@ const PROPERTY_DELETE_MUTATION = gql\`
 const enhancer = graphql(PROPERTY_DELETE_MUTATION, {
   name: 'propertyDelete',
   options: {
-    refetchQueries: ['propertiesList'],
+    refetchQueries: ['PropertiesTableContent'],
     context: {
-      ['TOAST_SUCCESS_MESSAGE']: 'Property successfuly deleted',
+      TOAST_SUCCESS_MESSAGE: 'Property successfuly deleted',
     },
   },
 });
@@ -30,8 +30,8 @@ const PropertyDeleteDialog = enhancer(
   class PropertyDeleteDialog extends React.Component {
     static contextType = ModalContext;
 
-    createOnSubmit = R.memoizeWith(R.identity, id => async () => {
-      await this.props.listingDelete({ variables: { id } });
+    createOnSubmit = memoizeWith(identity, id => async () => {
+      await this.props.propertyDelete({ variables: { id } });
 
       this.context.closeModal('PROPERTY_DELETE_DIALOG_ID');
     });
@@ -56,7 +56,7 @@ const PropertyDeleteDialog = enhancer(
     );
 
     renderContent = ({ args }) => {
-      return <Form onSubmit={this.createOnSubmit(args.id)}>{this.renderFormContent}</Form>;
+      return <FormLogic onSubmit={this.createOnSubmit(args.id)}>{this.renderFormContent}</FormLogic>;
     };
 
     render() {

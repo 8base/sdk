@@ -5,7 +5,7 @@
                 {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={InputField} />}
               </FieldArray><%
               } else if (field.fieldType === 'TEXT') { 
-                %><Field name="<%= field.name%>" label="<%= field.displayName%>" type="number" component={InputField} /><%
+                %><Field name="<%= field.name%>" label="<%= field.displayName%>" component={InputField} /><%
               }else if (field.fieldType === 'NUMBER' && field.isList) { 
               %><FieldArray name="<%= field.name%>">
                 {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" type="number" component={InputField} />}
@@ -48,10 +48,10 @@
                 %><Field name="<%= field.name%>" label="<%= field.displayName%>" component={FileInputField} /><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'ADDRESS' && field.isList) { 
                 %><FieldArray name="<%= field.name%>">
-                {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={AdressField} />}
+                {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={AddressField} />}
               </FieldArray><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'ADDRESS') { 
-                %><AdressField name="<%= field.name%>" label="<%= field.displayName%>" /><%
+                %><AddressField name="<%= field.name%>" label="<%= field.displayName%>" /><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'PHONE' && field.isList) { 
                 %><FieldArray name="<%= field.name%>">
                 {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={PhoneField} />}

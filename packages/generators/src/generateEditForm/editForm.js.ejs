@@ -29,16 +29,14 @@ const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
     }
   }
 `;
-<%- chunks.fieldsQueries({
+<%- chunks.createEditComponents({
     fields: fields,
     SchemaNameGenerator: SchemaNameGenerator,
     changeCase: changeCase,
+    chunks: chunks,
+    tableSelectors: tableSelectors,
+    table: table,
 }); %>
-<%- chunks.fieldsFileInput() %>
-<%- chunks.fieldsList() %>
-<%- chunks.addressField() %>
-<%- chunks.phoneField() %>
-
 const ehnhancer = graphql(<%= changeCase.upper(entityName)%>_UPDATE_MUTATION, {
   name: '<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>',
   options: {

@@ -64,7 +64,8 @@ export const createQueryObject = (
           _description: '_description',
         };
       } else if (isRelation) {
-        if (deep > 0) {
+        if (deep > 1) {
+
           if (!!refTableName && !!refTable) {
             const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
             const relationIncludeColumns = includeAllrelationFields
@@ -88,7 +89,10 @@ export const createQueryObject = (
             };
           }
         } else {
-          fieldContent = null;
+          fieldContent = {
+            id: 'id',
+            _description: '_description',
+          };
         }
       } else if (isFile) {
         fieldContent = {
