@@ -47,7 +47,6 @@ export const SWITCH_VALUES = {
 export const TEXT_FORMATS = {
   UNFORMATTED: 'UNFORMATTED',
   NAME: 'NAME',
-  ADDRESS: 'ADDRESS',
   SSN: 'SSN',
   EIN: 'EIN',
   PHONE: 'PHONE',

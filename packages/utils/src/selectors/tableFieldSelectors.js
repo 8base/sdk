@@ -33,10 +33,16 @@ export const isSmartField = createSelector(
   R.equals(FIELD_TYPE.SMART),
 );
 
+export const isIdField = createSelector(
+  getFieldType,
+  R.equals(FIELD_TYPE.ID),
+);
+
 export const isMetaField = createSelector(
   getTableField,
   R.propEq('isMeta', true),
 );
+
 
 export const isListField = createSelector(
   getTableField,

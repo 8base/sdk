@@ -411,6 +411,26 @@ export const SCHEMA = [{
   isSystem: false,
   fields: [
     {
+      name: 'numberanother',
+      displayName: 'number',
+      description: null,
+      fieldType: 'NUMBER',
+      fieldTypeAttributes: {
+        format: 'NUMBER',
+        precision: 0,
+        currency: null,
+        minValue: null,
+        maxValue: null,
+      },
+      isList: false,
+      isRequired: false,
+      isUnique: false,
+      defaultValue: null,
+      isSystem: false,
+      isMeta: false,
+      relation: null,
+    },
+    {
       name: 'number',
       displayName: 'number',
       description: null,

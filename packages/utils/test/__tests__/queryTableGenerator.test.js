@@ -5,9 +5,8 @@ import {
   createTableRowQueryTag,
   createTableRowUpdateTag,
   createTableRowDeleteTag,
-  getQueryObject,
   createQueryColumnsList,
-} from '../../src/queryTableGenerator';
+} from '../../src';
 
 import * as fixtures from '../__fixtures__';
 
@@ -23,7 +22,7 @@ describe('As a developer, I can generate table columns  by table schema', () => 
     const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', { includeColumns: [
       'number',
       'relation.scalarList',
-      'relation.relationList',
+      'relation.numberanother',
       'relationList',
     ] });
 
@@ -33,14 +32,8 @@ describe('As a developer, I can generate table columns  by table schema', () => 
 
 
 describe('As a developer, I can generate graphql query for list by table schema', () => {
-  it('should generate query object ', () => {
-    const queryObject = getQueryObject(fixtures.SCHEMA, 'tableSchema');
-
-    expect(queryObject).toMatchSnapshot();
-  });
-
   it('should generate query string ', () => {
-    const queryObject = createTableFilterGraphqlTag(fixtures.SCHEMA, 'tableSchema', {
+    const querString = createTableFilterGraphqlTag(fixtures.SCHEMA, 'tableSchema', {
       includeColumns: [
         'number',
         'numberList',
@@ -50,7 +43,7 @@ describe('As a developer, I can generate graphql query for list by table schema'
       ],
     });
 
-    expect(queryObject).toMatchSnapshot();
+    expect(querString).toMatchSnapshot();
   });
 
   it('should generate graphql tag for the table content by common table schema ', () => {
