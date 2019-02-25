@@ -28,7 +28,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
 
     if ((isRelationField(fieldSchema) || isFileField(fieldSchema)) && isListField(fieldSchema)) {
       if (data[fieldName]) {
-        result = R.assoc(fieldName, data[fieldName].items, result);
+        result[fieldName] = data[fieldName].items;
       }
     } else if (!isMetaField(fieldSchema)) {
       result = R.assoc(fieldName, data[fieldName], result);
@@ -36,7 +36,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
 
     if (isRelationField(fieldSchema) && !isFileField(fieldSchema) && result[fieldName]) {
       if (isListField(fieldSchema)) {
-        result = R.assoc(fieldName, result[fieldName].map(({ id }) => id), result);
+        result = R.assoc(fieldName, result[fieldName].map && result[fieldName].map(({ id }) => id), result);
       } else {
         result = R.assoc(fieldName, result[fieldName].id, result);
       }

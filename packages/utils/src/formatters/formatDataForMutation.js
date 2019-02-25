@@ -5,6 +5,7 @@ import { MUTATION_TYPE } from '../constants';
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
+import { omitDeep } from './omitDeep';
 
 import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 /**
@@ -80,7 +81,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     };
   }, {}, R.keys(data));
 
-  return formatedData;
+  return omitDeep(['_description', '__typename'], formatedData);
 };
 
 export { formatDataForMutation };

@@ -1,21 +1,29 @@
 import React from 'react';
-import { compose } from 'recompose';
-import { pathOr } from 'ramda';
 import gql from 'graphql-tag';
-import { TableBuilder, Dropdown, Icon, Menu, withModal } from '@8base/boost';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+import { pathOr, join } from 'ramda';
+import { DateTime } from 'luxon';
+import { TableBuilder, Dropdown, Icon, Menu, Link, Tag, Row, withModal } from '@8base/boost';
+import { FIELD_TYPE, SMART_FORMATS, FILE_FORMATS, DATE_FORMATS, SWITCH_FORMATS, SWITCH_VALUES } from '@8base/utils';
 
-const BROKERS_LIST_QUERY = gql`
-  <%= queryText%>
+const <%= changeCase.upper(entityName)%>_LIST_QUERY = gql`<%= 
+queryText%>
 `;
 
-const TABLE_COLUMNS = [
-  <% columns.forEach((column) => { %>
-    {
-      name: <%= column.name%>,
-      title: <%= column.title%>,
+const TABLE_COLUMNS = [<% 
+columns.forEach((column) => { %>
+  {
+    name: '<%= column.name%>',
+    title: '<%= column.title%>',
+    meta: {
+      isList: <%= column.meta.isList%>,
+      fieldType: FIELD_TYPE.<%= column.meta.fieldType%>,
+      fieldTypeAttributes: {
+        format: '<%= column.meta.fieldTypeAttributes && column.meta.fieldTypeAttributes.format%>',
+      },
     },
-  <% }); %>
+  },<%
+}); %>
   {
     name: 'edit',
     title: '',
@@ -25,45 +33,187 @@ const TABLE_COLUMNS = [
 
 const enhancer = compose(
   withModal,
-  graphql(<%= entityName.upperCase%>_LIST_QUERY, { name: '<%= tableName.lowerCase%>' })
+  graphql(<%= changeCase.upper(entityName)%>_LIST_QUERY, { name: '<%= changeCase.lower(tableName)%>' })
 );
 
-const <%= entityName.pascalCase%>Table = enhancer(({ (<%= tableName.lowerCase%>, openModal, closeModal }) => (
-  <TableBuilder
-    loading={<%= tableName.lowerCase%>.loading}
-    data={pathOr([], ['<%= queryName%>', 'items'], <%= tableName.lowerCase%>)}
-    columns={TABLE_COLUMNS}
-    renderCell={(column, rowData) => {
-      switch (column.name) {
-        case 'edit':
-          return (
-            <Dropdown defaultOpen={false}>
-              <Dropdown.Head>
-                <Icon name="Dots" size="sm" color="LIGHT_GRAY2" />
-              </Dropdown.Head>
-              <Dropdown.Body pin="right">
-                {({ closeDropdown }) => (
-                  <Menu>
-                    <Menu.Item
-                      onClick={() => {
-                        openModal(<%= entityName.pascalCase%>DeleteDialog.id, { id: rowData.id });
-                        closeDropdown();
-                      }}
-                    >
-                      Delete
-                    </Menu.Item>
-                  </Menu>
-                )}
-              </Dropdown.Body>
-            </Dropdown>
-          );
-        default:
-          return <div>{pathOr('', column.name.split('.'), rowData)}</div>;
-      }
-    }}
-    action="Create <%= entityName.pascalCase%>"
-    onActionClick={() => openModal(<%= entityName.pascalCase%>CreateDialog.id)}
-  />
-));
+const <%= changeCase.pascal(tableName)%>Table = enhancer(
+  class <%= changeCase.pascal(tableName)%>Table extends React.PureComponent {
+    renderEdit = rowData => (
+      <Dropdown defaultOpen={false}>
+        <Dropdown.Head>
+          <Icon name="Dots" size="sm" color="LIGHT_GRAY2" />
+        </Dropdown.Head>
+        <Dropdown.Body pin="right">
+          {({ closeDropdown }) => (
+            <Menu>
+              <Menu.Item
+                onClick={() => {
+                  this.props.openModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID', { initialValues: rowData });
+                  closeDropdown();
+                }}
+              >
+                Edit
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => {
+                  this.props.openModal('<%= changeCase.upper(entityName)%>_DELETE_DIALOG_ID', { id: rowData.id });
+                  closeDropdown();
+                }}
+              >
+                Delete
+              </Menu.Item>
+            </Menu>
+          )}
+        </Dropdown.Body>
+      </Dropdown>
+    );
 
-export { <%= entityName.pascalCase%>Table };
+    renderItems = (column, rowData, handler) => {
+      const dataPath = column.name.split('.');
+      const cellData = pathOr('', dataPath, rowData);
+
+      if (column.meta.isList) {
+        const itemsArray = cellData.items ? cellData.items : cellData;
+
+        return (
+          <Row style={{ flexWrap: 'wrap' }}>
+            {itemsArray && itemsArray.map(item => !!item && <Tag color="LIGHT_GRAY2">{handler(item)}</Tag>)}
+          </Row>
+        );
+      } else {
+        return cellData && <div>{handler(cellData)}</div>;
+      }
+    };
+
+    <% if(tableSelectors.hasScalarFields(table)) {%>
+      renderScalar = (column, rowData) => {
+        return this.renderItems(column, rowData, item => item);
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasDateFields(table)) {%>
+      renderDate = (column, rowData) => {
+        const dateFormat =
+          column.meta.fieldTypeAttributes.format === DATE_FORMATS.DATE ? DateTime.DATE_SHORT : DateTime.DATETIME_SHORT;
+
+        return this.renderItems(column, rowData, item => DateTime.fromISO(item).toLocaleString(dateFormat));
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasSwitchFields(table)) {%>
+      renderSwitch = (column, rowData) => {
+        if (column.meta.fieldTypeAttributes.format === SWITCH_FORMATS.CUSTOM) {
+          return this.renderItems(column, rowData, item => item);
+        } else {
+          return this.renderItems(column, rowData, item => SWITCH_VALUES[column.meta.fieldTypeAttributes.format][item]);
+        }
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasRelationFields(table)) {%>
+      renderRelation = (column, rowData) => {
+        const dataPath = column.name.split('.');
+
+        if (column.meta.isList) {
+          return pathOr('', [...dataPath, 'count'], rowData);
+        } else {
+          return pathOr('', [...dataPath, '_description'], rowData);
+        }
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasFileFields(table)) {%>
+      renderFile = (column, rowData) => {
+        if (column.meta.fieldTypeAttributes.format === FILE_FORMATS.IMAGE && !column.meta.isList) {
+          const cellData = pathOr('', column.name.split('.'), rowData);
+
+          return cellData && <img src={cellData.downloadUrl} alt="filename" style={{ width: '5rem' }} />;
+        } else {
+          return this.renderItems(column, rowData, item => (
+            <div>
+              <Link key={item.downloadUrl} target="_blank" href={item.downloadUrl} size="sm">
+                {item.filename}
+              </Link>
+            </div>
+          ));
+        }
+      };
+    <% }; %>
+
+    <% if(tableSelectors.hasSmartFields(table)) {%>
+      renderSmart = (column, rowData) => {
+        return this.renderItems(column, rowData, item => {
+          if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.ADDRESS) {
+            const address = [item.street1, item.street2, item.city, item.state, item.zip].filter(item => !!item);
+
+            return join(', ', address);
+          } else if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.PHONE) {
+            const phone = [item.code, item.number].filter(item => !!item);
+
+            return join(' ', phone);
+          }
+        });
+      };
+    <% }; %>
+
+    renderCell = (column, rowData) => {
+      if (column.name === 'edit') {
+        return this.renderEdit(rowData);
+      }
+
+      switch (column.meta.fieldType) {
+        <% if(tableSelectors.hasScalarFields(table)) {%>
+          case FIELD_TYPE.TEXT:
+          case FIELD_TYPE.NUMBER:
+            return this.renderScalar(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasDateFields(table)) {%>
+          case FIELD_TYPE.DATE:
+            return this.renderDate(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasSwitchFields(table)) {%>
+          case FIELD_TYPE.SWITCH:
+            return this.renderSwitch(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasFileFields(table)) {%>
+          case FIELD_TYPE.FILE:
+            return this.renderFile(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasRelationFields(table)) {%>
+          case FIELD_TYPE.RELATION:
+            return this.renderRelation(column, rowData);
+        <% }; %>
+        <% if(tableSelectors.hasSmartFields(table)) {%>
+          case FIELD_TYPE.SMART:
+            return this.renderSmart(column, rowData);
+        <% }; %>
+          default:
+            return null;
+      }
+    };
+
+    openCreateModal = () => {
+      const { openModal } = this.props;
+
+      openModal('<%= changeCase.upper(entityName)%>_CREATE_DIALOG_ID');
+    };
+
+    render() {
+      const { <%= changeCase.lower(tableName)%> } = this.props;
+      const tableData = pathOr([], ['<%= SchemaNameGenerator.getTableListFieldName(tableName)%>', 'items'], <%= changeCase.lower(tableName)%>);
+
+      return (
+        <TableBuilder
+          loading={<%= changeCase.lower(tableName)%>.loading}
+          data={tableData}
+          columns={TABLE_COLUMNS}
+          action="Create <%= changeCase.pascal(entityName)%>"
+          renderCell={this.renderCell}
+          onActionClick={this.openCreateModal}
+        />
+      );
+    }
+  }
+);
+
+export { <%= changeCase.pascal(tableName)%>Table };

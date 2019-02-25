@@ -1,9 +1,26 @@
 import React from 'react';
-import * as R from 'ramda';
-import { Form, Field } from '@8base/forms';
-import { Dialog, Grid, Button, InputField, SelectField, ModalContext } from '@8base/boost';
-import { graphql, Query } from 'react-apollo';
-
+import { memoizeWith, identity } from 'ramda';
+import gql from 'graphql-tag';
+import { Query, graphql } from 'react-apollo';
+import { COUNTRY_CODE_OPTIONS } from '@8base/utils';
+import { Form as FormLogic, Field, FieldArray } from '@8base/forms';
+import {
+  Dialog,
+  Grid,
+  Button,
+  Form,
+  Row,
+  Column,
+  Icon,
+  Text,
+  SelectField,
+  InputField,
+  CheckboxField,
+  DateInputField,
+  Label,
+  ModalContext,
+} from '@8base/boost';
+import { FileInput } from '@8base/file-input';
 
 const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
   mutation <%= changeCase.pascal(entityName)%>Update($data: <%= SchemaNameGenerator.getUpdateInputName(tableName)%>!) {
@@ -12,32 +29,30 @@ const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
     }
   }
 `;
-
-<%- chunks.fieldsQueries({
+<%- chunks.createEditComponents({
     fields: fields,
     SchemaNameGenerator: SchemaNameGenerator,
     changeCase: changeCase,
+    chunks: chunks,
+    tableSelectors: tableSelectors,
+    table: table,
 }); %>
-
-<%- chunks.fieldsFileInput() %>
-
-const ehnhancer = graphql( <%= changeCase.upper(entityName)%>_UPDATE_MUTATION, {
+const ehnhancer = graphql(<%= changeCase.upper(entityName)%>_UPDATE_MUTATION, {
   name: '<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>',
   options: {
-    refetchQueries: ['<%= SchemaNameGenerator.getTableListFieldName(tableName)%>'],
+    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent'],
     context: {
-      ['TOAST_SUCCESS_MESSAGE']: '<%= changeCase.pascal(entityName)%> successfuly updated',
+      TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(entityName)%> successfuly updated',
     },
   },
 });
 
-
-const <%= changeCase.pascal(entityName)%>EditDialog = (
-  class ListingEditDialog extends React.PureComponent {
+const <%= changeCase.pascal(entityName)%>EditDialog = ehnhancer(
+  class <%= changeCase.pascal(entityName)%>EditDialog extends React.PureComponent {
     static contextType = ModalContext;
 
-    createOnSubmit = R.memoizeWith(R.identity, id => async data => {
-      await this.props.listingUpdate({ variables: { data: { ...data, id } } });
+    updateOnSubmit = memoizeWith(identity, id => async data => {
+      await this.props.<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>({ variables: { data: { ...data, id } } });
 
       this.context.closeModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID');
     });
@@ -50,9 +65,10 @@ const <%= changeCase.pascal(entityName)%>EditDialog = (
       <form onSubmit={handleSubmit}>
         <Dialog.Header title="Edit <%= changeCase.pascal(entityName)%>" onClose={this.onClose} />
         <Dialog.Body scrollable>
-          <Grid.Layout gap="sm" stretch>
-            <%- chunks.fieldsInputsList({ 
-              fields: fields, 
+          <Grid.Layout gap="sm" stretch><%-
+            chunks.fieldsInputsList({ 
+              fields: fields,
+              chunks: chunks,
               changeCase: changeCase,
               pluralize: pluralize,
               SchemaNameGenerator: SchemaNameGenerator,
@@ -64,7 +80,7 @@ const <%= changeCase.pascal(entityName)%>EditDialog = (
             Cancel
           </Button>
           <Button color="primary" type="submit" disabled={pristine || invalid} loading={submitting}>
-            Update Listing
+            Update <%= changeCase.pascal(entityName)%>
           </Button>
         </Dialog.Footer>
       </form>
@@ -72,14 +88,14 @@ const <%= changeCase.pascal(entityName)%>EditDialog = (
 
     renderForm = ({ args }) => {
       return (
-        <Form
+        <FormLogic
           type="UPDATE"
           tableSchemaName="<%= tableName%>"
-          onSubmit={this.createOnSubmit(args.initialValues.id)}
+          onSubmit={this.updateOnSubmit(args.initialValues.id)}
           initialValues={args.initialValues}
         >
           {this.renderFormContent}
-        </Form>
+        </FormLogic>
       );
     };
 

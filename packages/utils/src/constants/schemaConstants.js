@@ -17,13 +17,36 @@ export const SWITCH_FORMATS = {
   TRUE_FALSE: 'TRUE_FALSE',
   ACTIVE_INACTIVE: 'ACTIVE_INACTIVE',
   HIGH_LOW: 'HIGH_LOW',
-  SMART: 'SMART',
+  CUSTOM: 'CUSTOM',
+};
+
+
+export const SWITCH_VALUES = {
+  ON_OFF: {
+    true: 'On',
+    false: 'Off',
+  },
+  YES_NO: {
+    true: 'Yes',
+    false: 'No',
+  },
+  TRUE_FALSE: {
+    true: 'True',
+    false: 'False',
+  },
+  ACTIVE_INACTIVE: {
+    true: 'Active',
+    false: 'Inactive',
+  },
+  HIGH_LOW: {
+    true: 'High',
+    false: 'Low',
+  },
 };
 
 export const TEXT_FORMATS = {
   UNFORMATTED: 'UNFORMATTED',
   NAME: 'NAME',
-  ADDRESS: 'ADDRESS',
   SSN: 'SSN',
   EIN: 'EIN',
   PHONE: 'PHONE',

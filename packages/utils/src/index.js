@@ -4,7 +4,7 @@ export * from './constants';
 export * from './formatters';
 export * from './selectors';
 export * from './verifiers';
-export * from './queryTableGenerator';
+export * from './queryGenerators';
 export * from './functionParameters';
 
 export { tableSelectors };

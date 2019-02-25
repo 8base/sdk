@@ -219,8 +219,24 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
 "
-  query DataViewerTableCommonsContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query CommonsTableContent(
+    $filter: CommonFilter
+    $orderBy: [CommonOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    commonsList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         field1
@@ -235,8 +251,24 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
 "
-  query DataViewerTableFilesContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query FilesTableContent(
+    $filter: FileFilter
+    $orderBy: [FileOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    filesList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         file {
@@ -267,8 +299,24 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
 "
-  query DataViewerTableRelationContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query RelationTableContent(
+    $filter: RelationFilter
+    $orderBy: [RelationOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    relationsList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         field1 {
@@ -293,8 +341,24 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with smart fields 1`] = `
 "
-  query DataViewerTableSmartFieldsContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: smartFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query SmartFieldsTableContent(
+    $filter: SmartFieldFilter
+    $orderBy: [SmartFieldOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    smartFieldsList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         id
@@ -326,112 +390,26 @@ exports[`As a developer, I can generate graphql query for list by table schema s
   }"
 `;
 
-exports[`As a developer, I can generate graphql query for list by table schema should generate query object  1`] = `
-Object {
-  "address": Object {
-    "city": "city",
-    "state": "state",
-    "street1": "street1",
-    "street2": "street2",
-    "zip": "zip",
-  },
-  "addresses": Object {
-    "city": "city",
-    "state": "state",
-    "street1": "street1",
-    "street2": "street2",
-    "zip": "zip",
-  },
-  "file": Object {
-    "downloadUrl": "downloadUrl",
-    "fileId": "fileId",
-    "filename": "filename",
-    "id": "id",
-    "meta": "meta",
-    "shareUrl": "shareUrl",
-  },
-  "fileList": Object {
-    "count": "count",
-    "items": Object {
-      "downloadUrl": "downloadUrl",
-      "fileId": "fileId",
-      "filename": "filename",
-      "id": "id",
-      "meta": "meta",
-      "shareUrl": "shareUrl",
-    },
-  },
-  "meta": "meta",
-  "number": "number",
-  "numberList": "numberList",
-  "relation": Object {
-    "_description": "_description",
-    "id": "id",
-    "nestedRelation": Object {
-      "_description": "_description",
-      "id": "id",
-    },
-    "nestedRelationList": Object {
-      "count": "count",
-      "items": Object {
-        "_description": "_description",
-        "id": "id",
-      },
-    },
-    "relation": Object {
-      "_description": "_description",
-      "id": "id",
-    },
-    "relationList": Object {
-      "count": "count",
-      "items": Object {
-        "_description": "_description",
-        "id": "id",
-      },
-    },
-    "scalar": "scalar",
-    "scalarList": "scalarList",
-  },
-  "relationList": Object {
-    "count": "count",
-    "items": Object {
-      "_description": "_description",
-      "id": "id",
-      "nestedRelation": Object {
-        "_description": "_description",
-        "id": "id",
-      },
-      "nestedRelationList": Object {
-        "count": "count",
-        "items": Object {
-          "_description": "_description",
-          "id": "id",
-        },
-      },
-      "relation": Object {
-        "_description": "_description",
-        "id": "id",
-      },
-      "relationList": Object {
-        "count": "count",
-        "items": Object {
-          "_description": "_description",
-          "id": "id",
-        },
-      },
-      "scalar": "scalar",
-      "scalarList": "scalarList",
-    },
-  },
-  "scalar": "scalar",
-  "scalarList": "scalarList",
-}
-`;
-
 exports[`As a developer, I can generate graphql query for list by table schema should generate query string  1`] = `
 "
-  query DataViewerTableTableSchemaContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: tableSchemasList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+  query TableSchemaTableContent(
+    $filter: TableSchemaFilter
+    $orderBy: [TableSchemaOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    tableSchemasList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         number
@@ -580,6 +558,28 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "currency": null,
+        "format": "NUMBER",
+        "maxValue": null,
+        "minValue": null,
+        "precision": 0,
+      },
+      "isList": false,
+    },
+    "name": "numberanother",
+    "title": "Numberanother",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "currency": null,
+        "format": "NUMBER",
+        "maxValue": null,
+        "minValue": null,
+        "precision": 0,
+      },
       "isList": false,
     },
     "name": "number",
@@ -588,6 +588,13 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "currency": null,
+        "format": "NUMBER",
+        "maxValue": null,
+        "minValue": null,
+        "precision": 0,
+      },
       "isList": true,
     },
     "name": "numberList",
@@ -596,6 +603,76 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "SMART",
+      "fieldTypeAttributes": Object {
+        "format": "ADDRESS",
+        "innerFields": Array [
+          Object {
+            "description": null,
+            "displayName": "Street 1",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "street1",
+          },
+          Object {
+            "description": null,
+            "displayName": "Street 2",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "street2",
+          },
+          Object {
+            "description": null,
+            "displayName": "Zip",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "zip",
+          },
+          Object {
+            "description": null,
+            "displayName": "City",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "city",
+          },
+          Object {
+            "description": null,
+            "displayName": "State",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "state",
+          },
+        ],
+      },
       "isList": false,
     },
     "name": "address",
@@ -604,6 +681,76 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "SMART",
+      "fieldTypeAttributes": Object {
+        "format": "ADDRESS",
+        "innerFields": Array [
+          Object {
+            "description": null,
+            "displayName": "Street 1",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "street1",
+          },
+          Object {
+            "description": null,
+            "displayName": "Street 2",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "street2",
+          },
+          Object {
+            "description": null,
+            "displayName": "Zip",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "zip",
+          },
+          Object {
+            "description": null,
+            "displayName": "City",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "city",
+          },
+          Object {
+            "description": null,
+            "displayName": "State",
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 255,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": false,
+            "isUnique": false,
+            "name": "state",
+          },
+        ],
+      },
       "isList": true,
     },
     "name": "addresses",
@@ -612,6 +759,10 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
       "isList": false,
     },
     "name": "scalar",
@@ -619,7 +770,37 @@ Array [
   },
   Object {
     "meta": Object {
+      "fieldType": "FILE",
+      "fieldTypeAttributes": Object {
+        "format": "FILE",
+        "maxSize": null,
+        "typeRestrictions": null,
+      },
+      "isList": false,
+    },
+    "name": "file",
+    "title": "File",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "FILE",
+      "fieldTypeAttributes": Object {
+        "format": "FILE",
+        "maxSize": null,
+        "typeRestrictions": null,
+      },
+      "isList": true,
+    },
+    "name": "fileList",
+    "title": "FileList",
+  },
+  Object {
+    "meta": Object {
       "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
       "isList": true,
     },
     "name": "scalarList",
@@ -628,54 +809,67 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
       "isList": false,
     },
     "name": "relation.scalar",
-    "title": "Scalar",
+    "title": "relation.Scalar",
   },
   Object {
     "meta": Object {
       "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
       "isList": true,
     },
     "name": "relation.scalarList",
-    "title": "ScalarList",
+    "title": "relation.ScalarList",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": false,
     },
     "name": "relation.relation",
-    "title": "Relation",
+    "title": "relation.Relation",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": true,
     },
     "name": "relation.relationList",
-    "title": "RelationList",
+    "title": "relation.RelationList",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": false,
     },
     "name": "relation.nestedRelation",
-    "title": "NestedRelation",
+    "title": "relation.NestedRelation",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": true,
     },
     "name": "relation.nestedRelationList",
-    "title": "NestedRelationList",
+    "title": "relation.NestedRelationList",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": true,
     },
     "name": "relationList",
@@ -689,6 +883,13 @@ Array [
   Object {
     "meta": Object {
       "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "currency": null,
+        "format": "NUMBER",
+        "maxValue": null,
+        "minValue": null,
+        "precision": 0,
+      },
       "isList": false,
     },
     "name": "number",
@@ -696,15 +897,20 @@ Array [
   },
   Object {
     "meta": Object {
-      "fieldType": "RELATION",
+      "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
       "isList": true,
     },
-    "name": "relation.relationList",
-    "title": "RelationList",
+    "name": "relation.scalarList",
+    "title": "relation.ScalarList",
   },
   Object {
     "meta": Object {
       "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
       "isList": true,
     },
     "name": "relationList",

@@ -2,18 +2,41 @@
 
 exports[`should generate table by the table name 1`] = `
 "import React from 'react';
-import { compose } from 'recompose';
-import { pathOr } from 'ramda';
 import gql from 'graphql-tag';
-import { TableBuilder, Dropdown, Icon, Menu, withModal } from '@8base/boost';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+import { pathOr, join } from 'ramda';
+import { DateTime } from 'luxon';
+import { TableBuilder, Dropdown, Icon, Menu, Link, Tag, Row, withModal } from '@8base/boost';
+import { FIELD_TYPE, SMART_FORMATS, FILE_FORMATS, DATE_FORMATS, SWITCH_FORMATS, SWITCH_VALUES } from '@8base/utils';
 
-const BROKERS_LIST_QUERY = gql\`
-  
-  query DataViewerTablePropertiesContent($filter: PropertyFilter, $orderBy: [PropertyOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) { 
-    tableContent: propertiesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+const PROPERTY_LIST_QUERY = gql\`
+  query PropertiesTableContent(
+    $filter: PropertyFilter
+    $orderBy: [PropertyOrderBy]
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $skip: Int
+  ) {
+    propertiesList(
+      filter: $filter
+      orderBy: $orderBy
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
+        address {
+          country
+        }
+        phone {
+          code
+          number
+        }
         pictures {
           items {
             id
@@ -35,6 +58,22 @@ const BROKERS_LIST_QUERY = gql\`
         listings {
           items {
             id
+            property {
+              id
+              _description
+            }
+            broker {
+              id
+              _description
+            }
+            buyer {
+              id
+              _description
+            }
+            seller {
+              id
+              _description
+            }
             documents {
               items {
                 id
@@ -61,47 +100,127 @@ const BROKERS_LIST_QUERY = gql\`
 \`;
 
 const TABLE_COLUMNS = [
-  
-    {
-      name: bedrooms,
-      title: Bedrooms,
+  {
+    name: 'address',
+    title: 'Address',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.SMART,
+      fieldTypeAttributes: {
+        format: 'ADDRESS',
+      },
     },
-  
-    {
-      name: title,
-      title: Title,
+  },
+  {
+    name: 'phone',
+    title: 'Phone',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.SMART,
+      fieldTypeAttributes: {
+        format: 'PHONE',
+      },
     },
-  
-    {
-      name: description,
-      title: Description,
+  },
+  {
+    name: 'pictures',
+    title: 'Pictures',
+    meta: {
+      isList: true,
+      fieldType: FIELD_TYPE.FILE,
+      fieldTypeAttributes: {
+        format: 'IMAGE',
+      },
     },
-  
-    {
-      name: sqFootage,
-      title: SqFootage,
+  },
+  {
+    name: 'bedrooms',
+    title: 'Bedrooms',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.NUMBER,
+      fieldTypeAttributes: {
+        format: 'NUMBER',
+      },
     },
-  
-    {
-      name: bathrooms,
-      title: Bathrooms,
+  },
+  {
+    name: 'title',
+    title: 'Title',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.TEXT,
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+      },
     },
-  
-    {
-      name: garage,
-      title: Garage,
+  },
+  {
+    name: 'description',
+    title: 'Description',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.TEXT,
+      fieldTypeAttributes: {
+        format: 'UNFORMATTED',
+      },
     },
-  
-    {
-      name: pool,
-      title: Pool,
+  },
+  {
+    name: 'sqFootage',
+    title: 'SqFootage',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.NUMBER,
+      fieldTypeAttributes: {
+        format: 'NUMBER',
+      },
     },
-  
-    {
-      name: listings,
-      title: Listings,
+  },
+  {
+    name: 'bathrooms',
+    title: 'Bathrooms',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.NUMBER,
+      fieldTypeAttributes: {
+        format: 'NUMBER',
+      },
     },
-  
+  },
+  {
+    name: 'garage',
+    title: 'Garage',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.SWITCH,
+      fieldTypeAttributes: {
+        format: 'YES_NO',
+      },
+    },
+  },
+  {
+    name: 'pool',
+    title: 'Pool',
+    meta: {
+      isList: false,
+      fieldType: FIELD_TYPE.SWITCH,
+      fieldTypeAttributes: {
+        format: 'YES_NO',
+      },
+    },
+  },
+  {
+    name: 'listings',
+    title: 'Listings',
+    meta: {
+      isList: true,
+      fieldType: FIELD_TYPE.RELATION,
+      fieldTypeAttributes: {
+        format: '',
+      },
+    },
+  },
   {
     name: 'edit',
     title: '',
@@ -114,44 +233,168 @@ const enhancer = compose(
   graphql(PROPERTY_LIST_QUERY, { name: 'properties' })
 );
 
-const PropertyTable = enhancer(({ (properties, openModal, closeModal }) => (
-  <TableBuilder
-    loading={properties.loading}
-    data={pathOr([], ['propertiesList', 'items'], properties)}
-    columns={TABLE_COLUMNS}
-    renderCell={(column, rowData) => {
-      switch (column.name) {
-        case 'edit':
-          return (
-            <Dropdown defaultOpen={false}>
-              <Dropdown.Head>
-                <Icon name=\\"Dots\\" size=\\"sm\\" color=\\"LIGHT_GRAY2\\" />
-              </Dropdown.Head>
-              <Dropdown.Body pin=\\"right\\">
-                {({ closeDropdown }) => (
-                  <Menu>
-                    <Menu.Item
-                      onClick={() => {
-                        openModal(PropertyDeleteDialog.id, { id: rowData.id });
-                        closeDropdown();
-                      }}
-                    >
-                      Delete
-                    </Menu.Item>
-                  </Menu>
-                )}
-              </Dropdown.Body>
-            </Dropdown>
-          );
-        default:
-          return <div>{pathOr('', column.name.split('.'), rowData)}</div>;
-      }
-    }}
-    action=\\"Create Property\\"
-    onActionClick={() => openModal(PropertyCreateDialog.id)}
-  />
-));
+const PropertiesTable = enhancer(
+  class PropertiesTable extends React.PureComponent {
+    renderEdit = rowData => (
+      <Dropdown defaultOpen={false}>
+        <Dropdown.Head>
+          <Icon name=\\"Dots\\" size=\\"sm\\" color=\\"LIGHT_GRAY2\\" />
+        </Dropdown.Head>
+        <Dropdown.Body pin=\\"right\\">
+          {({ closeDropdown }) => (
+            <Menu>
+              <Menu.Item
+                onClick={() => {
+                  this.props.openModal('PROPERTY_EDIT_DIALOG_ID', { initialValues: rowData });
+                  closeDropdown();
+                }}
+              >
+                Edit
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => {
+                  this.props.openModal('PROPERTY_DELETE_DIALOG_ID', { id: rowData.id });
+                  closeDropdown();
+                }}
+              >
+                Delete
+              </Menu.Item>
+            </Menu>
+          )}
+        </Dropdown.Body>
+      </Dropdown>
+    );
 
-export { PropertyTable };
+    renderItems = (column, rowData, handler) => {
+      const dataPath = column.name.split('.');
+      const cellData = pathOr('', dataPath, rowData);
+
+      if (column.meta.isList) {
+        const itemsArray = cellData.items ? cellData.items : cellData;
+
+        return (
+          <Row style={{ flexWrap: 'wrap' }}>
+            {itemsArray && itemsArray.map(item => !!item && <Tag color=\\"LIGHT_GRAY2\\">{handler(item)}</Tag>)}
+          </Row>
+        );
+      } else {
+        return cellData && <div>{handler(cellData)}</div>;
+      }
+    };
+
+    renderScalar = (column, rowData) => {
+      return this.renderItems(column, rowData, item => item);
+    };
+
+    renderDate = (column, rowData) => {
+      const dateFormat =
+        column.meta.fieldTypeAttributes.format === DATE_FORMATS.DATE ? DateTime.DATE_SHORT : DateTime.DATETIME_SHORT;
+
+      return this.renderItems(column, rowData, item => DateTime.fromISO(item).toLocaleString(dateFormat));
+    };
+
+    renderSwitch = (column, rowData) => {
+      if (column.meta.fieldTypeAttributes.format === SWITCH_FORMATS.CUSTOM) {
+        return this.renderItems(column, rowData, item => item);
+      } else {
+        return this.renderItems(column, rowData, item => SWITCH_VALUES[column.meta.fieldTypeAttributes.format][item]);
+      }
+    };
+
+    renderRelation = (column, rowData) => {
+      const dataPath = column.name.split('.');
+
+      if (column.meta.isList) {
+        return pathOr('', [...dataPath, 'count'], rowData);
+      } else {
+        return pathOr('', [...dataPath, '_description'], rowData);
+      }
+    };
+
+    renderFile = (column, rowData) => {
+      if (column.meta.fieldTypeAttributes.format === FILE_FORMATS.IMAGE && !column.meta.isList) {
+        const cellData = pathOr('', column.name.split('.'), rowData);
+
+        return cellData && <img src={cellData.downloadUrl} alt=\\"filename\\" style={{ width: '5rem' }} />;
+      } else {
+        return this.renderItems(column, rowData, item => (
+          <div>
+            <Link key={item.downloadUrl} target=\\"_blank\\" href={item.downloadUrl} size=\\"sm\\">
+              {item.filename}
+            </Link>
+          </div>
+        ));
+      }
+    };
+
+    renderSmart = (column, rowData) => {
+      return this.renderItems(column, rowData, item => {
+        if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.ADDRESS) {
+          const address = [item.street1, item.street2, item.city, item.state, item.zip].filter(item => !!item);
+
+          return join(', ', address);
+        } else if (column.meta.fieldTypeAttributes.format === SMART_FORMATS.PHONE) {
+          const phone = [item.code, item.number].filter(item => !!item);
+
+          return join(' ', phone);
+        }
+      });
+    };
+
+    renderCell = (column, rowData) => {
+      if (column.name === 'edit') {
+        return this.renderEdit(rowData);
+      }
+
+      switch (column.meta.fieldType) {
+        case FIELD_TYPE.TEXT:
+        case FIELD_TYPE.NUMBER:
+          return this.renderScalar(column, rowData);
+
+        case FIELD_TYPE.DATE:
+          return this.renderDate(column, rowData);
+
+        case FIELD_TYPE.SWITCH:
+          return this.renderSwitch(column, rowData);
+
+        case FIELD_TYPE.FILE:
+          return this.renderFile(column, rowData);
+
+        case FIELD_TYPE.RELATION:
+          return this.renderRelation(column, rowData);
+
+        case FIELD_TYPE.SMART:
+          return this.renderSmart(column, rowData);
+
+        default:
+          return null;
+      }
+    };
+
+    openCreateModal = () => {
+      const { openModal } = this.props;
+
+      openModal('PROPERTY_CREATE_DIALOG_ID');
+    };
+
+    render() {
+      const { properties } = this.props;
+      const tableData = pathOr([], ['propertiesList', 'items'], properties);
+
+      return (
+        <TableBuilder
+          loading={properties.loading}
+          data={tableData}
+          columns={TABLE_COLUMNS}
+          action=\\"Create Property\\"
+          renderCell={this.renderCell}
+          onActionClick={this.openCreateModal}
+        />
+      );
+    }
+  }
+);
+
+export { PropertiesTable };
 "
 `;

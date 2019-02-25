@@ -1,9 +1,9 @@
 import React from 'react';
-import * as R from 'ramda';
-import { Form } from '@8base/forms';
+import gql from 'graphql-tag';
+import { memoizeWith, identity } from 'ramda';
+import { Form as FormLogic } from '@8base/forms';
 import { Dialog, Button, ModalContext } from '@8base/boost';
 import { graphql } from 'react-apollo';
-
 
 const <%= changeCase.upper(entityName)%>_DELETE_MUTATION = gql`
   mutation <%= changeCase.pascal(entityName)%>Delete($id: ID!) {
@@ -16,9 +16,9 @@ const <%= changeCase.upper(entityName)%>_DELETE_MUTATION = gql`
 const enhancer = graphql(<%= changeCase.upper(entityName)%>_DELETE_MUTATION, {
   name: '<%= SchemaNameGenerator.getDeleteItemFieldName(tableName)%>',
   options: {
-    refetchQueries: ['<%= SchemaNameGenerator.getTableListFieldName(tableName)%>'],
+    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent'],
     context: {
-      ['TOAST_SUCCESS_MESSAGE']: '<%= changeCase.pascal(entityName)%> successfuly deleted',
+      TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(entityName)%> successfuly deleted',
     },
   },
 });
@@ -27,8 +27,8 @@ const <%= changeCase.pascal(entityName)%>DeleteDialog = enhancer(
   class <%= changeCase.pascal(entityName)%>DeleteDialog extends React.Component {
     static contextType = ModalContext;
 
-    createOnSubmit = R.memoizeWith(R.identity, id => async () => {
-      await this.props.listingDelete({ variables: { id } });
+    createOnSubmit = memoizeWith(identity, id => async () => {
+      await this.props.<%= SchemaNameGenerator.getDeleteItemFieldName(tableName)%>({ variables: { id } });
 
       this.context.closeModal('<%= changeCase.upper(entityName)%>_DELETE_DIALOG_ID');
     });
@@ -53,7 +53,7 @@ const <%= changeCase.pascal(entityName)%>DeleteDialog = enhancer(
     );
 
     renderContent = ({ args }) => {
-      return <Form onSubmit={this.createOnSubmit(args.id)}>{this.renderFormContent}</Form>;
+      return <FormLogic onSubmit={this.createOnSubmit(args.id)}>{this.renderFormContent}</FormLogic>;
     };
 
     render() {

@@ -1,0 +1,28 @@
+// @flow
+import * as R from 'ramda';
+
+const omitDeep = (omitedProps: string[], objectForOmitting?: Object) => {
+  if (!objectForOmitting) {
+    return objectForOmitting;
+  }
+
+  const currentLevelOmitedObject = R.omit(omitedProps, objectForOmitting);
+
+  const omitValue = (value: any) => {
+    if (R.is(Array, value)) {
+      return value; //.map(item => omitDeep(omitedProps, item));
+    } else if (R.is(Object, value)) {
+      return omitDeep(omitedProps, value);
+    }
+    return value;
+  };
+
+  const fullOmitedObject = R.mapObjIndexed(
+    omitValue,
+    currentLevelOmitedObject,
+  );
+
+  return fullOmitedObject;
+};
+
+export { omitDeep };

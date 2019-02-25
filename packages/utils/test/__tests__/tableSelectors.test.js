@@ -43,4 +43,75 @@ describe('apollo table selectors', () => {
     expect(selectors.isRelationField(tableState, 'f-1')).toBeTruthy();
     expect(selectors.isRelationField(tableState, 'f-2')).toBeFalsy();
   });
+
+  it('should return true when table has list fields', () => {
+    expect(selectors.hasListFields(tableState)).toBeFalsy();
+
+    expect(selectors.hasListFields({
+      ...tableState,
+      fields: [
+        ...tableState.fields,
+        {
+          id: 'f-1',
+          name: 'createdAt',
+          isMeta: true,
+          fieldType: 'RELATION',
+          isList: true,
+        },
+      ],
+    })).toBeTruthy();
+  });
+
+  it('should return true when table has relation fields', () => {
+    expect(selectors.hasRelationFields(tableState)).toBeTruthy();
+
+    expect(selectors.hasRelationFields({
+      ...tableState,
+      fields: [
+        {
+          name: 'createdAt',
+          isMeta: true,
+          fieldType: 'TEXT',
+        },
+      ],
+    })).toBeFalsy();
+  });
+
+  it('should return true when table has address fields', () => {
+    expect(selectors.hasAddressFields(tableState)).toBeFalsy();
+
+    expect(selectors.hasAddressFields({
+      ...tableState,
+      fields: [
+        ...tableState.fields,
+        {
+          name: 'createdAt',
+          isMeta: true,
+          fieldType: 'SMART',
+          fieldTypeAttributes: {
+            format: 'ADDRESS',
+          },
+        },
+      ],
+    })).toBeTruthy();
+  });
+
+  it('should return true when table has phone fields', () => {
+    expect(selectors.hasPhoneFields(tableState)).toBeFalsy();
+
+    expect(selectors.hasPhoneFields({
+      ...tableState,
+      fields: [
+        ...tableState.fields,
+        {
+          name: 'createdAt',
+          isMeta: true,
+          fieldType: 'SMART',
+          fieldTypeAttributes: {
+            format: 'PHONE',
+          },
+        },
+      ],
+    })).toBeTruthy();
+  });
 });

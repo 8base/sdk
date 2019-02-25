@@ -88,3 +88,8 @@ export interface Authorizable {
   logout(options?: Object): Promise<void>,
 }
 
+export type QueryGeneratorConfig = {
+  deep?: number,
+  withMeta?: boolean,
+  includeColumns?: null | string[],
+};
