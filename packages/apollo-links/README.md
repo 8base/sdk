@@ -1,6 +1,6 @@
 # 8base Apollo Links
 
-The set of Apollo links for more useful communication with 8base API.
+A collection of Apollo links for more efficient communication with the 8base API.
 
 ## API
 
@@ -20,9 +20,9 @@ Token Refresh Link renew authentication token when it's expired.
 #### Parameters
 
 -   `options` **TokenRefreshLinkOptions** The token refresh link options.
-    -   `options.getRefreshTokenParameters` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The function which are using for get refresh token parameters.
-    -   `options.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The callback which called when attempt to refresh authentication is success.
-    -   `options.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when attempt to refresh authentication is failed.
+    -   `options.getRefreshTokenParameters` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Used to refresh token parameters.
+    -   `options.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback which is executed when an attempt to refresh authentication is successful.
+    -   `options.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Callback which is executed when an attempt to refresh authentication fails.
 
 ### SuccessLink
 
@@ -51,7 +51,7 @@ const successHandler = ({ operation }) => {
 };
 
 const getAuthState = () => ({
-  workaspace: '',
+  workspace: '',
   email: '',
   userId: '',
   token: '',
@@ -64,7 +64,7 @@ const getRefreshTokenParameters = () => ({
 });
 
 const authSuccessHandler = ({ token, refreshToken}) => {
-  conolse.log({ token, refreshToken });
+  console.log({ token, refreshToken });
 }
 
 const authErrorHandler = () => {

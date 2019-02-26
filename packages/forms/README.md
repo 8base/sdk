@@ -20,7 +20,7 @@
 
 **Extends React.Component**
 
-`Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props and some extra props for easy working with 8base API.
+`Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). This component accepts [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) and other props for easy implementation with the 8base API.
 
 #### Properties
 
@@ -31,7 +31,7 @@
 
 **Extends React.Component**
 
-`FieldArray` wrapper based on `FieldArray` from the [`react-final-form-arrays`](https://github.com/final-form/react-final-form-arrays). It accepts [`FieldArrayProps`](https://github.com/final-form/react-final-form-arrays#fieldarrayprops) props.
+`FieldArray` wrapper based on `FieldArray` from the [`react-final-form-arrays`](https://github.com/final-form/react-final-form-arrays). It accepts [`FieldArrayProps`](https://github.com/final-form/react-final-form-arrays#fieldarrayprops) as a prop.
 
 ### Fieldset
 
@@ -42,18 +42,18 @@
 #### Properties
 
 -   `tableSchema` **TableSchema?** The 8base API table schema.
--   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
+-   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. This prop only works if `SchemaContext` is provided.
 
 ### Form
 
 **Extends React.Component**
 
-`Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FormProps`](https://github.com/final-form/react-final-form#formprops) props and some extra props for easy working with 8base API.
+`Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). This component accepts [`FormProps`](https://github.com/final-form/react-final-form#formprops) and other props for easy implementation with the 8base API.
 
 #### Properties
 
 -   `tableSchema` **TableSchema?** The 8base API table schema.
--   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
+-   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. This prop only works if `SchemaContext` is provided.
 
 ## Examples
 

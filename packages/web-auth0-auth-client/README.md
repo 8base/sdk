@@ -13,7 +13,7 @@ The 8base auth0 auth client for the `AuthProvider`.
 
 ### WebAuth0AuthClient
 
-Create instacne of the web auth0 auth client.
+Create an instance of the web auth0 auth client.
 
 #### Parameters
 
@@ -24,7 +24,7 @@ Create instacne of the web auth0 auth client.
 
 ## Usage
 
-### Withouth authentication profile
+### Without authentication profile
 ```js
 import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
@@ -122,4 +122,3 @@ import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 ...
 
 ```
-

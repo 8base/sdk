@@ -1,6 +1,6 @@
 # 8base Create Apollo Client
 
-The Apollo Client library contains extended [ApolloClient](https://www.apollographql.com/docs/react/api/apollo-client.html) with several links to work with 8base services. 
+The Apollo Client library contains an extended implementation of [ApolloClient](https://www.apollographql.com/docs/react/api/apollo-client.html) that includes several links to work with 8base services.
 
 ## EightBaseApolloClient
 
@@ -15,19 +15,19 @@ The Apollo Client library contains extended [ApolloClient](https://www.apollogra
 
 **Extends ApolloClient**
 
-Extended Apollo Client by 8base several links.
+Extends Apollo Client by 8base several links.
 
 #### Parameters
 
 -   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The Apollo Client config.
     -   `config.uri` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Endpoint of the GraphQl server.
-    -   `config.getAuthState` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The function which are using to get auth state.
-    -   `config.getRefreshTokenParameters` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The function which are using for get refresh token parameters.
-    -   `config.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The callback which called when attempt to refresh authentication is success.
-    -   `config.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when attempt to refresh authentication is failed.
-    -   `config.onIdTokenExpired` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when id token is expired.
-    -   `config.onRequestSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is success.
-    -   `config.onRequestError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** The callback which called when request is fail.
-    -   `config.extendLinks` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Function to extend standart array of the links.
+    -   `config.getAuthState` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Used to retrieve authentication state.
+    -   `config.getRefreshTokenParameters` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Used to retrieve the refresh token parameters.
+    -   `config.onAuthSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback that is executed when an attempt to refresh authentication is successful.
+    -   `config.onAuthError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Callback which is executed when an attempt to refresh authentication fails.
+    -   `config.onIdTokenExpired` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Callback which is executed when id token is expired.
+    -   `config.onRequestSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Callback which is executed when a request is successful.
+    -   `config.onRequestError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Callback which is executed when a request fails
+    -   `config.extendLinks` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Function that extends standard array of links.
 
 Returns **any** instance of the Apollo Client

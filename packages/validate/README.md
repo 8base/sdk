@@ -1,6 +1,6 @@
 # 8base Validate
 
-This library is used by the other 8base service packages to validate forms. You can also use it to make own form validation etc.
+This library is used by the other 8base service packages to validate forms. You can also use it to make your own form validation etc.
 
 ## API
 
@@ -13,7 +13,7 @@ This library is used by the other 8base service packages to validate forms. You 
 
 ### validatorFacade
 
-ValidatorFacade creates validaton function based on field metadata
+ValidatorFacade creates a validation function based on field metadata
 
 Type: function (field: Field): function (value: any): ValidationError?
 

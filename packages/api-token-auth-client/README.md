@@ -13,7 +13,7 @@ The 8base api token auth client for the `AuthProvider`.
 
 ### ApiTokenAuthClient
 
-Create instacne of the api token auth client
+Create instance of the api token auth client
 
 #### Parameters
 
