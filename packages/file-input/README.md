@@ -1,3 +1,3 @@
 # 8base File Input
 
-File input integrated with Filestask and 8base
+File input integrated with Filestack and 8base

@@ -13,7 +13,7 @@ The 8base react-native auth0 auth client for the `AuthProvider`.
 
 ### ReactNativeAuth0AuthClient
 
-Create instacne of the react-native auth0 auth client.
+Create an instance of the react-native auth0 auth client.
 
 #### Parameters
 
@@ -65,7 +65,7 @@ import { ReactNativeAuth0AuthClient } form '@8base/react-native-auth0-auth-clien
       </View>
     );
   };
-  
+
   ...
 
   <AuthProvider authClient={ authClient }>

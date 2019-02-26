@@ -1,6 +1,6 @@
 # 8base CRUD
 
-8base CRUD is wrapper under the react-apollo component to simplify working with the crud
+8base CRUD is a wrapper under the react-apollo component to simplify working with the crud operations.
 
 ## API
 
@@ -46,7 +46,7 @@ Component for deleting the record of the table
 
 **Extends Component**
 
-Component for creating the record of the table
+Component for creating records in table
 
 ### ChildrenPropObject
 
@@ -54,16 +54,16 @@ Results of the record update queries and mutation
 
 #### Properties
 
--   `tableMetaResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `recordDataResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `mutateResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `fetchingLoading` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `tableMetaResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `recordDataResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `mutateResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `fetchingLoading` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ### RecordUpdate
 
 **Extends Component**
 
-Component for updating the record of the table
+Component for updating records in table
 
 #### Properties
 
@@ -75,7 +75,7 @@ Component for updating the record of the table
 
 **Extends Component**
 
-Component for deleting the record of the table
+Component for deleting records in table
 
 #### Properties
 
@@ -104,7 +104,7 @@ Component for deleting the record of the table
     } }
   >
     { (onSubmit, { tableMetaResult, recordDataResult, fetchingLoading }) => (
-      <FormComponent initialBalues={ recordDataResult.data } onSubmit={ onSubmit } />
+      <FormComponent initialValues={ recordDataResult.data } onSubmit={ onSubmit } />
     ) }
   </RecordUpdate>
 ```

@@ -1,6 +1,6 @@
 # 8base SDK
 
-Set of JavaScript SDK packages for easy working with 8base.
+This repository contains a set of SDK packages to make it easier to use 8base with JavaScript.
 
 ## Build
 ```

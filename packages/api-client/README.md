@@ -1,6 +1,6 @@
 # 8base API Client
 
-This client library is used by the other 8base service packages to make requests to the 8base API. You can also use it independently to make custom requests to the our API.
+This client library is used by the other 8base service packages to make requests to the 8base API. You can also use it independently to make custom requests to the API.
 
 ## API
 
@@ -27,7 +27,7 @@ Client provides methods to make requests to the API.
 
 #### Parameters
 
--   `endpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The endpoint which are using for make requests.
+-   `endpoint` - **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** - The GraphQL API endpoint from your 8base workspace.
 
 #### setIdToken
 
@@ -70,7 +70,7 @@ Send request to the API
 -   `query` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | DocumentNode)** GraphQL query.
 -   `variables` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The variables that will be used when executing the query.
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)**
 
 # Usage
 

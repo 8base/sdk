@@ -1,6 +1,6 @@
 # 8base Table Schema Provider
 
-The Table Schema Provider fetching list of 8base table schemas and provide it via React Context.
+The Table Schema Provider fetches 8base table schemas and provides it via React Context.
 
 ## TableSchemaProvider
 

@@ -1,6 +1,6 @@
 # 8base Auth
 
-The 8base Auth package contains provider with authentication state and auth helpers.
+The 8base Auth package contains a provider with authentication state and auth helpers.
 
 ## AuthProvider
 
@@ -20,7 +20,7 @@ Provides access to the authentication state.
 
 #### Parameters
 
--   `props` **AuthProviderProps** 
+-   `props` **AuthProviderProps**
 
 #### Properties
 
