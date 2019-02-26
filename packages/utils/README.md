@@ -1,6 +1,6 @@
 # 8base Utils
 
-This library contains utils used by the other 8base service packages. You can also use it to common 
+This library contains utils used by the other 8base service packages.
 
 ## API
 
