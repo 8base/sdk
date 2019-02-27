@@ -37,12 +37,15 @@ export type FileField = Field<{}>;
 
 export type RelationField = Field<{}>;
 
+export type SmartField = Field<{}>;
+
 export type Fields = NumberField |
   TextField |
   DateField |
   SwitchField |
   FileField |
-  RelationField;
+  RelationField |
+  SmartField;
 
 const getFieldTypeAttributes: (Fields => {}) = R.prop('fieldTypeAttributes');
 const getMaxPrecision: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'precision'));
@@ -210,6 +213,8 @@ const getFileFieldValidators: ValidatorsGetter<FileField> = () => [];
 
 const getRelationFieldValidators: ValidatorsGetter<RelationField> = () => [];
 
+const getSmartFieldValidators: ValidatorsGetter<SmartField> = () => [];
+
 type ValidatorsProcesser = (validators: Array<PreparedValidator>) => PreparedValidator;
 
 const processValidators: ValidatorsProcesser = validators => R.converge(
@@ -236,6 +241,7 @@ export const validatorFacade: ValidatorFacade = R.pipe(
         [R.propEq('fieldType', FIELD_TYPE.SWITCH), getSwitchFieldValidators],
         [R.propEq('fieldType', FIELD_TYPE.FILE), getFileFieldValidators],
         [R.propEq('fieldType', FIELD_TYPE.RELATION), getRelationFieldValidators],
+        [R.propEq('fieldType', FIELD_TYPE.SMART), getSmartFieldValidators],
         [R.T, () => { throw new Error('Unsupported field type'); }],
       ]),
     ],

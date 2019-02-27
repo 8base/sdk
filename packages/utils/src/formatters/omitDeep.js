@@ -1,8 +1,8 @@
 // @flow
 import * as R from 'ramda';
 
-const omitDeep = (omitedProps: string[], objectForOmitting?: Object) => {
-  if (!objectForOmitting) {
+const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
+  if (!objectForOmitting || !R.is(Object, objectForOmitting)) {
     return objectForOmitting;
   }
 
@@ -10,7 +10,7 @@ const omitDeep = (omitedProps: string[], objectForOmitting?: Object) => {
 
   const omitValue = (value: any) => {
     if (R.is(Array, value)) {
-      return value; //.map(item => omitDeep(omitedProps, item));
+      return value.map(item => omitDeep(omitedProps, item));
     } else if (R.is(Object, value)) {
       return omitDeep(omitedProps, value);
     }
