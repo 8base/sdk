@@ -1,5 +1,5 @@
 
-const AddressField = ({ label, name }) => (
+const AddressField = ({ label, input: { name } }) => (
   <Column gap="none" alignItems="stretch">
     {label && <Label kind="secondary">{label}</Label>}
     <Grid.Layout

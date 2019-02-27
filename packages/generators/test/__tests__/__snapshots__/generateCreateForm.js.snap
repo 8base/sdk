@@ -78,7 +78,7 @@ const ListFields = ({ fields, label, component, defaultValue = '', ...rest }) =>
   </React.Fragment>
 );
 
-const AddressField = ({ label, name }) => (
+const AddressField = ({ label, input: { name } }) => (
   <Column gap=\\"none\\" alignItems=\\"stretch\\">
     {label && <Label kind=\\"secondary\\">{label}</Label>}
     <Grid.Layout
@@ -114,7 +114,7 @@ const AddressField = ({ label, name }) => (
   </Column>
 );
 
-const PhoneField = ({ label, name }) => (
+const PhoneField = ({ label, input: { name } }) => (
   <Column gap=\\"none\\" alignItems=\\"stretch\\">
     {label && <Label kind=\\"secondary\\">{label}</Label>}
     <Grid.Layout columns=\\"120px 1fr\\" autoRows=\\"auto\\" gap=\\"lg\\">
@@ -158,10 +158,10 @@ const PropertyCreateDialog = enhancer(
         <Dialog.Body scrollable>
           <Grid.Layout gap=\\"sm\\" stretch>
             <Grid.Box>
-              <AddressField name=\\"address\\" label=\\"Address\\" />
+              <Field name=\\"address\\" label=\\"Address\\" component={AddressField} />
             </Grid.Box>
             <Grid.Box>
-              <PhoneField name=\\"phone\\" label=\\"Phone\\" />
+              <Field name=\\"phone\\" label=\\"Phone\\" component={PhoneField} />
             </Grid.Box>
             <Grid.Box>
               <FieldArray name=\\"pictures\\">

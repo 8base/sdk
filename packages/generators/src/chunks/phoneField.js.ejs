@@ -1,5 +1,5 @@
 
-const PhoneField = ({ label, name }) => (
+const PhoneField = ({ label, input: { name } }) => (
   <Column gap="none" alignItems="stretch">
     {label && <Label kind="secondary">{label}</Label>}
     <Grid.Layout columns="120px 1fr" autoRows="auto" gap="lg">

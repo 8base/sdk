@@ -51,13 +51,13 @@
                 {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={AddressField} />}
               </FieldArray><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'ADDRESS') { 
-                %><AddressField name="<%= field.name%>" label="<%= field.displayName%>" /><%
+                %><Field name="<%= field.name%>" label="<%= field.displayName%>" component={AddressField} /><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'PHONE' && field.isList) { 
                 %><FieldArray name="<%= field.name%>">
                 {({ fields }) => <ListFields fields={fields} label="<%= field.displayName%>" component={PhoneField} />}
               </FieldArray><%
               } else if (field.fieldType === 'SMART' && field.fieldTypeAttributes.format === 'PHONE') { 
-                %><PhoneField name="<%= field.name%>" label="<%= field.displayName%>" /><%
+                %><Field name="<%= field.name%>" label="<%= field.displayName%>" component={PhoneField} /><%
               } else if (field.fieldType === 'RELATION') {
                 %><Query query={<%= changeCase.upper(field.name)%>_LIST_QUERY}>
                 {({ data, loading }) => (
