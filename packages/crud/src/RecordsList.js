@@ -65,7 +65,7 @@ export class RecordsList extends Component<RecordsListProps> {
         { (tableMetaResult) => (
           <Query
             { ...rest }
-            query={ gql(createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.name)) }
+            query={ gql(createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.name, { tableContentName: 'tableContent' })) }
           >
             { (recordsListResult) => children({
               ...recordsListResult,
