@@ -43,6 +43,8 @@ const getIdToken = R.path(['idToken']);
 
 const getIdTokenPayload = R.prop('idTokenPayload');
 
+const getState = R.prop('state');
+
 const get8baseRedirectUri = (
   originalRedirectUri: string,
   workspaceId: string,
@@ -139,6 +141,7 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
         idToken: getIdToken(result),
         isEmailVerified: isEmailVerified(result),
         idTokenPayload: getIdTokenPayload(result),
+        state: getState(result),
       });
     });
   });
@@ -175,6 +178,7 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
           idToken: getIdToken(authResult),
           isEmailVerified: isEmailVerified(authResult),
           idTokenPayload: getIdTokenPayload(authResult),
+          state: getState(authResult),
         });
       });
     });
