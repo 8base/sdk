@@ -72,6 +72,7 @@ export type AuthData = {
   idToken: string,
   email: string,
   idTokenPayload: Object,
+  state: any,
 };
 
 export interface AuthClient {
