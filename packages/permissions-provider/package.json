@@ -1,6 +1,6 @@
 {
   "name": "@8base/permissions-provider",
-  "version": "0.14.3",
+  "version": "0.14.4",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
