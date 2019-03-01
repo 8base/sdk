@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import fp from 'lodash/fp';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { SchemaNameGenerator } from '@8base/sdk';
+import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import type { TableSchema } from '@8base/utils';
 import { createTableRowQueryTag } from '@8base/utils';
 

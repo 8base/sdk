@@ -1,6 +1,6 @@
 // @flow
 import * as R from 'ramda';
-import { SchemaNameGenerator } from '@8base/sdk';
+import { SchemaNameGenerator } from '@8base/schema-name-generator';
 
 import * as tableSelectors from '../selectors/tableSelectors';
 import type { TableSchema, QueryGeneratorConfig } from '../types';

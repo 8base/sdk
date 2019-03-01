@@ -10,7 +10,7 @@
     "docs": "yarn doc src/index.js --section=API"
   },
   "dependencies": {
-    "@8base/sdk": "^0.0.78",
+    "@8base/schema-name-generator": "^0.1.1",
     "@8base/table-schema-provider": "^0.14.4",
     "@8base/utils": "^0.14.4",
     "@babel/runtime": "^7.2.0",
