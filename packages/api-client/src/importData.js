@@ -1,6 +1,6 @@
 // @flow
 import { formatDataForMutation, isRelationField, MUTATION_TYPE } from '@8base/utils';
-import { SchemaNameGenerator } from '@8base/sdk';
+import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import type { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, USER_QUERY } from './constants';

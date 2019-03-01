@@ -3,7 +3,7 @@
 import ejs from 'ejs';
 import pluralize from 'pluralize';
 import changeCase from 'change-case';
-import { SchemaNameGenerator } from '@8base/sdk';
+import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import { createTableFilterGraphqlTag, createQueryColumnsList, tableSelectors } from '@8base/utils';
 import type { TableSchema } from '@8base/utils';
 import type { GeneratorsConfig } from '../types';
