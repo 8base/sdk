@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import * as R from 'ramda';
 import { FieldArray as FinalFieldArray } from 'react-final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
 import type { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
@@ -12,12 +13,13 @@ import type { FieldArrayProps } from './types';
  */
 class FieldArray extends React.Component<FieldArrayProps> {
   collectProps = (): FinalFieldArrayProps => {
-    const { fieldSchema, name, ...restProps } = this.props;
+    const { fieldSchema, name, isEqual, ...restProps } = this.props;
 
     if (fieldSchema) {
       return {
         name: name || fieldSchema.name,
         fieldSchema,
+        isEqual: isEqual || R.equals,
         ...restProps,
       };
     }
