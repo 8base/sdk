@@ -90,6 +90,7 @@ export const TABLES_LIST_QUERY = `
     currency
     minValue
     maxValue
+    isBigInt
   }
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
