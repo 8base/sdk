@@ -71,6 +71,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
     currency
     minValue
     maxValue
+    isBigInt
   }
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
