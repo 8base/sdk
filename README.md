@@ -12,36 +12,29 @@ If you're developing on 8base now or are interested in using the 8base tools in 
 [whitepaper-url]: https://0xproject.com/pdfs/0x_white_paper.pdf
 [dev-mailing-list-url]: https://app.8base.com/auth/signup
 
-[![CircleCI](https://circleci.com/gh/0xProject/0x-monorepo.svg?style=svg&circle-token=61bf7cd8c9b4e11b132089dfcffdd1be277d1e0c)](https://circleci.com/gh/0xProject/0x-monorepo)
-[![Coverage Status](https://coveralls.io/repos/github/0xProject/0x-monorepo/badge.svg?branch=development)](https://coveralls.io/github/0xProject/0x-monorepo?branch=development)
-[![Discord](https://img.shields.io/badge/chat-rocket.chat-yellow.svg?style=flat)](https://chat.0xproject.com)
-[![Join the chat at https://gitter.im/0xProject/Lobby](https://badges.gitter.im/0xProject/Lobby.svg)](https://gitter.im/0xProject/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![8base docs](https://img.shields.io/badge/docs-read-blue.svg)](https://docs.8base.com/docs)
+[![8base slack](https://img.shields.io/badge/slack-join-orange.svg)](https://slack.8base.com/)
 
 ## Packages
 
-Visit our [developer portal](https://0xproject.com/docs/order-utils) for a comprehensive list of core & community maintained packages. All packages maintained with this monorepo are listed below.
-
-### Packages
-
 | Package                                                        | Version                                                                                                             | Description                                                                                       |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| [`api-client`](/packages/api-client) | [![PyPI](https://img.shields.io/pypi/v/0x-contract-addresses.svg)](https://pypi.org/project/0x-contract-addresses/) | A tiny utility library for getting known deployed contract addresses for a particular network     |
-| [`api-token-auth-client`](/packages/api-token-auth-client) | [![PyPI](https://img.shields.io/pypi/v/0x-contract-artifacts.svg)](https://pypi.org/project/0x-contract-artifacts/) | 0x smart contract compilation artifacts                                                           |
-| [`apollo-client`](/packages/apollo-client)             | [![PyPI](https://img.shields.io/pypi/v/0x-json-schemas.svg)](https://pypi.org/project/0x-json-schemas/)             | 0x-related JSON schemas                                                                           |
-| [`apollo-links`](/packages/apollo-links)               | [![PyPI](https://img.shields.io/pypi/v/0x-order-utils.svg)](https://pypi.org/project/0x-order-utils/)               | A set of utilities for generating, parsing, signing and validating 0x orders                      |
-| [`app-provider`](/packages/app-provider)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`auth`](/packages/auth)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`crud`](/packages/crud)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`file-input`](/packages/file-input)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`forms`](/packages/forms)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`generators`](/packages/generators)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`permissions-provider`](/packages/permissions-provider)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`react-native-auth0-auth-client`](/packages/react-native-auth0-auth-client)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`table-schema-provider`](/packages/table-schema-provider)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`utils`](/packages/utils)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`validate`](/packages/validate)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
-| [`web-auth0-auth-client`](/packages/web-auth0-auth-client)                 | [![PyPI](https://img.shields.io/pypi/v/0x-sra-client.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`api-client`](/packages/api-client) | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-contract-addresses/) | A tiny utility library for getting known deployed contract addresses for a particular network     |
+| [`api-token-auth-client`](/packages/api-token-auth-client) | [![npm](https://img.shields.io/badge/npm-v0.15.1-blue.svg) | 0x smart contract compilation artifacts                                                           |
+| [`apollo-client`](/packages/apollo-client)             | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-json-schemas/)             | 0x-related JSON schemas                                                                           |
+| [`apollo-links`](/packages/apollo-links)               | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-order-utils/)               | A set of utilities for generating, parsing, signing and validating 0x orders                      |
+| [`app-provider`](/packages/app-provider)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`auth`](/packages/auth)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`crud`](/packages/crud)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`file-input`](/packages/file-input)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`forms`](/packages/forms)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`generators`](/packages/generators)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`permissions-provider`](/packages/permissions-provider)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`react-native-auth0-auth-client`](/packages/react-native-auth0-auth-client)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`table-schema-provider`](/packages/table-schema-provider)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`utils`](/packages/utils)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`validate`](/packages/validate)                 | [![PyPI](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
+| [`web-auth0-auth-client`](/packages/web-auth0-auth-client)                 | [![npm](https://img.shields.io/badge/npm-v0.15.1-blue.svg)](https://pypi.org/project/0x-sra-client/)                 | A Python client for interacting with servers conforming to the Standard Relayer API specification |
 
 
 ### Solidity Packages
