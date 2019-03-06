@@ -263,6 +263,7 @@ Object {
     currency
     minValue
     maxValue
+    isBigInt
   }
 
   fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
@@ -316,7 +317,7 @@ Object {
       "close",
     ],
     "content-length": Array [
-      "2323",
+      "2337",
     ],
     "content-type": Array [
       "application/json",
