@@ -10,15 +10,11 @@ import { getPermissions } from './getPermissions';
 const USER_PERMISSIONS_QUERY = gql`
   query UserPermissions {
     user {
-      roles {
+      permissions {
         items {
-          permissions {
-            items {
-              resource
-              resourceType
-              permission
-            }
-          }
+          resource
+          resourceType
+          permission
         }
       }
     }

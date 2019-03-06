@@ -8,85 +8,66 @@ import {
   PermissionContext,
 } from '../../src';
 
-const mockDATA = {
+const mockPermissionsData = {
   user: {
-    roles: {
+    permissions: {
       items: [
         {
-          permissions: {
-            items: [
-              {
-                resource: 'Users',
-                resourceType: 'data',
-                permission: {
-                  create: {
-                    allow: true,
-                  },
-                  delete: {
-                    allow: true,
-                  },
-                  read: {
-                    allow: true,
-                  },
-                  update: {
-                    allow: true,
-                    filter: {
-                      id: {
-                        equals: '__loggedInUserId',
-                      },
-                    },
-                  },
-                },
-              },
-              {
-                resource: 'schema',
-                resourceType: 'custom',
-                permission: {
-                  edit: {
-                    allow: false,
-                  },
-                },
-              },
-            ],
-          },
+          resource: "Users",
+          resourceType: "data",
+          permission: {
+            create: {
+              allow: true
+            },
+            delete: {
+              allow: true
+            },
+            read: {
+              allow: true,
+              fields: {
+                createdAt: true,
+                updatedAt: true,
+                email: true,
+                isOwner: true,
+                firstName: true,
+                lastName: true,
+                cellPhone: true,
+                workPhone: true,
+                workPhoneExt: true,
+                gender: true,
+                birthday: true,
+                language: true,
+                timezone: true
+              }
+            },
+            update: {
+              allow: true,
+              fields: {
+                createdAt: true,
+                updatedAt: true,
+                email: true,
+                isOwner: true,
+                firstName: true,
+                lastName: true,
+                cellPhone: true,
+                workPhone: true,
+                workPhoneExt: true,
+                gender: true,
+                birthday: true,
+                language: true,
+                timezone: true
+              }
+            }
+          }
         },
         {
-          permissions: {
-            items: [
-              {
-                resource: 'Users',
-                resourceType: 'data',
-                permission: {
-                  create: {
-                    allow: true,
-                  },
-                  delete: {
-                    allow: true,
-                  },
-                  read: {
-                    allow: true,
-                  },
-                  update: {
-                    allow: true,
-                    filter: {
-                      id: {
-                        equals: '__loggedInUserId',
-                      },
-                    },
-                  },
-                },
-              },
-              {
-                resource: 'schema',
-                resourceType: 'custom',
-                permission: {
-                  edit: {
-                    allow: false,
-                  },
-                },
-              },
-            ],
-          },
+            resource: "schema",
+            resourceType: "custom",
+            permission: {
+              edit: {
+                allow: false
+              }
+            }
         },
       ],
     },
@@ -100,7 +81,7 @@ jest.mock('@8base/auth', () => ({
 }));
 
 jest.mock('react-apollo', () => ({
-  Query: ({ children }) => children({ data: mockDATA, loading: false }),
+  Query: ({ children }) => children({ data: mockPermissionsData, loading: false }),
 }));
 
 it('As a developer, I can use `IfAllowed` component for conditional rendering based user permissions.', () => {
