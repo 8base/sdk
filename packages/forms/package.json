@@ -1,6 +1,6 @@
 {
   "name": "@8base/forms",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -10,11 +10,11 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/auth": "^0.15.1",
+    "@8base/auth": "^0.15.2",
     "@8base/error-codes": "^1.0.8",
-    "@8base/table-schema-provider": "^0.15.1",
-    "@8base/utils": "^0.15.1",
-    "@8base/validate": "^0.15.1",
+    "@8base/table-schema-provider": "^0.15.2",
+    "@8base/utils": "^0.15.2",
+    "@8base/validate": "^0.15.2",
     "@babel/runtime": "^7.3.1",
     "final-form": "^4.11.1",
     "final-form-arrays": "^1.1.2",
