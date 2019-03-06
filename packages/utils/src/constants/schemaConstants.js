@@ -73,7 +73,7 @@ export const SMART_FORMATS = {
 
 export const DATE_FORMATS = {
   DATE: 'DATE',
-  DATETIME: 'DATE/TIME',
+  DATETIME: 'DATETIME',
 };
 
 export const MUTATION_TYPE = {
