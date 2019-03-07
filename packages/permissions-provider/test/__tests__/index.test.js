@@ -13,14 +13,14 @@ const mockPermissionsData = {
     permissions: {
       items: [
         {
-          resource: "Users",
-          resourceType: "data",
+          resource: 'Users',
+          resourceType: 'data',
           permission: {
             create: {
-              allow: true
+              allow: true,
             },
             delete: {
-              allow: true
+              allow: true,
             },
             read: {
               allow: true,
@@ -37,8 +37,8 @@ const mockPermissionsData = {
                 gender: true,
                 birthday: true,
                 language: true,
-                timezone: true
-              }
+                timezone: true,
+              },
             },
             update: {
               allow: true,
@@ -55,19 +55,19 @@ const mockPermissionsData = {
                 gender: true,
                 birthday: true,
                 language: true,
-                timezone: true
-              }
-            }
-          }
+                timezone: true,
+              },
+            },
+          },
         },
         {
-            resource: "schema",
-            resourceType: "custom",
-            permission: {
-              edit: {
-                allow: false
-              }
-            }
+          resource: 'schema',
+          resourceType: 'custom',
+          permission: {
+            edit: {
+              allow: false,
+            },
+          },
         },
       ],
     },

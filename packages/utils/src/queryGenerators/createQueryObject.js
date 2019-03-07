@@ -5,12 +5,13 @@ import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from '../constants';
 import type { TableSchema, QueryGeneratorConfig } from '../types';
 
-
 export type CheckedRule = {
   id: string,
   name: string,
   checked: boolean,
 }
+
+const DEFAULT_DEPTH = 1;
 
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
@@ -36,7 +37,11 @@ export const createQueryObject = (
   prevKey?: string = '',
 ) => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
-  const { deep = 3, withMeta = true, includeColumns } = queryObjectConfig;
+  const {
+    deep = DEFAULT_DEPTH,
+    withMeta = true,
+    includeColumns,
+  } = queryObjectConfig;
 
   const queryObject = {};
 

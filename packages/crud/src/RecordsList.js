@@ -11,6 +11,7 @@ type RecordsListProps = {
   tableName?: string,
   tableId?: string,
   children: (recordsListResult: Object) => React$Node,
+  deep?: number,
 }
 
 
@@ -56,7 +57,14 @@ export class RecordsList extends Component<RecordsListProps> {
   }
 
   render() {
-    const { tableName, tableId, children, ...rest } = this.props;
+    const {
+      tableName,
+      tableId,
+      children,
+      deep,
+      ...rest
+    } = this.props;
+
     return (
       <TableConsumer
         name={ tableName }
@@ -65,7 +73,13 @@ export class RecordsList extends Component<RecordsListProps> {
         { (tableMetaResult) => (
           <Query
             { ...rest }
-            query={ gql(createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.name, { tableContentName: 'tableContent' })) }
+            query={ gql(
+              createTableFilterGraphqlTag(
+                [tableMetaResult],
+                tableMetaResult.name,
+                { tableContentName: 'tableContent', deep },
+              ))
+            }
           >
             { (recordsListResult) => children({
               ...recordsListResult,
