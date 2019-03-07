@@ -37,6 +37,7 @@ describe('As a developer, I can generate graphql query for list by table schema'
       includeColumns: [
         'number',
         'numberList',
+        'relation',
         'relation.scalarList',
         'relation.relationList',
         'relationList',

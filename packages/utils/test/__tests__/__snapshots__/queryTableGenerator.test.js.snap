@@ -416,43 +416,11 @@ exports[`As a developer, I can generate graphql query for list by table schema s
         numberList
         relation {
           id
-          scalarList
-          relationList {
-            items {
-              id
-              _description
-            }
-            count
-          }
           _description
         }
         relationList {
           items {
             id
-            scalar
-            scalarList
-            relation {
-              id
-              _description
-            }
-            relationList {
-              items {
-                id
-                _description
-              }
-              count
-            }
-            nestedRelation {
-              id
-              _description
-            }
-            nestedRelationList {
-              items {
-                id
-                _description
-              }
-              count
-            }
             _description
           }
           count

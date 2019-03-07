@@ -10,14 +10,14 @@ export type PermissionsProps = {
 };
 
 const withPermissions = <InputPorps: { permissions: ?Object }>(
-  WrappedComponent: React$ComponentType<InputPorps>
+  WrappedComponent: React$ComponentType<InputPorps>,
 ): Class<React$Component<$Diff<InputPorps, PermissionsProps>>> => {
   class WithPermissions extends React.Component<$Diff<InputPorps, PermissionsProps>> {
     render() {
       return (
         <PermissionsContext.Consumer>
           { (permissions) => (
-            <WrappedComponent 
+            <WrappedComponent
               { ...this.props }
               permissions={ permissions }
             />
