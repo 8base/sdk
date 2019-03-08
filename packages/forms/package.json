@@ -26,7 +26,7 @@
     "react-apollo": "^2.4.0",
     "react-dom": "^16.4.1",
     "react-final-form": "^4.0.2",
-    "react-final-form-arrays": "^2.0.1",
+    "react-final-form-arrays": "2.0.1",
     "recompose": "^0.27.1"
   },
   "devDependencies": {
