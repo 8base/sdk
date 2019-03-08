@@ -22,8 +22,8 @@ import {
 } from '@8base/boost';
 import { FileInput } from '@8base/file-input';
 
-const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
-  mutation <%= changeCase.pascal(entityName)%>Update($data: <%= SchemaNameGenerator.getUpdateInputName(tableName)%>!) {
+const <%= changeCase.upper(screenName)%>_UPDATE_MUTATION = gql`
+  mutation <%= changeCase.pascal(screenName)%>Update($data: <%= SchemaNameGenerator.getUpdateInputName(tableName)%>!) {
     <%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>(data: $data) {
       id
     }
@@ -37,33 +37,33 @@ const <%= changeCase.upper(entityName)%>_UPDATE_MUTATION = gql`
     tableSelectors: tableSelectors,
     table: table,
 }); %>
-const ehnhancer = graphql(<%= changeCase.upper(entityName)%>_UPDATE_MUTATION, {
+const ehnhancer = graphql(<%= changeCase.upper(screenName)%>_UPDATE_MUTATION, {
   name: '<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>',
   options: {
     refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent'],
     context: {
-      TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(entityName)%> successfuly updated',
+      TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(screenName)%> successfuly updated',
     },
   },
 });
 
-const <%= changeCase.pascal(entityName)%>EditDialog = ehnhancer(
-  class <%= changeCase.pascal(entityName)%>EditDialog extends React.PureComponent {
+const <%= changeCase.pascal(screenName)%>EditDialog = ehnhancer(
+  class <%= changeCase.pascal(screenName)%>EditDialog extends React.PureComponent {
     static contextType = ModalContext;
 
     updateOnSubmit = memoizeWith(identity, id => async data => {
       await this.props.<%= SchemaNameGenerator.getUpdateItemFieldName(tableName)%>({ variables: { data: { ...data, id } } });
 
-      this.context.closeModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID');
+      this.context.closeModal('<%= changeCase.upper(screenName)%>_EDIT_DIALOG_ID');
     });
 
     onClose = () => {
-      this.context.closeModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID');
+      this.context.closeModal('<%= changeCase.upper(screenName)%>_EDIT_DIALOG_ID');
     };
 
     renderFormContent = ({ handleSubmit, invalid, submitting, pristine }) => (
       <form onSubmit={handleSubmit}>
-        <Dialog.Header title="Edit <%= changeCase.pascal(entityName)%>" onClose={this.onClose} />
+        <Dialog.Header title="Edit <%= changeCase.pascal(screenName)%>" onClose={this.onClose} />
         <Dialog.Body scrollable>
           <Grid.Layout gap="sm" stretch><%-
             chunks.fieldsInputsList({ 
@@ -80,7 +80,7 @@ const <%= changeCase.pascal(entityName)%>EditDialog = ehnhancer(
             Cancel
           </Button>
           <Button color="primary" type="submit" disabled={pristine || invalid} loading={submitting}>
-            Update <%= changeCase.pascal(entityName)%>
+            Update <%= changeCase.pascal(screenName)%>
           </Button>
         </Dialog.Footer>
       </form>
@@ -101,7 +101,7 @@ const <%= changeCase.pascal(entityName)%>EditDialog = ehnhancer(
 
     render() {
       return (
-        <Dialog id={'<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID'} size="sm">
+        <Dialog id={'<%= changeCase.upper(screenName)%>_EDIT_DIALOG_ID'} size="sm">
           {this.renderForm}
         </Dialog>
       );
@@ -109,4 +109,4 @@ const <%= changeCase.pascal(entityName)%>EditDialog = ehnhancer(
   }
 );
 
-export { <%= changeCase.pascal(entityName)%>EditDialog };
+export { <%= changeCase.pascal(screenName)%>EditDialog };

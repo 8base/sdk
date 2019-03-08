@@ -1,0 +1,32 @@
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+import { ProtectedRoute } from './shared/components';
+import { MainPlate, ContentPlate, Nav } from './components';
+import { Auth } from './routes/auth';
+<% screens.forEach(({ screenName, routeUrl }) => { %>
+  import { <%= changeCase.pascal(screenName)%> } from './routes/<%= changeCase.camel(screenName)%>';
+<% }); %>
+
+
+export const Root = () => (
+  <Switch>
+    <Route path="/auth" component={Auth} />
+    <Route>
+      <MainPlate>
+        <Nav.Plate color="BLUE">
+        <% screens.forEach(({ screenName, routeUrl }) => { %>
+          <Nav.Item to="<%= routeUrl %>" label="<%= changeCase.pascal(screenName)%>" />
+        <% }); %>
+        </Nav.Plate>
+        <ContentPlate>
+          <Switch>
+        <% screens.forEach(({ screenName, routeUrl }) => { %>
+          <ProtectedRoute exact path="<%= routeUrl%>" component={<%= changeCase.pascal(screenName)%>} />
+        <% }); %>
+          </Switch>
+        </ContentPlate>
+      </MainPlate>
+    </Route>
+  </Switch>
+);

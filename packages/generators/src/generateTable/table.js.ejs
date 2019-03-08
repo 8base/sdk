@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import { TableBuilder, Dropdown, Icon, Menu, Link, Tag, Row, withModal } from '@8base/boost';
 import { FIELD_TYPE, SMART_FORMATS, FILE_FORMATS, DATE_FORMATS, SWITCH_FORMATS, SWITCH_VALUES } from '@8base/utils';
 
-const <%= changeCase.upper(entityName)%>_LIST_QUERY = gql`<%= 
+const <%= changeCase.upper(screenName)%>_LIST_QUERY = gql`<%= 
 queryText%>
 `;
 
@@ -33,11 +33,11 @@ columns.forEach((column) => { %>
 
 const enhancer = compose(
   withModal,
-  graphql(<%= changeCase.upper(entityName)%>_LIST_QUERY, { name: '<%= changeCase.lower(tableName)%>' })
+  graphql(<%= changeCase.upper(screenName)%>_LIST_QUERY, { name: '<%= changeCase.lower(tableName)%>' })
 );
 
-const <%= changeCase.pascal(tableName)%>Table = enhancer(
-  class <%= changeCase.pascal(tableName)%>Table extends React.PureComponent {
+const <%= changeCase.pascal(screenName)%>Table = enhancer(
+  class <%= changeCase.pascal(screenName)%>Table extends React.PureComponent {
     renderEdit = rowData => (
       <Dropdown defaultOpen={false}>
         <Dropdown.Head>
@@ -48,7 +48,7 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
             <Menu>
               <Menu.Item
                 onClick={() => {
-                  this.props.openModal('<%= changeCase.upper(entityName)%>_EDIT_DIALOG_ID', { initialValues: rowData });
+                  this.props.openModal('<%= changeCase.upper(screenName)%>_EDIT_DIALOG_ID', { initialValues: rowData });
                   closeDropdown();
                 }}
               >
@@ -56,7 +56,7 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
-                  this.props.openModal('<%= changeCase.upper(entityName)%>_DELETE_DIALOG_ID', { id: rowData.id });
+                  this.props.openModal('<%= changeCase.upper(screenName)%>_DELETE_DIALOG_ID', { id: rowData.id });
                   closeDropdown();
                 }}
               >
@@ -195,7 +195,7 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
     openCreateModal = () => {
       const { openModal } = this.props;
 
-      openModal('<%= changeCase.upper(entityName)%>_CREATE_DIALOG_ID');
+      openModal('<%= changeCase.upper(screenName)%>_CREATE_DIALOG_ID');
     };
 
     render() {
@@ -207,7 +207,7 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
           loading={<%= changeCase.lower(tableName)%>.loading}
           data={tableData}
           columns={TABLE_COLUMNS}
-          action="Create <%= changeCase.pascal(entityName)%>"
+          action="Create <%= changeCase.pascal(screenName)%>"
           renderCell={this.renderCell}
           onActionClick={this.openCreateModal}
         />
@@ -216,4 +216,4 @@ const <%= changeCase.pascal(tableName)%>Table = enhancer(
   }
 );
 
-export { <%= changeCase.pascal(tableName)%>Table };
+export { <%= changeCase.pascal(screenName)%>Table };

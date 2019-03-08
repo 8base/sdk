@@ -1,24 +1,24 @@
 import React from 'react';
 import { Card, Heading } from '@8base/boost';
 
-import { <%= changeCase.pascal(entityName)%>CreateDialog } from './<%= changeCase.pascal(entityName)%>CreateDialog';
-import { <%= changeCase.pascal(entityName)%>EditDialog } from './<%= changeCase.pascal(entityName)%>EditDialog';
-import { <%= changeCase.pascal(entityName)%>DeleteDialog } from './<%= changeCase.pascal(entityName)%>DeleteDialog';
-import { <%= changeCase.pascal(tableName)%>Table } from './<%= changeCase.pascal(tableName)%>Table';
+import { <%= changeCase.pascal(screenName)%>CreateDialog } from './<%= changeCase.pascal(screenName)%>CreateDialog';
+import { <%= changeCase.pascal(screenName)%>EditDialog } from './<%= changeCase.pascal(screenName)%>EditDialog';
+import { <%= changeCase.pascal(screenName)%>DeleteDialog } from './<%= changeCase.pascal(screenName)%>DeleteDialog';
+import { <%= changeCase.pascal(screenName)%>Table } from './<%= changeCase.pascal(screenName)%>Table';
 
-const <%= changeCase.pascal(tableName)%> = () => (
+const <%= changeCase.pascal(screenName)%> = () => (
   <Card padding="md" stretch>
     <Card.Header>
-      <Heading type="h4" text=" <%= changeCase.pascal(tableName)%>" />
+      <Heading type="h4" text=" <%= changeCase.pascal(screenName)%>" />
     </Card.Header>
 
-    <<%= changeCase.pascal(entityName)%>CreateDialog />
-    <<%= changeCase.pascal(entityName)%>EditDialog />
-    <<%= changeCase.pascal(entityName)%>DeleteDialog />
+    <<%= changeCase.pascal(screenName)%>CreateDialog />
+    <<%= changeCase.pascal(screenName)%>EditDialog />
+    <<%= changeCase.pascal(screenName)%>DeleteDialog />
     <Card.Body padding="none" stretch>
-      <<%= changeCase.pascal(tableName)%>Table />
+      <<%= changeCase.pascal(screenName)%>Table />
     </Card.Body>
   </Card>
 );
 
-export { <%= changeCase.pascal(tableName)%> };
+export { <%= changeCase.pascal(screenName)%> };
