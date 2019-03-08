@@ -233,8 +233,8 @@ const enhancer = compose(
   graphql(PROPERTY_LIST_QUERY, { name: 'properties' })
 );
 
-const PropertiesTable = enhancer(
-  class PropertiesTable extends React.PureComponent {
+const PropertyTable = enhancer(
+  class PropertyTable extends React.PureComponent {
     renderEdit = rowData => (
       <Dropdown defaultOpen={false}>
         <Dropdown.Head>
@@ -395,6 +395,6 @@ const PropertiesTable = enhancer(
   }
 );
 
-export { PropertiesTable };
+export { PropertyTable };
 "
 `;

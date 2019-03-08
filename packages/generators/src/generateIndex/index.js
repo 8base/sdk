@@ -8,7 +8,7 @@ import { formatCode } from '../formatCode';
 // $FlowIgnore
 import index from './index.js.ejs';
 
-export const generateIndex = (tableName: string) => {
+export const generateIndex = ({ tableName, screenName }: *) => {
   const entityName = pluralize.singular(tableName);
 
   const tableGenerated = ejs.render(index, {
@@ -16,6 +16,7 @@ export const generateIndex = (tableName: string) => {
     pluralize,
     tableName,
     entityName,
+    screenName: screenName || entityName,
   });
 
   return formatCode(tableGenerated);
