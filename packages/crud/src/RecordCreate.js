@@ -43,7 +43,7 @@ export class RecordCreate extends Component<RecordCreateProps> {
           >
             { (mutateFunction, mutateResult) =>
               children(
-                mutateFunction,
+                (data) => mutateFunction({ data }),
                 {
                   tableMetaResult,
                   mutateResult: mutateResult || {},

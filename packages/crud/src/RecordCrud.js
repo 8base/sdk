@@ -43,7 +43,7 @@ export class RecordCrud extends Component<RecordCrudProps> {
       >
         { (mutateFunction, mutateResult) =>
           children(
-            (data) => mutateFunction({ variables: { data }}),
+            (variables) => mutateFunction({ variables }),
             mutateResult,
           ) }
       </Mutation>
