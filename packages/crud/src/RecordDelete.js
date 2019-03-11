@@ -13,7 +13,7 @@ type RecordDeleteProps = {
   tableName?: string,
   tableId?: string,
 
-  children: (mutateFunction: (id: string) => Promise<Object>, ChildrenPropObject) => React$Node,
+  children: (mutateFunction: (id: string, force: boolean) => Promise<Object>, ChildrenPropObject) => React$Node,
 }
 
 /**
@@ -42,7 +42,7 @@ export class RecordDelete extends Component<RecordDeleteProps> {
           >
             { (mutateFunction, mutateResult) =>
               children(
-                (id: string) => mutateFunction({ id }),
+                (id: string, force: boolean) => mutateFunction({ filter: { id }, force }),
                 {
                   tableMetaResult,
                   mutateResult: mutateResult || {},

@@ -53,7 +53,7 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
               >
                 { (mutateFunction, mutateResult) =>
                   children(
-                    (data) => mutateFunction({ ...data, id: recordId }),
+                    (data) => mutateFunction({ data, filter: { id: recordId }}),
                     {
                       tableMetaResult,
                       recordDataResult,

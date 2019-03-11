@@ -97,8 +97,8 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
 "
-  mutation DataViewerCommonsRowDelete($data: CommonDeleteInput!) {
-    commonDelete(data: $data) {
+  mutation DataViewerCommonsRowDelete($filter: CommonKeyFilter!, $force: Boolean) {
+    commonDelete(filter: $filter, force: $force) {
       success
     }
   }"
@@ -106,8 +106,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
 "
-  mutation DataViewerFilesRowDelete($data: FileDeleteInput!) {
-    fileDelete(data: $data) {
+  mutation DataViewerFilesRowDelete($filter: FileKeyFilter!, $force: Boolean) {
+    fileDelete(filter: $filter, force: $force) {
       success
     }
   }"
@@ -115,8 +115,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
 "
-  mutation DataViewerRelationRowDelete($data: RelationDeleteInput!) {
-    relationDelete(data: $data) {
+  mutation DataViewerRelationRowDelete($filter: RelationKeyFilter!, $force: Boolean) {
+    relationDelete(filter: $filter, force: $force) {
       success
     }
   }"
@@ -124,8 +124,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
 "
-  mutation DataViewerSmartFieldsRowDelete($data: SmartFieldDeleteInput!) {
-    smartFieldDelete(data: $data) {
+  mutation DataViewerSmartFieldsRowDelete($filter: SmartFieldKeyFilter!, $force: Boolean) {
+    smartFieldDelete(filter: $filter, force: $force) {
       success
     }
   }"
@@ -133,8 +133,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
 "
-  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!) {
-    commonUpdate(data: $data) {
+  mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!, $filter: CommonKeyFilter) {
+    commonUpdate(data: $data, filter: $filter) {
       id
       field1
       field2
@@ -145,8 +145,8 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
 "
-  mutation DataViewerFilesRowUpdate($data: FileUpdateInput!) {
-    fileUpdate(data: $data) {
+  mutation DataViewerFilesRowUpdate($data: FileUpdateInput!, $filter: FileKeyFilter) {
+    fileUpdate(data: $data, filter: $filter) {
       id
       file {
         id
@@ -173,8 +173,8 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
 "
-  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!) {
-    relationUpdate(data: $data) {
+  mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!, $filter: RelationKeyFilter) {
+    relationUpdate(data: $data, filter: $filter) {
       id
       field1 {
         id
@@ -195,8 +195,8 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
 "
-  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!) {
-    smartFieldUpdate(data: $data) {
+  mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!, $filter: SmartFieldKeyFilter) {
+    smartFieldUpdate(data: $data, filter: $filter) {
       id
       phone {
         code

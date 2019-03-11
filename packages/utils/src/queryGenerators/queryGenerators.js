@@ -84,8 +84,8 @@ export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: st
 };
 
 export const createTableRowUpdateTag = (tablesList: TableSchema[], tableName: string, config: QueryGeneratorConfig = {}) => `
-  mutation DataViewer${upperFirst(tableName)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(tableName)}!) {
-    ${SchemaNameGenerator.getUpdateItemFieldName(tableName)}(data: $data) {
+  mutation DataViewer${upperFirst(tableName)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(tableName)}!, $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(tableName)}) {
+    ${SchemaNameGenerator.getUpdateItemFieldName(tableName)}(data: $data, filter: $filter) {
       id${createQueryString(tablesList, tableName, { withMeta: false, ...config })}
     }
   }`;
@@ -97,8 +97,8 @@ export const createTableRowQueryTag = (tablesList: TableSchema[], tableName: str
   }`;
 
 export const createTableRowDeleteTag = (tablesList: TableSchema[], tableName: string) => `
-  mutation DataViewer${upperFirst(tableName)}RowDelete($data: ${SchemaNameGenerator.getDeleteInputName(tableName)}!) {
-    ${SchemaNameGenerator.getDeleteItemFieldName(tableName)}(data: $data) {
+  mutation DataViewer${upperFirst(tableName)}RowDelete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(tableName)}!, $force: Boolean) {
+    ${SchemaNameGenerator.getDeleteItemFieldName(tableName)}(filter: $filter, force: $force) {
       success
     }
   }`;
