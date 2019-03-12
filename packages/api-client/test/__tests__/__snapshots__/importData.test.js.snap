@@ -154,12 +154,54 @@ Array [
   Object {
     "body": Object {
       "query": "
-        mutation create($data: ClientCreateInput!) {
-          field: clientCreate(data: $data) {
-            id
+  query FileUploadInfo {
+    fileUploadInfo {
+      apiKey
+      policy
+      signature
+      path
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "146",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+          mutation create($data: ClientCreateInput!) {
+            field: clientCreate(data: $data) {
+              id
+            }
           }
-        }
-      ",
+        ",
       "variables": Object {
         "data": Object {
           "fullName": "Jacalyn Mccarrel",
@@ -180,7 +222,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "213",
+        "225",
       ],
       "content-type": Array [
         "application/json",
@@ -197,12 +239,12 @@ Array [
   Object {
     "body": Object {
       "query": "
-        mutation create($data: OrderCreateInput!) {
-          field: orderCreate(data: $data) {
-            id
+          mutation create($data: OrderCreateInput!) {
+            field: orderCreate(data: $data) {
+              id
+            }
           }
-        }
-      ",
+        ",
       "variables": Object {
         "data": Object {},
       },
@@ -221,7 +263,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "182",
+        "194",
       ],
       "content-type": Array [
         "application/json",
@@ -238,12 +280,12 @@ Array [
   Object {
     "body": Object {
       "query": "
-        mutation create($data: OrderCreateInput!) {
-          field: orderCreate(data: $data) {
-            id
+          mutation create($data: OrderCreateInput!) {
+            field: orderCreate(data: $data) {
+              id
+            }
           }
-        }
-      ",
+        ",
       "variables": Object {
         "data": Object {},
       },
@@ -262,7 +304,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "182",
+        "194",
       ],
       "content-type": Array [
         "application/json",

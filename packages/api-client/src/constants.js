@@ -148,3 +148,14 @@ export const USER_QUERY = `
     }
   }
 `;
+
+export const FILE_UPLOAD_INFO_QUERY = `
+  query FileUploadInfo {
+    fileUploadInfo {
+      apiKey
+      policy
+      signature
+      path
+    }
+  }
+`;
