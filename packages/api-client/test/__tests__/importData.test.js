@@ -18,6 +18,16 @@ it('As a developer, I can export schema of the user tables.', async () => {
     }),
     mockRequest('https://api.test.8base.com', 200, {
       data: {
+        fileUploadInfo: {
+          apiKey: 'apiKey',
+          policy: 'policy',
+          signature: 'signature',
+          path: 'path',
+        },
+      },
+    }),
+    mockRequest('https://api.test.8base.com', 200, {
+      data: {
         field: {
           id: 'remote-client-1',
         },

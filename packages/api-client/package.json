@@ -13,10 +13,13 @@
     "@8base/error-codes": "^1.0.5",
     "@8base/schema-name-generator": "^0.1.1",
     "@8base/utils": "^0.16.1",
+    "@8base/sdk": "^0.0.80",
     "@babel/runtime": "^7.3.1",
+    "filestack-js": "^1.14.6",
     "graphql": "0.13.0",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
+    "node-fetch": "^2.3.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
