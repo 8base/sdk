@@ -12,7 +12,6 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/schema-name-generator": "^0.1.1",
-    "@8base/sdk": "^0.0.80",
     "@8base/utils": "^0.16.2",
     "@babel/runtime": "^7.3.1",
     "filestack-js": "^1.14.6",
