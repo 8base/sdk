@@ -2,57 +2,79 @@
 
 import * as R from 'ramda';
 import { FIELD_TYPE, type FieldType, type Format } from '@8base/utils';
+import { Decimal } from 'decimal.js';
+
 import { VALIDATION_ERROR, FORMAT_PATTERN } from './validator.constants';
 
-type NumberFieldTypeAttributes = {
-  precision?: number,
-  minValue?: number,
-  maxValue?: number,
-};
-
-type TextFieldTypeAttributes = {
-  format: Format,
-  fieldSize?: number,
-};
-
-type DateFieldTypeAttributes = {
-  format: Format,
-};
-
-export type Field<T> = {
+export type Field = {
   isRequired: boolean,
   fieldType: FieldType,
-  fieldTypeAttributes: T
+  fieldTypeAttributes: $Shape<{
+    minValue: number,
+    maxValue: number,
+    precision: number,
+    isBigInt: boolean,
+    fieldSize: number,
+    format: Format,
+  }>
 };
 
-export type NumberField = Field<NumberFieldTypeAttributes>;
+const INT_MAX_VALUE = Math.pow(2, 31) - 1;
+const INT_MIN_VALUE = -Math.pow(2, 31);
+const FLOAT_MAX_VALUE = Number.MAX_VALUE;
+const FLOAT_MIN_VALUE = -Number.MAX_VALUE;
 
-export type TextField = Field<TextFieldTypeAttributes>;
+const getFieldTypeAttributes = R.prop('fieldTypeAttributes');
+const getMinValueFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('minValue'),
+);
+const getMaxValueFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('maxValue'),
+);
+const getMaxPrecisionFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('precision'),
+);
+const isBigIntFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('isBigInt'),
+);
+const getMaxFieldSizeFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('fieldSize'),
+);
+const getFormatFromAttributes = R.pipe(
+  getFieldTypeAttributes,
+  R.prop('format'),
+);
 
-export type DateField = Field<DateFieldTypeAttributes>;
+const getMinValue = (field: Field): number => {
+  const minValue = getMinValueFromAttributes(field);
+  const precision = getMaxPrecisionFromAttributes(field);
 
-export type SwitchField = Field<{}>;
+  if (typeof minValue === 'number') {
+    return minValue;
+  } else if (typeof precision === 'number' && precision !== 0) {
+    return FLOAT_MIN_VALUE;
+  }
 
-export type FileField = Field<{}>;
+  return INT_MIN_VALUE;
+};
 
-export type RelationField = Field<{}>;
+const getMaxValue = (field: Field): number => {
+  const maxValue = getMaxValueFromAttributes(field);
+  const precision = getMaxPrecisionFromAttributes(field);
 
-export type SmartField = Field<{}>;
+  if (typeof maxValue === 'number') {
+    return maxValue;
+  } else if (typeof precision === 'number' && precision !== 0) {
+    return FLOAT_MAX_VALUE;
+  }
 
-export type Fields = NumberField |
-  TextField |
-  DateField |
-  SwitchField |
-  FileField |
-  RelationField |
-  SmartField;
-
-const getFieldTypeAttributes: (Fields => {}) = R.prop('fieldTypeAttributes');
-const getMaxPrecision: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'precision'));
-const getMinValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(-2147483648, 'minValue'));
-const getMaxValue: (NumberField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(2147483647, 'maxValue'));
-const getMaxFieldSize: (TextField => (number | void)) = R.pipe(getFieldTypeAttributes, R.propOr(undefined, 'fieldSize'));
-const getFormat: ((TextField | DateField) => (Format)) = R.pipe(getFieldTypeAttributes, R.prop('format'));
+  return INT_MAX_VALUE;
+};
 
 type ValidatorResult = string | void;
 export type PreparedValidator = (?string) => ValidatorResult;
@@ -79,23 +101,19 @@ const checkIsNumber: PreparedValidator = R.ifElse(
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
 
-const getPrecision = (value: ?string | ?number) => {
-  if (R.isNil(value)) {
-    return 0;
-  }
-  value = String(value);
-
-
-  const dotIndex = value.indexOf('.');
-
-  return dotIndex === -1 ? 0 : (value.length - dotIndex - 1);
-};
 
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
 // will be resolved.
 const checkMaxPrecision: Validator<number> = (maxPrecision) => (value) => {
-  const precision = getPrecision(value);
+  if (isEmpty(value)) {
+    return undefined;
+  }
+
+  Decimal.set({ defaults: true });
+
+  const decimalValue = new Decimal(value);
+  const precision = decimalValue.decimalPlaces();
 
   return precision <= maxPrecision ? undefined : VALIDATION_ERROR.MAX_PRECISION(maxPrecision);
 };
@@ -142,7 +160,7 @@ const checkFormat: Validator<Format> = (format) => (value) => {
 
 type ValidatorsGetter<T> = (field: T) => Array<PreparedValidator>;
 
-const getCommonValidators: ValidatorsGetter<Fields> = (field) => {
+const getCommonValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
   if (field.isRequired) {
@@ -154,35 +172,36 @@ const getCommonValidators: ValidatorsGetter<Fields> = (field) => {
   return validators;
 };
 
-const getNumberFieldValidators: ValidatorsGetter<NumberField> = (field) => {
+const getNumberFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [
     checkIsNumber,
   ];
 
-  const maxPrecision = getMaxPrecision(field);
+  const maxPrecision = getMaxPrecisionFromAttributes(field);
   const minValue = getMinValue(field);
   const maxValue = getMaxValue(field);
+  const isBigInt = isBigIntFromAttributes(field);
 
   if (maxPrecision || maxPrecision === 0) {
     validators.push(checkMaxPrecision(maxPrecision));
   }
 
-  if (minValue) {
+  if (minValue && !isBigInt) {
     validators.push(checkMinValue(minValue));
   }
 
-  if (maxValue) {
+  if (maxValue && !isBigInt) {
     validators.push(checkMaxValue(maxValue));
   }
 
   return validators;
 };
 
-const getTextFieldValidators: ValidatorsGetter<TextField> = (field) => {
+const getTextFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
-  const maxFieldSize = getMaxFieldSize(field);
-  const format = getFormat(field);
+  const maxFieldSize = getMaxFieldSizeFromAttributes(field);
+  const format = getFormatFromAttributes(field);
 
   if (maxFieldSize) {
     validators.push(checkMaxFieldSize(maxFieldSize));
@@ -195,10 +214,10 @@ const getTextFieldValidators: ValidatorsGetter<TextField> = (field) => {
   return validators;
 };
 
-const getDateFieldValidators: ValidatorsGetter<DateField> = (field) => {
+const getDateFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
-  const format = getFormat(field);
+  const format = getFormatFromAttributes(field);
 
   if (format && FORMAT_PATTERN[format]) {
     validators.push(checkFormat(format));
@@ -207,13 +226,13 @@ const getDateFieldValidators: ValidatorsGetter<DateField> = (field) => {
   return validators;
 };
 
-const getSwitchFieldValidators: ValidatorsGetter<SwitchField> = () => [];
+const getSwitchFieldValidators: ValidatorsGetter<Field> = () => [];
 
-const getFileFieldValidators: ValidatorsGetter<FileField> = () => [];
+const getFileFieldValidators: ValidatorsGetter<Field> = () => [];
 
-const getRelationFieldValidators: ValidatorsGetter<RelationField> = () => [];
+const getRelationFieldValidators: ValidatorsGetter<Field> = () => [];
 
-const getSmartFieldValidators: ValidatorsGetter<SmartField> = () => [];
+const getSmartFieldValidators: ValidatorsGetter<Field> = () => [];
 
 type ValidatorsProcesser = (validators: Array<PreparedValidator>) => PreparedValidator;
 
@@ -222,7 +241,7 @@ const processValidators: ValidatorsProcesser = validators => R.converge(
   validators,
 );
 
-export type ValidatorFacade = (field: Fields) => PreparedValidator;
+export type ValidatorFacade = (field: Field) => PreparedValidator;
 
 /**
  * ValidatorFacade creates validaton function based on field metadata
