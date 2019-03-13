@@ -3,6 +3,7 @@
 .env.test
 .eslintcache
 .idea
+.vscode
 build
 coverage
 es
