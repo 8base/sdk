@@ -49,7 +49,7 @@ const FileInputField = ({ input, meta, maxFiles, label, ...rest }) => (
     <FileInput onChange={input.onChange} value={input.value} maxFiles={maxFiles} public={rest.public}>
       {({ pick, value }) => (
         <Row stretch alignItems=\\"center\\">
-          <Button type=\\"button\\" onClick={pick} stretch color=\\"neutral\\">
+          <Button type=\\"button\\" onClick={() => pick()} stretch color=\\"neutral\\">
             Choose Files
           </Button>
           <Text size=\\"sm\\">
