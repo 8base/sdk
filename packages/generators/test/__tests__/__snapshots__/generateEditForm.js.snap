@@ -157,7 +157,7 @@ const PropertyEditDialog = ehnhancer(
       <form onSubmit={handleSubmit}>
         <Dialog.Header title=\\"Edit Property\\" onClose={this.onClose} />
         <Dialog.Body scrollable>
-          <Grid.Layout gap=\\"sm\\" stretch>
+          <Grid.Layout gap=\\"md\\" stretch>
             <Grid.Box>
               <Field name=\\"address\\" label=\\"Address\\" component={AddressField} />
             </Grid.Box>

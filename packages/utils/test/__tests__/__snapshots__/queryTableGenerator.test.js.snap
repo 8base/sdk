@@ -784,7 +784,7 @@ Array [
       "isList": false,
     },
     "name": "relation.scalar",
-    "title": "relation.Scalar",
+    "title": "Scalar",
   },
   Object {
     "meta": Object {
@@ -796,7 +796,7 @@ Array [
       "isList": true,
     },
     "name": "relation.scalarList",
-    "title": "relation.ScalarList",
+    "title": "ScalarList",
   },
   Object {
     "meta": Object {
@@ -805,7 +805,7 @@ Array [
       "isList": false,
     },
     "name": "relation.relation",
-    "title": "relation.Relation",
+    "title": "Relation",
   },
   Object {
     "meta": Object {
@@ -814,7 +814,7 @@ Array [
       "isList": true,
     },
     "name": "relation.relationList",
-    "title": "relation.RelationList",
+    "title": "RelationList",
   },
   Object {
     "meta": Object {
@@ -823,7 +823,7 @@ Array [
       "isList": false,
     },
     "name": "relation.nestedRelation",
-    "title": "relation.NestedRelation",
+    "title": "NestedRelation",
   },
   Object {
     "meta": Object {
@@ -832,7 +832,16 @@ Array [
       "isList": true,
     },
     "name": "relation.nestedRelationList",
-    "title": "relation.NestedRelationList",
+    "title": "NestedRelationList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "RELATION",
+      "fieldTypeAttributes": null,
+      "isList": false,
+    },
+    "name": "relation",
+    "title": "Relation",
   },
   Object {
     "meta": Object {
@@ -873,7 +882,7 @@ Array [
       "isList": true,
     },
     "name": "relation.scalarList",
-    "title": "relation.ScalarList",
+    "title": "ScalarList",
   },
   Object {
     "meta": Object {
