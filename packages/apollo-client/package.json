@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-client",
-  "version": "0.16.5",
+  "version": "0.16.6",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/apollo-links": "^0.16.5",
+    "@8base/apollo-links": "^0.16.6",
     "@babel/runtime": "^7.2.0",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
