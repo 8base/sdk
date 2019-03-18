@@ -83,6 +83,27 @@ export const createTableRowCreateTag = (tablesList: TableSchema[], tableName: st
   }`;
 };
 
+export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableName: string) => {
+  const table = getTableByName(tablesList, tableName);
+  const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
+
+  if (hasNonMetaFields) {
+    return `
+  mutation DataViewer${upperFirst(tableName)}RowCreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(tableName)}]!) {
+    ${SchemaNameGenerator.getCreateManyItemFieldName(tableName)}(data: $data) {
+      count
+    }
+  }`;
+  }
+
+  return `
+  mutation DataViewer${upperFirst(tableName)}RowCreateMany {
+    ${SchemaNameGenerator.getCreateManyItemFieldName(tableName)} {
+      count
+    }
+  }`;
+};
+
 export const createTableRowUpdateTag = (tablesList: TableSchema[], tableName: string, config: QueryGeneratorConfig = {}) => `
   mutation DataViewer${upperFirst(tableName)}RowUpdate($data: ${SchemaNameGenerator.getUpdateInputName(tableName)}!, $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(tableName)}) {
     ${SchemaNameGenerator.getUpdateItemFieldName(tableName)}(data: $data, filter: $filter) {

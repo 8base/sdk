@@ -6,6 +6,7 @@ import {
   createTableRowUpdateTag,
   createTableRowDeleteTag,
   createQueryColumnsList,
+  createTableRowCreateManyTag,
 } from '../../src';
 
 import * as fixtures from '../__fixtures__';
@@ -100,6 +101,38 @@ describe('As a developer, I can generate graphql mutation for create entity by t
 
   it('should generate graphql tag for create mutation by table schema with smart fields', () => {
     const tag = createTableRowCreateTag([fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS], 'TableWithoutUserFields');
+
+    expect(tag).toMatchSnapshot();
+  });
+});
+
+describe('As a developer, I can generate graphql mutation for create many entities by table schema', () => {
+  it('should generate graphql tag for create mutation by common table schema ', () => {
+    const tag = createTableRowCreateManyTag([fixtures.COMMON_TABLE_SCHEMA], 'commons');
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for create mutation by table schema with files', () => {
+    const tag = createTableRowCreateManyTag([fixtures.TABLE_SCHEMA_WITH_FILES], 'Files');
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for create mutation by table schema with relation', () => {
+    const tag = createTableRowCreateManyTag([fixtures.TABLE_SCHEMA_WITH_RELATION], 'Relation');
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
+    const tag = createTableRowCreateManyTag([fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS], 'SmartFields');
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
+    const tag = createTableRowCreateManyTag([fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS], 'TableWithoutUserFields');
 
     expect(tag).toMatchSnapshot();
   });

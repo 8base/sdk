@@ -12,13 +12,14 @@
     -   [Properties](#properties)
 -   [RecordCreate](#recordcreate)
     -   [Properties](#properties-1)
--   [RecordCreate](#recordcreate-1)
--   [ChildrenPropObject](#childrenpropobject)
+-   [RecordCreateMany](#recordcreatemany)
     -   [Properties](#properties-2)
--   [RecordUpdate](#recordupdate)
+-   [ChildrenPropObject](#childrenpropobject)
     -   [Properties](#properties-3)
--   [RecordDelete](#recorddelete)
+-   [RecordUpdate](#recordupdate)
     -   [Properties](#properties-4)
+-   [RecordDelete](#recorddelete)
+    -   [Properties](#properties-5)
 
 ### RecordsList
 
@@ -35,18 +36,23 @@ Component for fetching the table content
 
 **Extends Component**
 
-Component for deleting the record of the table
+Component for creating the record of the table
 
 #### Properties
 
 -   `tableName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Name of the table
 -   `tableId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Id of the table
 
-### RecordCreate
+### RecordCreateMany
 
 **Extends Component**
 
-Component for creating records in table
+Component for creating many records of the table
+
+#### Properties
+
+-   `tableName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Name of the table
+-   `tableId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Id of the table
 
 ### ChildrenPropObject
 
@@ -54,16 +60,15 @@ Results of the record update queries and mutation
 
 #### Properties
 
--   `tableMetaResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
--   `recordDataResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
--   `mutateResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
--   `fetchingLoading` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `tableMetaResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `recordDataResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `mutateResult` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ### RecordUpdate
 
 **Extends Component**
 
-Component for updating records in table
+Component for updating the record of the table
 
 #### Properties
 
@@ -75,7 +80,7 @@ Component for updating records in table
 
 **Extends Component**
 
-Component for deleting records in table
+Component for deleting the record of the table
 
 #### Properties
 
