@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.16.6",
+  "version": "0.16.7",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^0.16.6",
+    "@8base/utils": "^0.16.7",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
     "react-apollo": "^2.5.2",
