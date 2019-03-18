@@ -13,16 +13,16 @@
   "dependencies": {
     "@8base/utils": "^0.16.4",
     "@babel/runtime": "^7.2.0",
-    "apollo-client": "^2.4.12",
-    "react-apollo": "^2.1.11",
+    "apollo-client": "^2.5.1",
+    "react-apollo": "^2.5.2",
     "react-dom": "^16.7.0",
     "recompose": "^0.30.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
-    "apollo-cache-inmemory": "^1.4.2",
-    "apollo-link": "^1.2.6",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-link": "^1.2.11",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",

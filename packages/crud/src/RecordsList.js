@@ -4,8 +4,10 @@ import * as R from 'ramda';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { TableConsumer } from '@8base/table-schema-provider';
-
-import { createTableFilterGraphqlTag } from '@8base/utils';
+import {
+  createTableFilterGraphqlTag,
+  type TableSchema,
+} from '@8base/utils';
 
 type RecordsListProps = {
   tableName?: string,
@@ -56,13 +58,38 @@ export class RecordsList extends Component<RecordsListProps> {
     return recordsListData;
   }
 
+  renderQuery = (tableMetaResult: TableSchema) => {
+    const {
+      children,
+      deep,
+      ...rest
+    } = this.props;
+
+    const query = gql(
+      createTableFilterGraphqlTag(
+        [tableMetaResult],
+        tableMetaResult.name,
+        { tableContentName: 'tableContent', deep },
+      ),
+    );
+
+    return (
+      <Query
+        { ...rest }
+        query={ query }
+      >
+        { (recordsListResult) => children({
+          ...recordsListResult,
+          data: this.getRecordsListData(recordsListResult),
+        }) }
+      </Query>
+    );
+  };
+
   render() {
     const {
       tableName,
       tableId,
-      children,
-      deep,
-      ...rest
     } = this.props;
 
     return (
@@ -70,23 +97,7 @@ export class RecordsList extends Component<RecordsListProps> {
         name={ tableName }
         id={ tableId }
       >
-        { (tableMetaResult) => (
-          <Query
-            { ...rest }
-            query={ gql(
-              createTableFilterGraphqlTag(
-                [tableMetaResult],
-                tableMetaResult.name,
-                { tableContentName: 'tableContent', deep },
-              ))
-            }
-          >
-            { (recordsListResult) => children({
-              ...recordsListResult,
-              data: this.getRecordsListData(recordsListResult),
-            }) }
-          </Query>
-        ) }
+        { this.renderQuery }
       </TableConsumer>
     );
   }

@@ -13,8 +13,8 @@
     "@8base/error-codes": "^1.0.5",
     "@8base/utils": "^0.16.4",
     "@babel/runtime": "^7.2.0",
-    "apollo-link": "1.2.1",
-    "apollo-link-error": "^1.1.0",
+    "apollo-link": "1.2.11",
+    "apollo-link-error": "^1.1.10",
     "graphql": "0.13.0",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.26.1"
