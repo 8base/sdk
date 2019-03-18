@@ -238,7 +238,7 @@ const PropertyTable = enhancer(
     renderEdit = rowData => (
       <Dropdown defaultOpen={false}>
         <Dropdown.Head>
-          <Icon name=\\"Dots\\" size=\\"sm\\" color=\\"LIGHT_GRAY2\\" />
+          <Icon name=\\"More\\" size=\\"sm\\" color=\\"LIGHT_GRAY2\\" />
         </Dropdown.Head>
         <Dropdown.Body pin=\\"right\\">
           {({ closeDropdown }) => (
