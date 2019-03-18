@@ -4,6 +4,11 @@ import * as R from 'ramda';
 import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import type { TableSchema, QueryGeneratorConfig } from '../types';
 
+
+type CreateQueryColumnsListConfig = {
+  flatten?: boolean,
+} & QueryGeneratorConfig
+
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
 
@@ -14,11 +19,11 @@ const capitalizeFirstLetter = (str: string) => {
 export const createQueryColumnsList = (
   tablesList: TableSchema[],
   tableName: string,
-  queryObjectConfig: QueryGeneratorConfig = {},
+  config: CreateQueryColumnsListConfig = {},
   prevKey?: string = '',
 ) => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
-  const { deep = 3, withMeta = false, includeColumns } = queryObjectConfig;
+  const { deep = 3, withMeta = false, flatten = true, includeColumns } = config;
 
   const transformedList = fields
     .filter((field) => {
@@ -43,7 +48,7 @@ export const createQueryColumnsList = (
       const refTableName = tableFieldSelectors.getRelationTableName(field);
       const currentKeyString = prevKey ? `${prevKey}.${fieldName}` : fieldName;
 
-      const title = prevKey ? `${prevKey}.${capitalizeFirstLetter(fieldName)}` : capitalizeFirstLetter(fieldName);
+      const title = capitalizeFirstLetter(fieldName);
       const refTable = getTableByName(tablesList, refTableName);
 
       const meta = {
@@ -61,9 +66,16 @@ export const createQueryColumnsList = (
           name: currentKeyString, title, meta,
         }];
       } else if (isRelation && refTableName && refTable && deep > 1) {
-        const innerKeys = createQueryColumnsList(tablesList, refTableName, { deep: deep - 1, withMeta, includeColumns }, currentKeyString);
+        const innerKeys = createQueryColumnsList(
+          tablesList,
+          refTableName,
+          { deep: deep - 1, withMeta, includeColumns },
+          currentKeyString,
+        );
 
-        return innerKeys;
+        return flatten
+          ? [...innerKeys, { name: currentKeyString, title, meta }]
+          : { name: currentKeyString, title, meta, children: innerKeys };
       } else if (isRelation) {
         return [{
           name: currentKeyString, title, meta,

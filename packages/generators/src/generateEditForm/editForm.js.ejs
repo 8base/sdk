@@ -65,7 +65,7 @@ const <%= changeCase.pascal(screenName)%>EditDialog = ehnhancer(
       <form onSubmit={handleSubmit}>
         <Dialog.Header title="Edit <%= changeCase.pascal(screenName)%>" onClose={this.onClose} />
         <Dialog.Body scrollable>
-          <Grid.Layout gap="sm" stretch><%-
+          <Grid.Layout gap="md" stretch><%-
             chunks.fieldsInputsList({ 
               fields: fields,
               chunks: chunks,

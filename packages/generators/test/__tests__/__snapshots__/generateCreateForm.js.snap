@@ -156,7 +156,7 @@ const PropertyCreateDialog = enhancer(
       <form onSubmit={handleSubmit}>
         <Dialog.Header title=\\"New Property\\" onClose={this.onClose} />
         <Dialog.Body scrollable>
-          <Grid.Layout gap=\\"sm\\" stretch>
+          <Grid.Layout gap=\\"md\\" stretch>
             <Grid.Box>
               <Field name=\\"address\\" label=\\"Address\\" component={AddressField} />
             </Grid.Box>
