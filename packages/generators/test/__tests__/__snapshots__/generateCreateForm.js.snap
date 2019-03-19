@@ -208,7 +208,7 @@ const PropertyCreateDialog = enhancer(
           </Grid.Layout>
         </Dialog.Body>
         <Dialog.Footer>
-          <Button color=\\"neutral\\" variant=\\"outlined\\" disabled={submitting} onClick={this.onClose}>
+          <Button color=\\"neutral\\" type=\\"button\\" variant=\\"outlined\\" disabled={submitting} onClick={this.onClose}>
             Cancel
           </Button>
           <Button color=\\"primary\\" type=\\"submit\\" loading={submitting}>
