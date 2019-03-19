@@ -1,6 +1,6 @@
 {
   "name": "@8base/app-provider",
-  "version": "0.16.8",
+  "version": "0.16.9",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -10,11 +10,11 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.16.8",
-    "@8base/apollo-links": "^0.16.8",
-    "@8base/auth": "^0.16.8",
+    "@8base/apollo-client": "^0.16.9",
+    "@8base/apollo-links": "^0.16.9",
+    "@8base/auth": "^0.16.9",
     "@8base/error-codes": "^1.0.5",
-    "@8base/table-schema-provider": "^0.16.8",
+    "@8base/table-schema-provider": "^0.16.9",
     "@babel/runtime": "^7.2.0",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
@@ -29,7 +29,7 @@
     "recompose": "0.27.1"
   },
   "devDependencies": {
-    "@8base/web-auth0-auth-client": "^0.16.8",
+    "@8base/web-auth0-auth-client": "^0.16.9",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "babel-core": "^7.0.0-bridge.0",
