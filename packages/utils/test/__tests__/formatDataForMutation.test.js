@@ -265,6 +265,42 @@ describe('As developer, I can format for create mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();
   });
+
+  it('Data with JSON field', () => {
+    const data = {
+      json: '{ "somePropArray": ["someValue1", "someValue2", "someValue3"] }',
+      jsonList: [
+        '{ "someProp": "someValue" }',
+        '{ "somePropArray": ["someValue1", "someValue2"] }',
+      ],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA),
+    ).toEqual({
+      json: {
+        somePropArray: ['someValue1', 'someValue2', 'someValue3'],
+      },
+      jsonList: [
+        { someProp: 'someValue' },
+        { somePropArray: ['someValue1', 'someValue2'] },
+      ],
+    });
+  });
+
+  it('Data with BigInt field', () => {
+    const data = {
+      bigInt: '999999999999999999999999999999',
+      bigIntList: [
+        '999999999999999999999999999999',
+        '111111111111111111111111111111',
+      ],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA),
+    ).toEqual(data);
+  });
 });
 
 describe('As developer, I can format for update mutation,', () => {
@@ -604,5 +640,41 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();
+  });
+
+  it('Data with JSON field', () => {
+    const data = {
+      json: '{ "somePropArray": ["someValue1", "someValue2", "someValue3"] }',
+      jsonList: [
+        '{ "someProp": "someValue" }',
+        '{ "somePropArray": ["someValue1", "someValue2"] }',
+      ],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA),
+    ).toEqual({
+      json: {
+        somePropArray: ['someValue1', 'someValue2', 'someValue3'],
+      },
+      jsonList: [
+        { someProp: 'someValue' },
+        { somePropArray: ['someValue1', 'someValue2'] },
+      ],
+    });
+  });
+
+  it('Data with BigInt field', () => {
+    const data = {
+      bigInt: '999999999999999999999999999999',
+      bigIntList: [
+        '999999999999999999999999999999',
+        '111111111111111111111111111111',
+      ],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA),
+    ).toEqual(data);
   });
 });

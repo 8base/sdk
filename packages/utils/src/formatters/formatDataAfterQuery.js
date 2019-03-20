@@ -2,7 +2,13 @@
 import * as R from 'ramda';
 
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
-import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';
+import {
+  isRelationField,
+  isFileField,
+  isListField,
+  isMetaField,
+  isJSONField,
+} from '../verifiers';
 
 import type { FieldSchema, TableSchema, Schema } from '../types';
 
@@ -39,6 +45,14 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
         result = R.assoc(fieldName, result[fieldName].map && result[fieldName].map(({ id }) => id), result);
       } else {
         result = R.assoc(fieldName, result[fieldName].id, result);
+      }
+    }
+
+    if (isJSONField(fieldSchema)) {
+      if (isListField(fieldSchema)) {
+        result[fieldName] = R.map(JSON.stringify, result[fieldName]);
+      } else {
+        result[fieldName] = JSON.stringify(result[fieldName]);
       }
     }
 

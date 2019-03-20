@@ -40,6 +40,12 @@ const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema
         nextData = Number(nextData);
       }
     }
+  } else if (verifiers.isJSONField(fieldSchema)) {
+    if (verifiers.isListField(fieldSchema)) {
+      nextData = R.map(JSON.parse, nextData);
+    } else {
+      nextData = JSON.parse(nextData);
+    }
   }
 
   return nextData;
