@@ -10,7 +10,7 @@ interface ChildrenPropObject {
   mutateResult: Object,
 }
 
-type RecordCreateProps = {
+type RecordCreateManyProps = {
   tableName?: string,
   tableId?: string,
 
@@ -18,13 +18,13 @@ type RecordCreateProps = {
 }
 
 /**
- * Component for creating the record of the table
+ * Component for creating many records of the table
  *
  * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {(Function, ChildrenPropObject) => React$Node} children - Render prop with result of the queries
  */
-export class RecordCreate extends Component<RecordCreateProps> {
+export class RecordCreateMany extends Component<RecordCreateManyProps> {
   render() {
     const { tableName, tableId, children, ...rest } = this.props;
 
@@ -37,7 +37,7 @@ export class RecordCreate extends Component<RecordCreateProps> {
           <RecordCrud
             { ...rest }
             tableMeta={ tableMetaResult }
-            mode="create"
+            mode="createMany"
           >
             { (mutateFunction, mutateResult) =>
               children(

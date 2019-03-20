@@ -95,6 +95,51 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
   }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by common table schema  1`] = `
+"
+  mutation DataViewerCommonsRowCreateMany($data: [CommonCreateManyInput]!) {
+    commonCreateMany(data: $data) {
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
+"
+  mutation DataViewerFilesRowCreateMany($data: [FileCreateManyInput]!) {
+    fileCreateMany(data: $data) {
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
+"
+  mutation DataViewerRelationRowCreateMany($data: [RelationCreateManyInput]!) {
+    relationCreateMany(data: $data) {
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
+"
+  mutation DataViewerSmartFieldsRowCreateMany($data: [SmartFieldCreateManyInput]!) {
+    smartFieldCreateMany(data: $data) {
+      count
+    }
+  }"
+`;
+
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
+"
+  mutation DataViewerTableWithoutUserFieldsRowCreateMany {
+    tableWithoutUserFieldCreateMany {
+      count
+    }
+  }"
+`;
+
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
 "
   mutation DataViewerCommonsRowDelete($filter: CommonKeyFilter!, $force: Boolean) {

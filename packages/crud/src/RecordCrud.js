@@ -6,11 +6,12 @@ import type { TableSchema } from '@8base/utils';
 import type { QueryResult } from './types';
 import {
   createTableRowCreateTag,
+  createTableRowCreateManyTag,
   createTableRowUpdateTag,
   createTableRowDeleteTag,
 } from '@8base/utils';
 
-type CrudModes = 'create' | 'update' | 'delete'
+type CrudModes = 'create' | 'createMany' | 'update' | 'delete'
 
 type RecordCrudProps = {
   tableMeta: TableSchema,
@@ -25,6 +26,7 @@ type RecordCrudProps = {
 const createRecordTag = (tableMeta: *, mode: CrudModes) => {
   switch (mode) {
     case 'create': return createTableRowCreateTag([tableMeta], tableMeta.name);
+    case 'createMany': return createTableRowCreateManyTag([tableMeta], tableMeta.name);
     case 'update': return createTableRowUpdateTag([tableMeta], tableMeta.name);
     case 'delete': return createTableRowDeleteTag([tableMeta], tableMeta.name);
     default: return null;
