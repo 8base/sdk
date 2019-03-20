@@ -897,6 +897,48 @@ Array [
     "name": "relationList",
     "title": "RelationList",
   },
+  Object {
+    "meta": Object {
+      "fieldType": "JSON",
+      "fieldTypeAttributes": null,
+      "isList": false,
+    },
+    "name": "json",
+    "title": "Json",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "JSON",
+      "fieldTypeAttributes": null,
+      "isList": true,
+    },
+    "name": "jsonList",
+    "title": "JsonList",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "isBigInt": true,
+        "precision": 0,
+      },
+      "isList": false,
+    },
+    "name": "bigInt",
+    "title": "BigInt",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "isBigInt": true,
+        "precision": 0,
+      },
+      "isList": true,
+    },
+    "name": "bigIntList",
+    "title": "BigIntList",
+  },
 ]
 `;
 

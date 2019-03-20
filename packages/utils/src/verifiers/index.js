@@ -7,3 +7,5 @@ export { isMetaField } from './isMetaField';
 export { isNumberField } from './isNumberField';
 export { isRelationField } from './isRelationField';
 export { isBigInt } from './isBigInt';
+export { isJSONField } from './isJSONField';
+

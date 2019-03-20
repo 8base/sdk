@@ -44,6 +44,22 @@ describe('As developer, I can format for create mutation,', () => {
           shareUrl: 'https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqop0000601qnytfd866c',
         }],
       },
+      json: {
+        somePropArray: [
+          'someValue1',
+          'someValue2',
+          'someValue3',
+        ],
+      },
+      jsonList: [
+        { someProp: 'someValue' },
+        {
+          somePropArray: [
+            'someValue1',
+            'someValue2',
+          ],
+        },
+      ],
     };
 
     expect(formatDataAfterQuery('tableSchema', data, SCHEMA)).toMatchSnapshot();

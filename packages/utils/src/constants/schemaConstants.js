@@ -9,6 +9,7 @@ export const FIELD_TYPE = {
   SWITCH: 'SWITCH',
   TEXT: 'TEXT',
   SMART: 'SMART',
+  JSON: 'JSON',
 };
 
 export const SWITCH_FORMATS = {
@@ -91,3 +92,4 @@ export const SYSTEM_TABLES = {
   API_TOKENS: 'ApiTokens',
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
 };
+
