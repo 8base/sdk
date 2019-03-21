@@ -25,10 +25,23 @@ Object {
       "shareUrl": "https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqop0000601qnytfd866c",
     },
   ],
-  "json": "{\\"somePropArray\\":[\\"someValue1\\",\\"someValue2\\",\\"someValue3\\"]}",
+  "json": Object {
+    "somePropArray": Array [
+      "someValue1",
+      "someValue2",
+      "someValue3",
+    ],
+  },
   "jsonList": Array [
-    "{\\"someProp\\":\\"someValue\\"}",
-    "{\\"somePropArray\\":[\\"someValue1\\",\\"someValue2\\"]}",
+    Object {
+      "someProp": "someValue",
+    },
+    Object {
+      "somePropArray": Array [
+        "someValue1",
+        "someValue2",
+      ],
+    },
   ],
   "relation": null,
   "relationList": Array [
