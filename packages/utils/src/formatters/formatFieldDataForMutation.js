@@ -7,6 +7,14 @@ import { formatFieldData } from './formatFieldData';
 
 import type { MutationType, FieldSchema, Schema } from '../types';
 
+const formatJSON = (data) => {
+  if (typeof data === 'string' && data.length === 0) {
+    return null;
+  }
+
+  return JSON.parse(data);
+};
+
 const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
   let nextData = data;
 
@@ -42,9 +50,9 @@ const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema
     }
   } else if (verifiers.isJSONField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {
-      nextData = R.map(JSON.parse, nextData);
+      nextData = R.map(formatJSON, nextData);
     } else {
-      nextData = JSON.parse(nextData);
+      nextData = formatJSON(nextData);
     }
   }
 
