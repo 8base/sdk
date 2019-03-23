@@ -22,7 +22,7 @@ import {
   Label,
   ModalContext,
 } from '@8base/boost';
-import { FileInput } from '@8base/file-input';
+import { AddressInputField, PhoneInputField, ListsField, FileInputField } from '../../shared/components';
 
 const PROPERTY_CREATE_MUTATION = gql\`
   mutation PropertyCreate($data: PropertyCreateInput!) {
@@ -43,90 +43,6 @@ const LISTINGS_LIST_QUERY = gql\`
 \`;
 
 const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, label: item._description }));
-
-const FileInputField = ({ input, meta, maxFiles, label, ...rest }) => (
-  <Form.Field label={label} input={input} meta={meta}>
-    <FileInput onChange={input.onChange} value={input.value} maxFiles={maxFiles} public={rest.public}>
-      {({ pick, value }) => (
-        <Row stretch alignItems=\\"center\\">
-          <Button type=\\"button\\" onClick={() => pick()} stretch color=\\"neutral\\">
-            Choose Files
-          </Button>
-          <Text size=\\"sm\\">
-            {value ? (Array.isArray(value) ? \`\${value.length} files selected\` : value.filename) : 'No files selected'}
-          </Text>
-        </Row>
-      )}
-    </FileInput>
-  </Form.Field>
-);
-
-const ListFields = ({ fields, label, component, defaultValue = '', ...rest }) => (
-  <React.Fragment>
-    {fields.length > 0 && <Label>{label}</Label>}
-    <Column gap=\\"sm\\" alignItems=\\"stretch\\">
-      {fields.map((name, index) => (
-        <Row gap=\\"sm\\" alignItems=\\"center\\">
-          <Field {...rest} key={name} name={name} component={component} />
-          <Icon color=\\"GRAY1\\" name=\\"Delete\\" cursor=\\"pointer\\" onClick={() => fields.remove(index)} />
-        </Row>
-      ))}
-      <Text color=\\"GRAY1\\" cursor=\\"pointer\\" onClick={() => fields.push(defaultValue)}>
-        Add {label}
-      </Text>
-    </Column>
-  </React.Fragment>
-);
-
-const AddressField = ({ label, input: { name } }) => (
-  <Column gap=\\"none\\" alignItems=\\"stretch\\">
-    {label && <Label kind=\\"secondary\\">{label}</Label>}
-    <Grid.Layout
-      columns=\\"100px 1fr 1fr\\"
-      autoRows=\\"auto\\"
-      gap=\\"sm\\"
-      areas={[
-        ['country', 'country', 'country'],
-        ['street1', 'street1', 'street1'],
-        ['street2', 'street2', 'street2'],
-        ['zip', 'city', 'state'],
-      ]}
-    >
-      <Grid.Box area=\\"country\\">
-        <Field name={\`\${name}.country\`} component={InputField} placeholder=\\"Country\\" />
-      </Grid.Box>
-      <Grid.Box area=\\"street1\\">
-        <Field name={\`\${name}.street1\`} component={InputField} placeholder=\\"Address Line 1\\" />
-      </Grid.Box>
-      <Grid.Box area=\\"street2\\">
-        <Field name={\`\${name}.street2\`} component={InputField} placeholder=\\"Address Line 2\\" />
-      </Grid.Box>
-      <Grid.Box area=\\"zip\\">
-        <Field name={\`\${name}.zip\`} component={InputField} placeholder=\\"Postal/Zip\\" />
-      </Grid.Box>
-      <Grid.Box area=\\"city\\">
-        <Field name={\`\${name}.city\`} component={InputField} placeholder=\\"City\\" />
-      </Grid.Box>
-      <Grid.Box area=\\"state\\">
-        <Field name={\`\${name}.state\`} component={InputField} placeholder=\\"State\\" />
-      </Grid.Box>
-    </Grid.Layout>
-  </Column>
-);
-
-const PhoneField = ({ label, input: { name } }) => (
-  <Column gap=\\"none\\" alignItems=\\"stretch\\">
-    {label && <Label kind=\\"secondary\\">{label}</Label>}
-    <Grid.Layout columns=\\"120px 1fr\\" autoRows=\\"auto\\" gap=\\"lg\\">
-      <Grid.Box>
-        <Field name={\`\${name}.code\`} component={SelectField} placeholder=\\"Code\\" options={COUNTRY_CODE_OPTIONS} />
-      </Grid.Box>
-      <Grid.Box justifyContent=\\"flex-end\\">
-        <Field name={\`\${name}.number\`} component={InputField} placeholder=\\"Number\\" />
-      </Grid.Box>
-    </Grid.Layout>
-  </Column>
-);
 
 const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
   name: 'propertyCreate',
@@ -158,10 +74,10 @@ const PropertyCreateDialog = enhancer(
         <Dialog.Body scrollable>
           <Grid.Layout gap=\\"md\\" stretch>
             <Grid.Box>
-              <Field name=\\"address\\" label=\\"Address\\" component={AddressField} />
+              <Field name=\\"address\\" label=\\"Address\\" component={AddressInputField} />
             </Grid.Box>
             <Grid.Box>
-              <Field name=\\"phone\\" label=\\"Phone\\" component={PhoneField} />
+              <Field name=\\"phone\\" label=\\"Phone\\" component={PhoneInputField} />
             </Grid.Box>
             <Grid.Box>
               <FieldArray name=\\"pictures\\">

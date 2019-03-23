@@ -3,7 +3,7 @@
 import ejs from 'ejs';
 import pluralize from 'pluralize';
 import changeCase from 'change-case';
-import { formatCode } from '../formatCode';
+import { formatCode } from '../../formatCode';
 
 // $FlowIgnore
 import index from './index.js.ejs';

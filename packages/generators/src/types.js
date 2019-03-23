@@ -1,10 +1,14 @@
 // @flow
 import type { TableSchema } from '@8base/utils';
 
-export type GeneratorsConfig = {
+
+export type GeneratorsCommonConfig = {
   deep: number,
-  includeColumns?: string[],
 };
+
+export type GeneratorsConfig = {
+  includeColumns?: string[],
+} & GeneratorsCommonConfig;
 
 export type GeneratorsData = {
   tablesList: TableSchema,
@@ -17,6 +21,13 @@ export type ScreenTable = {
   tableName: string,
   screenName: string,
   routeUrl: string,
+  tableFields?: string[],
+  formFields?: string[],
+};
+
+export type CliScreenTable = {
+  tableName: string,
+  screenName: string,
   tableFields?: string[],
   formFields?: string[],
 };

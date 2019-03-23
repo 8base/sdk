@@ -1,13 +1,13 @@
 // @flow
-import changeCase from 'change-case';
 import type { TableSchema } from '@8base/utils';
 
-import { generateCreateForm } from '../generateCreateForm/createForm';
-import { generateEditForm } from '../generateEditForm/editForm';
-import { generateDeleteForm } from '../generateDeleteForm/deleteForm';
-import { generateTable } from '../generateTable/table';
-import { generateIndex } from '../generateIndex';
-import { generateRoot } from '../generateRoot/generateRoot';
+import { generateCreateForm } from '../generateFiles/generateCreateForm/createForm';
+import { generateEditForm } from '../generateFiles/generateEditForm/editForm';
+import { generateDeleteForm } from '../generateFiles/generateDeleteForm/deleteForm';
+import { generateTable } from '../generateFiles/generateTable/table';
+import { generateIndex } from '../generateFiles/generateIndex';
+import { generateRoot } from '../generateFiles/generateRoot/generateRoot';
+import { getCreateFormFileName, getEditFormFileName, getDeleteFormFileName, getTableFileName, getScreenFolderName } from './generateFileNames';
 import type { ScreenTable, GeneratorsConfig } from '../types';
 
 type GenerateProjectFsData = {
@@ -15,13 +15,7 @@ type GenerateProjectFsData = {
   screens: ScreenTable[],
 }
 
-const getCreateFormFileName = (screenName: string) => `${changeCase.pascal(screenName)}CreateDialog.js`;
-const getEditFormFileName = (screenName: string) => `${changeCase.pascal(screenName)}EditDialog.js`;
-const getDeleteFormFileName = (screenName: string) => `${changeCase.pascal(screenName)}DeleteDialog.js`;
-const getTableFileName = (screenName: string) => `${changeCase.pascal(screenName)}Table.js`;
-const getScreenFolderName = (screenName: string) => changeCase.camel(screenName);
-
-export const generateProjectFs = ({ tablesList, screens }: GenerateProjectFsData, config: GeneratorsConfig) => {
+export const generateAllScreens = ({ tablesList, screens }: GenerateProjectFsData, config: GeneratorsConfig) => {
   const fs = {};
 
   screens.forEach(({ screenName, tableName, tableFields, formFields }) => {

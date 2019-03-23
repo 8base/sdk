@@ -19,7 +19,7 @@ import {
   Label,
   ModalContext,
 } from '@8base/boost';
-import { FileInput } from '@8base/file-input';
+import { AddressInputField, PhoneInputField, ListsField, FileInputField } from '../../shared/components'
 
 const PROPERTY_CREATE_MUTATION = gql`
   mutation <%= changeCase.pascal(screenName)%>Create($data: <%= SchemaNameGenerator.getCreateInputName(tableName)%>!) {

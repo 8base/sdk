@@ -4,8 +4,8 @@ import ejs from 'ejs';
 import pluralize from 'pluralize';
 import changeCase from 'change-case';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
-import type { GeneratorsData } from '../types';
-import { formatCode } from '../formatCode';
+import type { GeneratorsData } from '../../types';
+import { formatCode } from '../../formatCode';
 import { chunks } from '../chunks';
 
 // $FlowIgnore

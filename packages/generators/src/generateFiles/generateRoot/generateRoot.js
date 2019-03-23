@@ -1,7 +1,7 @@
 // @flow
 import ejs from 'ejs';
 import changeCase from 'change-case';
-import { formatCode } from '../formatCode';
+import { formatCode } from '../../formatCode';
 import { chunks } from '../chunks';
 
 // $FlowIgnore
