@@ -1,4 +1,4 @@
 // @flow
 
-/** Name of thi branch in repo https://github.com/8base/react-app-starter */
-export const REPO_BRANCH_NAME = 'v1.1.0';
+/** Name of branch in the repo https://github.com/8base/react-app-starter */
+export const REPO_BRANCH_NAME = 'v0.2.0';
