@@ -74,7 +74,7 @@ export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants): A
     }
   });
 
-  fsObjectReplaced[FS_NAMES.EIGHT_BASE_YML] = `projectName: ${constants.appName}`;
+  fsObjectReplaced[FS_NAMES.EIGHT_BASE_YML] = `appName: ${constants.appName}`;
 
   return fsObjectReplaced;
 };
