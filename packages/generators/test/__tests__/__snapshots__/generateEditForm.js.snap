@@ -5,7 +5,6 @@ exports[`should generate update form by the table name 1`] = `
 import { memoizeWith, identity } from 'ramda';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
-import { COUNTRY_CODE_OPTIONS } from '@8base/utils';
 import { Form as FormLogic, Field, FieldArray } from '@8base/forms';
 import {
   Dialog,

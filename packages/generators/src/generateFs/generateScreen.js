@@ -27,9 +27,9 @@ const PAGE_CONSTANTS = {
 export const generateScreen = ({ tablesList, screen, rootFile }: GenerateProjectFsData, config: GeneratorsCommonConfig) => {
   const fs = {};
   const { screenName, tableName, tableFields, formFields } = screen;
-  const routeUrl = screenName;
-
   const generatorData = { tablesList, tableName, screenName };
+  const routeUrl = `/${changeCase.camel(screenName)}`;
+
   fs[`src/routes/${getScreenFolderName(screenName)}/${getCreateFormFileName(screenName)}`] =
     generateCreateForm(generatorData, { ...config, includeColumns: formFields });
 
