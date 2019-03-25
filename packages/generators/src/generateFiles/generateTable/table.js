@@ -5,8 +5,8 @@ import pluralize from 'pluralize';
 import changeCase from 'change-case';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import { createTableFilterGraphqlTag, createQueryColumnsList, tableSelectors } from '@8base/utils';
-import type { GeneratorsConfig, GeneratorsData } from '../types';
-import { formatCode } from '../formatCode';
+import type { GeneratorsConfig, GeneratorsData } from '../../types';
+import { formatCode } from '../../formatCode';
 import { chunks } from '../chunks';
 
 // $FlowIgnore

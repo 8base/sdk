@@ -11,3 +11,6 @@ for file in $(find dist/module -name '*.js');
 done
 rm -rf dist/module
 yarn flow-copy-source src dist
+if [ -e src/index.d.ts ]
+ then cp src/index.d.ts dist
+fi

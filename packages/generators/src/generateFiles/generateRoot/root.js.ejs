@@ -5,7 +5,7 @@ import { ProtectedRoute } from './shared/components';
 import { MainPlate, ContentPlate, Nav } from './components';
 import { Auth } from './routes/auth';
 <% screens.forEach(({ screenName, routeUrl }) => { 
-  %>import { <%= changeCase.pascal(screenName)%> } from './routes/<%= changeCase.camel(screenName)%>';<% 
+  %><%- chunks.routeImport({ screenName: screenName, changeCase: changeCase })%><% 
 }); %>
 
 
@@ -16,13 +16,13 @@ export const Root = () => (
       <MainPlate>
         <Nav.Plate color="BLUE">
         <% screens.forEach(({ screenName, routeUrl }) => { 
-          %><Nav.Item to="<%= routeUrl %>" label="<%= changeCase.pascal(screenName)%>" /><% 
+          %><%- chunks.routeLink({ routeUrl: routeUrl, screenName: screenName, changeCase: changeCase })%><% 
         }); %>
         </Nav.Plate>
         <ContentPlate>
           <Switch>
         <% screens.forEach(({ screenName, routeUrl }) => { 
-          %><ProtectedRoute exact path="<%= routeUrl%>" component={<%= changeCase.pascal(screenName)%>} /><% 
+          %><%- chunks.routeComponent({ routeUrl: routeUrl, screenName: screenName, changeCase: changeCase })%><% 
         }); %>
           </Switch>
         </ContentPlate>
