@@ -14,18 +14,24 @@ import * as fixtures from '../__fixtures__';
 
 describe('As a developer, I can generate table columns  by table schema', () => {
   it('should generate table columns list ', () => {
-    const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema');
+    const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', {
+      deep: 3,
+      withMeta: false,
+    });
 
     expect(columnsList).toMatchSnapshot();
   });
 
   it('should generate table columns list with included columns', () => {
-    const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', { includeColumns: [
-      'number',
-      'relation.scalarList',
-      'relation.numberanother',
-      'relationList',
-    ] });
+    const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', {
+      deep: 3,
+      withMeta: false,
+      includeColumns: [
+        'number',
+        'relation.scalarList',
+        'relation.numberanother',
+        'relationList',
+      ] });
 
     expect(columnsList).toMatchSnapshot();
   });

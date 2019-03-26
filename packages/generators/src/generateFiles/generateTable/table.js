@@ -14,7 +14,7 @@ import tableTemplate from './table.js.ejs';
 
 
 export const generateTable =
-  ({ tablesList, tableName, screenName }: GeneratorsData, config: GeneratorsConfig | void = { deep: 2, withMeta: false }) => {
+  ({ tablesList, tableName, screenName }: GeneratorsData, config: GeneratorsConfig | void) => {
     const table = tablesList.find(({ name }) => tableName === name);
 
     if (!table) { throw new Error(`Can't find a table ${tableName}`); }

@@ -3,6 +3,7 @@
   "version": "0.18.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
+  "types": "dist/index.d.js",
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
