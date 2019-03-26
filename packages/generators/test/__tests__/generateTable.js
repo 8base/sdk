@@ -8,6 +8,9 @@ it('should generate table by the table name', () => {
   const generatedTable = generateTable({
     tablesList: tablesSchema,
     tableName: 'Properties',
+  }, {
+    deep: 2,
+    withMeta: false,
   });
 
   expect(generatedTable).toMatchSnapshot();

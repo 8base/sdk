@@ -23,7 +23,7 @@ export const createQueryColumnsList = (
   prevKey?: string = '',
 ) => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
-  const { deep = 3, withMeta = false, flatten = true, includeColumns } = config;
+  const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 
   const transformedList = fields
     .filter((field) => {

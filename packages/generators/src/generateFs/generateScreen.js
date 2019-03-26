@@ -10,11 +10,11 @@ import { generateIndex } from '../generateFiles/generateIndex';
 import { chunks } from '../generateFiles/chunks';
 import { formatCode } from '../formatCode';
 import { getCreateFormFileName, getEditFormFileName, getDeleteFormFileName, getTableFileName, getScreenFolderName } from './generateFileNames';
-import type { CliScreenTable, GeneratorsCommonConfig } from '../types';
+import type { ScreenTable, GeneratorsCommonConfig } from '../types';
 
 type GenerateProjectFsData = {
-  tablesList: TableSchema,
-  screen: CliScreenTable,
+  tablesList: TableSchema[],
+  screen: ScreenTable,
   rootFile?: string,
 }
 
