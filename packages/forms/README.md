@@ -209,17 +209,19 @@ render(
           <Field name="age" component="input" />
           <FieldArray name="fieldArray">
             {
-              ({ fields }) => (
+              React.Children.toArray(({ fields }) => (
                 <React.Fragment>
-                  fields.map((name, index) => (
-                    <React.Fragment>
-                      <Field key={ name } name={ name } component="input" />
-                      <button onClick={ () => props.fields.remove(index) }>Remove</button>
-                    </React.Fragment>
-                  ))
-                  <button onClick={ fields.push('New Field Array Item') }>Add</button>
+                  {
+                    fields.map((name, index) => (
+                      <React.Fragment>
+                        <Field key={ name } name={ name } component="input" />
+                        <button onClick={ () => fields.remove(index) }>Remove</button>
+                      </React.Fragment>
+                    ))
+                  }
+                  <button onClick={ () => fields.push('New Field Array Item') }>Add</button>
                 </React.Fragment>
-              )
+              ))
             }
           </FieldArray>
           <button type="submit">Create Client</button>
