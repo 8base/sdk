@@ -32,10 +32,10 @@ export function replaceInitialApp(fsObject: Object, constants: {
   authClientId: string,
   authDomain: string,
   appName: string,
-}): Object;
+}): Record<string, string>;
 
 export function generateScreen(data: {
   tablesList: TableSchema[],
   screen: ScreenTable,
   rootFile?: string,
-}, config: GeneratorsCommonConfig): Object;
+}, config: GeneratorsCommonConfig): Record<string, string>;
