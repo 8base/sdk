@@ -7,11 +7,12 @@ import { ApolloLink } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { AuthLink, SuccessLink } from '@8base/apollo-links';
 import { onError as createErrorLink } from 'apollo-link-error';
+import { type AuthState } from '@8base/utils';
 
 
 type EightBaseApolloClientCommon = {
   uri: string,
-  extendLinks?: (links: Object[]) => Object[],
+  extendLinks?: (links: Object[], { getAuthState?: () => AuthState }) => Object[],
   onAuthError?: Function,
   onIdTokenExpired?: Function,
   onRequestSuccess?: Function,
@@ -20,7 +21,7 @@ type EightBaseApolloClientCommon = {
 
 type EightBaseApolloClientWithAuthOptions = {
   withAuth?: true,
-  getAuthState: Function,
+  getAuthState: () => AuthState,
   getRefreshTokenParameters: Function,
   onAuthSuccess: Function,
 } & EightBaseApolloClientCommon;
@@ -95,7 +96,7 @@ class EightBaseApolloClient extends ApolloClient {
     }
 
     if (typeof extendLinks === 'function') {
-      links = extendLinks(links);
+      links = extendLinks(links, { getAuthState });
     }
 
     const link = ApolloLink.from(links);
