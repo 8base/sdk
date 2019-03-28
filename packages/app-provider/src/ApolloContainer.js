@@ -49,14 +49,7 @@ class ApolloContainer extends React.Component {
       },
     } = this.props;
 
-    if (authState) {
-      return R.pick([
-        'token',
-        'workspaceId',
-      ])(authState);
-    }
-
-    return null;
+    return authState;
   };
 
   createClient = R.memoizeWith(R.identity, (fragmentsSchema) => {
