@@ -15,7 +15,7 @@
     "graphql": "0.13.0",
     "graphql-tag": "^2.9.2",
     "react": "^16.4.1",
-    "react-apollo": "^2.5.2",
+    "react-apollo": "2.5.0 - 2.5.2",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
