@@ -18,7 +18,7 @@
     "graphql-tag": "^2.10.1",
     "ramda": "^0.26.1",
     "react": "^16.4.1",
-    "react-apollo": "^2.5.2",
+    "react-apollo": "2.5.0 - 2.5.2",
     "react-dom": "^16.4.1",
     "recompose": "^0.30.0",
     "reselect": "^3.0.1"

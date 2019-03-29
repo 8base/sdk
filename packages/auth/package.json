@@ -14,7 +14,7 @@
     "@8base/utils": "^0.18.5",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
-    "react-apollo": "^2.5.2",
+    "react-apollo": "2.5.0 - 2.5.2",
     "react-dom": "^16.7.0",
     "recompose": "^0.30.0"
   },
