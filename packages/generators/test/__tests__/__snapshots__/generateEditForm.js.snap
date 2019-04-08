@@ -31,8 +31,9 @@ const PROPERTY_UPDATE_MUTATION = gql\`
     }
   }
 \`;
+
 const LISTINGS_LIST_QUERY = gql\`
-  query ListingsListList {
+  query ListingsList {
     listingsList {
       items {
         id
@@ -47,7 +48,7 @@ const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, 
 const ehnhancer = graphql(PROPERTY_UPDATE_MUTATION, {
   name: 'propertyUpdate',
   options: {
-    refetchQueries: ['PropertiesTableContent'],
+    refetchQueries: ['PropertiesTableContent', 'PropertiesList'],
     context: {
       TOAST_SUCCESS_MESSAGE: 'Property successfuly updated',
     },

@@ -1,7 +1,7 @@
 <% fields.forEach(function({ fieldType, name }){
   if(fieldType === 'RELATION') {
 %>const <%= changeCase.upper(name)%>_LIST_QUERY = gql`
-  query <%= changeCase.pascal(SchemaNameGenerator.getTableListFieldName(name))%>List {
+  query <%= changeCase.pascal(SchemaNameGenerator.getTableListFieldName(name))%> {
     <%= SchemaNameGenerator.getTableListFieldName(name)%> {
       items {
         id

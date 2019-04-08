@@ -27,6 +27,7 @@ const PROPERTY_CREATE_MUTATION = gql`
     }
   }
 `;
+
 <%- chunks.createEditComponents({
     fields: fields,
     SchemaNameGenerator: SchemaNameGenerator,
@@ -38,7 +39,7 @@ const PROPERTY_CREATE_MUTATION = gql`
 const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
   name: '<%= SchemaNameGenerator.getCreateItemFieldName(tableName)%>',
   options: {
-    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent'],
+    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent', '<%= changeCase.pascal(SchemaNameGenerator.getTableListFieldName(tableName))%>'],
     context: {
       TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(screenName)%> successfuly created',
     },

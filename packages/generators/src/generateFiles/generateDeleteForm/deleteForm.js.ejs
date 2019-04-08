@@ -16,7 +16,7 @@ const <%= changeCase.upper(screenName)%>_DELETE_MUTATION = gql`
 const enhancer = graphql(<%= changeCase.upper(screenName)%>_DELETE_MUTATION, {
   name: '<%= SchemaNameGenerator.getDeleteItemFieldName(tableName)%>',
   options: {
-    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent'],
+    refetchQueries: ['<%=changeCase.pascal(tableName)%>TableContent', '<%= changeCase.pascal(SchemaNameGenerator.getTableListFieldName(tableName))%>'],
     context: {
       TOAST_SUCCESS_MESSAGE: '<%= changeCase.pascal(screenName)%> successfuly deleted',
     },

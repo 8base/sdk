@@ -30,8 +30,9 @@ const PROPERTY_CREATE_MUTATION = gql\`
     }
   }
 \`;
+
 const LISTINGS_LIST_QUERY = gql\`
-  query ListingsListList {
+  query ListingsList {
     listingsList {
       items {
         id
@@ -46,7 +47,7 @@ const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, 
 const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
   name: 'propertyCreate',
   options: {
-    refetchQueries: ['PropertiesTableContent'],
+    refetchQueries: ['PropertiesTableContent', 'PropertiesList'],
     context: {
       TOAST_SUCCESS_MESSAGE: 'Property successfuly created',
     },
