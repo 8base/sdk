@@ -26,13 +26,17 @@ export type ScreenTable = {
   formFields?: string[],
 };
 
-
-export function replaceInitialApp(fsObject: Object, constants: {
-  endpoint: string,
-  authClientId: string,
-  authDomain: string,
-  appName: string,
-}): Record<string, string>;
+export function replaceInitialApp(
+  fsObject: Object, 
+  constants: {
+    endpoint: string,
+    authClientId: string,
+    authDomain: string,
+    appName: string,
+  }, 
+  config?: { 
+    authMode: 'web' | 'api-token' 
+  }): Record<string, string>;
 
 export function generateScreen(data: {
   tablesList: TableSchema[],

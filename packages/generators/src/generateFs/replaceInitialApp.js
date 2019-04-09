@@ -32,7 +32,7 @@ const removePieceOfCode = (code: string, pieceName: string) => {
 };
 
 
-export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants, config: { authMode: 'web' | 'api-token' }): AppFs => {
+export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants, config?: { authMode: 'web' | 'api-token' } = { authMode: 'web' }): AppFs => {
   const fsObjectReplaced: AppFs = {};
   const isApiTokenMode = config.authMode === 'api-token';
 
