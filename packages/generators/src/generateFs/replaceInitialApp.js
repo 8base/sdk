@@ -56,13 +56,6 @@ export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants, co
         break;
       }
 
-      case FS_NAMES.APPOLO_CONFIG_JS: {
-        fsObjectReplaced[FS_NAMES.APPOLO_CONFIG_JS] = fsObject[FS_NAMES.APPOLO_CONFIG_JS] && fsObject[FS_NAMES.APPOLO_CONFIG_JS]
-          .replace('__APP_API_ENDPOINT__', constants.endpoint || '');
-
-        break;
-      }
-
       case FS_NAMES.PACKAGE_JSON: {
         fsObjectReplaced[FS_NAMES.PACKAGE_JSON] = fsObject[FS_NAMES.PACKAGE_JSON] && fsObject[FS_NAMES.PACKAGE_JSON]
           .replace(/"name": ".*"/, `"name": "${constants.appName}"`)
@@ -79,7 +72,16 @@ export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants, co
         break;
       }
 
-      default: break;
+      default: {
+        fsObjectReplaced[filePath] = fsObject[filePath] && fsObject[filePath]
+          .replace('__APP_API_ENDPOINT__', constants.endpoint || '')
+          .replace('__APP_AUTH_CLIENT_ID__', constants.authClientId || '')
+          .replace('__APP_AUTH_DOMAIN__', constants.authDomain || '')
+          .replace('__APP_NAME__', constants.appName || '');
+
+        break;
+      }
+
     }
   });
 
