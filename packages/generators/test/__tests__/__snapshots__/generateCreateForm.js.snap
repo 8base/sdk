@@ -21,7 +21,7 @@ import {
   Label,
   ModalContext,
 } from '@8base/boost';
-import { AddressInputField, PhoneInputField, ListsField, FileInputField } from '../../shared/components';
+import { AddressInputField, PhoneInputField, ListFields, FileInputField } from '../../shared/components';
 
 const PROPERTY_CREATE_MUTATION = gql\`
   mutation PropertyCreate($data: PropertyCreateInput!) {
@@ -33,7 +33,7 @@ const PROPERTY_CREATE_MUTATION = gql\`
 
 const LISTINGS_LIST_QUERY = gql\`
   query ListingsList {
-    listingsList {
+    listingsList: listingsList {
       items {
         id
         _description
@@ -42,7 +42,8 @@ const LISTINGS_LIST_QUERY = gql\`
   }
 \`;
 
-const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, label: item._description }));
+const getRelationOptions = (items = []) =>
+  items.map(item => ({ value: item.id, label: item._description || 'Untitled Record' }));
 
 const enhancer = graphql(PROPERTY_CREATE_MUTATION, {
   name: 'propertyCreate',
