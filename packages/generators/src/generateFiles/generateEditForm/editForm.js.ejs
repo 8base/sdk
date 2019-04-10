@@ -19,7 +19,7 @@ import {
   Label,
   ModalContext,
 } from '@8base/boost';
-import { AddressInputField, PhoneInputField, ListsField, FileInputField } from '../../shared/components'
+import { AddressInputField, PhoneInputField, ListFields, FileInputField } from '../../shared/components'
 
 const <%= changeCase.upper(screenName)%>_UPDATE_MUTATION = gql`
   mutation <%= changeCase.pascal(screenName)%>Update($data: <%= SchemaNameGenerator.getUpdateInputName(tableName)%>!) {

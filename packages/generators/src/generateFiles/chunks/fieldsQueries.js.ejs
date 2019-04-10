@@ -1,8 +1,8 @@
-<% fields.forEach(function({ fieldType, name }){
+<% fields.forEach(function({ fieldType, name, relation }){
   if(fieldType === 'RELATION') {
 %>const <%= changeCase.upper(name)%>_LIST_QUERY = gql`
   query <%= changeCase.pascal(SchemaNameGenerator.getTableListFieldName(name))%> {
-    <%= SchemaNameGenerator.getTableListFieldName(name)%> {
+    <%= SchemaNameGenerator.getTableListFieldName(name)%>: <%=SchemaNameGenerator.getTableListFieldName(relation.refTable.name)%> {
       items {
         id
         _description
@@ -14,4 +14,4 @@
   }
 });
 %>
-const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, label: item._description }));
+const getRelationOptions = (items = []) => items.map(item => ({ value: item.id, label: item._description || 'Untitled Record' }));
