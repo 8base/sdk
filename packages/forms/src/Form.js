@@ -34,37 +34,39 @@ class Form extends React.Component<FormProps> {
       ...restProps,
     };
 
-    if (type && tableSchema && schema) {
-      if (type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
-        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema);
+    if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
+      collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema);
+    }
+
+    collectedProps.onSubmit = async (data, ...rest) => {
+      let result = null;
+
+      try {
+        const fromattedData = (type && tableSchema && schema)
+          ? formatDataForMutation(type, tableSchema.name, data, schema)
+          : data;
+
+        result = await onSubmit(fromattedData, ...rest);
+      } catch (e) {
+        result = R.assoc('errors', e.graphQLErrors, result);
       }
 
-      collectedProps.onSubmit = async (data, ...rest) => {
-        let result = null;
+      const errors = R.pathOr([], ['errors'], result);
 
-        try {
-          result = await onSubmit(formatDataForMutation(type, tableSchema.name, data, schema), ...rest);
-        } catch (e) {
-          result = R.assoc('errors', e.graphQLErrors, result);
+      if (errors.length > 0) {
+        const error = errors[0];
+
+        if (error.code === errorCodes.ValidationErrorCode) {
+          return error.details;
         }
 
-        const errors = R.pathOr([], ['errors'], result);
+        return { [FORM_ERROR]: error.message };
+      }
 
-        if (errors.length > 0) {
-          const error = errors[0];
-
-          if (error.code === errorCodes.ValidationErrorCode) {
-            return error.details;
-          }
-
-          return { [FORM_ERROR]: error.message };
-        }
-
-        if (typeof onSuccess === 'function') {
-          onSuccess(result, ...rest);
-        }
-      };
-    }
+      if (typeof onSuccess === 'function') {
+        onSuccess(result, ...rest);
+      }
+    };
 
     return collectedProps;
   };
