@@ -37,13 +37,16 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     }
 
     const fieldSchema: ?FieldSchema = getFieldSchemaByName(fieldName, tableSchema);
+    const { skip, mutate, ignoreNonTableFields = true } = options;
 
     if (!fieldSchema) {
       // throw new Error(`Field schema with ${fieldName} name not found in table schema with ${tableSchema.name} name.`);
-      return result;
-    }
+      if (ignoreNonTableFields) {
+        return result;
+      }
 
-    const { skip } = options;
+      return { ...result, [fieldName]: data[fieldName] };
+    }
 
     if (typeof skip === 'function' && skip(data[fieldName], fieldSchema)) {
       return result;
@@ -68,8 +71,6 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     }
 
     formatedFieldData = formatFieldDataForMutation(type, fieldSchema, formatedFieldData, schema);
-
-    const { mutate } = options;
 
     if (typeof mutate === 'function') {
       formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);

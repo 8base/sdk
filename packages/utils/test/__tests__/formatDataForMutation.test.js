@@ -301,6 +301,35 @@ describe('As developer, I can format for create mutation,', () => {
       formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA),
     ).toEqual(data);
   });
+
+  it('should leave non-table fields if option ignoreNonTableFields is false', () => {
+    const data = {
+      scalar: 'Scalar Value',
+      scalarList: ['Scalar List Value'],
+      nonTableField: 'Non-table',
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA, { ignoreNonTableFields: false }),
+    ).toEqual(data);
+  });
+
+  it('should ignore non-table fields if option ignoreNonTableFields is true', () => {
+    const data = {
+      scalar: 'Scalar Value',
+      scalarList: ['Scalar List Value'],
+      nonTableField: 'Non-table',
+    };
+
+    const expectedResult = {
+      scalar: 'Scalar Value',
+      scalarList: ['Scalar List Value'],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA, { ignoreNonTableFields: true }),
+    ).toEqual(expectedResult);
+  });
 });
 
 describe('As developer, I can format for update mutation,', () => {
