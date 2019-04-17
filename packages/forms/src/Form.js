@@ -21,10 +21,11 @@ import type { FormProps, FormContextValue } from './types';
 class Form extends React.Component<FormProps> {
   static defaultProps = {
     mutators: {},
+    formatSubmitData: true,
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, ...restProps } = this.props;
+    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, formatSubmitData, ...restProps } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
@@ -42,11 +43,11 @@ class Form extends React.Component<FormProps> {
       let result = null;
 
       try {
-        const fromattedData = (type && tableSchema && schema)
+        const formattedData = (type && tableSchema && schema && formatSubmitData)
           ? formatDataForMutation(type, tableSchema.name, data, schema)
           : data;
 
-        result = await onSubmit(fromattedData, ...rest);
+        result = await onSubmit(formattedData, ...rest);
       } catch (e) {
         result = R.assoc('errors', e.graphQLErrors, result);
       }
