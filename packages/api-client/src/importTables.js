@@ -65,6 +65,7 @@ export const importTables = async (request: (query: string | DocumentNode, varia
           'maxValue',
           'maxSize',
           'typeRestrictions',
+          'isBigInt',
         ], field.fieldTypeAttributes);
       }
 
