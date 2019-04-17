@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "0.19.2",
+  "version": "0.19.3",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.5",
     "@8base/schema-name-generator": "^0.1.1",
-    "@8base/utils": "^0.19.2",
+    "@8base/utils": "^0.19.3",
     "@babel/runtime": "^7.3.1",
     "filestack-js": "^1.14.6",
     "graphql": "0.13.0",
