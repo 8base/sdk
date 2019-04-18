@@ -7,7 +7,7 @@ import { formatFieldData } from './formatFieldData';
 import { MutationType, FieldSchema, Schema } from '../types';
 
 const formatJSON = (data: any) => {
-  if (typeof data === 'string' && data.length === 0) {
+  if (typeof data !== 'string' || data.length === 0) {
     return null;
   }
 

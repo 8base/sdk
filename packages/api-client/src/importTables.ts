@@ -101,7 +101,7 @@ export const importTables = async (
         );
       }
 
-      if (field.relation) {
+      if (field.relation && field.relation.refTable.name) {
         const refTableName = field.relation.refTable.name;
 
         const refTable = tablesByName[refTableName];

@@ -16,6 +16,7 @@
     "@8base/schema-name-generator": "^0.1.1",
     "@8base/utils": "^0.28.3",
     "filestack-js": "^1.14.6",
+    "fs-extra": "^8.0.1",
     "graphql": "0.13.0",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
@@ -23,9 +24,15 @@
     "ramda": "^0.26.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@types/fs-extra": "^7.0.0",
     "@types/graphql": "^14.2.0",
     "@types/jest": "^24.0.13",
     "@types/nock": "^10.0.3",
+    "@types/ramda": "^0.26.9",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
     "jest": "^24.8.0",
     "nock": "^9.3.3",

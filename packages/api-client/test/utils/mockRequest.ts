@@ -1,9 +1,11 @@
 import nock from 'nock';
 
+type MockResponse = { data: { [key: string]: any } };
+
 function mockRequest(
   endpoint: string,
   status: number = 200,
-  response: { data: { [key: string]: any } } = { data: {} },
+  response: MockResponse | ((body: any) => MockResponse) = { data: {} },
 ): Promise<any> {
   let requestBody: any = null;
 
@@ -20,7 +22,7 @@ function mockRequest(
           headers: (this as any).req.headers,
         });
 
-        return response;
+        return typeof response === 'function' ? response(requestBody) : response;
       });
   });
 }

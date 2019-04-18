@@ -21,32 +21,33 @@ export type Format =
   | keyof typeof SMART_FORMATS
   | keyof typeof DATE_FORMATS;
 
+export type Relation = {
+  relationTableName: string;
+  relationFieldName?: string | null;
+  refFieldName?: string | null;
+  refFieldDisplayName?: string | null;
+  refFieldIsList?: boolean | null;
+  refFieldIsRequired?: boolean | null;
+  refTable: {
+    id: string;
+    name?: string | null;
+  };
+};
+
 export type FieldSchema = {
   id: string;
   name: string;
-  displayName?: string;
-  description?: string;
-  fieldType: FieldType;
-  fieldTypeAttributes: { [key: string]: any };
+  displayName?: string | null;
+  description?: string | null;
+  fieldType?: string | null;
+  fieldTypeAttributes?: { [key: string]: any } | null;
   isSystem: boolean;
   isList: boolean;
   isMeta: boolean;
   isRequired: boolean;
-  isUnique?: boolean;
+  isUnique?: boolean | null;
   defaultValue: any;
-  relation: {
-    id: string;
-    relationTableName: string;
-    relationFieldName: string;
-    refFieldName: string;
-    refFieldDisplayName: string;
-    refFieldIsList: boolean;
-    refFieldIsRequired: boolean;
-    refTable: {
-      id: string;
-      name: string;
-    };
-  };
+  relation?: Relation | null;
 };
 
 export type TableSchema = {

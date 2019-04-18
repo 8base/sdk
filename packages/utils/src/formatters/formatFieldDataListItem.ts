@@ -5,7 +5,7 @@ import { getTableSchemaById } from '../selectors';
 import { MUTATION_TYPE, SYSTEM_TABLES } from '../constants';
 import { formatDataForMutation } from './formatDataForMutation';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
-import { MutationType, FieldSchema, Schema, TableSchema } from '../types';
+import { MutationType, FieldSchema, Schema } from '../types';
 
 export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
   let nextData = data;
@@ -28,13 +28,14 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
   }
 
   if (isRelationField(fieldSchema)) {
-    const relationTableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
+    const refTableId = fieldSchema.relation && fieldSchema.relation.refTable.id;
+    const relationTableSchema = getTableSchemaById(schema, refTableId || '');
 
     if (!relationTableSchema) {
       throw new SDKError(
         ERROR_CODES.TABLE_NOT_FOUND,
         PACKAGES.UTILS,
-        `Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`,
+        `Relation table schema with ${refTableId} id not found in schema.`,
       );
     }
 

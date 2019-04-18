@@ -1,18 +1,18 @@
 import * as R from 'ramda';
-import { createSelector, ParametricSelector, Selector } from 'reselect';
+import { createSelector, ParametricSelector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
-import { FieldSchema, Format } from '../types';
+import { FieldSchema } from '../types';
 
 export const getTableField = (tableField: FieldSchema) => tableField;
 
 export const getFieldType: any = createSelector(
   getTableField,
-  R.prop('fieldType'),
+  fieldSchema => R.prop('fieldType', fieldSchema),
 );
 
 export const getFieldTypesAttributes = createSelector(
   getTableField,
-  R.prop('fieldTypeAttributes'),
+  fieldSchema => R.prop('fieldTypeAttributes', fieldSchema),
 );
 
 export const isRelationField = createSelector(

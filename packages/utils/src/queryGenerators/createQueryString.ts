@@ -86,7 +86,7 @@ export const createQueryString = (
           shareUrl
           meta
         }`;
-      } else if (isSmart) {
+      } else if (isSmart && field.fieldTypeAttributes) {
         fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce((accum: string, { name }: { name: string }) => {
           accum += `\n${name}`;
           return accum;
