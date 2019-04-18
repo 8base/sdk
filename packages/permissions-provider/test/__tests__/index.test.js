@@ -6,7 +6,7 @@ import {
   PermissionsProvider,
   isAllowed,
   PermissionContext,
-  withPermissions
+  withPermissions,
 } from '../../src';
 
 const mockPermissionsData = {
@@ -116,7 +116,7 @@ it('As a developer, I can use `IfAllowed` component for pass permission check re
 it('As a developer, I can use `IfAllowed` in order to check fields permissions if allowed.', () => {
   const testRenderFn = jest.fn(() => (
     <IfAllowed resource="Users" type="data" permission="update">
-      { (allowed, fields) => `Allowed = ${allowed}, allowed to change email = ${fields['email']}` }
+      { (allowed, fields) => `Allowed = ${allowed}, allowed to change email = ${fields.email}` }
     </IfAllowed>
   ));
 
@@ -168,7 +168,7 @@ it('As a developer, I can use `isAllowed` for check field access via context.', 
     );
 
     return `Allowed = ${allowed}`;
-  }
+  };
 
   const TestComponentWrapper = withPermissions(TestComponent);
 
