@@ -9,6 +9,16 @@
   dependencies:
     pluralize "^7.0.0"
 
+"@8base/utils@^0.19.3":
+  version "0.19.3"
+  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.19.3.tgz#a94fda291d4bb5b58b958b0c5d08fea2299912ed"
+  integrity sha512-0fmv3cCYpggoVKU567SEMMiZZFhRAUd5r++Qn3tTOfXRjVgUPNMw2g8BX+pLh3K3GONb50M57W00Fx2VgkLqOQ==
+  dependencies:
+    "@8base/schema-name-generator" "^0.1.1"
+    "@babel/runtime" "^7.3.1"
+    ramda "^0.26.1"
+    reselect "^4.0.0"
+
 "@babel/cli@^7.2.3":
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.2.3.tgz#1b262e42a3e959d28ab3d205ba2718e1923cfee6"
@@ -4395,6 +4405,11 @@ os-tmpdir@^1.0.0, os-tmpdir@^1.0.1:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
+os@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/os/-/os-0.1.1.tgz#208845e89e193ad4d971474b93947736a56d13f3"
+  integrity sha1-IIhF6J4ZOtTZcUdLk5R3NqVtE/M=
+
 osenv@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/osenv/-/osenv-0.1.5.tgz#85cdfafaeb28e8677f416e287592b5f3f49ea410"
@@ -5225,6 +5240,11 @@ require-resolve@0.0.2:
   integrity sha1-urQQqxruLz9Vt5MXRR3TQodk5vM=
   dependencies:
     x-path "^0.0.2"
+
+reselect@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
+  integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

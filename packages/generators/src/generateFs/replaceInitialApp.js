@@ -24,7 +24,7 @@ type AppFsConstants = {
 
 const removePieceOfCode = (code: string, pieceName: string) => {
   const pieceStart = `\\/\\*\\*\\s*__${pieceName}_START__\\s*\\*\\/`;
-  const pieceEnd = `\\/\\*\\*\\s*__${pieceName}_END__\\s*\\*\\/\\n`;
+  const pieceEnd = `\\/\\*\\*\\s*__${pieceName}_END__\\s*\\*\\/`;
 
   const regexp = new RegExp(`${pieceStart}[\\s\\S]*${pieceEnd}`, 'm');
 
@@ -44,14 +44,11 @@ export const replaceInitialApp = (fsObject: AppFs, constants: AppFsConstants, co
           ? fsObject[FS_NAMES.APPLICATION_JS] && removePieceOfCode(fsObject[FS_NAMES.APPLICATION_JS], 'AUTH_WEB')
             .replace('__APP_API_TOKEN__', constants.apiToken || '')
             .replace('__APP_API_ENDPOINT__', constants.endpoint || '')
-            .replace('import { WebAuth0AuthClient } from \'@8base/web-auth0-auth-client\';\n', '')
 
           : fsObject[FS_NAMES.APPLICATION_JS] && removePieceOfCode(fsObject[FS_NAMES.APPLICATION_JS], 'AUTH_API_TOKEN')
             .replace('__APP_API_ENDPOINT__', constants.endpoint || '')
             .replace('__APP_AUTH_CLIENT_ID__', constants.authClientId || '')
-            .replace('__APP_AUTH_DOMAIN__', constants.authDomain || '')
-            .replace('auth0WebClient', 'authClient')
-            .replace('import { ApiTokenAuthClient } from \'@8base/api-token-auth-client\';\n', '');
+            .replace('__APP_AUTH_DOMAIN__', constants.authDomain || '');
 
         break;
       }

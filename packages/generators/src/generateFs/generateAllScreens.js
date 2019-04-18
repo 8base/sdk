@@ -1,6 +1,5 @@
 // @flow
 import type { TableSchema } from '@8base/utils';
-
 import { generateCreateForm } from '../generateFiles/generateCreateForm/createForm';
 import { generateEditForm } from '../generateFiles/generateEditForm/editForm';
 import { generateDeleteForm } from '../generateFiles/generateDeleteForm/deleteForm';
