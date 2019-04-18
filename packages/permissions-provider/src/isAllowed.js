@@ -4,8 +4,14 @@ export const isAllowed = ({
   resource,
   type,
   permission,
-} = {}, permissions) => R.pathOr(
-  false,
-  [type, resource, 'permission', permission, 'allow'],
-  permissions,
-);
+  field,
+} = {}, permissions) => {
+  const path = [type, resource, 'permission', permission, 'allow'];
+
+  if (field) {
+    path.pop();
+    path.push('fields', field);
+  }
+
+  return R.pathOr(false, path, permissions);
+};
