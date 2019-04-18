@@ -1,4 +1,5 @@
 // @flow
+import os from 'os';
 import type { TableSchema } from '@8base/utils';
 import changeCase from 'change-case';
 
@@ -48,9 +49,9 @@ export const generateScreen = ({ tablesList, screen, rootFile }: GenerateProject
   if (typeof rootFile === 'string') {
     fs['src/Root.js'] = formatCode(
       rootFile
-        .replace(`${PAGE_CONSTANTS.APP_PAGES_IMPORTS}`, `${PAGE_CONSTANTS.APP_PAGES_IMPORTS}\n${chunks.routeImport({ screenName, changeCase })}`)
-        .replace(`${PAGE_CONSTANTS.APP_ROUTE_LINKS}`, `${PAGE_CONSTANTS.APP_ROUTE_LINKS}\n${chunks.routeLink({ screenName, routeUrl, changeCase })}`)
-        .replace(`${PAGE_CONSTANTS.APP_ROUTES}`, `${PAGE_CONSTANTS.APP_ROUTES}\n${chunks.routeComponent({ screenName, routeUrl, changeCase })}`),
+        .replace(`${PAGE_CONSTANTS.APP_PAGES_IMPORTS}`, `${PAGE_CONSTANTS.APP_PAGES_IMPORTS}${os.EOL}${chunks.routeImport({ screenName, changeCase })}`)
+        .replace(`${PAGE_CONSTANTS.APP_ROUTE_LINKS}`, `${PAGE_CONSTANTS.APP_ROUTE_LINKS}${os.EOL}${chunks.routeLink({ screenName, routeUrl, changeCase })}`)
+        .replace(`${PAGE_CONSTANTS.APP_ROUTES}`, `${PAGE_CONSTANTS.APP_ROUTES}${os.EOL}${chunks.routeComponent({ screenName, routeUrl, changeCase })}`),
     );
   }
 
