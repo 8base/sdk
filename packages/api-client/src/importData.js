@@ -19,7 +19,7 @@ const getRemoteEntityId = (localData: Object, fieldSchema: Object, $id: string, 
   return id;
 };
 
-const MAX_PARALLEL_CREATIONS = 50;
+const MAX_THREADS = 5;
 
 const uploadFiles = async (record, tableSchema, filestackClient, path) => {
   const fieldNames = R.keys(record);
@@ -55,7 +55,15 @@ const uploadFiles = async (record, tableSchema, filestackClient, path) => {
   return nextRecord;
 };
 
-export const importData = async (request: (query: string | DocumentNode, variables?: Object) => Promise<Object>, schemaData: Object) => {
+type ImportOptions = {
+  maxThreads?: number,
+};
+
+export const importData = async (
+  request: (query: string | DocumentNode, variables?: Object) => Promise<Object>,
+  schemaData: Object,
+  options?: ImportOptions = {},
+) => {
   const { tablesList: { items: tableSchema }} = await request(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
@@ -80,11 +88,13 @@ export const importData = async (request: (query: string | DocumentNode, variabl
 
   const localData = {};
 
+  const maxThreads = R.propOr(MAX_THREADS, 'maxThreads', options);
+
   for (const tableName of Object.keys(schemaData)) {
     localData[tableName] = {};
 
-    for (let i = 0; i < schemaData[tableName].length / MAX_PARALLEL_CREATIONS; i++) {
-      const tempData = schemaData[tableName].slice(i * MAX_PARALLEL_CREATIONS, (i + 1) * MAX_PARALLEL_CREATIONS);
+    for (let i = 0; i < schemaData[tableName].length / maxThreads; i++) {
+      const tempData = schemaData[tableName].slice(i * maxThreads, (i + 1) * maxThreads);
 
       await Promise.all(tempData.map(async (item) => {
         item = await uploadFiles(item, getTableSchemaByName(tableName, tableSchema), filestackClient, fileUploadInfo.path);
