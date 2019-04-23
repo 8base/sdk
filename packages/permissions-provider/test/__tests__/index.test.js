@@ -6,6 +6,7 @@ import {
   PermissionsProvider,
   isAllowed,
   PermissionContext,
+  withPermissions,
 } from '../../src';
 
 const mockPermissionsData = {
@@ -45,7 +46,7 @@ const mockPermissionsData = {
               fields: {
                 createdAt: true,
                 updatedAt: true,
-                email: true,
+                email: false,
                 isOwner: true,
                 firstName: true,
                 lastName: true,
@@ -112,6 +113,21 @@ it('As a developer, I can use `IfAllowed` component for pass permission check re
   expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
 });
 
+it('As a developer, I can use `IfAllowed` in order to check fields permissions if allowed.', () => {
+  const testRenderFn = jest.fn(() => (
+    <IfAllowed resource="Users" type="data" permission="update">
+      { (allowed, fields) => `Allowed = ${allowed}, allowed to change email = ${fields.email}` }
+    </IfAllowed>
+  ));
+
+  const tree = renderer.create(
+    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
+  );
+
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true, allowed to change email = false"');
+});
+
+// TODO this.context is an empty object so the test passes incorrectly
 it('As a developer, I can use `isAllowed` for check access via context.', () => {
   class TestComponent extends React.Component {
     static contextType = PermissionContext;
@@ -137,4 +153,30 @@ it('As a developer, I can use `isAllowed` for check access via context.', () => 
   );
 
   expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = false"');
+});
+
+it('As a developer, I can use `isAllowed` for check field access via context.', () => {
+  const TestComponent = ({ permissions }) => {
+    const allowed = isAllowed(
+      {
+        resource: 'Users',
+        type: 'data',
+        permission: 'update',
+        field: 'firstName',
+      },
+      permissions,
+    );
+
+    return `Allowed = ${allowed}`;
+  };
+
+  const TestComponentWrapper = withPermissions(TestComponent);
+
+  const tree = renderer.create(
+    <PermissionsProvider>
+      { () => <TestComponentWrapper /> }
+    </PermissionsProvider>,
+  );
+
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
 });

@@ -43,6 +43,7 @@ type FormProps = {
   schema?: Schema,
   type?: 'CREATE' | 'UPDATE',
   ignoreNonTableFields?: boolean,
+  permissions?: Object,
   onSuccess: (result: any, form: FormApi) => void,
 } & FinalFormProps;
 

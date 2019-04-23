@@ -8,6 +8,7 @@ import { compose, setDisplayName } from 'recompose';
 import type { FormProps as FinalFormProps } from 'react-final-form';
 import { formatDataForMutation, formatDataAfterQuery, MUTATION_TYPE } from '@8base/utils';
 import errorCodes from '@8base/error-codes';
+import { isAllowed } from '@8base/permissions-provider';
 
 import { FormContext } from './FormContext';
 import { withTableSchema } from './utils';
@@ -25,7 +26,7 @@ class Form extends React.Component<FormProps> {
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, ignoreNonTableFields, ...restProps } = this.props;
+    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, ignoreNonTableFields, permissions, ...restProps } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
@@ -39,12 +40,20 @@ class Form extends React.Component<FormProps> {
       collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema);
     }
 
+    const skipData = (value, fieldSchema) =>
+      !isAllowed({
+        resource: tableSchema && tableSchema.name,
+        type: 'data',
+        permission: type && type.toLowerCase(),
+        field: fieldSchema.name,
+      }, permissions);
+
     collectedProps.onSubmit = async (data, ...rest) => {
       let result = null;
 
       try {
         const formattedData = (type && tableSchema && schema)
-          ? formatDataForMutation(type, tableSchema.name, data, schema, { ignoreNonTableFields })
+          ? formatDataForMutation(type, tableSchema.name, data, schema, { ignoreNonTableFields, skip: permissions && skipData })
           : data;
 
         result = await onSubmit(formattedData, ...rest);

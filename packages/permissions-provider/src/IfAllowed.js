@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import * as R from 'ramda';
 
 import { PermissionsContext } from './PermissionsContext';
 import { isAllowed } from './isAllowed';
@@ -21,8 +22,14 @@ class IfAllowed extends React.Component<IfAllowedProps> {
       permission,
     }, permissions);
 
+    const fieldsPermissions = R.pathOr(
+      {},
+      [type, resource, 'permission', permission, 'fields'],
+      permissions,
+    );
+
     if (typeof children === 'function') {
-      return children(allowed);
+      return children(allowed, fieldsPermissions);
     }
 
     return allowed ? children : null;
@@ -36,6 +43,5 @@ class IfAllowed extends React.Component<IfAllowedProps> {
     );
   }
 }
-
 
 export { IfAllowed };
