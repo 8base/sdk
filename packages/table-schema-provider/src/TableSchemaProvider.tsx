@@ -16,6 +16,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
       ...SmartFieldTypesAttributes
+      ...MissingRelationFieldTypeAttributes
     }
   }
 
@@ -31,6 +32,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...FileFieldTypeAttributes
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
+      ...MissingRelationFieldTypeAttributes
     }
     isList
     isRequired
@@ -38,6 +40,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
     defaultValue
     isSystem
     isMeta
+    isExternal
     relation {
       refFieldName
       refFieldDisplayName
@@ -96,6 +99,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
         ...FileFieldTypeAttributes
         ...DateFieldTypeAttributes
         ...SwitchFieldTypeAttributes
+        ...MissingRelationFieldTypeAttributes
       }
     }
   }
@@ -104,6 +108,10 @@ export const TABLE_FIELD_FRAGMENT = gql`
     format
     listOptions
   }
+
+  fragment MissingRelationFieldTypeAttributes on MissingRelationFieldTypeAttributes {
+    missingTable
+  }
 `;
 
 export const TABLE_FRAGMENT = gql`
@@ -111,6 +119,14 @@ export const TABLE_FRAGMENT = gql`
     id
     name
     displayName
+    application {
+      id
+      name
+      displayName
+      description
+      status
+      appType
+    }
     isSystem
     fields {
       ...TableFieldFragment
@@ -118,6 +134,18 @@ export const TABLE_FRAGMENT = gql`
   }
 
   ${TABLE_FIELD_FRAGMENT}
+`;
+
+export const APPLICATIONS_FRAGMENT = gql`
+  fragment ApplicationFragment on Application {
+    id
+    name
+    displayName
+    description
+    createdAt
+    appType
+    status
+  }
 `;
 
 export const TABLES_SCHEMA_QUERY = gql`
@@ -128,9 +156,17 @@ export const TABLES_SCHEMA_QUERY = gql`
       }
       count
     }
+
+    applicationsList {
+      items {
+        ...ApplicationFragment
+      }
+      count
+    }
   }
 
   ${TABLE_FRAGMENT}
+  ${APPLICATIONS_FRAGMENT}
 `;
 
 type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
@@ -146,8 +182,11 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
     const { children } = this.props;
 
     return (
-      <TableSchemaContext.Provider value={R.pathOr([], ['tablesList', 'items'], data)}>
-        {children({ loading })}
+      <TableSchemaContext.Provider value={{
+        tablesList: R.pathOr([], ['tablesList', 'items'], data),
+        applicationsList: R.pathOr([], ['applicationsList', 'items'], data),
+      }}>
+        { children({ loading }) }
       </TableSchemaContext.Provider>
     );
   };

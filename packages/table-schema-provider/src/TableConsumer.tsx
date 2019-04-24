@@ -1,25 +1,24 @@
 import React from 'react';
-import { QueryResult } from 'react-apollo';
-import { Schema, TableSchema } from '@8base/utils';
-import * as selectors from './selectors';
+import { Schema, TableSchema, tablesListSelectors } from '@8base/utils';
 import { TableSchemaContext } from './TableSchemaContext';
 
 type TableConsumerProps = {
   id?: string;
   name?: string;
+  app?: string;
   children: (tableSchema: TableSchema | null) => React.ReactNode;
 };
 
 class TableConsumer extends React.Component<TableConsumerProps> {
-  public renderWithSchemaResponse = (schema?: Schema) => {
-    const { id, name, children } = this.props;
+  public renderWithSchemaResponse = (tablesList?: Schema) => {
+    const { id, name, app, children } = this.props;
 
     let tableSchema: TableSchema | void | null = null;
 
     if (id) {
-      tableSchema = selectors.tableList.getTableById(schema, id);
+      tableSchema = tablesListSelectors.getTableById(tablesList, id);
     } else if (name) {
-      tableSchema = selectors.tableList.getTableByName(schema, name);
+      tableSchema = tablesListSelectors.getTableByName(tablesList, name, app);
     }
 
     return children(tableSchema || null);

@@ -7,7 +7,19 @@ const MOCK_TABLES_SCHEMA = {
     {
       id: '1',
       name: 'tableName',
-      displayName: 'tableName',
+      displayName: 'Table Name',
+      isSystem: false,
+      fields: [],
+      __typename: 'Table',
+    },
+    {
+      id: '2',
+      name: 'tableName',
+      displayName: 'Table Name Application',
+      application: {
+        id: 'APPLICATION_ID',
+        name: 'Salesforce',
+      },
       isSystem: false,
       fields: [],
       __typename: 'Table',
@@ -63,8 +75,10 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
-        <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+        <TableConsumer name="tableName">
+          { testRenderFn }
+        </TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
@@ -72,10 +86,25 @@ describe('TableConsumer', () => {
     expect(testRenderFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[0]);
   });
 
+  it('As a developer, I can get access to the table schema via TableConsumer by table name and application name.', () => {
+    renderer.create(
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+        <TableConsumer name="tableName" app="Salesforce">
+          { testRenderFn }
+        </TableConsumer>
+      </TableSchemaContext.Provider>,
+    );
+
+    expect(testRenderFn).toHaveBeenCalledTimes(1);
+    expect(testRenderFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[1]);
+  });
+
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
-        <TableConsumer id="1">{testRenderFn}</TableConsumer>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+        <TableConsumer id="1">
+          { testRenderFn }
+        </TableConsumer>
       </TableSchemaContext.Provider>,
     );
 

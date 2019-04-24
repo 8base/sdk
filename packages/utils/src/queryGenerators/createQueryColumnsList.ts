@@ -1,14 +1,11 @@
 import * as R from 'ramda';
 
-import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
+import { tablesListSelectors, tableFieldSelectors } from '../selectors';
 import { TableSchema, QueryGeneratorConfig } from '../types';
 
 type CreateQueryColumnsListConfig = {
   flatten?: boolean;
 } & QueryGeneratorConfig;
-
-const getTableByName = (tablesList: TableSchema[], tableName: string) =>
-  tablesList.find(({ name }) => tableName === name);
 
 const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -16,11 +13,11 @@ const capitalizeFirstLetter = (str: string) => {
 
 export const createQueryColumnsList = (
   tablesList: TableSchema[],
-  tableName: string,
+  tableId: string,
   config: CreateQueryColumnsListConfig = {},
   prevKey: string = '',
-): Array<{ name: string; title: string; meta: { [key: string]: any } }> => {
-  const { fields = [] } = getTableByName(tablesList, tableName) || {};
+) => {
+  const { fields = [] } = tablesListSelectors.getTableById(tablesList, tableId) || {};
   const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 
   const transformedList = fields
@@ -41,11 +38,11 @@ export const createQueryColumnsList = (
       const isRelation = tableFieldSelectors.isRelationField(field);
       const isFile = tableFieldSelectors.isFileField(field);
       const isList = tableFieldSelectors.isListField(field);
-      const refTableName = tableFieldSelectors.getRelationTableName(field);
+      const refTableId = tableFieldSelectors.getRelationTableId(field);
+      const refTable = tablesListSelectors.getTableById(tablesList, refTableId);
       const currentKeyString = prevKey ? `${prevKey}.${fieldName}` : fieldName;
 
       const title = capitalizeFirstLetter(fieldName);
-      const refTable = getTableByName(tablesList, refTableName);
 
       const meta = {
         fieldType,
@@ -62,17 +59,13 @@ export const createQueryColumnsList = (
           },
         ];
       } else if (isRelation && isList) {
-        return [
-          {
-            meta,
-            name: currentKeyString,
-            title,
-          },
-        ];
-      } else if (isRelation && refTableName && refTable && deep > 1) {
+        return [{
+          name: currentKeyString, title, meta,
+        }];
+      } else if (isRelation && refTableId && refTable && deep > 1) {
         const innerKeys = createQueryColumnsList(
           tablesList,
-          refTableName,
+          refTableId,
           { deep: deep - 1, withMeta, includeColumns },
           currentKeyString,
         );

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@8base/schema-name-generator@^0.1.1":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@8base/schema-name-generator/-/schema-name-generator-0.1.5.tgz#99c9d6612d96bcaee997ed40d87acad411ef26af"
-  integrity sha512-OHK9BXUkGJo3BUYAipKLcPVlNQ/crYyWcxuqn4FEpnVZyIfHst64vu39Dn3Uu6Xd0DMgOg98YwGCRPWBYBtAtg==
+"@8base/schema-name-generator@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@8base/schema-name-generator/-/schema-name-generator-0.1.4.tgz#890544b2a758695875441c36d1cbd6dd55ee66e5"
+  integrity sha512-O3aE1RwRS78oLr+Uo6Am5hYIuCJ7WUxGmxiJN6FbQsNa2q1iADn+jQq2u7SmOfgUkzVayfIBqUa8PWh4um2XYg==
   dependencies:
     lodash "^4.17.11"
     pluralize "^7.0.0"

@@ -18,7 +18,7 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/schema-name-generator": "^0.1.1",
+    "@8base/schema-name-generator": "^0.1.4",
     "@8base/table-schema-provider": "^0.28.2",
     "@8base/utils": "^0.28.2",
     "apollo-client": "^2.5.1",
