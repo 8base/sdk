@@ -9,94 +9,77 @@ import { DateTime } from 'luxon';
 import { TableBuilder, Dropdown, Icon, Menu, Link, Tag, Row, withModal } from '@8base/boost';
 import { FIELD_TYPE, SMART_FORMATS, FILE_FORMATS, DATE_FORMATS, SWITCH_FORMATS, SWITCH_VALUES } from '@8base/utils';
 
-const PROPERTY_LIST_QUERY = gql\`
-  query PropertiesTableContent(
-    $filter: PropertyFilter
-    $orderBy: [PropertyOrderBy]
-    $after: String
-    $before: String
-    $first: Int
-    $last: Int
-    $skip: Int
-  ) {
-    propertiesList(
-      filter: $filter
-      orderBy: $orderBy
-      after: $after
-      before: $before
-      first: $first
-      last: $last
-      skip: $skip
-    ) {
-      items {
-        id
-        address {
-          country
+const PROPERTY_LIST_QUERY = gql\`query PropertiesTableContent($filter: PropertyFilter, $orderBy: [PropertyOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  propertiesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    items {
+      id
+      address {
+        country
+      }
+      phone {
+        code
+        number
+      }
+      pictures {
+        items {
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
         }
-        phone {
-          code
-          number
-        }
-        pictures {
-          items {
+        count
+      }
+      bedrooms
+      title
+      description
+      sqFootage
+      bathrooms
+      garage
+      pool
+      listings {
+        items {
+          id
+          property {
             id
-            fileId
-            filename
-            downloadUrl
-            shareUrl
-            meta
-          }
-          count
-        }
-        bedrooms
-        title
-        description
-        sqFootage
-        bathrooms
-        garage
-        pool
-        listings {
-          items {
-            id
-            property {
-              id
-              _description
-            }
-            broker {
-              id
-              _description
-            }
-            buyer {
-              id
-              _description
-            }
-            seller {
-              id
-              _description
-            }
-            documents {
-              items {
-                id
-                fileId
-                filename
-                downloadUrl
-                shareUrl
-                meta
-              }
-              count
-            }
-            status
-            closingDate
-            price
             _description
           }
-          count
+          broker {
+            id
+            _description
+          }
+          buyer {
+            id
+            _description
+          }
+          seller {
+            id
+            _description
+          }
+          documents {
+            items {
+              id
+              fileId
+              filename
+              downloadUrl
+              shareUrl
+              meta
+            }
+            count
+          }
+          status
+          closingDate
+          price
+          _description
         }
-        _description
+        count
       }
-      count
+      _description
     }
+    count
   }
+}
 \`;
 
 const TABLE_COLUMNS = [
