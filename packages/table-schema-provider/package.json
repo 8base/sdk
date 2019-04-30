@@ -1,6 +1,6 @@
 {
   "name": "@8base/table-schema-provider",
-  "version": "0.19.5",
+  "version": "0.19.6",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^0.19.5",
+    "@8base/utils": "^0.19.6",
     "@babel/runtime": "^7.3.1",
     "apollo-client": "^2.5.1",
     "graphql": "^14.1.1",
