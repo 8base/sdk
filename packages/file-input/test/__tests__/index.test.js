@@ -40,7 +40,10 @@ jest.mock('filestack-js', () => {
     mock_picker: picker,
     init: () => ({
       picker,
-      session: {},
+      session: {
+        policy: 'policy-key',
+        signature: 'signature-key',
+      },
     }),
   };
 });
@@ -71,10 +74,10 @@ describe('should call onChange when file is uploaded', () => {
 
     const originalFile = new File([''], 'filename');
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile }] });
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/fileId' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: false });
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: false, downloadUrl: 'https://url.com/fileId?policy=policy-key&signature=signature-key' });
     expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
@@ -97,10 +100,10 @@ describe('should call onChange when file is uploaded', () => {
 
     const originalFile = new File([''], 'filename');
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile }] });
+    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/fileId' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: true });
+    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: true, downloadUrl: 'https://url.com/fileId?policy=policy-key&signature=signature-key' });
     expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
@@ -127,18 +130,18 @@ describe('should call onChange when file is uploaded', () => {
 
     await mock_onUploadDone({
       filesUploaded: [
-        { handle: 'handle1', filename: 'filename1', originalFile: originalFile1 },
-        { handle: 'handle2', filename: 'filename2', originalFile: originalFile2 },
-        { handle: 'handle3', filename: 'filename3', originalFile: originalFile3 },
+        { handle: 'handle1', filename: 'filename1', originalFile: originalFile1, url: 'https://url.com/fileId' },
+        { handle: 'handle2', filename: 'filename2', originalFile: originalFile2, url: 'https://url.com/fileId' },
+        { handle: 'handle3', filename: 'filename3', originalFile: originalFile3, url: 'https://url.com/fileId' },
       ],
     });
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toEqual(
       [
-        { fileId: 'handle1', filename: 'filename1', public: false },
-        { fileId: 'handle2', filename: 'filename2', public: false },
-        { fileId: 'handle3', filename: 'filename3', public: false },
+        { fileId: 'handle1', filename: 'filename1', public: false, downloadUrl: 'https://url.com/fileId?policy=policy-key&signature=signature-key' },
+        { fileId: 'handle2', filename: 'filename2', public: false, downloadUrl: 'https://url.com/fileId?policy=policy-key&signature=signature-key' },
+        { fileId: 'handle3', filename: 'filename3', public: false, downloadUrl: 'https://url.com/fileId?policy=policy-key&signature=signature-key' },
       ],
     );
     expect(onChange.mock.calls[0][1]).toEqual(
@@ -239,4 +242,3 @@ describe('FileInput', () => {
     });
   });
 });
-

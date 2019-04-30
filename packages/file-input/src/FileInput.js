@@ -101,9 +101,12 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   }
 
   onUploadDone = async ({ filesUploaded }) => {
-    let value = filesUploaded.map(({ handle, filename }) => ({
+    const { policy = '""', signature = '""' } = this.filestack.session;
+
+    let value = filesUploaded.map(({ handle, filename, url }) => ({
       fileId: handle,
       filename,
+      downloadUrl: `${url}?policy=${policy}&signature=${signature}`,
       public: !!this.props.public,
     }));
 
