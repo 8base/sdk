@@ -1,9 +1,9 @@
 //@flow
 import * as R from 'ramda';
 
-import { isRelationField } from '../verifiers';
+import { isRelationField, isFileField } from '../verifiers';
 import { getTableSchemaById } from '../selectors';
-import { MUTATION_TYPE } from '../constants';
+import { MUTATION_TYPE, SYSTEM_TABLES } from '../constants';
 import { formatDataForMutation } from './formatDataForMutation';
 
 import type { MutationType, FieldSchema, Schema, TableSchema } from '../types';
@@ -36,6 +36,10 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
     }
 
     nextData = formatDataForMutation(type, relationTableSchema.name, nextData, schema);
+  }
+
+  if (isFileField(fieldSchema)) {
+    nextData = formatDataForMutation(type, SYSTEM_TABLES.FILES, nextData, schema);
   }
 
   return {

@@ -109,8 +109,12 @@ describe('As developer, I can format for create mutation,', () => {
       filename: 'Screenshot at авг. 13 15-22-49.png',
     };
 
+    const nonFileFields = {
+      nonFileField: 'non file field',
+    };
+
     const data = {
-      file,
+      file: { ...file, ...nonFileFields },
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -426,8 +430,12 @@ describe('As developer, I can format for update mutation,', () => {
       filename: 'Screenshot at авг. 13 15-22-49.png',
     };
 
+    const nonFileFields = {
+      nonFileField: 'non file field',
+    };
+
     const data = {
-      file,
+      file: { ...file, ...nonFileFields },
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -647,9 +655,11 @@ describe('As developer, I can format for update mutation,', () => {
         id: '1234',
         fileId: 'file-id',
         filename: 'Screenshot at авг. 13 15-22-49.png',
+        nonFileField: 'non file field',
       }, null, {
         fileId: 'file-id',
         filename: 'Screenshot at авг. 13 15-22-49.png',
+        nonFileField: 'non file field',
       }],
       relationList: [{
         scalar: 'Relation List Scalar Value',

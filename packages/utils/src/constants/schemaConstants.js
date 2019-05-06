@@ -21,7 +21,6 @@ export const SWITCH_FORMATS = {
   CUSTOM: 'CUSTOM',
 };
 
-
 export const SWITCH_VALUES = {
   ON_OFF: {
     true: 'On',
@@ -93,3 +92,4 @@ export const SYSTEM_TABLES = {
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
 };
 
+export const MUTATION_FILE_FIELDS = ['fileId', 'public', 'filename', 'meta', 'mods'];

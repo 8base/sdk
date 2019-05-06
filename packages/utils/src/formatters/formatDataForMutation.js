@@ -1,9 +1,9 @@
 //@flow
 import * as R from 'ramda';
 
-import { MUTATION_TYPE } from '../constants';
+import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
 import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
-import { isMetaField, isFileField, isRelationField, isListField } from '../verifiers';
+import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
 
@@ -32,7 +32,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
   }
 
   const formatedData = R.reduce((result: Object, fieldName: string) => {
-    if (fieldName === '_description' || fieldName === '__typename') {
+    if (fieldName === '_description' || fieldName === '__typename' || (isFilesTable(tableSchema) && !MUTATION_FILE_FIELDS.includes(fieldName))) {
       return result;
     }
 
