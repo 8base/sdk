@@ -37,6 +37,7 @@ export type TableSchema = {
 export type QueryGeneratorConfig = {
   deep?: number,
   withMeta?: boolean,
+  relationItemsCount?: number,
   includeColumns?: null | string[],
 };
 

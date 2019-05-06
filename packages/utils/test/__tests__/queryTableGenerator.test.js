@@ -72,6 +72,14 @@ describe('As a developer, I can generate graphql query for list by table schema'
     expect(tag).toMatchSnapshot();
   });
 
+  it('should generate graphql tag for the table content by table schema with some relation count', () => {
+    const tag = createTableFilterGraphqlTag([fixtures.TABLE_SCHEMA_WITH_RELATION], 'Relation', {
+      relationItemsCount: 5,
+    });
+
+    expect(tag).toMatchSnapshot();
+  });
+
   it('should generate graphql tag for the table content by table schema with smart fields', () => {
     const tag = createTableFilterGraphqlTag([fixtures.TABLE_SCHEMA_WITH_SMART_FIELDS], 'SmartFields');
 

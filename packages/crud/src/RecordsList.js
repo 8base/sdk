@@ -14,6 +14,7 @@ type RecordsListProps = {
   tableId?: string,
   children: (recordsListResult: Object) => React$Node,
   deep?: number,
+  relationItemsCount?: number,
 }
 
 
@@ -62,6 +63,7 @@ export class RecordsList extends Component<RecordsListProps> {
     const {
       children,
       deep,
+      relationItemsCount,
       ...rest
     } = this.props;
 
@@ -69,7 +71,7 @@ export class RecordsList extends Component<RecordsListProps> {
       createTableFilterGraphqlTag(
         [tableMetaResult],
         tableMetaResult.name,
-        { tableContentName: 'tableContent', deep },
+        { tableContentName: 'tableContent', deep, relationItemsCount },
       ),
     );
 

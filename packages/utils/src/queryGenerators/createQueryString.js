@@ -16,34 +16,22 @@ const DEFAULT_DEPTH = 1;
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
 
-const emptyRelation = {
-  id: 'id',
-  _description: '_description',
-};
 
-const emptyRelationList = {
-  items: {
-    id: 'id',
-    _description: '_description',
-  },
-  count: 'count',
-};
-
-
-export const createQueryObject = (
+export const createQueryString = (
   tablesList: TableSchema[],
   tableName: string,
   queryObjectConfig: QueryGeneratorConfig = {},
   prevKey?: string = '',
-) => {
+): string => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
   const {
     deep = DEFAULT_DEPTH,
     withMeta = true,
+    relationItemsCount,
     includeColumns,
   } = queryObjectConfig;
 
-  const queryObject = {};
+  let queryObject = '';
 
   fields
     .filter((field) => {
@@ -63,73 +51,72 @@ export const createQueryObject = (
       const refTable = getTableByName(tablesList, refTableName);
       const isSettingsRefTable = tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
       const currentKeyString = prevKey ? `${prevKey}.${field.name}` : field.name;
+      let isNotEmptyRelation = false;
 
       if (isSettingsRefTable) {
-        fieldContent = {
-          _description: '_description',
-        };
+        fieldContent = `{
+          _description
+        }`;
       } else if (isRelation) {
-        if (deep > 1) {
-
-          if (!!refTableName && !!refTable) {
-            const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
-            const relationIncludeColumns = includeAllrelationFields
-              ? null
-              : includeColumns;
-
-            fieldContent = {
-              id: 'id',
-              ...createQueryObject(
-                tablesList,
-                refTableName,
-                { deep: deep - 1, withMeta, includeColumns: relationIncludeColumns },
-                currentKeyString,
-              ),
-              _description: '_description',
-            };
-          } else {
-            fieldContent = {
-              id: 'id',
-              _description: '_description',
-            };
-          }
+        if (deep <= 1 || !refTableName || !refTable) {
+          fieldContent = `{
+              id
+              _description
+            }`;
         } else {
-          fieldContent = {
-            id: 'id',
-            _description: '_description',
-          };
+          const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
+          const relationIncludeColumns = includeAllrelationFields
+            ? null
+            : includeColumns;
+
+          const innerFields = createQueryString(
+            tablesList,
+            refTableName,
+            { deep: deep - 1, withMeta, includeColumns: relationIncludeColumns },
+            currentKeyString,
+          );
+
+          isNotEmptyRelation = !R.isEmpty(innerFields);
+
+          fieldContent = `{
+            id
+            ${innerFields}
+            _description
+          }`;
         }
       } else if (isFile) {
-        fieldContent = {
-          id: 'id',
-          fileId: 'fileId',
-          filename: 'filename',
-          downloadUrl: 'downloadUrl',
-          shareUrl: 'shareUrl',
-          meta: 'meta',
-        };
+        fieldContent = `{
+          id
+          fileId
+          filename
+          downloadUrl
+          shareUrl
+          meta
+        }`;
       } else if (isSmart) {
-        fieldContent = field.fieldTypeAttributes.innerFields.reduce(
-          (accum, { name }) => { accum[name] = name; return accum; },
-          {},
-        );
+        fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce(
+          (accum, { name }) => { accum += `\n${name}`; return accum; },
+          '',
+        )}}`;
       }
 
       if (isList && (isRelation || isFile) && fieldContent !== null) {
-        fieldContent = {
-          items: fieldContent,
-          count: 'count',
-        };
+        fieldContent = `{
+          items ${fieldContent}
+          count
+        }`;
       }
-
-      const isNotEmptyRelation = isRelation && !R.equals(fieldContent, emptyRelation) && !R.equals(fieldContent, emptyRelationList);
 
       const needsInclude = !!includeColumns
         ? R.contains(currentKeyString, includeColumns)
         : true;
 
       if (fieldContent !== null && (needsInclude || isNotEmptyRelation)) {
-        queryObject[field.name] = fieldContent;
+        if (!!relationItemsCount && isList && isRelation) {
+          queryObject += `\n${field.name}(first: ${relationItemsCount}) ${fieldContent}`;
+        } else {
+          queryObject += `\n${field.name} ${fieldContent}`;
+        }
       }
     });
 
