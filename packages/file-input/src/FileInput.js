@@ -103,14 +103,18 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   onUploadDone = async ({ filesUploaded }) => {
     const { policy = '""', signature = '""' } = this.filestack.session;
 
-    let value = filesUploaded.map(({ handle, filename, url }) => ({
-      fileId: handle,
-      filename,
-      downloadUrl: `${url}?policy=${policy}&signature=${signature}`,
-      public: !!this.props.public,
-    }));
+    let value = filesUploaded.map(({ handle, filename, url }) => {
+      const urlOrigin = url ? new URL(url).origin : '';
 
-    let originalFile = filesUploaded.map((item) => item.originalFile);
+      return {
+        fileId: handle,
+        filename,
+        downloadUrl: `${urlOrigin}/security=p:${policy},s:${signature}/${handle}`,
+        public: !!this.props.public,
+      };
+    });
+
+    let originalFile = filesUploaded.map(item => item.originalFile);
 
     const { maxFiles, onUploadDone, onChange } = this.props;
 
@@ -157,10 +161,12 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
 
     const pickerOptions = this.collectPickerOptions();
 
-    this.filestack.picker({
-      ...options,
-      ...pickerOptions,
-    }).open();
+    this.filestack
+      .picker({
+        ...options,
+        ...pickerOptions,
+      })
+      .open();
   };
 
   render() {
