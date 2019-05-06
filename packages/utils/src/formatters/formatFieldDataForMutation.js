@@ -34,6 +34,16 @@ const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema
         nextData = null;
       }
     }
+  } else if (verifiers.isPhoneField(fieldSchema)) {
+    if (verifiers.isListField(fieldSchema)) {
+      if (Array.isArray(nextData)) {
+        nextData = R.reject(verifiers.isEmptyPhone, nextData);
+      }
+    } else {
+      if (verifiers.isEmptyPhone(nextData)) {
+        nextData = null;
+      }
+    }
   } else if (verifiers.isNumberField(fieldSchema) && !verifiers.isBigInt(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {
       if (Array.isArray(nextData)) {

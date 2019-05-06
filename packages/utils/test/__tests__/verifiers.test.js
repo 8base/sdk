@@ -1,6 +1,6 @@
 //@flow
 
-import { isEmptyAddress } from '../../src';
+import { isEmptyAddress, isEmptyPhone } from '../../src';
 
 const EMPTY_ADDRESSES = [
   ['null', null],
@@ -14,6 +14,17 @@ const EMPTY_ADDRESSES = [
     country: '',
     city: '',
     state: '',
+  }],
+];
+
+const EMPTY_PHONES = [
+  ['null', null],
+  ['undefined', undefined],
+  ['empty object', {}],
+  ['empty string', ''],
+  ['full phone with all empty subfields', {
+    code: '',
+    number: undefined,
   }],
 ];
 
@@ -36,10 +47,29 @@ const NOT_EMPTY_ADDRESSES = [
   }],
 ];
 
+const NOT_EMPTY_PHONES = [
+  ['full phone', {
+    code: '+78',
+    number: '5637821',
+  }],
+  ['partial address', {
+    code: '+78',
+    number: '',
+  }],
+];
+
 it.each(EMPTY_ADDRESSES)('Should return `true` if address is empty (%s)', (name, value) => {
   expect(isEmptyAddress(value)).toBeTruthy();
 });
 
 it.each(NOT_EMPTY_ADDRESSES)('Should return `false` if address is not empty (%s)', (name, value) => {
   expect(isEmptyAddress(value)).toBeFalsy();
+});
+
+it.each(EMPTY_PHONES)('Should return `true` if phone is empty (%s)', (name, value) => {
+  expect(isEmptyPhone(value)).toBeTruthy();
+});
+
+it.each(NOT_EMPTY_PHONES)('Should return `false` if phone is not empty (%s)', (name, value) => {
+  expect(isEmptyPhone(value)).toBeFalsy();
 });

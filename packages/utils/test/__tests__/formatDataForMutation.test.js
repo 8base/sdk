@@ -220,6 +220,35 @@ describe('As developer, I can format for create mutation,', () => {
     });
   });
 
+  it('Empty phone', () => {
+    const data = {
+      phone: {
+        code: '',
+        number: '',
+      },
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      phone: null,
+    });
+  });
+
+  it('List of phones', () => {
+    const data = {
+      phones: [{
+        code: '',
+        number: '',
+      }, {
+        code: '+78',
+        number: '3242342',
+      }],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+      phones: [data.phones[1]],
+    });
+  });
+
   it('List of addresses', () => {
     const data = {
       addresses: [{
@@ -609,6 +638,19 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Empty phone', () => {
+    const data = {
+      phone: {
+        code: '',
+        number: '',
+      },
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      phone: null,
+    });
+  });
+
   it('List of addresses', () => {
     const data = {
       addresses: [{
@@ -629,6 +671,22 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       addresses: [data.addresses[1]],
+    });
+  });
+
+  it('List of phones', () => {
+    const data = {
+      phones: [{
+        code: '',
+        number: '',
+      }, {
+        code: '+89',
+        number: '4567823',
+      }],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+      phones: [data.phones[1]],
     });
   });
 
