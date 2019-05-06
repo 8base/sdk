@@ -348,6 +348,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 }"
 `;
 
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with some relation count 1`] = `
+"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    items {
+      id
+      field1 {
+        id
+        _description
+      }
+      field2
+      field3
+      field4(first: 5) {
+        items {
+          id
+          _description
+        }
+        count
+      }
+      _description
+    }
+    count
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql query for list by table schema should generate query string  1`] = `
 "query TableSchemaTableContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
   tableSchemasList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {

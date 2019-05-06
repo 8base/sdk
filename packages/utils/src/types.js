@@ -92,5 +92,6 @@ export interface Authorizable {
 export type QueryGeneratorConfig = {
   deep?: number,
   withMeta?: boolean,
+  relationItemsCount?: number,
   includeColumns?: null | string[],
 };

@@ -5,14 +5,7 @@ import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import gqlPrettier from 'graphql-prettier';
 import * as tableSelectors from '../selectors/tableSelectors';
 import type { TableSchema, QueryGeneratorConfig } from '../types';
-import { createQueryObject } from './createQueryObject';
-import { transformQueryObjectToString } from './transformQueryObjectToString';
-
-type QueryStringConfig = {
-  prevSpaceCount?: number,
-  spaceCount?: number,
-  initSpaceCount?: number,
-} & QueryGeneratorConfig
+import { createQueryString } from './createQueryString';
 
 type QueryTableFilterConfig = {
   tableContentName?: string
@@ -24,19 +17,7 @@ const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
 
 
-const createQueryString =
-  (tablesList: TableSchema[], tableName: string, queryStringConfig?: QueryStringConfig = {}) => {
-    const { prevSpaceCount, spaceCount, ...rest } = queryStringConfig;
-
-    const gueryObject = createQueryObject(tablesList, tableName, {
-      ...rest,
-    });
-
-    return transformQueryObjectToString(gueryObject, { prevSpaceCount, initSpaceCount: spaceCount, spaceCount });
-  };
-
-
-export const createTableFilterGraphqlTag = 
+export const createTableFilterGraphqlTag =
   (tablesList: TableSchema[], tableName: string, config: QueryTableFilterConfig = {}) => gqlPrettier(`
     query ${upperFirst(tableName)}TableContent(
       $filter: ${SchemaNameGenerator.getFilterInputTypeName(tableName)}
