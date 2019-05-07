@@ -75,7 +75,7 @@ Object {
     "create": Array [
       Object {
         "nestedRelation": Object {
-          "reconnect": Object {
+          "connect": Object {
             "id": "5b32159b66a450c047285628",
           },
         },
@@ -88,7 +88,6 @@ Object {
               ],
             },
           ],
-          "reconnect": Array [],
         },
         "scalar": "Relation List Scalar Value",
         "scalarList": Array [

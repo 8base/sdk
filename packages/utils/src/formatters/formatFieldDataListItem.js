@@ -35,11 +35,11 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
       throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);
     }
 
-    nextData = formatDataForMutation(type, relationTableSchema.name, nextData, schema);
+    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, relationTableSchema.name, nextData, schema);
   }
 
   if (isFileField(fieldSchema)) {
-    nextData = formatDataForMutation(type, SYSTEM_TABLES.FILES, nextData, schema);
+    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, SYSTEM_TABLES.FILES, nextData, schema);
   }
 
   return {
