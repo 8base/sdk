@@ -1,6 +1,6 @@
 {
   "name": "@8base/file-input",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
