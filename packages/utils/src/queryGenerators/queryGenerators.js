@@ -16,7 +16,6 @@ const upperFirst = (str: string) => R.toUpper(R.head(str)) + R.tail(str);
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
 
-
 export const createTableFilterGraphqlTag =
   (tablesList: TableSchema[], tableName: string, config: QueryTableFilterConfig = {}) => gqlPrettier(`
     query ${upperFirst(tableName)}TableContent(

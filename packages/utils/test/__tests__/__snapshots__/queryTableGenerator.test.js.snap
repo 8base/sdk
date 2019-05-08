@@ -534,6 +534,84 @@ Array [
     "meta": Object {
       "fieldType": "SMART",
       "fieldTypeAttributes": Object {
+        "format": "PHONE",
+        "innerFields": Array [
+          Object {
+            "description": null,
+            "displayName": null,
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 4,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "code",
+          },
+          Object {
+            "description": null,
+            "displayName": null,
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 8,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "number",
+          },
+        ],
+      },
+      "isList": false,
+    },
+    "name": "phone",
+    "title": "Phone",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "SMART",
+      "fieldTypeAttributes": Object {
+        "format": "PHONE",
+        "innerFields": Array [
+          Object {
+            "description": null,
+            "displayName": null,
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 4,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "code",
+          },
+          Object {
+            "description": null,
+            "displayName": null,
+            "fieldType": "TEXT",
+            "fieldTypeAttributes": Object {
+              "fieldSize": 8,
+              "format": "UNFORMATTED",
+            },
+            "isList": false,
+            "isRequired": true,
+            "isUnique": false,
+            "name": "number",
+          },
+        ],
+      },
+      "isList": true,
+    },
+    "name": "phones",
+    "title": "Phones",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "SMART",
+      "fieldTypeAttributes": Object {
         "format": "ADDRESS",
         "innerFields": Array [
           Object {
