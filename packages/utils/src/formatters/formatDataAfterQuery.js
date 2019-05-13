@@ -42,6 +42,10 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
     if (isRelationField(fieldSchema) && !isFileField(fieldSchema) && result[fieldName]) {
       const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
 
+      if (!relationTableSchema) {
+        throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);
+      }
+
       if (isListField(fieldSchema)) {
         result[fieldName] = result[fieldName].map(item => formatDataAfterQuery(relationTableSchema.name, item, schema));
       } else {
