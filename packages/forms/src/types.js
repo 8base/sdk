@@ -1,8 +1,9 @@
 // @flow
-import type { FormApi } from 'final-form';
+import type { FormApi, FieldState as FinalFieldState } from 'final-form';
 import type { FormProps as FinalFormProps, FieldProps as FinalFieldProps } from 'react-final-form';
 import type { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
 import type { FieldType } from '@8base/utils';
+import type { PreparedValidator } from '@8base/validate';
 
 type FieldSchema = {
   name: string,
@@ -31,7 +32,7 @@ type SchemaContextValue = Schema;
 type RenderableProps = {
   component?: React$ComponentType<any>,
   children?: ((props: Object) => React$Node) | React$Node,
-  render?: (props: Object) => React$Node
+  render?: (props: Object) => React$Node,
 };
 
 type FormContextValue = {|
@@ -54,6 +55,7 @@ type FieldsetProps = {
 
 type FieldProps = {
   fieldSchema?: FieldSchema,
+  validate?: (value: ?any, allValues: Object, meta: ?FinalFieldState, validateFieldSchema: PreparedValidator) => ?any,
 } & FinalFieldProps;
 
 type FieldArrayProps = FinalFieldArrayProps;
