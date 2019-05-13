@@ -17,10 +17,10 @@ class Field extends React.Component<FieldProps> {
   collectProps = R.pipe(
     R.when(
       R.has('fieldSchema'),
-      (props) => ({
-        name: props.name || props.fieldSchema.name,
-        validate: createValidate(props.fieldSchema),
-        ...props,
+      ({ validate, ...rest }) => ({
+        name: rest.name || rest.fieldSchema.name,
+        validate: typeof validate === 'function' ? (...args) => validate(...args, createValidate(rest.fieldSchema)) : createValidate(rest.fieldSchema),
+        ...rest,
       }),
     ),
     R.when(
