@@ -1,9 +1,0 @@
-<%
-  if(tableSelectors.hasRelationFields(table)) { 
-  %><%- chunks.fieldsQueries({
-        fields: fields,
-        SchemaNameGenerator: SchemaNameGenerator,
-        changeCase: changeCase,
-    });
-  %><%}; 
-%>
