@@ -21,12 +21,22 @@ describe('As developer, I can format for create mutation,', () => {
       relation: null,
       relationList: {
         items: [{
-          id: 'id',
+          id: 'id-1',
           scalar: 'Relation List Scalar Value',
           scalarList: [
             'Relation List Scalar List Value',
           ],
-          nestedRelation: '5b32159b66a450c047285628',
+          nestedRelation: {
+            id: 'nestedId',
+            scalar: 'Nested Scalar Value',
+            nonNestedRelationField: 'should be removed',
+          },
+        }, {
+          id: 'id-2',
+          scalar: 'Relation List Scalar Value',
+          scalarList: [
+            'Relation List Scalar List Value',
+          ],
         }],
       },
       fileList: {

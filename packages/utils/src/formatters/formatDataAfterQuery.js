@@ -1,7 +1,7 @@
 //@flow
 import * as R from 'ramda';
 
-import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
+import { getFieldSchemaByName, getTableSchemaByName, getTableSchemaById } from '../selectors';
 import {
   isRelationField,
   isFileField,
@@ -40,10 +40,12 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema) =
     }
 
     if (isRelationField(fieldSchema) && !isFileField(fieldSchema) && result[fieldName]) {
+      const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
+
       if (isListField(fieldSchema)) {
-        result = R.assoc(fieldName, result[fieldName].map && result[fieldName].map(({ id }) => id), result);
+        result[fieldName] = result[fieldName].map(item => formatDataAfterQuery(relationTableSchema.name, item, schema));
       } else {
-        result = R.assoc(fieldName, result[fieldName].id, result);
+        result[fieldName] = formatDataAfterQuery(relationTableSchema.name, result[fieldName], schema);
       }
     }
 

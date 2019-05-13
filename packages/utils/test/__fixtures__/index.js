@@ -920,6 +920,17 @@ export const SCHEMA = [{
   isSystem: false,
   fields: [
     {
+      id: '5cc0849dfe73ad48a46103b0',
+      isSystem: true,
+      name: 'id',
+      displayName: 'ID',
+      fieldType: 'ID',
+      isRequired: true,
+      isUnique: true,
+      defaultValue: null,
+      relation: null,
+    },
+    {
       name: 'scalar',
       displayName: 'Scalar',
       description: null,
@@ -1040,6 +1051,17 @@ export const SCHEMA = [{
   displayName: 'Other Relation Table Schema',
   isSystem: false,
   fields: [
+    {
+      id: '5cc0849dfe73ad48a46103b0',
+      isSystem: true,
+      name: 'id',
+      displayName: 'ID',
+      fieldType: 'ID',
+      isRequired: true,
+      isUnique: true,
+      defaultValue: null,
+      relation: null,
+    },
     {
       name: 'scalar',
       displayName: 'Scalar',

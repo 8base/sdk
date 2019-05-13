@@ -45,7 +45,24 @@ Object {
   ],
   "relation": null,
   "relationList": Array [
-    "id",
+    Object {
+      "id": "id-1",
+      "nestedRelation": Object {
+        "id": "nestedId",
+        "scalar": "Nested Scalar Value",
+      },
+      "scalar": "Relation List Scalar Value",
+      "scalarList": Array [
+        "Relation List Scalar List Value",
+      ],
+    },
+    Object {
+      "id": "id-2",
+      "scalar": "Relation List Scalar Value",
+      "scalarList": Array [
+        "Relation List Scalar List Value",
+      ],
+    },
   ],
   "scalar": "Scalar Value",
   "scalarList": Array [
