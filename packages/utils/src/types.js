@@ -95,3 +95,7 @@ export type QueryGeneratorConfig = {
   relationItemsCount?: number,
   includeColumns?: null | string[],
 };
+
+export type FormatDataAfterQueryOptions = {
+  formatRelationToIds?: boolean,
+};
