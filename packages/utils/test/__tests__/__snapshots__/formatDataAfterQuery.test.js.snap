@@ -1,5 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`As developer, I can format for create mutation, Compelex data with formatRelationToIds option. 1`] = `
+Object {
+  "address": Object {
+    "city": "Kenia Urhahn",
+    "state": "Scottie Swailes",
+    "street1": "Pamelia Quall",
+    "street2": "Lasonya Friedly",
+    "zip": "Timothy Ingleton",
+  },
+  "fileList": Array [
+    Object {
+      "downloadUrl": "https://cdn.filestackcontent.com/security=p:eyJjYWxsIjpbInJlYWQiXSwiZXhwaXJ5IjoxNTQwNDU5ODAxODYzLCJoYW5kbGUiOiI5U05UelRmVEFXTUZhckhyb2hBNiJ9,s:d019cfe489a72037a9fd57bfc008664b1ec5bd7d4e24f0979aa067d29d54c305/9SNTzTfTAWMFarHrohA6",
+      "fileId": "9SNTzTfTAWMFarHrohA6",
+      "filename": "9217163.png",
+      "id": "cjnodqoni000501qnkcga0qra",
+      "shareUrl": "https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqoni000501qnkcga0qra",
+    },
+    Object {
+      "downloadUrl": "https://cdn.filestackcontent.com/security=p:eyJjYWxsIjpbInJlYWQiXSwiZXhwaXJ5IjoxNTQwNDU5ODAxODYzLCJoYW5kbGUiOiI1QVhRRjVTYVFSbWdyeFRKQ01xUSJ9,s:1ee9fe13f9a855acd1aad3330a7612b4c6849a7de4f9d45d5b831e596ca26115/5AXQF5SaQRmgrxTJCMqQ",
+      "fileId": "5AXQF5SaQRmgrxTJCMqQ",
+      "filename": "9217163.png",
+      "id": "cjnodqop0000601qnytfd866c",
+      "shareUrl": "https://prestaging-api.8basedev.com/file/download/cjnod10tj000001pjf7an05k2_Master/cjnodqop0000601qnytfd866c",
+    },
+  ],
+  "json": Object {
+    "somePropArray": Array [
+      "someValue1",
+      "someValue2",
+      "someValue3",
+    ],
+  },
+  "jsonList": Array [
+    Object {
+      "someProp": "someValue",
+    },
+    Object {
+      "somePropArray": Array [
+        "someValue1",
+        "someValue2",
+      ],
+    },
+  ],
+  "relation": null,
+  "relationList": Array [
+    "id-1",
+    "id-2",
+  ],
+  "scalar": "Scalar Value",
+  "scalarList": Array [
+    "Scalar List Value",
+  ],
+}
+`;
+
 exports[`As developer, I can format for create mutation, Compelex data. 1`] = `
 Object {
   "address": Object {
@@ -45,7 +100,24 @@ Object {
   ],
   "relation": null,
   "relationList": Array [
-    "id",
+    Object {
+      "id": "id-1",
+      "nestedRelation": Object {
+        "id": "nestedId",
+        "scalar": "Nested Scalar Value",
+      },
+      "scalar": "Relation List Scalar Value",
+      "scalarList": Array [
+        "Relation List Scalar List Value",
+      ],
+    },
+    Object {
+      "id": "id-2",
+      "scalar": "Relation List Scalar Value",
+      "scalarList": Array [
+        "Relation List Scalar List Value",
+      ],
+    },
   ],
   "scalar": "Scalar Value",
   "scalarList": Array [

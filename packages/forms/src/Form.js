@@ -26,7 +26,19 @@ class Form extends React.Component<FormProps> {
   };
 
   collectProps = (): FinalFormProps => {
-    const { mutators, tableSchema, type, schema, onSubmit, initialValues, onSuccess, ignoreNonTableFields, permissions, ...restProps } = this.props;
+    const {
+      mutators,
+      tableSchema,
+      type,
+      schema,
+      onSubmit,
+      initialValues,
+      onSuccess,
+      ignoreNonTableFields,
+      permissions,
+      formatRelationToIds,
+      ...restProps
+    } = this.props;
 
     const collectedProps = {
       mutators: R.merge(arrayMutators, mutators),
@@ -37,7 +49,7 @@ class Form extends React.Component<FormProps> {
     };
 
     if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
-      collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema);
+      collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, { formatRelationToIds });
     }
 
     const skipData = (value, fieldSchema) =>
