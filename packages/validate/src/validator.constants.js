@@ -17,6 +17,7 @@ export const FORMAT_PATTERN = {
 export const VALIDATION_ERROR = {
   IS_REQUIRED: (): string => 'Value is required',
   NOT_A_NUMBER: (): string => 'Value isn\'t a number',
+  NOT_A_JSON: (parseError: string): string => `Value isn't a valid JSON: ${parseError}.`,
   MAX_PRECISION: (maxPrecision: number): string => `Maximum allowed precision is ${maxPrecision}. It was exceeded.`,
   MIN_VALUE: (minValue: number): string => `Value is lower than minimum allowed value ${minValue}.`,
   MAX_VALUE: (maxValue: number): string => `Value is greater than maximum allowed value ${maxValue}.`,
