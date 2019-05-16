@@ -6,30 +6,31 @@ import { PermissionsContext } from './PermissionsContext';
 import { isAllowed } from './isAllowed';
 
 type IfAllowedProps = {
-  resource: string,
-  type: string,
-  permission: string,
+  permissions: Array<Array<string>>,
   children: React$Node,
 };
 
 class IfAllowed extends React.Component<IfAllowedProps> {
-  renderContent = (permissions: ?Object) => {
-    const { children, resource, type, permission } = this.props;
+  renderContent = (userPermissions: ?Object) => {
+    const { children, permissions } = this.props;
 
-    const allowed = isAllowed({
-      type,
-      resource,
-      permission,
-    }, permissions);
+    const result = permissions.map(([type, resource, permission]) => ({
+      allowed: isAllowed({
+        type,
+        resource,
+        permission,
+      }, userPermissions),
+      fields: R.pathOr(
+        {},
+        [type, resource, 'permission', permission, 'fields'],
+        userPermissions,
+      ),
+    }));
 
-    const fieldsPermissions = R.pathOr(
-      {},
-      [type, resource, 'permission', permission, 'fields'],
-      permissions,
-    );
+    const allowed = R.all(R.propEq('allowed', true), result);
 
     if (typeof children === 'function') {
-      return children(allowed, fieldsPermissions);
+      return children(allowed, result);
     }
 
     return allowed ? children : null;
