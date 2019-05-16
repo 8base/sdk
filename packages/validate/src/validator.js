@@ -1,7 +1,13 @@
 //@flow
 
 import * as R from 'ramda';
-import { FIELD_TYPE, type FieldType, type Format } from '@8base/utils';
+import {
+  SDKError,
+  ERROR_CODES,
+  FIELD_TYPE,
+  type FieldType,
+  type Format,
+} from '@8base/utils';
 import { Decimal } from 'decimal.js';
 
 import { VALIDATION_ERROR, FORMAT_PATTERN } from './validator.constants';
@@ -101,6 +107,17 @@ const checkIsNumber: PreparedValidator = R.ifElse(
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
 
+const checkIsJson: PreparedValidator = (value) => {
+  if (typeof value === 'string' && value.length > 0) {
+    try {
+      JSON.parse(value);
+
+      return undefined;
+    } catch (e) {
+      return VALIDATION_ERROR.NOT_A_JSON(e.message);
+    }
+  }
+};
 
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
@@ -234,6 +251,10 @@ const getRelationFieldValidators: ValidatorsGetter<Field> = () => [];
 
 const getSmartFieldValidators: ValidatorsGetter<Field> = () => [];
 
+const getJSONFieldValidators: ValidatorsGetter<Field> = () => [
+  checkIsJson,
+];
+
 type ValidatorsProcesser = (validators: Array<PreparedValidator>) => PreparedValidator;
 
 const processValidators: ValidatorsProcesser = validators => R.converge(
@@ -261,7 +282,14 @@ export const validatorFacade: ValidatorFacade = R.pipe(
         [R.propEq('fieldType', FIELD_TYPE.FILE), getFileFieldValidators],
         [R.propEq('fieldType', FIELD_TYPE.RELATION), getRelationFieldValidators],
         [R.propEq('fieldType', FIELD_TYPE.SMART), getSmartFieldValidators],
-        [R.T, () => { throw new Error('Unsupported field type'); }],
+        [R.propEq('fieldType', FIELD_TYPE.JSON), getJSONFieldValidators],
+        [R.T, (field) => {
+          throw new SDKError(
+            ERROR_CODES.UNSUPPORTED_FIELD_TYPE,
+            '@8base/validator',
+            `Validator doesn't support field type ${field.fieldType}`,
+          );
+        }],
       ]),
     ],
   ),
