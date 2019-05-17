@@ -21,7 +21,6 @@ Provider for 8base user permissions
 
 -   `children` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Children of the provider. Could be either react node or function with loading state.
 
-
 ## Usage
 
 ### Programatic usage
@@ -59,12 +58,12 @@ const Application = () => (
 
 ```jsx
 import React from 'react';
-import { PermissionsProvider, Can } from '@8base/permission-provider';
+import { PermissionsProvider, IfAllowed } from '@8base/permission-provider';
 
 const MyComponent = () => (
-  <Can resource="schema" type="custom" permission="edit">
+  <IfAllowed permissions={[['custom', 'schema', 'edit']]}>
     <Button>Edit Schema!</Button>
-  </Can>
+  </IfAllowed>
 );
 
 const Application = () => (
@@ -82,12 +81,12 @@ const Application = () => (
 
 ```jsx
 import React from 'react';
-import { Can } from '@8base/permission-provider';
+import { IfAllowed } from '@8base/permission-provider';
 
 const MyComponent = () => (
-  <Can resource="Clients" type="data" permission="create">
+  <IfAllowed permissions={[['data', 'Clients', 'create']]}>
     <Button>Create Client!</Button>
-  </Can>
+  </IfAllowed>
 );
 
 const Application = () => (
@@ -105,14 +104,14 @@ const Application = () => (
 
 ```jsx
 import React from 'react';
-import { Can } from '@8base/permission-provider';
+import { IfAllowed } from '@8base/permission-provider';
 
 const MyComponent = () => (
-  <Can resource="schema" type="custom" permission={["edit"]}>
+  <IfAllowed permissions={[['custom', 'schema', 'edit']]}>
     {
       (allowed) => <Button disabled={!allowed}>Edit Schema!</Button>
     }
-  </Can>
+  </IfAllowed>
 );
 
 const Application = () => (
