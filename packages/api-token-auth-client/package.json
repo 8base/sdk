@@ -3,6 +3,7 @@
   "version": "0.21.2",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/api-token-auth-client#readme",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
