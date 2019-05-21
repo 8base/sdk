@@ -1,6 +1,8 @@
 {
   "name": "@8base/table-schema-provider",
   "version": "0.21.2",
+  "repository": "https://github.com/8base/sdk",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/table-schema-provider#readme",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
