@@ -1,11 +1,38 @@
 // @flow
 import * as R from 'ramda';
+import errorCodes from '@8base/error-codes';
 import type { Schema } from '@8base/utils';
 import type { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, TABLE_CREATE_MUTATION, FIELD_CREATE_MUTATION } from './constants';
 
-export const importTables = async (request: (query: string | DocumentNode, variables?: Object) => Promise<Object>, schema: Schema) => {
+type ImportTablesOptions = {
+  debug?: boolean,
+};
+
+const handleError = (message: string, e: Object, debug: boolean) => {
+  // eslint-disable-next-line no-console
+  console.warn(message);
+
+  if (debug) {
+    // eslint-disable-next-line no-console
+    console.warn(JSON.stringify(e.response, null, 2));
+  } else if (R.pathEq(['response', 'errors', 0, 'code'], errorCodes.ValidationErrorCode, e)) {
+    // eslint-disable-next-line no-console
+    console.warn(JSON.stringify(R.path(['response', 'errors', 0, 'details'], e), null, 2));
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn(R.path(['response', 'errors', 0, 'message'], e));
+  }
+};
+
+export const importTables = async (
+  request: (query: string | DocumentNode, variables?: Object) => Promise<Object>,
+  schema: Schema,
+  options: ImportTablesOptions = {},
+) => {
+  const debug = R.propOr(false, 'debug', options);
+
   for (const table of schema) {
     try {
       await request(TABLE_CREATE_MUTATION, {
@@ -15,8 +42,7 @@ export const importTables = async (request: (query: string | DocumentNode, varia
         },
       });
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(`Can't create table "${table.name}"`);
+      handleError(`\nCan't create table "${table.name}"`, e, debug);
     }
   }
 
@@ -106,8 +132,7 @@ export const importTables = async (request: (query: string | DocumentNode, varia
           data: field,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn(`Can't create field "${field.name}"`);
+        handleError(`\nCan't create field "${field.name}"`, e, debug);
       }
     }
   }
