@@ -1,6 +1,6 @@
 {
   "name": "@8base/app-provider",
-  "version": "0.21.3",
+  "version": "0.21.4",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/app-provider#readme",
   "main": "dist/index.js",
@@ -12,11 +12,11 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.21.3",
-    "@8base/apollo-links": "^0.21.3",
-    "@8base/auth": "^0.21.3",
+    "@8base/apollo-client": "^0.21.4",
+    "@8base/apollo-links": "^0.21.4",
+    "@8base/auth": "^0.21.4",
     "@8base/error-codes": "^1.0.5",
-    "@8base/table-schema-provider": "^0.21.3",
+    "@8base/table-schema-provider": "^0.21.4",
     "@babel/runtime": "^7.2.0",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
@@ -31,7 +31,7 @@
     "recompose": "0.27.1"
   },
   "devDependencies": {
-    "@8base/web-auth0-auth-client": "^0.21.3",
+    "@8base/web-auth0-auth-client": "^0.21.4",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "babel-core": "^7.0.0-bridge.0",
