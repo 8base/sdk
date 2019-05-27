@@ -6,3 +6,5 @@ build
 es
 flow-typed
 packages/local-*
+packages/app-provider
+packages/web-auth0-auth-client

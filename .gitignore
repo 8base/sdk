@@ -16,3 +16,4 @@ package-lock.json
 packages/local-*
 yarn-error.log
 yerna.log
+tsconfig.tsbuildinfo

@@ -1,17 +1,16 @@
-import React from 'react';
-import { TableSchemaProvider } from '@8base/table-schema-provider';
-import { AuthProvider, type AuthClient } from '@8base/auth';
-
+import * as React from 'react';
+import { AuthClient } from '@8base/utils';
 import { ApolloContainer } from './ApolloContainer';
+import { ApolloContainerPassedProps } from './types';
 
-type EightBaseAppProviderProps = {
-  uri: string,
-  children: ({ loading: boolean }) => React$Node,
-  onRequestSuccess: (Object) => void,
-  onRequestError: (Object) => void,
-  authClient: AuthClient,
-  extendLinks?: (links: Object[]) => Object[],
-};
+const { AuthProvider }  = require('@8base/auth');
+const { TableSchemaProvider } = require('@8base/table-schema-provider');
+
+
+type EightBaseAppProviderProps = ApolloContainerPassedProps & { 
+  authClient?: AuthClient,
+  children: (renderProps: { loading: boolean }) => React.ReactNode,
+}
 
 /**
  * `EightBaseAppProvider` universal provider which loads fragments schema and provides Apollo client with it, authentication and table schema.
@@ -29,7 +28,7 @@ const EightBaseAppProvider = ({
   onRequestError,
   extendLinks,
   children,
-}: EightBaseAppProviderProps) =>
+}: EightBaseAppProviderProps): any =>
   !!authClient
     ? (
       <AuthProvider authClient={ authClient }>

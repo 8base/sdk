@@ -1,3 +1,3 @@
 module.exports = {
-  extends: '../../babel.config.js',
+  extends: '../../babel-ts.config.js',
 };
