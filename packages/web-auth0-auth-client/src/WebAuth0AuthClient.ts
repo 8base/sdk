@@ -1,9 +1,8 @@
-// @flow
-import auth0 from 'auth0-js';
+import * as auth0 from 'auth0-js';
 import * as R from 'ramda';
 import { throwIfMissingRequiredOption } from '@8base/utils';
 
-import type {
+import {
   AuthState,
   AuthData,
   AuthClient,
@@ -33,7 +32,7 @@ const isEmptyOrNil = R.either(
 );
 
 const isEmailVerified = R.pipe(
-  R.path(['idTokenPayload', 'email_verified']),
+  R.pathOr(undefined, ['idTokenPayload', 'email_verified']),
   R.equals(true),
 );
 
@@ -41,9 +40,9 @@ const getEmail = R.path(['idTokenPayload', 'email']);
 
 const getIdToken = R.path(['idToken']);
 
-const getIdTokenPayload = R.prop('idTokenPayload');
+const getIdTokenPayload = R.propOr(undefined, 'idTokenPayload');
 
-const getState = R.prop('state');
+const getState = R.propOr(undefined, 'state');
 
 const get8baseRedirectUri = (
   originalRedirectUri: string,
@@ -68,9 +67,9 @@ const get8baseRedirectUri = (
  */
 class WebAuth0AuthClient implements AuthClient, Authorizable {
   auth0: auth0.WebAuth;
-  logoutRedirectUri: string | void;
-  workspaceId: string | void;
-  profileId: string | void;
+  logoutRedirectUri?: string;
+  workspaceId?: string;
+  profileId?: string;
 
   constructor(options: WebAuth0AuthClientOptions) {
     throwIfMissingRequiredOption([
@@ -115,22 +114,25 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
       domain,
       clientID: clientId,
       redirectUri,
+      // @ts-ignore Check typings. WebAuth options has no mustAcceptTerms property!
       mustAcceptTerms: true,
       responseType: 'token id_token',
       scope: 'openid email profile',
     });
   }
 
-  authorize = async (options?: Object = {}): Promise<void> => {
+  // @ts-ignore Check this logic. Why in the interface defines Promise<AuthData> in return value?
+  authorize = async (options: Object = {}): Promise<void> => {
     this.auth0.authorize({
+      // @ts-ignore Check typings. Authorize options has no workspaceId property!
       workspaceId: this.workspaceId,
       profileId: this.profileId,
       ...options,
     });
   };
 
-  renewToken = (options?: Object = {}): Promise<AuthData> => new Promise((resolve, reject) => {
-    this.auth0.checkSession(options, (error, result) => {
+  renewToken = (options: Object = {}): Promise<AuthData> => new Promise((resolve: any, reject) => {
+    this.auth0.checkSession(options, (error, result: any) => {
       if (error) {
         reject(error || {});
         return;
@@ -148,7 +150,7 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
 
 
   changePassword = async (): Promise<{ email: string }> => {
-    const { email } = await this.getAuthState();
+    const { email = '' } = await this.getAuthState();
 
     return new Promise((resolve, reject) => {
       this.auth0.changePassword({
@@ -166,7 +168,7 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
   };
 
   getAuthorizedData = (): Promise<AuthData> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: Function, reject) => {
       this.auth0.parseHash((error, authResult) => {
         if (error) {
           reject(error);
@@ -200,7 +202,7 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
     return R.not(isEmptyOrNil(token));
   };
 
-  logout = async (options?: Object = {}): Promise<void> => {
+  logout = async (options: Object = {}): Promise<void> => {
     this.auth0.logout({
       returnTo: this.logoutRedirectUri,
       ...options,

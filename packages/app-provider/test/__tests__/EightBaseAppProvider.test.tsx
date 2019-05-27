@@ -1,23 +1,21 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
 
-import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
-import { EightBaseApolloClient } from '@8base/apollo-client';
-import { AuthProvider } from '@8base/auth';
+const { WebAuth0AuthClient } = require('@8base/web-auth0-auth-client');
+const { EightBaseApolloClient } = require('@8base/apollo-client');
+const { AuthProvider } = require('@8base/auth');
 
 import { EightBaseAppProvider } from '../../src';
 
 jest.mock('../../src/FragmentsSchemaContainer', () => ({
-  FragmentsSchemaContainer: ({ children }) => (
+  FragmentsSchemaContainer: ({ children }: any) => (
     <div>{ children({ loading: false }) }</div>
   ),
 }));
 
 jest.mock('@8base/auth', () => ({
   AuthProvider: jest.fn(({ children }) => <div>{ children }</div>),
-  withAuth: jest.fn(Component => props => <Component { ...props } />),
+  withAuth: jest.fn(Component => (props: any) => <Component { ...props } />),
 }));
 
 jest.mock('@8base/apollo-client', () => {
@@ -48,7 +46,7 @@ describe('EightBaseAppProvider', () => {
     const onRequestSuccess = jest.fn();
     const uri = 'http://8base.com';
 
-    const authClient = new WebAuth0AuthClient({
+    const authClient: any = new WebAuth0AuthClient({
       domain: 'qweqwe',
       clientId: 'asdad',
       redirectUri: `${window.location.origin}/auth/callback`,
@@ -70,7 +68,7 @@ describe('EightBaseAppProvider', () => {
     const {
       cache,
       ...apolloClientProps
-    } = EightBaseApolloClient.mock.calls[0][0];
+    } = (EightBaseApolloClient as any).mock.calls[0][0];
 
     expect(EightBaseApolloClient).toHaveBeenCalled();
     expect(apolloClientProps.extendLinks).toEqual(extendLinks);
@@ -97,7 +95,7 @@ Object {
     const onRequestSuccess = jest.fn();
     const uri = 'http://8base.com';
 
-    const authClient = new WebAuth0AuthClient({
+    const authClient: any = new WebAuth0AuthClient({
       domain: 'qweqwe',
       clientId: 'asdad',
       redirectUri: `${window.location.origin}/auth/callback`,
@@ -119,7 +117,7 @@ Object {
     const {
       cache,
       ...apolloClientProps
-    } = EightBaseApolloClient.mock.calls[0][0];
+    } = (EightBaseApolloClient as any).mock.calls[0][0];
 
 
     expect(AuthProvider).toHaveBeenCalled();
@@ -162,7 +160,7 @@ Object {
     const {
       cache,
       ...apolloClientProps
-    } = EightBaseApolloClient.mock.calls[0][0];
+    } = (EightBaseApolloClient as any).mock.calls[0][0];
 
     expect(AuthProvider).not.toHaveBeenCalled();
     expect(EightBaseApolloClient).toHaveBeenCalled();

@@ -1,8 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import * as R from 'ramda';
 
-class FragmentsSchemaContainer extends React.PureComponent {
-  state = {
+type FragmentsSchemaContainerProps = {
+  uri: string,
+  children: (args: { loading: boolean, fragmentsSchema: Object | null }) => React.ReactNode,
+}
+
+type FragmentsSchemaContainerState = {
+  loading: boolean,
+  fragmentsSchema: null | Object,
+
+}
+
+class FragmentsSchemaContainer extends React.PureComponent<FragmentsSchemaContainerProps, FragmentsSchemaContainerState> {
+  state: FragmentsSchemaContainerState = {
     loading: true,
     fragmentsSchema: null,
   };
@@ -25,8 +36,8 @@ class FragmentsSchemaContainer extends React.PureComponent {
   }
 }
 
-const fetchFragmentsSchema = async (uri: string): ?Object => {
-  const result: Object = await fetch(uri, {
+const fetchFragmentsSchema = async (uri: string): Promise<Object | null> => {
+  const result: { data: any } = await fetch(uri, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -52,7 +63,7 @@ const fetchFragmentsSchema = async (uri: string): ?Object => {
   }
 
   const filteredData = result.data.__schema.types.filter(
-    type => type.possibleTypes !== null,
+    (type: any) => type.possibleTypes !== null,
   );
 
   result.data.__schema.types = filteredData;

@@ -153,3 +153,35 @@ export const MUTATION_FILE_FIELDS: ['fileId', 'public', 'filename', 'meta', 'mod
 export const tableSelectors: { [key: string]: Function };
 
 export const tableFieldSelectors: { [key: string]: Function };
+
+export const throwIfMissingRequiredOption: Function;
+
+export type AuthState = {
+  email?: string,
+  userId?: string,
+  workspaceId?: string,
+  refreshToken?: string,
+  token?: string,
+}
+
+export type AuthData = {
+  isEmailVerified: boolean,
+  idToken: string,
+  email: string,
+  idTokenPayload: Object,
+  state: any,
+};
+
+export interface AuthClient {
+  getAuthState(): Promise<AuthState>,
+  setAuthState(state: AuthState): Promise<void>,
+  purgeAuthState(): Promise<void>,
+  checkIsAuthorized(): Promise<boolean>,
+}
+
+export interface Authorizable {
+  authorize(options?: Object): Promise<AuthData>,
+  renewToken(options?: Object): Promise<AuthData>,
+  changePassword(): Promise<{ email: string }>,
+  logout(options?: Object): Promise<void>,
+}

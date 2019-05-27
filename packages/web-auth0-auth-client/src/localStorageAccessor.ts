@@ -1,5 +1,4 @@
-// @flow
-import type { AuthState } from '@8base/utils';
+import { AuthState } from '@8base/utils';
 
 const AUTH_LOCALSTORAGE_KEY = 'auth';
 

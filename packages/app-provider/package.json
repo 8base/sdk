@@ -6,8 +6,10 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "../../bin/build-package.sh",
-    "watch": "../../bin/watch-package.sh",
+    "build:clean": "rimraf dist",
+    "build:ts": "tsc",
+    "build": "yarn build:clean && yarn build:ts",
+    "watch": "yarn build --watch",
     "docs": "NODE_ENV=test documentation readme src/EightBaseAppProvider.js --section=API",
     "test": "NPM_ENV=test jest"
   },
@@ -17,7 +19,7 @@
     "@8base/auth": "^0.21.4",
     "@8base/error-codes": "^1.0.5",
     "@8base/table-schema-provider": "^0.21.4",
-    "@babel/runtime": "^7.2.0",
+    "@8base/utils": "^0.21.4",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.11",
@@ -32,26 +34,50 @@
   },
   "devDependencies": {
     "@8base/web-auth0-auth-client": "^0.21.4",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "@types/enzyme": "^3.9.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/graphql": "^14.2.0",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "@types/ramda": "^0.26.8",
+    "@types/react": "^16.8.18",
+    "@types/react-dom": "^16.8.4",
     "documentation": "^8.0.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
-    "flow-copy-source": "^2.0.2",
-    "jest": "^23.6.0",
+    "jest": "24",
     "jest-fetch-mock": "^2.1.0",
     "prettier": "^1.16.4",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
     "setupFiles": [
-      "<rootDir>/test/jest.setup.js"
+      "<rootDir>/test/jest.setup.ts"
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"
