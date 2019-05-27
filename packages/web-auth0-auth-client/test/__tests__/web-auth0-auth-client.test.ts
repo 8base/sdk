@@ -18,9 +18,13 @@ jest.mock('auth0-js', () => {
   const logout = jest.fn();
   const checkSession = jest.fn();
   const WebAuth = jest.fn(function WebAuth() {
+    // @ts-ignore
     this.authorize = authorize;
+    // @ts-ignore
     this.parseHash = parseHash;
+    // @ts-ignore
     this.logout = logout;
+    // @ts-ignore
     this.checkSession = checkSession;
   });
 
@@ -54,7 +58,7 @@ describe('WebAuth0AuthClient', () => {
   });
 
   it('As a developer, i can get authorized adata', async () => {
-    auth0.parseHash.mockImplementation((callback) => {
+    auth0.parseHash.mockImplementation((callback: any) => {
       callback(null, {
         idToken: ID_TOKEN,
         idTokenPayload: {
@@ -84,7 +88,7 @@ describe('WebAuth0AuthClient', () => {
       token: ID_TOKEN,
     });
 
-    expect(JSON.parse(localStorage.getItem('auth'))).toEqual({
+    expect(JSON.parse(localStorage.getItem('auth') || '')).toEqual({
       token: ID_TOKEN,
     });
   });
@@ -118,7 +122,7 @@ describe('WebAuth0AuthClient', () => {
   });
 
   it('As a developer, i can renew token', async () => {
-    auth0.checkSession.mockImplementation((options, callback) => {
+    auth0.checkSession.mockImplementation((options: any, callback: any) => {
       callback(null, {
         idToken: ANOTHER_ID_TOKEN,
         email: EMAIL,
