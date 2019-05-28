@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import * as React from 'react';
+import * as TestRenderer from 'react-test-renderer';
 
 import { AuthContext, AuthProvider } from '../../src';
 import { SampleAuthClient } from '../utils';
@@ -16,9 +16,9 @@ type StubComponentProps = {
   },
 };
 
-const NotAuthorizedComponent = () => 'I am not authorider';
+const NotAuthorizedComponent = () => <span>I am not authorider</span>;
 
-const AuthorizedComponent = () => 'I am authorized';
+const AuthorizedComponent = () => <span>I am authorized</span>;
 
 const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => {
   return isAuthorized ? (
@@ -48,7 +48,7 @@ describe('AuthContext', () => {
 
     expect(props.auth.isAuthorized).toBe(false);
     expect(props.auth.authState).toEqual({});
-    expect(children[0].type).toBe(NotAuthorizedComponent);
+    expect((children[0] as any).type).toBe(NotAuthorizedComponent);
   });
 
   it('As a developer, i can use AuthContext to update authorization state', async () => {
@@ -68,7 +68,7 @@ describe('AuthContext', () => {
     expect(props.auth.authState).toEqual({
       token: TOKEN,
     });
-    expect(children[0].type).toBe(AuthorizedComponent);
+    expect((children[0] as any).type).toBe(AuthorizedComponent);
   });
 
   it('As a developer, i can use AuthContext to clear authorization state', async () => {
@@ -84,7 +84,7 @@ describe('AuthContext', () => {
 
     expect(props.auth.isAuthorized).toBe(false);
     expect(props.auth.authState).toEqual({});
-    expect(children[0].type).toBe(NotAuthorizedComponent);
+    expect((children[0] as any).type).toBe(NotAuthorizedComponent);
   });
 });
 

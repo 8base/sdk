@@ -1,35 +1,36 @@
 // @flow
 
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import * as React from 'react';
+import * as TestRenderer from 'react-test-renderer';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { Observable } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import { AuthProvider, withLogout, type AuthProps } from '../../src';
+import { AuthProvider, withLogout, WithAuthProps } from '../../src';
 import { SampleAuthClient } from '../utils';
 
 type StubComponentProps = {
   foo: number,
-} & AuthProps;
+} & WithAuthProps;
 
-const NotAuthorizedComponent = () => 'I am not authorider';
+const NotAuthorizedComponent = () => <span>I am not authorider</span>;
 
-const AuthorizedComponent = () => 'I am authorized';
+const AuthorizedComponent = () => <span>I am authorized</span>;
 
-const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
+const StubComponent: any = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>
     { isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent /> }
     { foo }
   </div>
 );
 
-const EnhancedStubComponent = withLogout(StubComponent);
+const EnhancedStubComponent: any = withLogout(StubComponent);
 
 describe('withLogout', () => {
   const authClient = new SampleAuthClient();
   const apolloClient = new ApolloClient({
+    // @ts-ignore
     link: () => Observable.of(),
     cache: new InMemoryCache(),
   });

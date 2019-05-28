@@ -1,13 +1,13 @@
 // @flow
 
-import React from 'react';
-import type { AuthState, AuthClient, Authorizable } from '@8base/utils';
+import * as React from 'react';
+import { AuthState, AuthClient, Authorizable } from '@8base/utils';
 
 import { AuthContext } from './AuthContext';
 
 type AuthProviderProps = {
-  children: React$Node,
-  authClient: AuthClient & (Authorizable | {}),
+  children: React.ReactNode,
+  authClient: AuthClient & Authorizable,
 };
 
 type AuthProviderState = {

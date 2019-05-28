@@ -1,5 +1,5 @@
-export const SampleAuthClient = function () {
-  let authState = {};
+export const SampleAuthClient: any = function () {
+  let authState: any = {};
 
   const purgeAuthState = jest.fn(async () => {
     authState = {};
@@ -14,9 +14,13 @@ export const SampleAuthClient = function () {
     return !!authState.token;
   });
 
+  // @ts-ignore
   this.purgeAuthState = purgeAuthState;
+  // @ts-ignore
   this.setAuthState = setAuthState;
+  // @ts-ignore
   this.getAuthState = getAuthState;
+  // @ts-ignore
   this.checkIsAuthorized = checkIsAuthorized;
 };
 

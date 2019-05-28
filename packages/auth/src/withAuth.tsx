@@ -1,25 +1,28 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
+import { Subtract } from 'utility-types';
 import { wrapDisplayName } from 'recompose';
 
-import { AuthContext, type AuthContextProps } from './AuthContext';
+import { AuthContext, AuthContextProps } from './AuthContext';
 
-export type AuthProps = {
+export type WithAuthProps = {
   auth: AuthContextProps,
 };
 
-const withAuth = <InputProps: { auth: AuthContextProps }>(
-  WrappedComponent: React$ComponentType<InputProps>,
-): Class<React$Component<$Diff<InputProps, AuthProps>>> => {
-  class WithAuth extends React.Component<$Diff<InputProps, AuthProps>> {
+const withAuth = <T extends WithAuthProps>(
+  WrappedComponent: React.ComponentType<T>,
+) =>  
+  class WithAuth extends React.Component<Subtract<T, WithAuthProps>> {
+    public static displayName = wrapDisplayName(WrappedComponent, 'withAuth');
+
     render() {
       return (
         <AuthContext.Consumer>
           { (auth) => (
             <WrappedComponent
-              { ...this.props }
-              auth={ auth }
+              {...this.props as T }
+              auth={ auth || {} }
             />
           ) }
         </AuthContext.Consumer>
@@ -27,10 +30,6 @@ const withAuth = <InputProps: { auth: AuthContextProps }>(
     }
   }
 
-  WithAuth.displayName = wrapDisplayName(WrappedComponent, 'withAuth');
-
-  return WithAuth;
-};
 
 export { withAuth };
 
