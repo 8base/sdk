@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import type { AuthState, AuthClient, Authorizable } from '@8base/utils';
+import { AuthState, AuthClient, Authorizable } from '@8base/utils';
 
 export type AuthContextProps = AuthClient & (Authorizable | {}) & {
   isAuthorized: boolean,
