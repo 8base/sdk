@@ -1,4 +1,4 @@
-export const COMMON_TABLE_SCHEMA = {
+export const COMMON_TABLE_SCHEMA: any = {
   name: 'commons',
   fields: [
     { name: 'field1', id: '1', isMeta: false, isSystem: false },
@@ -7,7 +7,7 @@ export const COMMON_TABLE_SCHEMA = {
   ],
 };
 
-export const TABLE_SCHEMA_WITH_RELATION = {
+export const TABLE_SCHEMA_WITH_RELATION: any = {
   name: 'Relation',
   fields: [
     { name: 'field1', isMeta: false, isSystem: false, id: '1', fieldType: 'RELATION' },
@@ -17,7 +17,7 @@ export const TABLE_SCHEMA_WITH_RELATION = {
   ],
 };
 
-export const TABLE_SCHEMA_WITH_FILES = {
+export const TABLE_SCHEMA_WITH_FILES: any = {
   name: 'Files',
   fields: [
     {
@@ -61,7 +61,7 @@ export const TABLE_SCHEMA_WITH_FILES = {
   ],
 };
 
-export const TABLE_SCHEMA_WITH_SMART_FIELDS = {
+export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
   name: 'SmartFields',
   fields: [
     {
@@ -319,7 +319,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS = {
   ],
 };
 
-export const TABLE_SCHEMA_WITHOUT_USER_FIELDS = {
+export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
   name: 'TableWithoutUserFields',
   fields: [
     {
@@ -404,7 +404,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS = {
 };
 
 
-export const SCHEMA = [{
+export const SCHEMA: any = [{
   id: 'TABLE_SCHEMA_ID',
   name: 'tableSchema',
   displayName: 'Table Schema',

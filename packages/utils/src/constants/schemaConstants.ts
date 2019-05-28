@@ -1,4 +1,3 @@
-//@flow
 
 export const FIELD_TYPE = {
   DATE: 'DATE',
@@ -76,7 +75,7 @@ export const DATE_FORMATS = {
   DATETIME: 'DATETIME',
 };
 
-export const MUTATION_TYPE = {
+export const MUTATION_TYPE: { [key: string]: 'CREATE' | 'UPDATE' } = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
 };

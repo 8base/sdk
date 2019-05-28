@@ -1,4 +1,3 @@
-// @flow
 import {
   FIELD_TYPE,
   SWITCH_FORMATS,
@@ -6,30 +5,31 @@ import {
   NUMBER_FORMATS,
   FILE_FORMATS,
   DATE_FORMATS,
+  MUTATION_TYPE,
 } from './constants';
 
-export type MutationType = 'CREATE' | 'UPDATE';
+export type MutationType = keyof typeof MUTATION_TYPE;
 
-export type FieldType = $Values<typeof FIELD_TYPE>;
+export type FieldType =keyof typeof FIELD_TYPE;
 
-export type Format = $Values<typeof SWITCH_FORMATS>
-  | $Values<typeof TEXT_FORMATS>
-  | $Values<typeof NUMBER_FORMATS>
-  | $Values<typeof FILE_FORMATS>
-  | $Values<typeof DATE_FORMATS>;
+export type Format = keyof typeof SWITCH_FORMATS
+  | keyof typeof TEXT_FORMATS
+  | keyof typeof NUMBER_FORMATS
+  | keyof typeof FILE_FORMATS
+  | keyof typeof DATE_FORMATS;
 
 export type FieldSchema = {
   id: string,
   name: string,
   displayName?: string,
-  description: ?string,
+  description?: string,
   fieldType: FieldType,
-  fieldTypeAttributes: Object,
+  fieldTypeAttributes: { [key: string]: any },
   isSystem: boolean,
   isList: boolean,
   isMeta: boolean,
   isRequired: boolean,
-  isUnique: ?boolean,
+  isUnique?: boolean,
   defaultValue: any,
   relation: {
     id: string,
@@ -41,6 +41,7 @@ export type FieldSchema = {
     refFieldIsRequired: boolean,
     refTable: {
       id: string,
+      name: string,
     },
   },
 };
@@ -60,11 +61,14 @@ export type SchemaResponse = {
   count: number,
 };
 
-export type PossibleAuthItems = 'email' | 'userId' | 'workspaceId' | 'refreshToken' | 'token';
 
 export type AuthState = {
-  [PossibleAuthItems]: string,
-};
+  email?: string,
+  userId?: string,
+  workspaceId?: string,
+  refreshToken?: string,
+  token?: string,
+}
 
 export type AuthData = {
   state: Object,
@@ -72,7 +76,6 @@ export type AuthData = {
   idToken: string,
   email: string,
   idTokenPayload: Object,
-  state: any,
 };
 
 export interface AuthClient {

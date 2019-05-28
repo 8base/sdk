@@ -1,9 +1,8 @@
-// @flow
 import * as R from 'ramda';
 
 import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from '../constants';
-import type { TableSchema, QueryGeneratorConfig } from '../types';
+import { TableSchema, QueryGeneratorConfig } from '../types';
 
 export type CheckedRule = {
   id: string,
@@ -21,7 +20,7 @@ export const createQueryString = (
   tablesList: TableSchema[],
   tableName: string,
   queryObjectConfig: QueryGeneratorConfig = {},
-  prevKey?: string = '',
+  prevKey: string = '',
 ): string => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
   const {
@@ -95,7 +94,7 @@ export const createQueryString = (
         }`;
       } else if (isSmart) {
         fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce(
-          (accum, { name }) => { accum += `\n${name}`; return accum; },
+          (accum: string, { name }: { name: string }) => { accum += `\n${name}`; return accum; },
           '',
         )}}`;
       }

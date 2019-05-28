@@ -1,10 +1,9 @@
-//@flow
 import * as R from 'ramda';
 
 import { MUTATION_TYPE } from '../constants';
 import { formatFieldDataListItem } from './formatFieldDataListItem';
 
-import type { MutationType, FieldSchema, Schema } from '../types';
+import { MutationType, FieldSchema, Schema } from '../types';
 
 export const formatFieldDataList = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => R.pipe(
   R.map((item) => formatFieldDataListItem(type, fieldSchema, item, schema)),

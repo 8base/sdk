@@ -1,8 +1,7 @@
-// @flow
 import * as R from 'ramda';
 
 import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
-import type { TableSchema, QueryGeneratorConfig } from '../types';
+import { TableSchema, QueryGeneratorConfig } from '../types';
 
 
 type CreateQueryColumnsListConfig = {
@@ -20,8 +19,8 @@ export const createQueryColumnsList = (
   tablesList: TableSchema[],
   tableName: string,
   config: CreateQueryColumnsListConfig = {},
-  prevKey?: string = '',
-) => {
+  prevKey: string = '',
+): Array<{ name: string, title: string, meta: Object }> => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
   const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 
@@ -86,8 +85,8 @@ export const createQueryColumnsList = (
       }];
     });
 
-  return (R.flatten(transformedList): any)
-    .filter(({ name }: Object) => !!includeColumns
+  return (R.flatten<any>(transformedList))
+    .filter(({ name }: { name: string }) => !!includeColumns
       ? R.contains(name, includeColumns)
       : true,
     );

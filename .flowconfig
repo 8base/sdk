@@ -7,6 +7,7 @@
 <PROJECT_ROOT>/packages/apollo-client
 <PROJECT_ROOT>/packages/apollo-links
 <PROJECT_ROOT>/packages/auth
+<PROJECT_ROOT>/packages/utils
 <PROJECT_ROOT>/packages/web-auth0-auth-client
 
 [include]

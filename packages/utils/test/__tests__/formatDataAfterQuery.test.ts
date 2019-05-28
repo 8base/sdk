@@ -1,4 +1,3 @@
-//@flow
 
 import { formatDataAfterQuery } from '../../src';
 import { SCHEMA } from '../__fixtures__';

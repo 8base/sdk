@@ -1,7 +1,6 @@
-// @flow
 import * as selectors from '../../src/selectors/tableSelectors';
 
-const tableState = {
+const tableState: any = {
   id: 't-1',
   name: 'pit12',
   fields: [{

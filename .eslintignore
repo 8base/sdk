@@ -9,6 +9,7 @@ packages/local-*
 packages/api-client
 packages/api-token-auth-client
 packages/app-provider
+packages/utils
 packages/apollo-client
 packages/apollo-links
 packages/auth

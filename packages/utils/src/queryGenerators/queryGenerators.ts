@@ -1,10 +1,9 @@
-// @flow
 import * as R from 'ramda';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 
 import gqlPrettier from 'graphql-prettier';
 import * as tableSelectors from '../selectors/tableSelectors';
-import type { TableSchema, QueryGeneratorConfig } from '../types';
+import { TableSchema, QueryGeneratorConfig } from '../types';
 import { createQueryString } from './createQueryString';
 
 type QueryTableFilterConfig = {
@@ -38,7 +37,7 @@ export const createTableFilterGraphqlTag =
       ) {
         items {
           id
-          ${createQueryString(tablesList, tableName, { ...config, prevSpaceCount: 6 })}
+          ${createQueryString(tablesList, tableName, { ...config })}
           _description
         }
         count

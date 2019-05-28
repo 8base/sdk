@@ -1,4 +1,3 @@
-//@flow
 
 import { isEmptyAddress, isEmptyPhone } from '../../src';
 
@@ -58,18 +57,18 @@ const NOT_EMPTY_PHONES = [
   }],
 ];
 
-it.each(EMPTY_ADDRESSES)('Should return `true` if address is empty (%s)', (name, value) => {
+it.each<any>(EMPTY_ADDRESSES)('Should return `true` if address is empty (%s)', (name, value) => {
   expect(isEmptyAddress(value)).toBeTruthy();
 });
 
-it.each(NOT_EMPTY_ADDRESSES)('Should return `false` if address is not empty (%s)', (name, value) => {
+it.each<any>(NOT_EMPTY_ADDRESSES)('Should return `false` if address is not empty (%s)', (name, value) => {
   expect(isEmptyAddress(value)).toBeFalsy();
 });
 
-it.each(EMPTY_PHONES)('Should return `true` if phone is empty (%s)', (name, value) => {
+it.each<any>(EMPTY_PHONES)('Should return `true` if phone is empty (%s)', (name, value) => {
   expect(isEmptyPhone(value)).toBeTruthy();
 });
 
-it.each(NOT_EMPTY_PHONES)('Should return `false` if phone is not empty (%s)', (name, value) => {
+it.each<any>(NOT_EMPTY_PHONES)('Should return `false` if phone is not empty (%s)', (name, value) => {
   expect(isEmptyPhone(value)).toBeFalsy();
 });
