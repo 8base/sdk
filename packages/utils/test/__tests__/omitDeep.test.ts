@@ -1,4 +1,3 @@
-// @flow
 
 import { omitDeep } from '../../src/formatters/omitDeep';
 

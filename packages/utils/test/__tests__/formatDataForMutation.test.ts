@@ -1,4 +1,3 @@
-//@flow
 
 import { formatDataForMutation, MUTATION_TYPE } from '../../src';
 import { SCHEMA } from '../__fixtures__';
@@ -602,7 +601,7 @@ describe('As developer, I can format for update mutation,', () => {
   });
 
   it('Data with list of the file objects.', () => {
-    const fileList = [{
+    const fileList: [any, null, null] = [{
       id: '1234',
       fileId: 'file-id',
       filename: 'Screenshot at авг. 13 15-22-49.png',

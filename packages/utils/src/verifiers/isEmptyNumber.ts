@@ -1,4 +1,3 @@
-//@flow
 import * as R from 'ramda';
 
 export const isEmptyNumber = R.anyPass([

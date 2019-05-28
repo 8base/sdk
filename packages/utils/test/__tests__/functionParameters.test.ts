@@ -1,7 +1,7 @@
 import { throwIfMissing, throwIfMissingRequiredOption } from '../../src';
 
 describe('throwIfMissing', () => {
-  const testFunction = (someParam = throwIfMissing('someParam')) => { return someParam; };
+  const testFunction: (arg: string | void) => string | void = (someParam = throwIfMissing('someParam')) => { return someParam; };
 
   it('throws if there is a missing function parameter', () => {
     expect(() => {
@@ -17,7 +17,7 @@ describe('throwIfMissing', () => {
 });
 
 describe('throwIfMissingRequiredOption', () => {
-  const testFunction = (options) => {
+  const testFunction = (options: any) => {
     throwIfMissingRequiredOption([
       'key2',
       ['key1', 'nestedKey1'],

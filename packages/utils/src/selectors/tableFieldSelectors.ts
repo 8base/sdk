@@ -1,11 +1,10 @@
-// @flow
 
 import * as R from 'ramda';
-import { createSelector } from 'reselect';
+import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
-import type { FieldSchema } from '../types';
+import { FieldSchema } from '../types';
 
-export const getTableField = (tableField?: FieldSchema): FieldSchema | void => tableField;
+export const getTableField = (tableField: FieldSchema) => tableField;
 
 
 export const getFieldType = createSelector(
@@ -54,12 +53,12 @@ export const getFieldName = createSelector(
   R.prop('name'),
 );
 
-export const getRelationTableId = createSelector(
+export const getRelationTableId: ParametricSelector<FieldSchema, void, string> = createSelector(
   getTableField,
-  R.path(['relation', 'refTable', 'id']),
+  R.path<any>(['relation', 'refTable', 'id']),
 );
 
-export const getRelationTableName = createSelector(
+export const getRelationTableName: ParametricSelector<FieldSchema, void, string> = createSelector(
   getTableField,
-  R.path(['relation', 'refTable', 'name']),
+  R.path<any>(['relation', 'refTable', 'name']),
 );

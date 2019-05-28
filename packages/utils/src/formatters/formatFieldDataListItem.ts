@@ -1,4 +1,3 @@
-//@flow
 import * as R from 'ramda';
 
 import { isRelationField, isFileField } from '../verifiers';
@@ -6,7 +5,7 @@ import { getTableSchemaById } from '../selectors';
 import { MUTATION_TYPE, SYSTEM_TABLES } from '../constants';
 import { formatDataForMutation } from './formatDataForMutation';
 
-import type { MutationType, FieldSchema, Schema, TableSchema } from '../types';
+import { MutationType, FieldSchema, Schema, TableSchema } from '../types';
 
 export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
   let nextData = data;
@@ -29,7 +28,7 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
   }
 
   if (isRelationField(fieldSchema)) {
-    const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
+    const relationTableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
 
     if (!relationTableSchema) {
       throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);

@@ -1,9 +1,8 @@
-//@flow
 import * as R from 'ramda';
 
 import { FIELD_TYPE } from '../constants';
-import type { FieldSchema } from '../types';
+import { FieldSchema } from '../types';
 
-const isFileField: (FieldSchema) => boolean = R.propEq('fieldType', FIELD_TYPE.FILE);
+const isFileField: (fieldSchema: FieldSchema) => boolean = R.propEq('fieldType', FIELD_TYPE.FILE);
 
 export { isFileField };

@@ -1,9 +1,8 @@
-//@flow
 import * as R from 'ramda';
 
-import type { FieldSchema, TableSchema } from '../types';
+import { FieldSchema, TableSchema } from '../types';
 
-const getFieldSchemaByName = (fieldName: string, tableSchema: TableSchema): ?FieldSchema => R.find(
+const getFieldSchemaByName = (fieldName: string, tableSchema: TableSchema): FieldSchema | void => R.find(
   R.propEq('name', fieldName),
   tableSchema.fields,
 );

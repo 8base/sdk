@@ -1,4 +1,3 @@
-//@flow
 import * as R from 'ramda';
 
 import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
@@ -6,17 +5,23 @@ import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
+import { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 
-import type { MutationType, FieldSchema, TableSchema, Schema } from '../types';
+
+interface IOptions {
+  skip?: boolean | Function, 
+  mutate?: Function, 
+  ignoreNonTableFields?: boolean,
+}
+
 /**
-
  * Formats entity data for create or update mutation based on passed schema.
  * @param {MutationType} type - The type of the mutation.
  * @param {string} tableName - The name of the table from the 8base API.
  * @param {Object} data - The entity data for format.
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  */
-const formatDataForMutation = (type: MutationType, tableName: string, data: any, schema: Schema, options: Object = {}) => {
+const formatDataForMutation = (type: MutationType, tableName: string, data: any, schema: Schema, options: IOptions = {}) => {
   if (R.not(type in MUTATION_TYPE)) {
     throw new Error(`Invalid mutation type: ${type}`);
   }
@@ -25,7 +30,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     return data;
   }
 
-  const tableSchema: ?TableSchema = getTableSchemaByName(tableName, schema);
+  const tableSchema = getTableSchemaByName(tableName, schema);
 
   if (!tableSchema) {
     throw new Error(`Table schema with ${tableName} name not found in schema.`);
@@ -36,7 +41,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
       return result;
     }
 
-    const fieldSchema: ?FieldSchema = getFieldSchemaByName(fieldName, tableSchema);
+    const fieldSchema = getFieldSchemaByName(fieldName, tableSchema);
     const { skip, mutate, ignoreNonTableFields = true } = options;
 
     if (!fieldSchema) {
@@ -80,7 +85,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
       ...result,
       [fieldName]: formatedFieldData,
     };
-  }, {}, R.keys(data));
+  }, {}, R.keys(data) as string[]);
 
   return omitDeep(['_description', '__typename'], formatedData);
 };

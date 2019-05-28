@@ -1,4 +1,3 @@
-// @flow
 import {
   createTableFilterGraphqlTag,
   createTableRowCreateTag,

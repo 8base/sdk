@@ -1,13 +1,12 @@
-//@flow
 import * as R from 'ramda';
 
 import * as verifiers from '../verifiers';
 import { formatFieldDataList } from './formatFieldDataList';
 import { formatFieldData } from './formatFieldData';
 
-import type { MutationType, FieldSchema, Schema } from '../types';
+import { MutationType, FieldSchema, Schema } from '../types';
 
-const formatJSON = (data) => {
+const formatJSON = (data: any) => {
   if (typeof data === 'string' && data.length === 0) {
     return null;
   }

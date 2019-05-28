@@ -1,4 +1,3 @@
-// @flow
 
 import * as tableSelectors from './tableSelectors';
 import * as tableFieldSelectors from './tableFieldSelectors';

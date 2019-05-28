@@ -7,4 +7,5 @@ es
 flow-typed
 packages/local-*
 packages/app-provider
+packages/utils
 packages/web-auth0-auth-client

@@ -7,5 +7,6 @@ export * from './verifiers';
 export * from './queryGenerators';
 export * from './functionParameters';
 export * from './errors';
+export * from './types';
 
 export { tableSelectors };
