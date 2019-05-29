@@ -6,8 +6,8 @@ import { AuthClient, Authorizable, AuthState } from '@8base/utils';
 import { ApolloContainerPassedProps } from './types';
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
+import { withAuth, WithAuthProps } from '@8base/auth';
 const { EightBaseApolloClient } = require('@8base/apollo-client');
-const { withAuth } = require('@8base/auth');
 
 
 
@@ -16,11 +16,7 @@ type ApolloContainerProps = ApolloContainerPassedProps & {
   children: React.ReactNode,
 }
 
-type ApolloContainerHocProps = ApolloContainerProps & {
-  auth: AuthClient & Authorizable & {
-    authState: AuthState,
-  },
-}
+type ApolloContainerHocProps = WithAuthProps & ApolloContainerProps;
 
 
 const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
@@ -28,7 +24,6 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     client: any;
 
     static defaultProps = {
-      auth: {},
       withAuth: true,
     }
 

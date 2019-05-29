@@ -1,19 +1,19 @@
 // @flow
 
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import * as React from 'react';
+import * as TestRenderer from 'react-test-renderer';
 import { getDisplayName } from 'recompose';
 
-import { AuthProvider, withAuth, type AuthProps } from '../../src';
+import { AuthProvider, withAuth, WithAuthProps } from '../../src';
 import { SampleAuthClient } from '../utils';
 
 type StubComponentProps = {
   foo: number,
-} & AuthProps;
+} & WithAuthProps;
 
-const NotAuthorizedComponent = () => 'I am not authorider';
+const NotAuthorizedComponent = () => <span>I am not authorider</span>;
 
-const AuthorizedComponent = () => 'I am authorized';
+const AuthorizedComponent = () => <span>I am authorized</span>;
 
 const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>

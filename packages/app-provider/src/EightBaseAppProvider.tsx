@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { AuthClient } from '@8base/utils';
+import { AuthClient, Authorizable } from '@8base/utils';
+import { AuthProvider } from '@8base/auth';
 import { ApolloContainer } from './ApolloContainer';
 import { ApolloContainerPassedProps } from './types';
 
-const { AuthProvider }  = require('@8base/auth');
 const { TableSchemaProvider } = require('@8base/table-schema-provider');
 
 
 type EightBaseAppProviderProps = ApolloContainerPassedProps & { 
-  authClient?: AuthClient,
+  authClient?: AuthClient & Authorizable,
   children: (renderProps: { loading: boolean }) => React.ReactNode,
 }
 

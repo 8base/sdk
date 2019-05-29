@@ -6,14 +6,14 @@ import { withAuth } from './withAuth';
 const withLogout = compose(
   withApollo,
   withAuth,
-  withHandlers({
+  withHandlers<any, any>({
     logout: ({
       auth: {
         purgeAuthState,
         logout,
       },
       client,
-    }) => async (options) => {
+    }: any) => async (options: any) => {
       await purgeAuthState();
 
       client.resetStore();
