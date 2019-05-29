@@ -1,6 +1,6 @@
-// @flow
-import React from 'react';
+import * as React from 'react';
+import { TransformedPermissions } from './types';
 
-const PermissionsContext = React.createContext();
+const PermissionsContext = React.createContext<TransformedPermissions>({});
 
 export { PermissionsContext };

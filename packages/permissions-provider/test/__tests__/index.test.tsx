@@ -1,11 +1,11 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 
 import {
   IfAllowed,
   PermissionsProvider,
   isAllowed,
-  PermissionContext,
+  PermissionsContext,
   withPermissions,
 } from '../../src';
 
@@ -76,13 +76,13 @@ const mockPermissionsData = {
 };
 
 jest.mock('@8base/auth', () => ({
-  withAuth: Component => props => (
+  withAuth: (Component: any) => (props: any) => (
     <Component { ...props } auth={{ isAuthorized: true }} />
   ),
 }));
 
 jest.mock('react-apollo', () => ({
-  Query: ({ children }) =>
+  Query: ({ children }: any) =>
     children({ data: mockPermissionsData, loading: false }),
 }));
 
@@ -92,7 +92,7 @@ it('As a developer, I can use `IfAllowed` component for conditional rendering ba
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
+    <PermissionsProvider>{ testRenderFn }</PermissionsProvider>,
   );
 
   expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed"');
@@ -110,7 +110,7 @@ it('As a developer, I can use `IfAllowed` component for conditional rendering ba
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
+    <PermissionsProvider>{ testRenderFn }</PermissionsProvider>,
   );
 
   expect(tree.toJSON()).toEqual(null);
@@ -150,12 +150,12 @@ Array [
 it('As a developer, I can use `IfAllowed` component for pass permission check result via render props.', () => {
   const testRenderFn = jest.fn(() => (
     <IfAllowed permissions={ [['data', 'Users', 'create']] }>
-      { allowed => `Allowed = ${allowed}` }
+      { (allowed: boolean) => `Allowed = ${allowed}` }
     </IfAllowed>
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
+    <PermissionsProvider>{ testRenderFn }</PermissionsProvider>,
   );
 
   expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
@@ -164,14 +164,14 @@ it('As a developer, I can use `IfAllowed` component for pass permission check re
 it('As a developer, I can use `IfAllowed` in order to check fields permissions if allowed.', () => {
   const testRenderFn = jest.fn(() => (
     <IfAllowed permissions={ [['data', 'Users', 'update']] }>
-      { (allowed, [{ fields }]) =>
+      { (allowed: boolean, [{ fields }]: any[]) =>
         `Allowed = ${allowed}, allowed to change email = ${fields.email}`
       }
     </IfAllowed>
   ));
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">{ testRenderFn }</PermissionsProvider>,
+    <PermissionsProvider>{ testRenderFn }</PermissionsProvider>,
   );
 
   expect(tree.toJSON()).toMatchInlineSnapshot(
@@ -181,8 +181,8 @@ it('As a developer, I can use `IfAllowed` in order to check fields permissions i
 
 // TODO this.context is an empty object so the test passes incorrectly
 it('As a developer, I can use `isAllowed` for check access via context.', () => {
-  class TestComponent extends React.Component {
-    static contextType = PermissionContext;
+  class TestComponent extends React.Component<any> {
+    static contextType = PermissionsContext;
 
     render() {
       const allowed = isAllowed(
@@ -191,6 +191,7 @@ it('As a developer, I can use `isAllowed` for check access via context.', () => 
           type: 'custom',
           permission: 'edit',
         },
+        // @ts-ignore
         this.context,
       );
 
@@ -199,7 +200,7 @@ it('As a developer, I can use `isAllowed` for check access via context.', () => 
   }
 
   const tree = renderer.create(
-    <PermissionsProvider name="tableName">
+    <PermissionsProvider>
       { () => <TestComponent /> }
     </PermissionsProvider>,
   );
@@ -208,7 +209,7 @@ it('As a developer, I can use `isAllowed` for check access via context.', () => 
 });
 
 it('As a developer, I can use `isAllowed` for check field access via context.', () => {
-  const TestComponent = ({ permissions }) => {
+  const TestComponent = ({ permissions }: any) => {
     const allowed = isAllowed(
       {
         resource: 'Users',
@@ -222,6 +223,7 @@ it('As a developer, I can use `isAllowed` for check field access via context.', 
     return `Allowed = ${allowed}`;
   };
 
+  // @ts-ignore
   const TestComponentWrapper = withPermissions(TestComponent);
 
   const tree = renderer.create(

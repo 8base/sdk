@@ -6,8 +6,10 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "../../bin/build-package.sh",
-    "watch": "../../bin/watch-package.sh",
+    "build:clean": "rimraf dist",
+    "build:ts": "tsc",
+    "build": "yarn build:clean && yarn build:ts",
+    "watch": "yarn build --watch",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/PermissionsProvider.js --section=API",
     "test": "NPM_ENV=test jest"
@@ -26,20 +28,39 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "@types/graphql": "^14.2.0",
+    "@types/jest": "^24.0.13",
+    "@types/ramda": "^0.26.9",
+    "@types/react-test-renderer": "^16.8.1",
     "documentation": "^8.0.0",
-    "flow-copy-source": "^2.0.2",
-    "jest": "^23.1.0",
+    "jest": "24",
     "prettier": "^1.15.3",
-    "react-test-renderer": "^16.4.1"
+    "react-test-renderer": "^16.4.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"

@@ -1,24 +1,28 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import { wrapDisplayName } from 'recompose';
+import { Subtract } from 'utility-types';
 
 import { PermissionsContext } from './PermissionsContext';
+import { TransformedPermissions } from './types';
 
-export type PermissionsProps = {
-  permissions: ?Object,
+
+export type WithPermissionsProps = {
+  permissions: TransformedPermissions,
 };
 
-const withPermissions = <InputPorps: { permissions: ?Object }>(
-  WrappedComponent: React$ComponentType<InputPorps>,
-): Class<React$Component<$Diff<InputPorps, PermissionsProps>>> => {
-  class WithPermissions extends React.Component<$Diff<InputPorps, PermissionsProps>> {
+
+const withPermissions = <T extends WithPermissionsProps>(
+  WrappedComponent: React.ComponentType<T>,
+) => 
+  class WithPermissions extends React.Component<Subtract<T, WithPermissionsProps>> {
+    public static displayName = wrapDisplayName(WrappedComponent,'withPermissions');
+
     render() {
       return (
         <PermissionsContext.Consumer>
           { (permissions) => (
             <WrappedComponent
-              { ...this.props }
+              { ...this.props as T }
               permissions={ permissions }
             />
           ) }
@@ -27,13 +31,6 @@ const withPermissions = <InputPorps: { permissions: ?Object }>(
     }
   }
 
-  WithPermissions.displayName = wrapDisplayName(
-    WrappedComponent,
-    'withPermissions',
-  );
-
-  return WithPermissions;
-};
 
 export { withPermissions };
 

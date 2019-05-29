@@ -1,17 +1,17 @@
-// @flow
-import React from 'react';
+import * as React from 'react';
 import * as R from 'ramda';
 
 import { PermissionsContext } from './PermissionsContext';
 import { isAllowed } from './isAllowed';
+import { TransformedPermissions } from './types';
 
 type IfAllowedProps = {
   permissions: Array<Array<string>>,
-  children: React$Node,
+  children: React.ReactNode,
 };
 
 class IfAllowed extends React.Component<IfAllowedProps> {
-  renderContent = (userPermissions: ?Object) => {
+  renderContent = (userPermissions: TransformedPermissions) => {
     const { children, permissions } = this.props;
 
     const result = permissions.map(([type, resource, permission]) => ({

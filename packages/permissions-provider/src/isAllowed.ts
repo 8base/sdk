@@ -1,12 +1,20 @@
 import * as R from 'ramda';
+import { TransformedPermissions } from './types';
+
+type IsAllowedArgs = {
+  resource: string,
+  type: string,
+  permission: string,
+  field?: any,
+}
 
 export const isAllowed = ({
   resource,
   type,
   permission,
   field,
-} = {}, permissions) => {
-  const path = [type, resource, 'permission', permission, 'allow'];
+}: IsAllowedArgs, permissions: TransformedPermissions) => {
+  const path: string[] = [type, resource, 'permission', permission, 'allow'];
 
   if (field) {
     path.pop();
