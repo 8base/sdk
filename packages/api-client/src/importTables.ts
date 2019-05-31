@@ -1,16 +1,17 @@
 // @flow
 import * as R from 'ramda';
 import errorCodes from '@8base/error-codes';
-import type { Schema } from '@8base/utils';
-import type { DocumentNode } from 'graphql';
+import { Schema, FieldSchema } from '@8base/utils';
+import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, TABLE_CREATE_MUTATION, FIELD_CREATE_MUTATION } from './constants';
+import { TableSchemaResponse } from './types';
 
 type ImportTablesOptions = {
   debug?: boolean,
 };
 
-const handleError = (message: string, e: Object, debug: boolean) => {
+const handleError = (message: string, e: { response: any }, debug: boolean) => {
   // eslint-disable-next-line no-console
   console.warn(message);
 
@@ -27,11 +28,11 @@ const handleError = (message: string, e: Object, debug: boolean) => {
 };
 
 export const importTables = async (
-  request: (query: string | DocumentNode, variables?: Object) => Promise<Object>,
+  request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>,
   schema: Schema,
   options: ImportTablesOptions = {},
 ) => {
-  const debug = R.propOr(false, 'debug', options);
+  const debug: boolean = R.propOr(false, 'debug', options);
 
   for (const table of schema) {
     try {
@@ -46,7 +47,7 @@ export const importTables = async (
     }
   }
 
-  const tablesListData = await request(TABLES_LIST_QUERY, {
+  const tablesListData = await request<TableSchemaResponse>(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
     },
@@ -66,7 +67,7 @@ export const importTables = async (
         continue;
       }
 
-      const field = R.pick([
+      const field: Partial<FieldSchema> = R.pick([
         'name',
         'displayName',
         'fieldType',
@@ -100,7 +101,9 @@ export const importTables = async (
 
         const refTable = tablesByName[refTableName];
 
+        // @ts-ignore. Check what does do relations prop.
         if (refTable.relations && refTable.relations[schemaTable.name]) {
+        // @ts-ignore. Check what does do relations prop.
           if (refTable.relations[schemaTable.name].includes(field.name)) {
             continue;
           }
@@ -114,17 +117,22 @@ export const importTables = async (
             'refFieldDisplayName',
           ], field.relation),
           refTableId: refTable.id,
-        };
+        } as any;
 
+          // @ts-ignore. Check what does relations prop do.
         table.relations = table.relations || {};
 
+          // @ts-ignore. Check what does relations prop do.
         if (table.relations[refTableName]) {
+          // @ts-ignore. Check what does relations prop do.
           table.relations[refTableName].push(field.relation.refFieldName);
         } else {
+          // @ts-ignore. Check what does relations prop do.
           table.relations[refTableName] = [field.relation.refFieldName];
         }
       }
 
+      // @ts-ignore. Check what does tableId prop do.
       field.tableId = table.id;
 
       try {

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
-import nock from 'nock';
+import * as nock from 'nock';
 
 import { Client } from '../../src';
 
@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 it('As a developer, I can create client and send request.', async () => {
-  const requestPromise = mockRequest('https://api.test.8base.com');
+  const requestPromise = global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -21,7 +21,7 @@ it('As a developer, I can create client and send request.', async () => {
 });
 
 it('As a developer, I can create client and send request with variables.', async () => {
-  const requestPromise = mockRequest('https://api.test.8base.com');
+  const requestPromise = global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -33,7 +33,7 @@ it('As a developer, I can create client and send request with variables.', async
 });
 
 it('As a developer, I can create client, set API credentials and send request.', async () => {
-  const requestPromise = mockRequest('https://api.test.8base.com');
+  const requestPromise = global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -48,7 +48,7 @@ it('As a developer, I can create client, set API credentials and send request.',
 });
 
 it('As a developer, I can send queries with graphql tag.', async () => {
-  const requestPromise = mockRequest('https://api.test.8base.com');
+  const requestPromise = global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -60,7 +60,7 @@ it('As a developer, I can send queries with graphql tag.', async () => {
 });
 
 it('When client receive token expired error, it should refresh token and repeat my request.', async () => {
-  mockRequest('https://api.test.8base.com', 502, {
+  global.mockRequest('https://api.test.8base.com', 502, {
     errors: [
       {
         code: errorCodes.TokenExpiredErrorCode,
@@ -72,7 +72,7 @@ it('When client receive token expired error, it should refresh token and repeat 
     ],
   });
 
-  const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 200, {
+  const refreshTokenRequestPromise = global.mockRequest('https://api.test.8base.com', 200, {
     data: {
       userRefreshToken: {
         refreshToken: 'newRefreshToken',
@@ -81,7 +81,7 @@ it('When client receive token expired error, it should refresh token and repeat 
     },
   });
 
-  const requestPromise = mockRequest('https://api.test.8base.com');
+  const requestPromise = global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -100,14 +100,14 @@ it('When client receive token expired error, it should refresh token and repeat 
 });
 
 it('When client receive other errors, it should throw that error.', async () => {
-  mockRequest('https://api.test.8base.com', 502, {
+  global.mockRequest('https://api.test.8base.com', 502, {
     errors: [{
       code: errorCodes.InvalidTokenErrorCode,
     }],
     data: null,
   });
 
-  mockRequest('https://api.test.8base.com');
+  global.mockRequest('https://api.test.8base.com');
 
   const client = new Client('https://api.test.8base.com');
 
@@ -126,7 +126,7 @@ it('When client receive other errors, it should throw that error.', async () => 
 });
 
 it('When client receive network errors, it should throw that error.', async () => {
-  mockRequest('https://api.test.8base.com', 502, {
+  global.mockRequest('https://api.test.8base.com', 502, {
     foo: 'bar',
   });
 
@@ -147,7 +147,7 @@ it('When client receive network errors, it should throw that error.', async () =
 });
 
 it('When client receive refresh token expired error, it should throw cant refresh token error.', async () => {
-  mockRequest('https://api.test.8base.com', 502, {
+  global.mockRequest('https://api.test.8base.com', 502, {
     errors: [
       {
         code: errorCodes.TokenExpiredErrorCode,
@@ -159,7 +159,7 @@ it('When client receive refresh token expired error, it should throw cant refres
     ],
   });
 
-  const refreshTokenRequestPromise = mockRequest('https://api.test.8base.com', 502, {
+  const refreshTokenRequestPromise = global.mockRequest('https://api.test.8base.com', 502, {
     data: {
       userRefreshToken: null,
     },

@@ -1,13 +1,21 @@
-// @flow
-import { formatDataForMutation, isRelationField, getFieldSchemaByName, getTableSchemaByName, isFileField, isListField, MUTATION_TYPE } from '@8base/utils';
+import { 
+  formatDataForMutation, 
+  getTableSchemaByName, 
+  tableFieldSelectors,
+  tableSelectors, 
+  MUTATION_TYPE,
+  FieldSchema,
+  TableSchema,
+} from '@8base/utils';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import * as filestack from 'filestack-js';
 import * as R from 'ramda';
-import type { DocumentNode } from 'graphql';
+import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, USER_QUERY, FILE_UPLOAD_INFO_QUERY } from './constants';
+import { TableSchemaResponse } from './types';
 
-const getRemoteEntityId = (localData: Object, fieldSchema: Object, $id: string, userId: string) => {
+const getRemoteEntityId = (localData: { [key:string]: any }, fieldSchema: FieldSchema, $id: string, userId: string) => {
   let id = null;
 
   if ($id === '$currentUserId' && fieldSchema.relation.refTable.name === 'Users') {
@@ -21,18 +29,18 @@ const getRemoteEntityId = (localData: Object, fieldSchema: Object, $id: string, 
 
 const MAX_THREADS = 5;
 
-const uploadFiles = async (record, tableSchema, filestackClient, path) => {
-  const fieldNames = R.keys(record);
+const uploadFiles = async (record: any, tableSchema: TableSchema, filestackClient: any, path: string) => {
+  const fieldNames: string[] = R.keys(record) as any;
 
   let nextRecord = record;
 
   for (let i = fieldNames.length - 1; i >= 0; i--) {
     const fieldName = fieldNames[i];
 
-    const fieldSchema = getFieldSchemaByName(fieldName, tableSchema);
+    const fieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
 
-    if (fieldSchema && isFileField(fieldSchema)) {
-      if (isListField(fieldSchema)) {
+    if (fieldSchema && tableFieldSelectors.isFileField(fieldSchema)) {
+      if (tableFieldSelectors.isListField(fieldSchema)) {
         if (Array.isArray(record[fieldName])) {
           for (let j = 0; j < record[fieldName].length; j++) {
             nextRecord = R.assocPath([fieldName, j, 'fileId'], (await (filestackClient.storeURL(record[fieldName][j].url, {
@@ -60,17 +68,17 @@ type ImportOptions = {
 };
 
 export const importData = async (
-  request: (query: string | DocumentNode, variables?: Object) => Promise<Object>,
-  schemaData: Object,
-  options?: ImportOptions = {},
+  request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>,
+  schemaData: { [key: string]: any },
+  options: ImportOptions = {},
 ) => {
-  const { tablesList: { items: tableSchema }} = await request(TABLES_LIST_QUERY, {
+  const { tablesList: { items: tableSchema } } = await request<TableSchemaResponse>(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
     },
   });
 
-  let fileUploadInfo = {};
+  let fileUploadInfo = {} as any;
 
   try {
     ({ fileUploadInfo } = await request(FILE_UPLOAD_INFO_QUERY));
@@ -86,9 +94,9 @@ export const importData = async (
     },
   });
 
-  const localData = {};
+  const localData = {} as any;
 
-  const maxThreads = R.propOr(MAX_THREADS, 'maxThreads', options);
+  const maxThreads: number = R.propOr(MAX_THREADS, 'maxThreads', options);
 
   for (const tableName of Object.keys(schemaData)) {
     localData[tableName] = {};
@@ -96,14 +104,14 @@ export const importData = async (
     for (let i = 0; i < schemaData[tableName].length / maxThreads; i++) {
       const tempData = schemaData[tableName].slice(i * maxThreads, (i + 1) * maxThreads);
 
-      await Promise.all(tempData.map(async (item) => {
-        item = await uploadFiles(item, getTableSchemaByName(tableName, tableSchema), filestackClient, fileUploadInfo.path);
+      await Promise.all(tempData.map(async (item: any) => {
+        item = await uploadFiles(item, getTableSchemaByName(tableSchema, tableName), filestackClient, fileUploadInfo.path);
 
         const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, tableSchema, {
-          skip: (value, fieldSchema) => isRelationField(fieldSchema),
+          skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
         });
 
-        const fieldData = await request(`
+        const fieldData = await request<{ field: { id: string }}>(`
           mutation create($data: ${SchemaNameGenerator.getCreateInputName(tableName)}!) {
             field: ${SchemaNameGenerator.getCreateItemFieldName(tableName)}(data: $data) {
               id
@@ -123,7 +131,7 @@ export const importData = async (
   let userId = '';
 
   try {
-    const userData = await request(USER_QUERY);
+    const userData = await request<{ user: { id: string }}>(USER_QUERY);
 
     userId = userData.user.id;
   } catch (e) {
@@ -134,8 +142,8 @@ export const importData = async (
   for (const tableName of Object.keys(schemaData)) {
     for (const item of schemaData[tableName]) {
       const data = formatDataForMutation(MUTATION_TYPE.UPDATE, tableName, item, tableSchema, {
-        skip: (value, fieldSchema) => !isRelationField(fieldSchema),
-        mutate: (value, plainValue, fieldSchema) => {
+        skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
+        mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
           if (Array.isArray(plainValue)) {
             return {
               connect: plainValue.map(({ $id }) => ({

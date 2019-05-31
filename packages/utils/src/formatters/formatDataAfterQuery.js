@@ -1,7 +1,7 @@
 //@flow
 import * as R from 'ramda';
 
-import { getFieldSchemaByName, getTableSchemaByName, getTableSchemaById } from '../selectors';
+import { tableSelectors, getTableSchemaByName, getTableSchemaById } from '../selectors';
 import {
   isRelationField,
   isFileField,
@@ -19,14 +19,14 @@ import type { FieldSchema, TableSchema, Schema, FormatDataAfterQueryOptions } fr
  * @param {FormatDataAfterQueryOptions} options
  */
 const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema, options: FormatDataAfterQueryOptions = {}) => {
-  const tableSchema: ?TableSchema = getTableSchemaByName(tableName, schema);
+  const tableSchema: ?TableSchema = getTableSchemaByName(schema, tableName);
 
   if (!tableSchema) {
     throw new Error(`Table schema with ${tableName} name not found in schema.`);
   }
 
   const formatedData = R.reduce((result: Object, fieldName: string) => {
-    const fieldSchema: ?FieldSchema = getFieldSchemaByName(fieldName, tableSchema);
+    const fieldSchema: ?FieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
 
     if (!fieldSchema) {
       return result;
@@ -48,7 +48,7 @@ const formatDataAfterQuery = (tableName: string, data: Object, schema: Schema, o
           result = R.assoc(fieldName, result[fieldName].id, result);
         }
       } else {
-        const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
+        const relationTableSchema: ?TableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
 
         if (!relationTableSchema) {
           throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);

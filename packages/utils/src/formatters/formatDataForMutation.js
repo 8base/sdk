@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 
 import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
-import { getFieldSchemaByName, getTableSchemaByName } from '../selectors';
+import { tableSelectors, getTableSchemaByName } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
@@ -25,7 +25,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
     return data;
   }
 
-  const tableSchema: ?TableSchema = getTableSchemaByName(tableName, schema);
+  const tableSchema: ?TableSchema = getTableSchemaByName(schema, tableName);
 
   if (!tableSchema) {
     throw new Error(`Table schema with ${tableName} name not found in schema.`);
@@ -36,7 +36,7 @@ const formatDataForMutation = (type: MutationType, tableName: string, data: any,
       return result;
     }
 
-    const fieldSchema: ?FieldSchema = getFieldSchemaByName(fieldName, tableSchema);
+    const fieldSchema: ?FieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
     const { skip, mutate, ignoreNonTableFields = true } = options;
 
     if (!fieldSchema) {

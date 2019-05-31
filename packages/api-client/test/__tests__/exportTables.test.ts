@@ -1,4 +1,4 @@
-import nock from 'nock';
+import * as nock from 'nock';
 
 import { Client, exportTables } from '../../src';
 import { TABLES } from '../__fixtures__';
@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 it('As a developer, I can export schema of the user tables.', async () => {
-  const mock = mockRequest('https://api.test.8base.com', 200, {
+  const mock = global.mockRequest('https://api.test.8base.com', 200, {
     data: {
       tablesList: {
         items: TABLES,

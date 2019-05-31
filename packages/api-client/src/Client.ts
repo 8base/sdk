@@ -1,9 +1,8 @@
-// @flow
-import type { DocumentNode } from 'graphql';
+import * as R from 'ramda';
+import { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 import { GraphQLClient } from 'graphql-request';
 import errorCodes from '@8base/error-codes';
-import * as R from 'ramda';
 
 import { importWorkspace } from './importWorkspace';
 
@@ -23,8 +22,8 @@ const hasIdTokenExpiredError = R.any(R.allPass([
   R.propEq('message', 'Token expired'),
 ]));
 
-const getRefreshToken = R.path(['userRefreshToken', 'refreshToken']);
-const getIdToken = R.path(['userRefreshToken', 'idToken']);
+const getRefreshToken: (obj: any) => string = R.path<any>(['userRefreshToken', 'refreshToken']);
+const getIdToken: (obj: any) => string = R.path<any>(['userRefreshToken', 'idToken']);
 
 type GraphQLClientResponse = {
   errors: Array<Object>,
@@ -54,9 +53,9 @@ class RefreshTokenInvalidError extends Error {
 class Client {
   gqlc: GraphQLClient;
 
-  workspaceId: string;
-  idToken: ?string;
-  refreshToken: string;
+  workspaceId?: string;
+  idToken?: string | null;
+  refreshToken?: string;
 
   constructor(endpoint: string) {
     this.gqlc = new GraphQLClient(endpoint);
@@ -66,12 +65,13 @@ class Client {
    * Update id token.
    * @param idToken - The id token.
    */
-  setIdToken(idToken: ?string) {
+  setIdToken(idToken: string | null) {
     this.idToken = idToken;
 
     if (idToken) {
       this.gqlc.setHeader('Authorization', `Bearer ${idToken}`);
     } else {
+      // @ts-ignore. Check access to private variable.
       delete this.gqlc.options.headers.Authorization;
     }
   }
@@ -118,7 +118,6 @@ class Client {
   }
 
   handleRequestErrors = (err: GraphQLClientError) => {
-    // $FlowFixMe
     if (hasIdTokenExpiredError(R.pathOr([], ['response', 'errors'], err))) {
       return this.tryToRefreshToken(err);
     }
@@ -133,6 +132,7 @@ class Client {
    * @returns {Promise}
    */
   request(query: string | DocumentNode, variables: Object = {}) {
+    // @ts-ignore. Check how it works with query as DocumentNode
     return this.gqlc.request(query, variables).catch(this.handleRequestErrors);
   }
 

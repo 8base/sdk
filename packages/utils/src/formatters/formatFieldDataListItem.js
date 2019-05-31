@@ -29,7 +29,7 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
   }
 
   if (isRelationField(fieldSchema)) {
-    const relationTableSchema: ?TableSchema = getTableSchemaById(fieldSchema.relation.refTable.id, schema);
+    const relationTableSchema: ?TableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
 
     if (!relationTableSchema) {
       throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);
