@@ -12,6 +12,12 @@ export const getFieldById: Selector<TableSchema, string, $Shape<FieldSchema>> =
       fields,
     ) || {};
 
+export const getFieldByName: Selector<TableSchema, string, $Shape<FieldSchema>> =
+  (tableSchema: TableSchema, fieldName: string) => R.find(
+    R.propEq('name', fieldName),
+    tableSchema.fields,
+  );
+
 export const getFieldTypeById = createSelector(
   getFieldById,
   R.prop('fieldType'),

@@ -1,7 +1,11 @@
 [ignore]
 <PROJECT_ROOT>/packages/local-*
 <PROJECT_ROOT>/.*/node_modules/graphql/.*js.flow
+<PROJECT_ROOT>/packages/api-client
+<PROJECT_ROOT>/packages/api-token-auth-client
 <PROJECT_ROOT>/packages/app-provider
+<PROJECT_ROOT>/packages/apollo-client
+<PROJECT_ROOT>/packages/apollo-links
 <PROJECT_ROOT>/packages/auth
 <PROJECT_ROOT>/packages/web-auth0-auth-client
 

@@ -6,13 +6,15 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "../../bin/build-package.sh",
-    "watch": "../../bin/watch-package.sh",
+    "build:clean": "rimraf dist",
+    "build:ts": "tsc",
+    "build": "yarn build:clean && yarn build:ts",
+    "watch": "yarn build --watch",
     "docs": "documentation readme src/Client.js --section=API",
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@8base/error-codes": "^1.0.5",
+    "@8base/error-codes": "^1.0.12",
     "@8base/schema-name-generator": "^0.1.1",
     "@8base/utils": "^0.23.1",
     "@babel/runtime": "^7.3.1",
@@ -26,21 +28,45 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@types/graphql": "^14.2.0",
+    "@types/jest": "^24.0.13",
+    "@types/nock": "^10.0.3",
+    "@types/ramda": "^0.26.9",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "documentation": "^8.0.0",
     "flow-copy-source": "^2.0.2",
-    "jest": "^23.5.0",
+    "jest": "^24.8.0",
     "nock": "^9.3.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1",
     "yargs": "^12.0.1"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/test/tsconfig.json"
+      }
+    },
     "setupFiles": [
-      "<rootDir>/test/jest.setup.js"
+      "<rootDir>/test/jest.setup.ts"
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"

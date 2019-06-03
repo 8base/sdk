@@ -22,6 +22,7 @@ export type FieldSchema = {
     refFieldIsRequired: boolean,
     refTable: {
       id: string,
+      name: string,
     },
   },
 };
@@ -150,11 +151,17 @@ export const SYSTEM_TABLES: {
 
 export const MUTATION_FILE_FIELDS: ['fileId', 'public', 'filename', 'meta', 'mods'];
 
-export const tableSelectors: { [key: string]: Function };
+export const tableSelectors: { [key: string]: (schema: TableSchema, arg?: any) => any };
 
-export const tableFieldSelectors: { [key: string]: Function };
+export const tableFieldSelectors: { [key: string]: (field: FieldSchema, arg?: any) => any };
+
+export const getTableSchemaByName: (schema: TableSchema[], name: string) => TableSchema;
+
+export const getTableSchemaById: (schema: TableSchema[], id: string) => TableSchema;
 
 export const throwIfMissingRequiredOption: Function;
+
+export const formatDataForMutation: Function;
 
 export type AuthState = {
   email?: string,
