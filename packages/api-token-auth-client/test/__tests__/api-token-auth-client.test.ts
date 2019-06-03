@@ -8,6 +8,7 @@ describe('ApiTokenClient', () => {
 
   it('Throws an error if apiToken haven\'t provided', () => {
     expect(() => {
+      // @ts-ignore
       new ApiTokenAuthClient({});
     }).toThrow('apiToken is required');
   });

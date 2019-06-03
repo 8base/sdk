@@ -6,6 +6,8 @@ build
 es
 flow-typed
 packages/local-*
+packages/api-client
+packages/api-token-auth-client
 packages/app-provider
 packages/auth
 packages/web-auth0-auth-client

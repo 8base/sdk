@@ -1,5 +1,5 @@
 // @flow
-import type { AuthState, AuthClient } from '@8base/utils';
+import { AuthState, AuthClient } from '@8base/utils';
 
 type ApiTokenAuthClientOptions = {
   apiToken: string,
