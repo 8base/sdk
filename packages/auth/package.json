@@ -14,25 +14,31 @@
     "docs": "yarn doc src/index.js --section=AuthProvider",
     "test": "NPM_ENV=test jest"
   },
+  "peerDependencies": {
+    "graphql": "^0.13.0",
+    "react": "^16.3.0",
+    "react-apollo": "^2.5.0",
+    "react-dom": "^16.3.0"
+  },
   "dependencies": {
     "@8base/utils": "^0.23.0",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
-    "react": "^16.6.0",
-    "react-apollo": "2.5.0 - 2.5.2",
-    "react-dom": "^16.7.0",
     "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "@types/graphql": "^14.2.0",
+    "@types/graphql": "^0.13.0",
     "@types/jest": "^24.0.13",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-link": "^1.2.11",
     "documentation": "^8.0.0",
-    "graphql": "^14.1.1",
     "jest": "24",
     "jest-localstorage-mock": "^2.2.0",
-    "react-test-renderer": "^16.6.0",
+    "graphql": "^0.13.0",
+    "react": "^16.8.6",
+    "react-apollo": "2.5.2",
+    "react-dom": "^16.8.6",
+    "react-test-renderer": "^16.8.6",
     "ts-jest": "^24.0.2",
     "typescript": "^3.4.5"
   },

@@ -13,6 +13,11 @@
     "docs": "NODE_ENV=test documentation readme src/EightBaseAppProvider.js --section=API",
     "test": "NPM_ENV=test jest"
   },
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "react-apollo": "^2.5.0",
+    "react-dom": "^16.3.0"
+  },
   "dependencies": {
     "@8base/apollo-client": "^0.23.0",
     "@8base/apollo-links": "^0.23.0",
@@ -24,17 +29,13 @@
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.11",
     "apollo-link-error": "^1.1.10",
-    "graphql": "^0.13.0",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.26.1",
-    "react": "^16.4.2",
-    "react-apollo": "2.5.0 - 2.5.2",
-    "react-dom": "^16.4.2",
     "recompose": "0.27.1"
   },
   "devDependencies": {
     "@8base/web-auth0-auth-client": "^0.23.0",
-    "@types/graphql": "^14.2.0",
+    "@types/graphql": "^0.13.0",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
     "@types/ramda": "^0.26.8",
@@ -47,6 +48,10 @@
     "prop-types": "^15.6.2",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
+    "graphql": "^0.13.0",
+    "react": "^16.8.6",
+    "react-apollo": "2.5.2",
+    "react-dom": "^16.8.6",
     "typescript": "^3.4.5"
   },
   "jest": {
