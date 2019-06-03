@@ -30,10 +30,10 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
   it(
     'adds authorization headers',
     () => new Promise((resolve, reject) => {
-      getAuthState.mockReturnValueOnce({
+      getAuthState.mockReturnValueOnce(Promise.resolve({
         workspaceId,
         token,
-      });
+      }));
 
       execute(
         links,
@@ -64,10 +64,10 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
     () => new Promise((resolve, reject) => {
       stubLink.mockClear();
 
-      getAuthState.mockReturnValueOnce({
+      getAuthState.mockReturnValueOnce(Promise.resolve({
         workspaceId: '',
         token: 'some-id-token',
-      });
+      }));
 
       execute(
         links,

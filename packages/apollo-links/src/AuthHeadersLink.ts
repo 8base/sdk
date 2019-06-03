@@ -17,7 +17,7 @@ const assocWhenNotEmpty = (key: string, value?: string | null) => R.when(
 );
 
 export class AuthHeadersLink extends ApolloLink {
-  getAuthState: () => AuthState;
+  getAuthState: () => Promise<AuthState>;
 
   constructor({ getAuthState }: AuthHeadersLinkParameters) {
     super();
@@ -25,18 +25,23 @@ export class AuthHeadersLink extends ApolloLink {
     this.getAuthState = getAuthState;
   }
 
-
   request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    const { token, workspaceId }: AuthState = this.getAuthState();
+    return new Observable(observer => {
+      this.getAuthState().then(({ token, workspaceId }) => {
+        operation.setContext(
+          R.over(R.lensProp('headers'), R.pipe(
+            assocWhenNotEmpty('authorization', token ? `Bearer ${token}` : null),
+            assocWhenNotEmpty('workspace', workspaceId),
+          )),
+        );
 
-    operation.setContext(
-      R.over(R.lensProp('headers'), R.pipe(
-        assocWhenNotEmpty('authorization', token ? `Bearer ${token}` : null),
-        assocWhenNotEmpty('workspace', workspaceId),
-      )),
-    );
-
-    return forward(operation);
+        forward(operation).subscribe({
+          next: (...args) => observer.next(...args),
+          error: (...args) => observer.error(...args),
+          complete: (...args) => observer.complete(...args),
+        });
+      });
+    });
   }
 }
 

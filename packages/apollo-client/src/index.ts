@@ -10,7 +10,7 @@ import { AuthState } from '@8base/utils';
 
 type EightBaseApolloClientCommon = {
   uri: string,
-  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => AuthState }) => ApolloLink[],
+  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<AuthState> }) => ApolloLink[],
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
   onRequestSuccess?: (options: { operation: Operation, data: any }) => void;
@@ -19,7 +19,7 @@ type EightBaseApolloClientCommon = {
 
 type EightBaseApolloClientOptions = {
   withAuth?: boolean,
-  getAuthState?: () => AuthState,
+  getAuthState?: () => Promise<AuthState>,
   getRefreshTokenParameters?: Function,
   onAuthSuccess?: Function,
 } & EightBaseApolloClientCommon;

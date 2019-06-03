@@ -9,13 +9,13 @@ import { EightBaseAppProvider } from '../../src';
 
 jest.mock('../../src/FragmentsSchemaContainer', () => ({
   FragmentsSchemaContainer: ({ children }: any) => (
-    <div>{ children({ loading: false }) }</div>
+    <div>{children({ loading: false })}</div>
   ),
 }));
 
 jest.mock('@8base/auth', () => ({
-  AuthProvider: jest.fn(({ children }) => <div>{ children }</div>),
-  withAuth: jest.fn(Component => (props: any) => <Component { ...props } />),
+  AuthProvider: jest.fn(({ children }) => <div>{children}</div>),
+  withAuth: jest.fn(Component => (props: any) => <Component {...props} />),
 }));
 
 jest.mock('@8base/apollo-client', () => {
@@ -33,7 +33,6 @@ jest.mock('@8base/apollo-client', () => {
     ),
   };
 });
-
 
 describe('EightBaseAppProvider', () => {
   beforeEach(() => {
@@ -55,13 +54,13 @@ describe('EightBaseAppProvider', () => {
 
     mount(
       <EightBaseAppProvider
-        uri={ uri }
-        authClient={ authClient }
-        extendLinks={ extendLinks }
-        onRequestError={ onRequestError }
-        onRequestSuccess={ onRequestSuccess }
+        uri={uri}
+        authClient={authClient}
+        extendLinks={extendLinks}
+        onRequestError={onRequestError}
+        onRequestSuccess={onRequestSuccess}
       >
-        { () => <div /> }
+        {() => <div />}
       </EightBaseAppProvider>,
     );
 
@@ -76,18 +75,18 @@ describe('EightBaseAppProvider', () => {
     expect(apolloClientProps.onRequestSuccess).toEqual(onRequestSuccess);
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
-Object {
-  "extendLinks": [MockFunction],
-  "getAuthState": [Function],
-  "onAuthError": [Function],
-  "onRequestError": [MockFunction],
-  "onRequestSuccess": [MockFunction],
-  "uri": "http://8base.com",
-  "withAuth": true,
-}
-`);
+      Object {
+        "extendLinks": [MockFunction],
+        "getAuthState": [Function],
+        "onAuthError": [Function],
+        "onIdTokenExpired": [Function],
+        "onRequestError": [MockFunction],
+        "onRequestSuccess": [MockFunction],
+        "uri": "http://8base.com",
+        "withAuth": true,
+      }
+    `);
   });
-
 
   it('should render App Provider with auth', () => {
     const extendLinks = jest.fn();
@@ -104,13 +103,13 @@ Object {
 
     const wrapper = mount(
       <EightBaseAppProvider
-        uri={ uri }
-        authClient={ authClient }
-        extendLinks={ extendLinks }
-        onRequestError={ onRequestError }
-        onRequestSuccess={ onRequestSuccess }
+        uri={uri}
+        authClient={authClient}
+        extendLinks={extendLinks}
+        onRequestError={onRequestError}
+        onRequestSuccess={onRequestSuccess}
       >
-        { () => <div /> }
+        {() => <div />}
       </EightBaseAppProvider>,
     );
 
@@ -119,7 +118,6 @@ Object {
       ...apolloClientProps
     } = (EightBaseApolloClient as any).mock.calls[0][0];
 
-
     expect(AuthProvider).toHaveBeenCalled();
     expect(wrapper.find(AuthProvider).prop('authClient')).toEqual(authClient);
 
@@ -127,18 +125,18 @@ Object {
     expect(apolloClientProps.withAuth).toBeTruthy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
-Object {
-  "extendLinks": [MockFunction],
-  "getAuthState": [Function],
-  "onAuthError": [Function],
-  "onRequestError": [MockFunction],
-  "onRequestSuccess": [MockFunction],
-  "uri": "http://8base.com",
-  "withAuth": true,
-}
-`);
+      Object {
+        "extendLinks": [MockFunction],
+        "getAuthState": [Function],
+        "onAuthError": [Function],
+        "onIdTokenExpired": [Function],
+        "onRequestError": [MockFunction],
+        "onRequestSuccess": [MockFunction],
+        "uri": "http://8base.com",
+        "withAuth": true,
+      }
+    `);
   });
-
 
   it('should render App Provider without auth', () => {
     const uri = 'http://8base.com';
@@ -148,12 +146,12 @@ Object {
 
     mount(
       <EightBaseAppProvider
-        uri={ uri }
-        extendLinks={ extendLinks }
-        onRequestError={ onRequestError }
-        onRequestSuccess={ onRequestSuccess }
+        uri={uri}
+        extendLinks={extendLinks}
+        onRequestError={onRequestError}
+        onRequestSuccess={onRequestSuccess}
       >
-        { () => <div /> }
+        {() => <div />}
       </EightBaseAppProvider>,
     );
 
@@ -167,13 +165,13 @@ Object {
     expect(apolloClientProps.withAuth).toBeFalsy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
-Object {
-  "extendLinks": [MockFunction],
-  "onRequestError": [MockFunction],
-  "onRequestSuccess": [MockFunction],
-  "uri": "http://8base.com",
-  "withAuth": false,
-}
-`);
+      Object {
+        "extendLinks": [MockFunction],
+        "onRequestError": [MockFunction],
+        "onRequestSuccess": [MockFunction],
+        "uri": "http://8base.com",
+        "withAuth": false,
+      }
+    `);
   });
 });
