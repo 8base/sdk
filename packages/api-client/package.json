@@ -12,9 +12,9 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
+    "@8base/utils": "^0.23.0",
     "@8base/error-codes": "^1.0.5",
     "@8base/schema-name-generator": "^0.1.1",
-    "@8base/utils": "^0.23.0",
     "@babel/runtime": "^7.3.1",
     "filestack-js": "^1.14.6",
     "graphql": "0.13.0",
