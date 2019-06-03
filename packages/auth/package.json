@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.23.0",
+  "version": "0.23.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/auth#readme",
   "main": "dist/index.js",
@@ -21,7 +21,7 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/utils": "^0.23.0",
+    "@8base/utils": "^0.23.1",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
     "recompose": "^0.30.0"
@@ -32,9 +32,9 @@
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-link": "^1.2.11",
     "documentation": "^8.0.0",
+    "graphql": "^0.13.0",
     "jest": "24",
     "jest-localstorage-mock": "^2.2.0",
-    "graphql": "^0.13.0",
     "react": "^16.8.6",
     "react-apollo": "2.5.2",
     "react-dom": "^16.8.6",
