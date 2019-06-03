@@ -9,5 +9,7 @@ packages/local-*
 packages/api-client
 packages/api-token-auth-client
 packages/app-provider
+packages/apollo-client
+packages/apollo-links
 packages/auth
 packages/web-auth0-auth-client

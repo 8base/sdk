@@ -1,5 +1,3 @@
-// @flow
-
 import { AuthLink } from '@8base/apollo-links';
 import { EightBaseApolloClient } from '../../src';
 
@@ -42,7 +40,7 @@ describe('EightBaseApolloClient', () => {
       onIdTokenExpired,
     });
 
-    expect(AuthLink.mock.calls[0][0]).toEqual({
+    expect((AuthLink as any).mock.calls[0][0]).toEqual({
       getAuthState,
       getRefreshTokenParameters,
       onAuthError,

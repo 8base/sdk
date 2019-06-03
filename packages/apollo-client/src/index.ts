@@ -1,34 +1,27 @@
-// @flow
-
 import gql from 'graphql-tag';
-import { type ApolloClientOptions, ApolloClient } from 'apollo-client';
+import { ApolloClientOptions, ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { AuthLink, SuccessLink } from '@8base/apollo-links';
-import { onError as createErrorLink } from 'apollo-link-error';
-import { type AuthState } from '@8base/utils';
+import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
+import { AuthState } from '@8base/utils';
 
 
 type EightBaseApolloClientCommon = {
   uri: string,
-  extendLinks?: (links: Object[], { getAuthState?: () => AuthState }) => Object[],
-  onAuthError?: Function,
-  onIdTokenExpired?: Function,
-  onRequestSuccess?: Function,
-  onRequestError?: Function,
-} & $Shape<ApolloClientOptions>;
-
-type EightBaseApolloClientWithAuthOptions = {
-  withAuth?: true,
-  getAuthState: () => AuthState,
-  getRefreshTokenParameters: Function,
-  onAuthSuccess: Function,
-} & EightBaseApolloClientCommon;
-
+  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => AuthState }) => ApolloLink[],
+  onAuthError?: (error?: {}) => void;
+  onIdTokenExpired?: () => Promise<any>;
+  onRequestSuccess?: (options: { operation: Operation, data: any }) => void;
+  onRequestError?: ErrorHandler,
+} & Partial<ApolloClientOptions<any>>;
 
 type EightBaseApolloClientOptions = {
-  withAuth: false,
+  withAuth?: boolean,
+  getAuthState?: () => AuthState,
+  getRefreshTokenParameters?: Function,
+  onAuthSuccess?: Function,
 } & EightBaseApolloClientCommon;
 
 
@@ -48,8 +41,8 @@ type EightBaseApolloClientOptions = {
  *
  * @return instance of the Apollo Client
  */
-class EightBaseApolloClient extends ApolloClient {
-  constructor(config: EightBaseApolloClientOptions | EightBaseApolloClientWithAuthOptions) {
+class EightBaseApolloClient extends ApolloClient<Object> {
+  constructor(config: EightBaseApolloClientOptions) {
     const {
       uri,
       getAuthState,
@@ -73,11 +66,13 @@ class EightBaseApolloClient extends ApolloClient {
     const batchHttpLink = new BatchHttpLink({ uri });
 
 
-    let links = [batchHttpLink];
+    let links: ApolloLink[] = [batchHttpLink];
 
     if (withAuth) {
       const authLink = new AuthLink({
+        // @ts-ignore
         getAuthState,
+        // @ts-ignore. Needs to check and remove this parameter.
         getRefreshTokenParameters,
         onAuthSuccess,
         onAuthError,

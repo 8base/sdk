@@ -6,15 +6,16 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "../../bin/build-package.sh",
-    "watch": "../../bin/watch-package.sh",
+    "build:clean": "rimraf dist",
+    "build:ts": "tsc",
+    "build": "yarn build:clean && yarn build:ts",
+    "watch": "yarn build --watch",
     "docs": "NODE_ENV=test documentation readme src/index.js --section=EightBaseApolloClient",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
     "@8base/apollo-links": "^0.23.1",
     "@8base/utils": "^0.23.1",
-    "@babel/runtime": "^7.2.0",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link": "1.2.11",
@@ -24,23 +25,40 @@
     "graphql-tag": "^2.10.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "@types/graphql": "^14.2.0",
+    "@types/jest": "^24.0.13",
     "documentation": "^8.1.2",
-    "flow-copy-source": "^2.0.2",
-    "jest": "^23.6.0",
+    "jest": "24",
     "jest-fetch-mock": "^2.1.0",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
     "setupFiles": [
-      "<rootDir>/test/jest.setup.js"
+      "<rootDir>/test/jest.setup.ts"
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"
