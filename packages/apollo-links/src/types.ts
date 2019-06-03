@@ -30,7 +30,7 @@ export type AuthState = {
 };
 
 export type AuthHeadersLinkParameters = {
-  getAuthState: () => AuthState,
+  getAuthState: () => Promise<AuthState>,
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;

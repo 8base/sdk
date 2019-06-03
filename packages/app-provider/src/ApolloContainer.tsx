@@ -55,7 +55,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       }
     };
 
-    getAuthState = () => {
+    getAuthState = async () => {
       const {
         auth: {
           authState,
@@ -79,6 +79,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       const eightBaseApolloClientData = withAuth
         ? {
           ...commonOptions,
+          onIdTokenExpired: this.onIdTokenExpired,
           getAuthState: this.getAuthState,
           onAuthError: this.onAuthError,
           withAuth: true,

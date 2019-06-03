@@ -22,7 +22,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
   const stubLink: any = jest.fn(() => Observable.of());
   const onIdTokenExpired = jest.fn();
   const authLink: ApolloLink = new AuthLink({
-    getAuthState: () => ({
+    getAuthState: () => Promise.resolve({
       workspaceId,
       token,
     }),
