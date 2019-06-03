@@ -1,5 +1,3 @@
-// @flow
-
 import * as R from 'ramda';
 import {
   ApolloLink,
@@ -9,9 +7,9 @@ import {
   FetchResult,
 } from 'apollo-link';
 
-import type { AuthHeadersLinkParameters, AuthState } from './types';
+import { AuthHeadersLinkParameters, AuthState } from './types';
 
-const assocWhenNotEmpty = (key: string, value: ?string) => R.when(
+const assocWhenNotEmpty = (key: string, value?: string | null) => R.when(
   R.always(
     R.complement(R.either(R.isNil, R.isEmpty))(value),
   ),
@@ -19,6 +17,8 @@ const assocWhenNotEmpty = (key: string, value: ?string) => R.when(
 );
 
 export class AuthHeadersLink extends ApolloLink {
+  getAuthState: () => AuthState;
+
   constructor({ getAuthState }: AuthHeadersLinkParameters) {
     super();
 

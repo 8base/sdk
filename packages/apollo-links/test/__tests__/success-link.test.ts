@@ -14,7 +14,7 @@ const TEST_QUERY = gql`
 
 describe('As a developer i can use SuccessLink to handle success graphql operations', () => {
   it('calls handler on successful operation', (done) => {
-    const terminatingLink = () => Observable.of({});
+    const terminatingLink: any = () => Observable.of({});
     const successHandler = jest.fn();
 
     const links = ApolloLink.from([
@@ -32,7 +32,7 @@ describe('As a developer i can use SuccessLink to handle success graphql operati
   });
 
   it('doesn\'t call handler on operation with error', (done) => {
-    const terminatingLink = () => Observable.of({
+    const terminatingLink: any = () => Observable.of({
       errors: [
         {
           code: errorCodes.TokenExpiredErrorCode,

@@ -1,4 +1,3 @@
-// @flow
 export type ErrorObject = {
   code: string,
   message: string,
@@ -17,11 +16,11 @@ type GraphQLError = {
 
 export type TokenRefreshLinkParameters = {
   onAuthError?: (error?: {}) => void;
-  onIdTokenExpired?: () => Promise<*>;
+  onIdTokenExpired?: () => Promise<any>;
 };
 
 export type ErrorLinkParameters = {
-  onGraphQLErrors?: (GraphQLError[]) => void,
+  onGraphQLErrors?: (error: GraphQLError[]) => void,
   onNetworkError?: (error: {}) => void,
 };
 

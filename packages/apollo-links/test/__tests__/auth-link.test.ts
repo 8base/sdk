@@ -1,5 +1,3 @@
-// @flow
-
 import {
   Observable,
   execute,
@@ -21,7 +19,7 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
   `;
   const workspaceId: string = 'some workspace id';
   const token: string = 'some id token';
-  const stubLink = jest.fn(() => Observable.of());
+  const stubLink: any = jest.fn(() => Observable.of());
   const onIdTokenExpired = jest.fn();
   const authLink: ApolloLink = new AuthLink({
     getAuthState: () => ({

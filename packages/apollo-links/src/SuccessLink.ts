@@ -1,5 +1,3 @@
-// @flow
-
 import { not, has } from 'ramda';
 import {
   ApolloLink,
@@ -10,13 +8,15 @@ import {
 } from 'apollo-link';
 
 
-type SuccessHandler = ({ operation: Operation }) => void;
+type SuccessHandler = (options: { operation: Operation, data: any }) => void;
 
 type SuccessLinkParameters = {
   successHandler: SuccessHandler,
 };
 
 export class SuccessLink extends ApolloLink {
+  successHandler: SuccessHandler;
+
   constructor({ successHandler }: SuccessLinkParameters) {
     super();
 

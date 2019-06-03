@@ -1,4 +1,4 @@
-// @flow
+import * as R from 'ramda';
 import {
   ApolloLink,
   Observable,
@@ -6,7 +6,6 @@ import {
   NextLink,
   FetchResult,
 } from 'apollo-link';
-import * as R from 'ramda';
 
 import {
   hasIdTokenExpiredError,
@@ -14,17 +13,19 @@ import {
   hasTokenInvalidError,
 } from './utils';
 
-import type { TokenRefreshLinkParameters } from './types';
+import { TokenRefreshLinkParameters } from './types';
 
 /**
  * Token Refresh Link renew authentication token when it's expired.
  * @param {TokenRefreshLinkOptions} options - The token refresh link options.
- * @param {Function} options.getRefreshTokenParameters - The function which are using for get refresh token parameters.
  * @param {Function} options.onAuthSuccess - The callback which called when attempt to refresh authentication is success.
  * @param {Function} [options.onAuthError] - The callback which called when attempt to refresh authentication is failed.
  * @param {Function} [options.onIdTokenExpired] - The callback which called when id token is expired.
  */
 export class TokenRefreshLink extends ApolloLink {
+  onAuthError?: (error?: {}) => void;
+  onIdTokenExpired?: () => Promise<any>;
+
   constructor({
     onIdTokenExpired,
     onAuthError,
@@ -37,7 +38,7 @@ export class TokenRefreshLink extends ApolloLink {
 
   request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     return new Observable(observer => {
-      let subscription = null;
+      let subscription: any = null;
       let handling = false;
 
       const handleTokenRefresh = () => {
@@ -63,7 +64,7 @@ export class TokenRefreshLink extends ApolloLink {
       };
 
       const subscriber = {
-        next: data => {
+        next: (data: any) => {
           const dataErrors = data.errors || [];
 
           if (hasIdTokenExpiredError(dataErrors)) {
@@ -75,7 +76,7 @@ export class TokenRefreshLink extends ApolloLink {
             observer.next(data);
           }
         },
-        error: error => {
+        error: (error: any) => {
           const batchedErrors = R.pathOr([error], ['response', 'parsed', 'errors'], error);
 
           if (hasIdTokenExpiredError(batchedErrors)) {

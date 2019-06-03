@@ -1,5 +1,3 @@
-// @flow
-
 import {
   Observable,
   execute,
@@ -21,7 +19,7 @@ describe('As a developer, I can use \'AuthHeadersLink\' to add authorization hea
   `;
   const workspaceId: string = 'some workspace id';
   const token: string = 'some id token';
-  const stubLink = jest.fn(() => Observable.of());
+  const stubLink: any = jest.fn(() => Observable.of());
   const getAuthState = jest.fn();
   const authHeadersLink: ApolloLink = new AuthHeadersLink({ getAuthState });
   const links: ApolloLink = ApolloLink.from([

@@ -1,5 +1,3 @@
-// @flow
-
 import {
   ApolloLink,
   Operation,
@@ -11,9 +9,11 @@ import {
 import { AuthHeadersLink } from './AuthHeadersLink';
 import { TokenRefreshLink } from './TokenRefreshLink';
 
-import type { AuthLinkParameters } from './types';
+import { AuthLinkParameters } from './types';
 
 export class AuthLink extends ApolloLink {
+  link: ApolloLink;
+
   constructor(authLinkParameters: AuthLinkParameters) {
     super();
 
@@ -26,7 +26,7 @@ export class AuthLink extends ApolloLink {
     ]);
   }
 
-  request(operation: Operation, forward: NextLink): Observable<FetchResult> {
+  request(operation: Operation, forward: NextLink): Observable<FetchResult> | null {
     return this.link.request(operation, forward);
   }
 }

@@ -12,11 +12,11 @@ const DYNO_QUERY = gql`
 `;
 
 describe('As a developer, I can use token refresh link for auto-refresh authentication token.', () => {
-  let onAuthError = null;
-  let onIdTokenExpired = null;
-  let tokenRefreshLink = null;
-  let stub = null;
-  let link = null;
+  let onAuthError: any = null;
+  let onIdTokenExpired: any = null;
+  let tokenRefreshLink: any = null;
+  let stub: any = null;
+  let link: any = null;
 
   beforeEach(() => {
     onAuthError = jest.fn();
