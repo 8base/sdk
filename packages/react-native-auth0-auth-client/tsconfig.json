@@ -4,6 +4,12 @@
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
+    "noImplicitAny": true,
+    "lib": [
+      "es2016",
+      "esnext.asynciterable",
+      "es2016.array.include"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -12,7 +18,10 @@
         "types/*"
       ]
     }
-  },      
+  }, 
+  "exclude": [
+    "node_modules/expo/**/*"
+  ],
   "include": [
     "src/**/*"
   ]

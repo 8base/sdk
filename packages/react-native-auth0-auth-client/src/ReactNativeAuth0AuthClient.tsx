@@ -1,8 +1,9 @@
-// @flow
-import { AuthSession } from 'expo';
+
+import R from 'ramda';
 import jwtDecode from 'jwt-decode';
-import * as R from 'ramda';
-import type {
+import { AuthSession } from 'expo';
+import { Subtract } from 'utility-types';
+import {
   AuthState,
   AuthData,
   AuthClient,
@@ -20,7 +21,7 @@ type ReactNativeAuth0AuthClientOptions = {
 
 const toQueryString = R.pipe(
   R.mapObjIndexed(
-    (value, key) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    (value: any, key: string) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
   ),
   R.values,
   R.join('&'),
@@ -31,15 +32,15 @@ const isEmptyOrNil = R.either(
   R.isEmpty,
 );
 
-const getError = R.path(['params', 'error']);
+const getError: (obj: any) => string = R.path(['params', 'error']) as any;
 
-const getErrorDescription = R.path(['params', 'error_description']);
+const getErrorDescription: (obj: any) => string = R.path(['params', 'error_description']) as any;
 
-const getIdToken = R.path(['params', 'id_token']);
+const getIdToken: (obj: any) => string = R.path(['params', 'id_token']) as any;
 
-const getEmail = R.path(['email']);
+const getEmail: (obj: any) => string = R.path(['email']) as any;
 
-const isEmailVerified = R.path(['email_verified']);
+const isEmailVerified: (obj: any) => boolean = R.path(['email_verified']) as any;
 
 /**
  * Create instacne of the react-native auth0 auth client.
@@ -47,7 +48,7 @@ const isEmailVerified = R.path(['email_verified']);
  * @param {string} domain Domain. See auth0 documentation.
  * @param {string} clientId Client id. See auth0 documentation.
  */
-class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
+class ReactNativeAuth0AuthClient implements AuthClient, Subtract<Authorizable, { logout: any } /** temporary. needs to implement logout here */> {
   clientId: string;
   domain: string;
   workspaceId: string | void;
@@ -77,7 +78,7 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
     return R.not(isEmptyOrNil(token));
   };
 
-  authorize = async (options?: Object = {}): Promise<AuthData> => {
+  authorize = async (options: Object = {}): Promise<AuthData> => {
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({
       authUrl: `${this.domain}/authorize?${toQueryString({
@@ -103,7 +104,7 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
       }
 
       const encodedIdToken = getIdToken(result);
-      const decodedIdToken = jwtDecode(encodedIdToken);
+      const decodedIdToken: any = jwtDecode(encodedIdToken);
 
       await this.setAuthState({
         token: encodedIdToken,
@@ -115,6 +116,8 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
         email: getEmail(decodedIdToken),
         isEmailVerified: isEmailVerified(decodedIdToken),
       };
+    } else {
+      throw new Error('something went wrong while logging in');
     }
   };
 

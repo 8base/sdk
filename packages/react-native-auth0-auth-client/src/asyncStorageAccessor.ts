@@ -1,13 +1,11 @@
-// @flow
-
 import { AsyncStorage } from 'react-native';
-import type { AuthState } from '@8base/utils';
+import { AuthState } from '@8base/utils';
 
 const AUTH_ASYNCSTORAGE_KEY = 'auth';
 
 const getAuthState = async (): Promise<AuthState> => {
   const auth = JSON.parse(
-    await AsyncStorage.getItem(AUTH_ASYNCSTORAGE_KEY),
+    await AsyncStorage.getItem(AUTH_ASYNCSTORAGE_KEY) || '',
   );
 
   return auth || {};
