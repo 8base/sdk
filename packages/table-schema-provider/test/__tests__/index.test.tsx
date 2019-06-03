@@ -1,5 +1,5 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 import { TableConsumer, TableSchemaContext, TableSchemaProvider } from '../../src';
 
 const MOCK_TABLES_SCHEMA = {
@@ -17,7 +17,7 @@ const MOCK_TABLES_SCHEMA = {
 };
 
 jest.mock('react-apollo', () => ({
-  Query: ({ children, skip }) => skip ?
+  Query: ({ children, skip }: any) => skip ?
     children({ data: undefined, loading: false }) :
     children({ data: { tablesList: MOCK_TABLES_SCHEMA }, loading: false }),
 }));
@@ -51,7 +51,7 @@ describe('TableSchemaProvider', () => {
 
   it('As a developer, I can skip TableSchemaProvider', () => {
     const testRenderer = renderer.create(
-      <TableSchemaProvider skip >
+      <TableSchemaProvider skip>
         { testConsumerFn }
       </TableSchemaProvider>,
     );
@@ -61,7 +61,7 @@ describe('TableSchemaProvider', () => {
     expect(testConsumerFn).toHaveBeenCalledTimes(1);
     expect(testConsumerFn).toHaveBeenCalledWith({ loading: false });
     expect(testContentFn).toHaveBeenCalledTimes(1);
-    expect(testContentFn).toHaveBeenCalledWith(undefined);
+    expect(testContentFn).toHaveBeenCalledWith(null);
   });
 });
 

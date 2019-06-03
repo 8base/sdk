@@ -1,8 +1,8 @@
-// @flow
-import React from 'react';
+import * as React from 'react';
 import * as R from 'ramda';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, QueryProps } from 'react-apollo';
+import { Subtract } from 'utility-types';
 
 import { TableSchemaContext } from './TableSchemaContext';
 
@@ -133,8 +133,8 @@ export const TABLES_SCHEMA_QUERY = gql`
   ${TABLE_FRAGMENT}
 `;
 
-type TableSchemaProviderProps = {
-  children: ({ loading?: boolean }) => React$Node,
+type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
+  children: (props: { loading?: boolean }) => React.ReactNode,
 };
 
 /**
@@ -142,7 +142,7 @@ type TableSchemaProviderProps = {
  * @property {Function} children Children of the provider. Could be either react node or function with loading state.
  */
 class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
-  renderContent = ({ data, loading }: * = {}) => {
+  renderContent = ({ data, loading }: { data?: any, loading?: boolean } = {}) => {
     const { children } = this.props;
 
     return (

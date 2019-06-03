@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Subtract } from 'utility-types';
 import { wrapDisplayName } from 'recompose';

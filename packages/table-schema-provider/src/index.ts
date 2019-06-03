@@ -6,4 +6,4 @@ export {
   TableSchemaProvider,
 } from './TableSchemaProvider';
 export { TableConsumer } from './TableConsumer';
-export { withTablesList } from './withTablesList';
+export { withTablesList, WithTablesListProps } from './withTablesList';
