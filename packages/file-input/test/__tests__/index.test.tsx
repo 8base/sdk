@@ -1,10 +1,10 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 
 import { FileInput } from '../../src';
 
-let mock_onUploadDone = null;
-let mock_client = null;
+let mock_onUploadDone: any = null;
+let mock_client: any = null;
 
 jest.mock('react-apollo', () => {
   const client = {
@@ -25,7 +25,7 @@ jest.mock('react-apollo', () => {
   };
 
   return {
-    withApollo: (BaseComponent) => (props) => <BaseComponent { ...props } client={ client } />,
+    withApollo: (BaseComponent: any) => (props: any) => <BaseComponent { ...props } client={ client } />,
   };
 });
 
@@ -56,8 +56,8 @@ beforeEach(() => {
 
 describe('should call onChange when file is uploaded', () => {
   it('for single file input', async () => {
-    const renderFileInputView = jest.fn(() => null);
-    const onChange = jest.fn();
+    const renderFileInputView: any = jest.fn(() => null);
+    const onChange: any = jest.fn();
 
     renderer.create(
       <FileInput onChange={ onChange }>
@@ -82,7 +82,7 @@ describe('should call onChange when file is uploaded', () => {
   });
 
   it('for single file input with public modifier', async() => {
-    const renderFileInputView = jest.fn(() => null);
+    const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
     renderer.create(
@@ -108,7 +108,7 @@ describe('should call onChange when file is uploaded', () => {
   });
 
   it('for multiple files input', async() => {
-    const renderFileInputView = jest.fn(() => null);
+    const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
     renderer.create(
@@ -154,10 +154,10 @@ describe('should call onChange when file is uploaded', () => {
   });
 
   it('for input with custom on upload handler', async() => {
-    const renderFileInputView = jest.fn(() => null);
+    const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
-    const onUploadDone = (value) => new Promise((resolve) => {
+    const onUploadDone: any = (value: any) => new Promise((resolve) => {
       setTimeout(() => {
         resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
       }, 50);
@@ -189,7 +189,7 @@ describe('FileInput', () => {
   });
 
   it('allows to pass custom options to pick method', async () => {
-    const renderFileInputView = jest.fn(() => null);
+    const renderFileInputView: any = jest.fn(() => null);
 
     renderer.create(
       <FileInput>
@@ -215,7 +215,7 @@ describe('FileInput', () => {
   });
 
   it('doesn\'t allow to rewrite maxFiles and onUploadDone options', async () => {
-    const renderFileInputView = jest.fn(() => null);
+    const renderFileInputView: any = jest.fn(() => null);
 
     renderer.create(
       <FileInput maxFiles={ 3 }>
