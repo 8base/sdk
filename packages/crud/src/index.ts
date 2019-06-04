@@ -1,4 +1,3 @@
-// @flow
 export { RecordsList } from './RecordsList';
 export { RecordCreate } from './RecordCreate';
 export { RecordCreateMany } from './RecordCreateMany';

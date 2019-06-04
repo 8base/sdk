@@ -1,19 +1,20 @@
-// @flow
 import React, { Component } from 'react';
+import { MutationResult, MutationFn } from 'react-apollo';
 import { TableConsumer } from '@8base/table-schema-provider';
+import { TableSchema } from '@8base/utils';
 
 import { RecordCrud } from './RecordCrud';
 
 interface ChildrenPropObject {
-  tableMetaResult: Object,
-  mutateResult: Object,
+  tableMetaResult: TableSchema | null,
+  mutateResult: MutationResult,
 }
 
 type RecordDeleteProps = {
   tableName?: string,
   tableId?: string,
 
-  children: (mutateFunction: (id: string, force: boolean) => Promise<Object>, ChildrenPropObject) => React$Node,
+  children: (mutateFunction: (id: string, force: boolean) => Promise<any>, result: ChildrenPropObject) => React.ReactNode,
 }
 
 /**
@@ -22,33 +23,42 @@ type RecordDeleteProps = {
  * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {string} recordId - Id of the record
- * @prop {(Function, ChildrenPropObject) => React$Node} children - Render prop with result of the queries
+ * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
 
 export class RecordDelete extends Component<RecordDeleteProps> {
+  renderQuery = (tableMetaResult: TableSchema | null) => {
+    const { children, ...rest } = this.props;
+
+    if (!tableMetaResult) {
+      throw new Error('Table doesn\'t find');
+    }
+
+    return (
+      <RecordCrud
+        {...rest}
+        tableMeta={tableMetaResult}
+        mode="delete"
+      >
+        {(mutateFunction, mutateResult) =>
+          children(
+            (id: string, force: boolean) => mutateFunction({ filter: { id }, force }),
+            {
+              tableMetaResult,
+              mutateResult,
+            })}
+      </RecordCrud>
+    )
+  }
   render() {
-    const { tableName, tableId, children, ...rest } = this.props;
+    const { tableName, tableId } = this.props;
 
     return (
       <TableConsumer
         name={ tableName }
         id={ tableId }
       >
-        { (tableMetaResult) => (
-          <RecordCrud
-            { ...rest }
-            tableMeta={ tableMetaResult }
-            mode="delete"
-          >
-            { (mutateFunction, mutateResult) =>
-              children(
-                (id: string, force: boolean) => mutateFunction({ filter: { id }, force }),
-                {
-                  tableMetaResult,
-                  mutateResult: mutateResult || {},
-                }) }
-          </RecordCrud>
-        ) }
+        { this.renderQuery }
       </TableConsumer>
     );
   }

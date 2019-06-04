@@ -1,13 +1,9 @@
-// @flow
 import React, { Component } from 'react';
-import fp from 'lodash/fp';
-import { Query } from 'react-apollo';
+import * as R from 'ramda';
+import { Query, QueryResult } from 'react-apollo';
 import gql from 'graphql-tag';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
-import type { TableSchema } from '@8base/utils';
-import { createTableRowQueryTag } from '@8base/utils';
-
-import type { QueryResult } from './types';
+import { createTableRowQueryTag, TableSchema } from '@8base/utils';
 
 type RecordDataProps = {
   tableName?: string,
@@ -16,8 +12,8 @@ type RecordDataProps = {
 
   recordId: string,
   variables?: Object,
-  skip?: (Object) => boolean,
-  children: (recordData: QueryResult) => React$Node,
+  skip?: boolean,
+  children: (recordData: QueryResult) => React.ReactNode,
 }
 
 
@@ -32,9 +28,9 @@ export class RecordData extends Component<RecordDataProps> {
         query={ gql(createTableRowQueryTag([tableMeta], tableMeta.name)) }
         variables={{ id: recordId }}
       >
-        { ({ data, ...rest }) => children({
+        { ({ data, ...rest }: QueryResult) => children({
           ...rest,
-          data: fp.get([SchemaNameGenerator.getTableItemFieldName(tableMeta.name)], data),
+          data: R.path([SchemaNameGenerator.getTableItemFieldName(tableMeta.name)], data),
         }) }
       </Query>
     );

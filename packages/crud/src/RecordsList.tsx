@@ -1,18 +1,28 @@
-// @flow
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Query, QueryResult } from 'react-apollo';
 import { TableConsumer } from '@8base/table-schema-provider';
 import {
   createTableFilterGraphqlTag,
-  type TableSchema,
+  TableSchema,
 } from '@8base/utils';
+
+
+
+type RecordsListFlattenData<T = object> = {
+  items: T[],
+  count: number,
+}
+
+type RecordsListData = {
+  tableContent: RecordsListFlattenData
+}
 
 type RecordsListProps = {
   tableName?: string,
   tableId?: string,
-  children: (recordsListResult: Object) => React$Node,
+  children: (recordsListResult: QueryResult<RecordsListFlattenData>) => React.ReactNode,
   deep?: number,
   relationItemsCount?: number,
 }
@@ -23,11 +33,10 @@ type RecordsListProps = {
  *
  * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
- * @prop {(recordsListResult: Object) => React$Node} children - Render prop with result of the query
+ * @prop {(recordsListResult: Object) => React.ReactNode} children - Render prop with result of the query
  */
 export class RecordsList extends Component<RecordsListProps> {
-  isFetchingNewTable: boolean;
-  isFetchingNewTable = false;
+  isFetchingNewTable: boolean = false;
 
   componentDidUpdate(prevProps: RecordsListProps) {
     if (
@@ -47,7 +56,7 @@ export class RecordsList extends Component<RecordsListProps> {
   }
 
   /** this dirty hack needs to avoid passing the old table data after changing the table */
-  getRecordsListData = (recordsListResult: Object) => {
+  getRecordsListData = (recordsListResult: QueryResult<RecordsListData>) => {
     const recordsListData = this.isFetchingNewTable && recordsListResult.loading
       ? []
       : R.path(['data', 'tableContent'], recordsListResult);
@@ -59,13 +68,17 @@ export class RecordsList extends Component<RecordsListProps> {
     return recordsListData;
   }
 
-  renderQuery = (tableMetaResult: TableSchema) => {
+  renderQuery = (tableMetaResult: TableSchema | null) => {
     const {
       children,
       deep,
       relationItemsCount,
       ...rest
     } = this.props;
+
+    if (!tableMetaResult) {
+      throw new Error('Table doesn\'t find');
+    }
 
     const query = gql(
       createTableFilterGraphqlTag(
@@ -80,7 +93,7 @@ export class RecordsList extends Component<RecordsListProps> {
         { ...rest }
         query={ query }
       >
-        { (recordsListResult) => children({
+        {(recordsListResult: any) => children({
           ...recordsListResult,
           data: this.getRecordsListData(recordsListResult),
         }) }

@@ -1,14 +1,12 @@
-// @flow
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, MutationFn, MutationResult } from 'react-apollo';
 import gql from 'graphql-tag';
-import type { TableSchema } from '@8base/utils';
-import type { QueryResult } from './types';
 import {
   createTableRowCreateTag,
   createTableRowCreateManyTag,
   createTableRowUpdateTag,
   createTableRowDeleteTag,
+  TableSchema,
 } from '@8base/utils';
 
 type CrudModes = 'create' | 'createMany' | 'update' | 'delete'
@@ -18,12 +16,12 @@ type RecordCrudProps = {
   mode: CrudModes,
 
   children: (
-    mutateFunction: (Object) => Promise<Object>,
-    mutateResult: QueryResult
-  ) => React$Node,
+    mutateFunction: (args: { [key: string ]: any }) => Promise<any>,
+    mutateResult: MutationResult
+  ) => React.ReactNode,
 }
 
-const createRecordTag = (tableMeta: *, mode: CrudModes) => {
+const createRecordTag = (tableMeta: TableSchema, mode: CrudModes) => {
   switch (mode) {
     case 'create': return createTableRowCreateTag([tableMeta], tableMeta.name);
     case 'createMany': return createTableRowCreateManyTag([tableMeta], tableMeta.name);
@@ -43,7 +41,7 @@ export class RecordCrud extends Component<RecordCrudProps> {
         { ...rest }
         mutation={ mutation }
       >
-        { (mutateFunction, mutateResult) =>
+        {(mutateFunction: MutationFn, mutateResult: MutationResult) =>
           children(
             (variables) => mutateFunction({ variables }),
             mutateResult,

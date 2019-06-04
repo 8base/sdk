@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { QueryResult } from 'react-apollo';
 import { Schema, TableSchema } from '@8base/utils';
 import * as selectors from './selectors';
 import { TableSchemaContext } from './TableSchemaContext';

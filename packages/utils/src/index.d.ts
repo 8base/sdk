@@ -175,6 +175,13 @@ export const throwIfMissingRequiredParameters: Function;
 
 export const formatDataForMutation: Function;
 
+export const createTableRowCreateTag: Function;
+export const createTableRowCreateManyTag: Function;
+export const createTableRowUpdateTag: Function;
+export const createTableRowDeleteTag: Function;
+export const createTableRowQueryTag: Function;
+export const createTableFilterGraphqlTag: Function;
+
 export type AuthState = {
   email?: string,
   userId?: string,
