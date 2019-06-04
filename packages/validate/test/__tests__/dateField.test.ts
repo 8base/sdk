@@ -1,5 +1,4 @@
-//@flow
-import { FIELD_TYPE, DATE_FORMATS, type Format } from '@8base/utils';
+import { FIELD_TYPE, DATE_FORMATS, Format } from '@8base/utils';
 
 import { validatorFacade as validator } from '../../src/validator';
 

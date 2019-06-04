@@ -1,12 +1,10 @@
-//@flow
-
 import * as R from 'ramda';
 import {
   SDKError,
   ERROR_CODES,
   FIELD_TYPE,
-  type FieldType,
-  type Format,
+  FieldType,
+  Format,
 } from '@8base/utils';
 import { Decimal } from 'decimal.js';
 
@@ -15,7 +13,7 @@ import { VALIDATION_ERROR, FORMAT_PATTERN } from './validator.constants';
 export type Field = {
   isRequired: boolean,
   fieldType: FieldType,
-  fieldTypeAttributes: $Shape<{
+  fieldTypeAttributes: Partial<{
     minValue: number,
     maxValue: number,
     precision: number,
@@ -30,28 +28,28 @@ const INT_MIN_VALUE = -Math.pow(2, 31);
 const FLOAT_MAX_VALUE = Number.MAX_VALUE;
 const FLOAT_MIN_VALUE = -Number.MAX_VALUE;
 
-const getFieldTypeAttributes = R.prop('fieldTypeAttributes');
-const getMinValueFromAttributes = R.pipe(
+const getFieldTypeAttributes: (obj: Field) => Record<any, any> = R.prop('fieldTypeAttributes');
+const getMinValueFromAttributes: (obj: Field) => number = R.pipe(
   getFieldTypeAttributes,
   R.prop('minValue'),
 );
-const getMaxValueFromAttributes = R.pipe(
+const getMaxValueFromAttributes: (obj: Field) => number = R.pipe(
   getFieldTypeAttributes,
   R.prop('maxValue'),
 );
-const getMaxPrecisionFromAttributes = R.pipe(
+const getMaxPrecisionFromAttributes: (obj: Field) => number = R.pipe(
   getFieldTypeAttributes,
   R.prop('precision'),
 );
-const isBigIntFromAttributes = R.pipe(
+const isBigIntFromAttributes: (obj: Field) => boolean = R.pipe(
   getFieldTypeAttributes,
   R.prop('isBigInt'),
 );
-const getMaxFieldSizeFromAttributes = R.pipe(
+const getMaxFieldSizeFromAttributes: (obj: Field) => number = R.pipe(
   getFieldTypeAttributes,
   R.prop('fieldSize'),
 );
-const getFormatFromAttributes = R.pipe(
+const getFormatFromAttributes: (obj: Field) => Format = R.pipe(
   getFieldTypeAttributes,
   R.prop('format'),
 );
@@ -83,9 +81,9 @@ const getMaxValue = (field: Field): number => {
 };
 
 type ValidatorResult = string | void;
-export type PreparedValidator = (?string) => ValidatorResult;
-type Validator<T> = (T) => PreparedValidator;
-type Check = (?string) => boolean;
+export type PreparedValidator = (arg: string | null | void) => ValidatorResult;
+type Validator<T> = (arg: T) => PreparedValidator;
+type Check = (arg: string | null) => boolean;
 
 const isEmpty: Check = R.either(R.isNil, R.isEmpty);
 
@@ -122,7 +120,7 @@ const checkIsJson: PreparedValidator = (value) => {
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
 // will be resolved.
-const checkMaxPrecision: Validator<number> = (maxPrecision) => (value) => {
+const checkMaxPrecision: Validator<number> = (maxPrecision) => (value: any) => {
   if (isEmpty(value)) {
     return undefined;
   }
@@ -136,7 +134,7 @@ const checkMaxPrecision: Validator<number> = (maxPrecision) => (value) => {
 };
 
 const checkMinValue: Validator<number> = (minValue) => R.ifElse(
-  R.cond([
+  R.cond<string | null, boolean>([
     [isEmpty, R.T],
     [R.T, R.pipe(Number, R.lte(minValue))],
   ]),
@@ -145,7 +143,7 @@ const checkMinValue: Validator<number> = (minValue) => R.ifElse(
 );
 
 const checkMaxValue: Validator<number> = (maxValue) => R.ifElse(
-  R.cond([
+  R.cond<string | null, boolean>([
     [isEmpty, R.T],
     [R.T, R.pipe(Number, R.gte(maxValue))],
   ]),
@@ -165,15 +163,16 @@ const checkMaxFieldSize: Validator<number> = (maxFieldSize) => R.ifElse(
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
 // will be resolved.
-const checkFormat: Validator<Format> = (format) => (value) => {
-  if (isEmpty(value)) {
-    return undefined;
-  }
+const checkFormat: Validator<Format> = (format: Format) => 
+  (value: any) => {
+    if (isEmpty(value)) {
+      return undefined;
+    }
 
-  return R.test(FORMAT_PATTERN[format], value || '') ?
-    undefined :
-    VALIDATION_ERROR[format]();
-};
+    return R.test((FORMAT_PATTERN as any)[format], value || '') ?
+      undefined :
+      (VALIDATION_ERROR as any)[format]();
+  };
 
 type ValidatorsGetter<T> = (field: T) => Array<PreparedValidator>;
 

@@ -149,6 +149,18 @@ export const SYSTEM_TABLES: {
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
 };
 
+
+export type MutationType = 'CREATE' | 'UPDATE';
+
+export type FieldType = keyof typeof FIELD_TYPE;
+
+export type Format = keyof typeof SWITCH_FORMATS
+  | keyof typeof TEXT_FORMATS
+  | keyof typeof NUMBER_FORMATS
+  | keyof typeof FILE_FORMATS
+  | keyof typeof SMART_FORMATS
+  | keyof typeof DATE_FORMATS;
+
 export const MUTATION_FILE_FIELDS: ['fileId', 'public', 'filename', 'meta', 'mods'];
 
 export const tableSelectors: { [key: string]: (schema: TableSchema, arg?: any) => any };

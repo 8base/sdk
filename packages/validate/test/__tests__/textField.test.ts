@@ -1,4 +1,3 @@
-//@flow
 import { FIELD_TYPE, TEXT_FORMATS } from '@8base/utils';
 
 import { validatorFacade as validator } from '../../src/validator';

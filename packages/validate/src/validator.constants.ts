@@ -1,11 +1,10 @@
-//@flow
-import { TEXT_FORMATS, DATE_FORMATS } from '@8base/utils';
-import type { Format } from '@8base/utils';
+import { TEXT_FORMATS, DATE_FORMATS, SMART_FORMATS } from '@8base/utils';
+import { Format } from '@8base/utils';
 
-export const FORMAT_PATTERN = {
+export const FORMAT_PATTERN: Partial<Record<Format, RegExp>> = {
   [TEXT_FORMATS.UNFORMATTED]: /.*/,
   [TEXT_FORMATS.NAME]: /.*/,
-  [TEXT_FORMATS.ADDRESS]: /.*/,
+  [SMART_FORMATS.ADDRESS]: /.*/,
   [TEXT_FORMATS.EMAIL]: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
   [TEXT_FORMATS.PHONE]: /^(0|[1-9][0-9]{9})$/i,
   [TEXT_FORMATS.SSN]: /^(?!666|000|9\d{2})\d{3}[- ]{0,1}(?!00)\d{2}[- ]{0,1}(?!0{4})\d{4}$/,
@@ -25,7 +24,7 @@ export const VALIDATION_ERROR = {
   MAX_FIELD_SIZE: (maxFieldSize: number): string => `Maximum allowed field size is ${maxFieldSize}. It was exceeded.`,
   [TEXT_FORMATS.UNFORMATTED]: (): string => '',
   [TEXT_FORMATS.NAME]: (): string => '',
-  [TEXT_FORMATS.ADDRESS]: (): string => '',
+  [SMART_FORMATS.ADDRESS]: (): string => '',
   [TEXT_FORMATS.EMAIL]: (): string => 'Invalid email.',
   [TEXT_FORMATS.PHONE]: (): string => 'Invalid phone number.',
   [TEXT_FORMATS.SSN]: (): string => 'Invalid Social Security Number.',
@@ -34,4 +33,4 @@ export const VALIDATION_ERROR = {
   [DATE_FORMATS.DATETIME]: (): string => 'Invalid datetime.',
 };
 
-export type ValidationError = $Values<typeof VALIDATION_ERROR>;
+export type ValidationError = keyof typeof VALIDATION_ERROR;

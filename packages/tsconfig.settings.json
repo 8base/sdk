@@ -9,6 +9,7 @@
     "strict": true,
     "jsx": "react",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "es2016",
       "esnext.asynciterable",
