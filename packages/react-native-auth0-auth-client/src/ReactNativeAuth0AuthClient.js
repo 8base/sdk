@@ -14,8 +14,6 @@ import * as asyncStorageAccessor from './asyncStorageAccessor';
 type ReactNativeAuth0AuthClientOptions = {
   clientId: string,
   domain: string,
-  workspaceId?: string,
-  profileId?: string,
 };
 
 const toQueryString = R.pipe(
@@ -43,21 +41,16 @@ const isEmailVerified = R.path(['email_verified']);
 
 /**
  * Create instacne of the react-native auth0 auth client.
- * @param {string} workspaceId Identifier of the 8base app workspace.
  * @param {string} domain Domain. See auth0 documentation.
  * @param {string} clientId Client id. See auth0 documentation.
  */
 class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
   clientId: string;
   domain: string;
-  workspaceId: string | void;
-  profileId: string | void;
 
-  constructor({ clientId, domain, workspaceId, profileId }: ReactNativeAuth0AuthClientOptions) {
+  constructor({ clientId, domain }: ReactNativeAuth0AuthClientOptions) {
     this.clientId = clientId;
     this.domain = domain;
-    this.workspaceId = workspaceId;
-    this.profileId = profileId;
   }
 
   setAuthState = async (state: AuthState): Promise<void> => {
@@ -81,8 +74,6 @@ class ReactNativeAuth0AuthClient implements AuthClient, Authorizable {
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({
       authUrl: `${this.domain}/authorize?${toQueryString({
-        workspace_id: this.workspaceId,
-        profile_id: this.profileId,
         client_id: this.clientId,
         response_type: 'id_token',
         scope: 'openid email profile',

@@ -159,7 +159,7 @@ export const getTableSchemaByName: (schema: TableSchema[], name: string) => Tabl
 
 export const getTableSchemaById: (schema: TableSchema[], id: string) => TableSchema;
 
-export const throwIfMissingRequiredOption: Function;
+export const throwIfMissingRequiredParameters: Function;
 
 export const formatDataForMutation: Function;
 
