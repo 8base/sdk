@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/auth#readme",
   "main": "dist/index.js",
@@ -21,7 +21,7 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/utils": "^0.25.0",
+    "@8base/utils": "^0.25.1",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
     "recompose": "^0.30.0"

@@ -1,6 +1,6 @@
 {
   "name": "@8base/permissions-provider",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/permissions-provider#readme",
   "main": "dist/index.js",
@@ -21,7 +21,7 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/auth": "^0.25.0",
+    "@8base/auth": "^0.25.1",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
     "graphql-tag": "^2.9.2",

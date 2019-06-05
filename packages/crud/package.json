@@ -1,6 +1,6 @@
 {
   "name": "@8base/crud",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/crud#readme",
   "main": "dist/index.js",
@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@8base/schema-name-generator": "^0.1.1",
-    "@8base/table-schema-provider": "^0.25.0",
-    "@8base/utils": "^0.25.0",
+    "@8base/table-schema-provider": "^0.25.1",
+    "@8base/utils": "^0.25.1",
     "@babel/runtime": "^7.2.0",
     "apollo-client": "^2.5.1",
     "graphql-tag": "^2.9.2",
