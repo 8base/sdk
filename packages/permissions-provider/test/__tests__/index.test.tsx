@@ -220,7 +220,17 @@ it('As a developer, I can use `isAllowed` for check field access via context.', 
       permissions,
     );
 
-    return `Allowed = ${allowed}`;
+    const unexistedFieldAllowed = isAllowed(
+      {
+        resource: 'Users',
+        type: 'data',
+        permission: 'update',
+        field: 'unexistedField'
+      },
+      permissions
+    );
+
+    return `Allowed = ${allowed}, UnexistedFieldAllowed = ${unexistedFieldAllowed}`;
   };
 
   // @ts-ignore
@@ -230,5 +240,5 @@ it('As a developer, I can use `isAllowed` for check field access via context.', 
     <PermissionsProvider>{ () => <TestComponentWrapper /> }</PermissionsProvider>,
   );
 
-  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true, UnexistedFieldAllowed = true"');
 });
