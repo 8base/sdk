@@ -21,5 +21,5 @@ export const isAllowed = ({
     path.push('fields', field);
   }
 
-  return R.pathOr(false, path, permissions);
+  return R.pathOr(true, path, permissions);
 };
