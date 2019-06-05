@@ -9,8 +9,6 @@ import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 import { withAuth, WithAuthProps } from '@8base/auth';
 const { EightBaseApolloClient } = require('@8base/apollo-client');
 
-
-
 type ApolloContainerProps = ApolloContainerPassedProps & {
   withAuth: boolean,
   children: React.ReactNode,
@@ -25,6 +23,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
 
     static defaultProps = {
       withAuth: true,
+      autoSignUp: false,
     }
 
     onIdTokenExpired = async () => {
@@ -66,7 +65,11 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     };
 
     createClient = R.memoizeWith(R.identity, (fragmentsSchema) => {
-      const { withAuth } = this.props;
+      const {
+        withAuth,
+        autoSignUp,
+        authProfileId,
+      } = this.props;
 
       const commonOptions = {
         uri: this.props.uri,
@@ -83,6 +86,8 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
           getAuthState: this.getAuthState,
           onAuthError: this.onAuthError,
           withAuth: true,
+          autoSignUp,
+          authProfileId,
         }
         : {
           ...commonOptions,

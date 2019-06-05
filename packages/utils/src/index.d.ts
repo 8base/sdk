@@ -192,3 +192,22 @@ export interface Authorizable {
   changePassword(): Promise<{ email: string }>,
   logout(options?: Object): Promise<void>,
 }
+
+export class SDKError extends Error {
+  name: string;
+  code: string;
+  packageName: string;
+  message: string;
+
+  constructor(code: string, packageName: string, message: string);
+
+  toString(): string;
+
+  toJSON(): {};
+}
+
+export const ERROR_CODES: {
+  UNSUPPORTED_FIELD_TYPE: 'UnsupportedFieldType',
+  MISSING_PARAMETER: 'MissingParameter',
+};
+

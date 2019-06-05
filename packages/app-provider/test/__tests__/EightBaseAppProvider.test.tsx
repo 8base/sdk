@@ -59,6 +59,8 @@ describe('EightBaseAppProvider', () => {
         extendLinks={extendLinks}
         onRequestError={onRequestError}
         onRequestSuccess={onRequestSuccess}
+        autoSignUp={true}
+        authProfileId="someProfileId"
       >
         {() => <div />}
       </EightBaseAppProvider>,
@@ -76,6 +78,8 @@ describe('EightBaseAppProvider', () => {
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
       Object {
+        "authProfileId": "someProfileId",
+        "autoSignUp": true,
         "extendLinks": [MockFunction],
         "getAuthState": [Function],
         "onAuthError": [Function],
@@ -108,6 +112,7 @@ describe('EightBaseAppProvider', () => {
         extendLinks={extendLinks}
         onRequestError={onRequestError}
         onRequestSuccess={onRequestSuccess}
+        autoSignUp={false}
       >
         {() => <div />}
       </EightBaseAppProvider>,
@@ -126,6 +131,8 @@ describe('EightBaseAppProvider', () => {
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
       Object {
+        "authProfileId": undefined,
+        "autoSignUp": false,
         "extendLinks": [MockFunction],
         "getAuthState": [Function],
         "onAuthError": [Function],
@@ -165,13 +172,13 @@ describe('EightBaseAppProvider', () => {
     expect(apolloClientProps.withAuth).toBeFalsy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
-      Object {
-        "extendLinks": [MockFunction],
-        "onRequestError": [MockFunction],
-        "onRequestSuccess": [MockFunction],
-        "uri": "http://8base.com",
-        "withAuth": false,
-      }
-    `);
+            Object {
+              "extendLinks": [MockFunction],
+              "onRequestError": [MockFunction],
+              "onRequestSuccess": [MockFunction],
+              "uri": "http://8base.com",
+              "withAuth": false,
+            }
+        `);
   });
 });
