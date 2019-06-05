@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
 
 const DYNO_QUERY = gql`
-  mutation {
+  query {
     sample {
-      id
+      success
     }
   }
 `;
@@ -51,12 +51,22 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
     onIdTokenExpired.mockImplementation(() => Promise.resolve());
     stub.mockReturnValueOnce(Observable.of({
       data: {
-        success: true,
+        sample: { 
+          success: true,
+        }
       },
     }));
 
     return new Promise((resolve, reject) => execute(link, { query: DYNO_QUERY }).subscribe(
-      () => null,
+      (data) => {
+        expect(data).toEqual({
+          data: {
+            sample: {
+              success: true,
+            },
+          },
+        });
+      },
       () => reject(),
       () => {
         expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
