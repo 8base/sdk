@@ -2,12 +2,12 @@
 import * as R from 'ramda';
 import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
-import { FieldSchema } from '../types';
+import { FieldSchema, Format } from '../types';
 
 export const getTableField = (tableField: FieldSchema) => tableField;
 
 
-export const getFieldType = createSelector(
+export const getFieldType: any = createSelector(
   getTableField,
   R.prop('fieldType'),
 );

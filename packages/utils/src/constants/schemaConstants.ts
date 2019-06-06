@@ -1,5 +1,15 @@
 
-export const FIELD_TYPE = {
+export const FIELD_TYPE: {
+  DATE: 'DATE',
+  FILE: 'FILE',
+  ID: 'ID',
+  NUMBER: 'NUMBER',
+  RELATION: 'RELATION',
+  SWITCH: 'SWITCH',
+  TEXT: 'TEXT',
+  SMART: 'SMART',
+  JSON: 'JSON',
+} = {
   DATE: 'DATE',
   FILE: 'FILE',
   ID: 'ID',
@@ -11,7 +21,14 @@ export const FIELD_TYPE = {
   JSON: 'JSON',
 };
 
-export const SWITCH_FORMATS = {
+export const SWITCH_FORMATS: { 
+  ON_OFF: 'ON_OFF',
+  YES_NO: 'YES_NO',
+  TRUE_FALSE: 'TRUE_FALSE',
+  ACTIVE_INACTIVE: 'ACTIVE_INACTIVE',
+  HIGH_LOW: 'HIGH_LOW',
+  CUSTOM: 'CUSTOM',
+ } = {
   ON_OFF: 'ON_OFF',
   YES_NO: 'YES_NO',
   TRUE_FALSE: 'TRUE_FALSE',
@@ -20,7 +37,28 @@ export const SWITCH_FORMATS = {
   CUSTOM: 'CUSTOM',
 };
 
-export const SWITCH_VALUES = {
+export const SWITCH_VALUES: {
+  ON_OFF: {
+    true: 'On',
+    false: 'Off',
+  },
+  YES_NO: {
+    true: 'Yes',
+    false: 'No',
+  },
+  TRUE_FALSE: {
+    true: 'True',
+    false: 'False',
+  },
+  ACTIVE_INACTIVE: {
+    true: 'Active',
+    false: 'Inactive',
+  },
+  HIGH_LOW: {
+    true: 'High',
+    false: 'Low',
+  },
+} = {
   ON_OFF: {
     true: 'On',
     false: 'Off',
@@ -43,7 +81,14 @@ export const SWITCH_VALUES = {
   },
 };
 
-export const TEXT_FORMATS = {
+export const TEXT_FORMATS: {
+  UNFORMATTED: 'UNFORMATTED',
+  NAME: 'NAME',
+  SSN: 'SSN',
+  EIN: 'EIN',
+  PHONE: 'PHONE',
+  EMAIL: 'EMAIL',
+} = {
   UNFORMATTED: 'UNFORMATTED',
   NAME: 'NAME',
   SSN: 'SSN',
@@ -52,7 +97,13 @@ export const TEXT_FORMATS = {
   EMAIL: 'EMAIL',
 };
 
-export const NUMBER_FORMATS = {
+export const NUMBER_FORMATS: {
+  NUMBER: 'NUMBER',
+  CURRENCY: 'CURRENCY',
+  PERCENTAGE: 'PERCENTAGE',
+  FRACTION: 'FRACTION',
+  SCIENTIFIC: 'SCIENTIFIC',
+} = {
   NUMBER: 'NUMBER',
   CURRENCY: 'CURRENCY',
   PERCENTAGE: 'PERCENTAGE',
@@ -60,27 +111,49 @@ export const NUMBER_FORMATS = {
   SCIENTIFIC: 'SCIENTIFIC',
 };
 
-export const FILE_FORMATS = {
+export const FILE_FORMATS: {
+  FILE: 'FILE',
+  IMAGE: 'IMAGE',
+} = {
   FILE: 'FILE',
   IMAGE: 'IMAGE',
 };
 
-export const SMART_FORMATS = {
+export const SMART_FORMATS: {
+  ADDRESS: 'ADDRESS',
+  PHONE: 'PHONE',
+
+} = {
   ADDRESS: 'ADDRESS',
   PHONE: 'PHONE',
 };
 
-export const DATE_FORMATS = {
+export const DATE_FORMATS: { 
+  DATE: 'DATE',
+  DATETIME: 'DATETIME',
+} = {
   DATE: 'DATE',
   DATETIME: 'DATETIME',
 };
 
-export const MUTATION_TYPE: { [key: string]: 'CREATE' | 'UPDATE' } = {
+export const MUTATION_TYPE: { 
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+} = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
 };
 
-export const SYSTEM_TABLES = {
+export const SYSTEM_TABLES: {
+  USERS: 'Users',
+  FILES: 'Files',
+  SETTINGS: 'Settings',
+  ROLES: 'Roles',
+  INVITATIONS: 'Invitations',
+  PERMISSIONS: 'Permissions',
+  API_TOKENS: 'ApiTokens',
+  ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
+} = {
   USERS: 'Users',
   FILES: 'Files',
   SETTINGS: 'Settings',

@@ -1,7 +1,7 @@
 import { throwIfMissingRequiredParameters, SDKError, ERROR_CODES } from '../../src';
 
 describe('throwIfMissingRequiredOption', () => {
-  const testFunction = (parameters) => {
+  const testFunction = (parameters: any) => {
     throwIfMissingRequiredParameters(
       [
         'key2',

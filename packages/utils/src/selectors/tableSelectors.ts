@@ -1,18 +1,18 @@
-import * as R from 'ramda';
+import R from 'ramda';
 import { createSelector, ParametricSelector } from 'reselect';
 import { FIELD_TYPE, SMART_FORMATS } from '../constants';
 import { TableSchema, FieldSchema } from '../types';
 
 export const getTable = (table: TableSchema) => table;
 
-export const getFieldById: ParametricSelector<TableSchema, string, Partial<FieldSchema>> =
+export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> =
   ({ fields } : TableSchema, fieldId: string) =>
     R.find(
       R.pipe(R.prop('id'), R.equals(fieldId)),
       fields,
-    ) || {};
+    );
 
-export const getFieldByName: ParametricSelector<TableSchema, string, Partial<FieldSchema>> =
+export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema | void> =
   (tableSchema: TableSchema, fieldName: string) => R.find(
     R.propEq('name', fieldName),
     tableSchema.fields,
@@ -20,9 +20,8 @@ export const getFieldByName: ParametricSelector<TableSchema, string, Partial<Fie
 
 export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = createSelector(
   getFieldById,
-  ({ fieldType }: Partial<FieldSchema>) => fieldType,
+  R.propOr('', 'fieldType')
 );
-
 
 export const isRelationField: ParametricSelector<TableSchema, string, boolean> = createSelector(
   getFieldTypeById,
@@ -51,7 +50,7 @@ export const isListField = createSelector(
 
 export const getFieldNameById = createSelector(
   getFieldById,
-  ({ name }: Partial<FieldSchema>) => name || '',
+  R.propOr('', 'name')
 );
 
 export const hasNonMetaFields: (schema?: TableSchema) => boolean = R.pipe(

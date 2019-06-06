@@ -6,16 +6,19 @@ import {
   FILE_FORMATS,
   DATE_FORMATS,
   MUTATION_TYPE,
+  SMART_FORMATS,
 } from './constants';
 
 export type MutationType = keyof typeof MUTATION_TYPE;
 
 export type FieldType =keyof typeof FIELD_TYPE;
 
-export type Format = keyof typeof SWITCH_FORMATS
+export type Format = 
+    keyof typeof SWITCH_FORMATS
   | keyof typeof TEXT_FORMATS
   | keyof typeof NUMBER_FORMATS
   | keyof typeof FILE_FORMATS
+  | keyof typeof SMART_FORMATS
   | keyof typeof DATE_FORMATS;
 
 export type FieldSchema = {

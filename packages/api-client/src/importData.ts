@@ -9,11 +9,11 @@ import {
 } from '@8base/utils';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import * as filestack from 'filestack-js';
-import * as R from 'ramda';
+import R from 'ramda';
 import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, USER_QUERY, FILE_UPLOAD_INFO_QUERY } from './constants';
-import { TableSchemaResponse } from './types';
+import { SchemaResponse } from './types';
 
 const getRemoteEntityId = (localData: { [key:string]: any }, fieldSchema: FieldSchema, $id: string, userId: string) => {
   let id = null;
@@ -72,13 +72,14 @@ export const importData = async (
   schemaData: { [key: string]: any },
   options: ImportOptions = {},
 ) => {
-  const { tablesList: { items: tableSchema } } = await request<TableSchemaResponse>(TABLES_LIST_QUERY, {
+  const { tablesList: { items: schema } } = await request<SchemaResponse>(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
     },
   });
 
   let fileUploadInfo = {} as any;
+
 
   try {
     ({ fileUploadInfo } = await request(FILE_UPLOAD_INFO_QUERY));
@@ -100,14 +101,20 @@ export const importData = async (
 
   for (const tableName of Object.keys(schemaData)) {
     localData[tableName] = {};
+    
+    const tableSchema = getTableSchemaByName(schema, tableName)
+    
+    if (!tableSchema) {
+      throw new Error(`Table with name ${tableName} not found`);
+    }
 
     for (let i = 0; i < schemaData[tableName].length / maxThreads; i++) {
       const tempData = schemaData[tableName].slice(i * maxThreads, (i + 1) * maxThreads);
 
       await Promise.all(tempData.map(async (item: any) => {
-        item = await uploadFiles(item, getTableSchemaByName(tableSchema, tableName), filestackClient, fileUploadInfo.path);
+        item = await uploadFiles(item, tableSchema, filestackClient, fileUploadInfo.path);
 
-        const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, tableSchema, {
+        const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, schema, {
           skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
         });
 
@@ -141,7 +148,7 @@ export const importData = async (
 
   for (const tableName of Object.keys(schemaData)) {
     for (const item of schemaData[tableName]) {
-      const data = formatDataForMutation(MUTATION_TYPE.UPDATE, tableName, item, tableSchema, {
+      const data = formatDataForMutation(MUTATION_TYPE.UPDATE, tableName, item, schema, {
         skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
         mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
           if (Array.isArray(plainValue)) {

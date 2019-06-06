@@ -25,7 +25,7 @@ const formatDataAfterQuery = (tableName: string, data: { [key: string]: any }, s
   }
 
   const formatedData = R.reduce((result: { [key: string]: any }, fieldName: string) => {
-    const fieldSchema = getFieldSchemaByName(tableSchema, fieldName);
+    const fieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
 
     if (!fieldSchema) {
       return result;

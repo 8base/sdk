@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@8base/apollo-client@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/apollo-client/-/apollo-client-0.25.1.tgz#ce6c5028c5fe2d3e5a21322ebbe6873993670644"
-  integrity sha512-RQoV7H47WEfIIBQfwdcTjFqdsyXBzQbvxRVlTLbLcd0XuDUwQEfBnlcIJji7jc0hJKhLTNDzrLukXJ8Sz800Og==
+"@8base/apollo-client@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/apollo-client/-/apollo-client-0.26.0.tgz#c89daf3cb4a35a05fa9279d879295684bde3c1dd"
+  integrity sha512-hyjQml8xU7Ti66RjcffSu/4P7Z0IrSGkzl6UE+6UU6W4kZmkFhE3h/ex8mZM5y+p3citDXsWTCytgJSaukkKIA==
   dependencies:
-    "@8base/apollo-links" "^0.25.1"
-    "@8base/utils" "^0.25.1"
+    "@8base/apollo-links" "^0.26.0"
+    "@8base/utils" "^0.26.0"
     apollo-cache-inmemory "^1.5.1"
     apollo-client "^2.5.1"
     apollo-link "1.2.11"
@@ -17,25 +17,26 @@
     graphql "0.13.0"
     graphql-tag "^2.10.0"
 
-"@8base/apollo-links@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/apollo-links/-/apollo-links-0.25.1.tgz#dfb58f9407218ba4711e4979b0def4a5be203f27"
-  integrity sha512-BMVbYHpzJarIYo14aDzkV/4kjgdOQe7Sm+CrcslcDzKeb2uYQzuI2q0ArU6cDn+ycUK3I5wMkGJ/NkVfzBpXrQ==
+"@8base/apollo-links@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/apollo-links/-/apollo-links-0.26.0.tgz#a31f7bccc14d1d38d6adc0ad298034878f9f0341"
+  integrity sha512-HOsRMnvdsdSKhoTBoJZOw+s0tjLAFMqdLUKdQSNT8GaN3TPiiysZPCs2nofy8Reyve+BwubU6N1TDAlbvZmVmg==
   dependencies:
     "@8base/error-codes" "^1.0.12"
-    "@8base/utils" "^0.25.1"
+    "@8base/utils" "^0.26.0"
     apollo-link "1.2.11"
     apollo-link-error "^1.1.10"
     graphql "0.13.0"
     graphql-tag "^2.9.2"
     ramda "^0.26.1"
+    zen-observable-ts "^0.8.18"
 
-"@8base/auth@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/auth/-/auth-0.25.1.tgz#809257e0c9bf0c9b1edaedcbda94cab7770c2e1c"
-  integrity sha512-d1vEGcryxf4Cvqxn31YAP1oeJcQChOlbU9z64Q7SETWifvLij/qzHWpQ68n3+T/8pRj1/R9Dh3jbApx/9SDFZw==
+"@8base/auth@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/auth/-/auth-0.26.0.tgz#29319c5feecba4950ada78f7dfdef2843e131d26"
+  integrity sha512-Xx1EAfkt8y9iH18vZg5cAZ6nCbwP99ViAn+FE0sfQxRiUFQRzGBEBUpqe6CEUwycwX5GMOJVoRF8FhIumiXcmQ==
   dependencies:
-    "@8base/utils" "^0.25.1"
+    "@8base/utils" "^0.26.0"
     "@babel/runtime" "^7.2.0"
     apollo-client "^2.5.1"
     recompose "^0.30.0"
@@ -58,12 +59,12 @@
     lodash "^4.17.11"
     pluralize "^7.0.0"
 
-"@8base/table-schema-provider@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/table-schema-provider/-/table-schema-provider-0.25.1.tgz#b19da4adab1acb17ae8f4ad4d8883b7451fe6c1a"
-  integrity sha512-ZtXqrzyMVGBbNcbXavJrMoOTefyeobRBOqnqA/fC6U5/1YH4EFRbDy4r2R1rNTXgVRRDZdSxrr+5biktOm4eew==
+"@8base/table-schema-provider@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/table-schema-provider/-/table-schema-provider-0.26.0.tgz#f1ffe51993a33ff41a59f3ab6f2a1de05b7de9e4"
+  integrity sha512-+ZxRlf6QYO2OBk0+x6crfnsfN4CobrtMfjzXI2sctCuXa3HVpjUubhGh/c3ueAeDHv8ZuCtNHS9I330gwRxIpA==
   dependencies:
-    "@8base/utils" "^0.25.1"
+    "@8base/utils" "^0.26.0"
     "@babel/runtime" "^7.3.1"
     apollo-client "^2.5.1"
     graphql-tag "^2.10.1"
@@ -71,10 +72,10 @@
     recompose "^0.30.0"
     reselect "^3.0.1"
 
-"@8base/utils@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.25.1.tgz#e59896b0a1e06ddedbf0927be3fd1463a05a07c0"
-  integrity sha512-aWUYZFVvSkQRUlG/jS7G5luDRhG7A78Pn3Il34eSyt9aB9IUusn/JyA/EKeEUNxqKIA+3zqC2/5G45M7SLQIeg==
+"@8base/utils@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/utils/-/utils-0.26.0.tgz#44887fc4a24b0fb08f3f7637033f0ae880d11315"
+  integrity sha512-IBWNzR5+HsBKQuqg09pYW7Qm/2J0CRoSHX0uPUBsOlbOnGwNra3UMakB+sGvE8Ie2GY8Oms/cn35X9IiULgOPA==
   dependencies:
     "@8base/schema-name-generator" "^0.1.1"
     "@babel/runtime" "^7.3.1"
@@ -82,12 +83,12 @@
     ramda "^0.26.1"
     reselect "^4.0.0"
 
-"@8base/web-auth0-auth-client@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@8base/web-auth0-auth-client/-/web-auth0-auth-client-0.25.1.tgz#dff2c15068fa6b094ac52cfe171da1452cbeec0d"
-  integrity sha512-SoeZOci1tFhiv/GVkFEtpRFpoDh3NhsgWDDMrgPEJzGjIT3MCRh7JDnKcI705aWAItLM7IVVktN6p8347crweg==
+"@8base/web-auth0-auth-client@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@8base/web-auth0-auth-client/-/web-auth0-auth-client-0.26.0.tgz#5e3509575654125049b337831647a830d8ba5fae"
+  integrity sha512-0tvoWW+X5tf4NHC4gJ6ItaEHmapjdf4rBhM8VdEFm0TaYfjeKAccJWXVlo3livHz0JfMc0sYUKoFDC77f+8Njw==
   dependencies:
-    "@8base/utils" "^0.25.1"
+    "@8base/utils" "^0.26.0"
     auth0-js "^9.9.1"
     ramda "^0.26.1"
 
@@ -483,11 +484,6 @@
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.2.tgz#3452a24edf9fea138b48fad4a0a028a683da1e40"
   integrity sha512-5tabW/i+9mhrfEOUcLDu2xBPsHJ+X5Orqy9FKpale3SjDA17j5AEpYq5vfy3oAeAHGcvANRCO3NV3d2D6q3NiA==
-
-"@types/ramda@^0.26.8":
-  version "0.26.8"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.8.tgz#e002612cca52e52f9176d577f4d6229c8c72a10a"
-  integrity sha512-PSMkNNhB900U2xcyndlkVjJeCXpVtf1yod0Kdq/ArsLDIE0tW8pLBChmQeJs4o4dfp3AEP+AGm6zIseZPU4ndA==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"

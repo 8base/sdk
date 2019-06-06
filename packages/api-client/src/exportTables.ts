@@ -1,9 +1,7 @@
-// @flow
 import { DocumentNode } from 'graphql';
-import { TableSchema } from '@8base/utils';
 
 import { TABLES_LIST_QUERY } from './constants';
-import { TableSchemaResponse } from './types';
+import { SchemaResponse } from './types';
 
 type ExportTablesConfig = {
   withSystemTables?: boolean
@@ -19,7 +17,7 @@ export const exportTables =
         },
       };
 
-    const tablesListData = await request<TableSchemaResponse>(TABLES_LIST_QUERY, variables);
+    const tablesListData = await request<SchemaResponse>(TABLES_LIST_QUERY, variables);
 
     return tablesListData.tablesList.items;
   };
