@@ -6,7 +6,6 @@ import { ApolloContainerPassedProps } from './types';
 
 const { TableSchemaProvider } = require('@8base/table-schema-provider');
 
-
 type EightBaseAppProviderProps = ApolloContainerPassedProps & { 
   authClient?: AuthClient & Authorizable,
   children: (renderProps: { loading: boolean }) => React.ReactNode,
@@ -28,6 +27,8 @@ const EightBaseAppProvider = ({
   onRequestError,
   extendLinks,
   children,
+  autoSignUp,
+  authProfileId,
 }: EightBaseAppProviderProps): any =>
   !!authClient
     ? (
@@ -38,6 +39,8 @@ const EightBaseAppProvider = ({
           extendLinks={ extendLinks }
           onRequestSuccess={ onRequestSuccess }
           onRequestError={ onRequestError }
+          autoSignUp={ autoSignUp }
+          authProfileId={ authProfileId }
         >
           <TableSchemaProvider>
             { children }

@@ -3,9 +3,9 @@ import { ApolloClientOptions, ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { AuthLink, SuccessLink } from '@8base/apollo-links';
+import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
-import { AuthState } from '@8base/utils';
+import { AuthState, SDKError, ERROR_CODES } from '@8base/utils';
 
 
 type EightBaseApolloClientCommon = {
@@ -19,6 +19,8 @@ type EightBaseApolloClientCommon = {
 
 type EightBaseApolloClientOptions = {
   withAuth?: boolean,
+  autoSignUp?: boolean,
+  authProfileId?: string,
   getAuthState?: () => Promise<AuthState>,
   getRefreshTokenParameters?: Function,
   onAuthSuccess?: Function,
@@ -54,6 +56,8 @@ class EightBaseApolloClient extends ApolloClient<Object> {
       onRequestError,
       extendLinks,
       withAuth = true,
+      autoSignUp = false,
+      authProfileId,
       ...rest
     } = config;
 
@@ -80,6 +84,24 @@ class EightBaseApolloClient extends ApolloClient<Object> {
       });
 
       links = [authLink, ...links];
+
+      if (autoSignUp) {
+        if (!authProfileId) {
+          throw new SDKError(
+            ERROR_CODES.MISSING_PARAMETER,
+            '@8base/apollo-client',
+            'Please provide authProfileId if you want to enable auto sign up.',
+          );
+        }
+
+        const signUpLink = new SignUpLink({
+          // @ts-ignore
+          getAuthState,
+          authProfileId,
+        });
+
+        links = [signUpLink, ...links];
+      }
     }
 
     if (typeof onRequestSuccess === 'function') {
@@ -101,3 +123,4 @@ class EightBaseApolloClient extends ApolloClient<Object> {
 }
 
 export { EightBaseApolloClient, gql, InMemoryCache };
+

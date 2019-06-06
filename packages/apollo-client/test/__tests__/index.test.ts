@@ -1,4 +1,5 @@
-import { AuthLink } from '@8base/apollo-links';
+import { ApolloLink } from 'apollo-link';
+import { AuthLink, SignUpLink } from '@8base/apollo-links';
 import { EightBaseApolloClient } from '../../src';
 
 jest.mock('apollo-client', () => ({
@@ -6,11 +7,10 @@ jest.mock('apollo-client', () => ({
 }));
 
 jest.mock('@8base/apollo-links', () => {
-  const { ApolloLink } = require('apollo-link');
-
   return {
     AuthLink: jest.fn(() => new ApolloLink()),
     SuccessLink: jest.fn(() => new ApolloLink()),
+    SignUpLink: jest.fn(() => new ApolloLink()),
   };
 });
 
@@ -23,6 +23,7 @@ describe('EightBaseApolloClient', () => {
   const onAuthError = jest.fn();
   const onIdTokenExpired = jest.fn();
   const uri = 'http://8base.com';
+  const authProfileId = 'someProfileId';
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -38,6 +39,8 @@ describe('EightBaseApolloClient', () => {
       onAuthSuccess,
       onAuthError,
       onIdTokenExpired,
+      autoSignUp: true,
+      authProfileId,
     });
 
     expect((AuthLink as any).mock.calls[0][0]).toEqual({
@@ -47,11 +50,38 @@ describe('EightBaseApolloClient', () => {
       onAuthSuccess,
       onIdTokenExpired,
     });
+
+    expect((SignUpLink as any).mock.calls[0][0]).toEqual({
+      getAuthState,
+      authProfileId,
+    });
   });
 
+  it('should create EightBaseApolloClient without auto sign up', () => {
+    new EightBaseApolloClient({
+      uri,
+      onRequestError,
+      onRequestSuccess,
+      getAuthState,
+      getRefreshTokenParameters,
+      onAuthSuccess,
+      onAuthError,
+      onIdTokenExpired,
+      autoSignUp: false,
+    });
+
+    expect((AuthLink as any).mock.calls[0][0]).toEqual({
+      getAuthState,
+      getRefreshTokenParameters,
+      onAuthError,
+      onAuthSuccess,
+      onIdTokenExpired,
+    });
+
+    expect(SignUpLink).not.toHaveBeenCalled();
+  });
 
   it('should create EightBaseApolloClient without auth', () => {
-
     new EightBaseApolloClient({
       withAuth: false,
       uri,
@@ -63,5 +93,7 @@ describe('EightBaseApolloClient', () => {
     });
 
     expect(AuthLink).not.toHaveBeenCalled();
+
+    expect(SignUpLink).not.toHaveBeenCalled();
   });
 });

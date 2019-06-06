@@ -27,6 +27,7 @@ export type ErrorLinkParameters = {
 export type AuthState = {
   workspaceId?: string,
   token?: string,
+  email?: string,
 };
 
 export type AuthHeadersLinkParameters = {
@@ -34,3 +35,9 @@ export type AuthHeadersLinkParameters = {
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;
+
+export type SignUpLinkParameters = {
+  getAuthState: () => Promise<AuthState>,
+  authProfileId: string,
+};
+

@@ -3,7 +3,6 @@ import { ReactNativeAuth0AuthClient } from '../../src';
 const ID_TOKEN = 'encoded id token';
 const ANOTHER_ID_TOKEN = 'another encoded id token';
 const WORKSPACE_ID = 'some workspace id';
-const PROFILE_ID = 'some profile id';
 const DOMAIN = 'https://test.auth0.com';
 const CLIENT_ID = 'some client id';
 
@@ -54,8 +53,6 @@ describe('ReactNativeAuth0AuthClient', () => {
   const client = new ReactNativeAuth0AuthClient({
     domain: DOMAIN,
     clientId: CLIENT_ID,
-    workspaceId: WORKSPACE_ID,
-    profileId: PROFILE_ID,
   });
 
   it('As a developer, i can authorize by the client', async () => {
@@ -76,8 +73,6 @@ describe('ReactNativeAuth0AuthClient', () => {
 
     expect(AuthSession.startAsync).toHaveBeenCalledWith({
       authUrl: `${DOMAIN}/authorize?`
-        + `${encodeURIComponent('workspace_id')}=${encodeURIComponent(WORKSPACE_ID)}&`
-        + `${encodeURIComponent('profile_id')}=${encodeURIComponent(PROFILE_ID)}&`
         + `${encodeURIComponent('client_id')}=${encodeURIComponent(CLIENT_ID)}&`
         + `${encodeURIComponent('response_type')}=${encodeURIComponent('id_token')}&`
         + `${encodeURIComponent('scope')}=${encodeURIComponent('openid email profile')}&`

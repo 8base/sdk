@@ -20,7 +20,8 @@
     "apollo-link-error": "^1.1.10",
     "graphql": "0.13.0",
     "graphql-tag": "^2.9.2",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "zen-observable-ts": "^0.8.18"
   },
   "devDependencies": {
     "@types/graphql": "^14.2.0",

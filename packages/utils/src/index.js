@@ -5,7 +5,6 @@ export * from './formatters';
 export * from './selectors';
 export * from './verifiers';
 export * from './queryGenerators';
-export * from './functionParameters';
 export * from './errors';
 
 export { tableSelectors };

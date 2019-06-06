@@ -1,6 +1,6 @@
 import * as auth0 from 'auth0-js';
 import * as R from 'ramda';
-import { throwIfMissingRequiredOption } from '@8base/utils';
+import { throwIfMissingRequiredParameters } from '@8base/utils';
 
 import {
   AuthState,
@@ -16,12 +16,6 @@ export type WebAuth0AuthClientOptions = {
   clientId: string,
   redirectUri: string,
   logoutRedirectUri: string,
-  workspaceId?: string,
-  profile?: {
-    id: string,
-    isDefault: boolean,
-  },
-  apiEndpoint?: string,
 };
 
 const DEFAULT_8BASE_API_ENDPOINT = 'https://api.8base.com/';
@@ -44,23 +38,8 @@ const getIdTokenPayload = R.propOr(undefined, 'idTokenPayload');
 
 const getState = R.propOr(undefined, 'state');
 
-const get8baseRedirectUri = (
-  originalRedirectUri: string,
-  workspaceId: string,
-  apiEndpoint: string = DEFAULT_8BASE_API_ENDPOINT,
-): string => {
-  const encodedOriginalRedirectUri = encodeURIComponent(originalRedirectUri);
-  const encodedWorkspaceId = encodeURIComponent(workspaceId);
-
-  return (new URL(
-    `/authRedirect?redirectUrl=${encodedOriginalRedirectUri}&workspace=${encodedWorkspaceId}`,
-    apiEndpoint,
-  )).toString();
-};
-
 /**
  * Create instacne of the web auth0 auth client.
- * @param {string} workspaceId Identifier of the 8base app workspace.
  * @param {string} domain Domain. See auth0 documentation.
  * @param {string} clientId Client id. See auth0 documentation.
  * @param {string} redirectUri Redurect uri. See auth0 documentation.
@@ -68,46 +47,22 @@ const get8baseRedirectUri = (
 class WebAuth0AuthClient implements AuthClient, Authorizable {
   auth0: auth0.WebAuth;
   logoutRedirectUri?: string;
-  workspaceId?: string;
-  profileId?: string;
 
   constructor(options: WebAuth0AuthClientOptions) {
-    throwIfMissingRequiredOption([
-      'domain', 'clientId', 'redirectUri', 'logoutRedirectUri',
-    ], options);
+    throwIfMissingRequiredParameters(
+      [
+        'domain', 'clientId', 'redirectUri', 'logoutRedirectUri',
+      ],
+      '@8base/web-auth0-auth-client',
+      options,
+    );
 
     const {
       domain,
       clientId,
-      profile,
-      workspaceId,
-      apiEndpoint,
+      redirectUri,
+      logoutRedirectUri,
     } = options;
-    let { redirectUri, logoutRedirectUri } = options;
-
-    if (profile) {
-      throwIfMissingRequiredOption([
-        'workspaceId',
-        ['profile', 'id'],
-      ], options);
-
-      this.workspaceId = workspaceId;
-      this.profileId = profile.id;
-
-      if (profile.isDefault && workspaceId) {
-        redirectUri = get8baseRedirectUri(
-          redirectUri,
-          workspaceId,
-          apiEndpoint,
-        );
-
-        logoutRedirectUri = get8baseRedirectUri(
-          logoutRedirectUri,
-          workspaceId,
-          apiEndpoint,
-        );
-      }
-    }
 
     this.logoutRedirectUri = logoutRedirectUri;
     this.auth0 = new auth0.WebAuth({
@@ -123,10 +78,8 @@ class WebAuth0AuthClient implements AuthClient, Authorizable {
 
   // @ts-ignore Check this logic. Why in the interface defines Promise<AuthData> in return value?
   authorize = async (options: Object = {}): Promise<void> => {
+    // @ts-ignore 
     this.auth0.authorize({
-      // @ts-ignore Check typings. Authorize options has no workspaceId property!
-      workspaceId: this.workspaceId,
-      profileId: this.profileId,
       ...options,
     });
   };

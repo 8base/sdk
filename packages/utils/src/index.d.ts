@@ -159,7 +159,7 @@ export const getTableSchemaByName: (schema: TableSchema[], name: string) => Tabl
 
 export const getTableSchemaById: (schema: TableSchema[], id: string) => TableSchema;
 
-export const throwIfMissingRequiredOption: Function;
+export const throwIfMissingRequiredParameters: Function;
 
 export const formatDataForMutation: Function;
 
@@ -192,3 +192,22 @@ export interface Authorizable {
   changePassword(): Promise<{ email: string }>,
   logout(options?: Object): Promise<void>,
 }
+
+export class SDKError extends Error {
+  name: string;
+  code: string;
+  packageName: string;
+  message: string;
+
+  constructor(code: string, packageName: string, message: string);
+
+  toString(): string;
+
+  toJSON(): {};
+}
+
+export const ERROR_CODES: {
+  UNSUPPORTED_FIELD_TYPE: 'UnsupportedFieldType',
+  MISSING_PARAMETER: 'MissingParameter',
+};
+
