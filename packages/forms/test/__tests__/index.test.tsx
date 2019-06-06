@@ -1,10 +1,10 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import * as renderer from 'react-test-renderer';
 import { TableSchemaContext } from '@8base/table-schema-provider';
 
 import { Form, Field, Fieldset, FieldArray } from '../../src';
 
-const TABLE_SCHEMA = {
+const TABLE_SCHEMA: any = {
   id: 'TABLE_SCHEMA_ID',
   name: 'tableSchema',
   displayName: 'Table Schema',
@@ -85,7 +85,7 @@ const TABLE_SCHEMA = {
   ],
 };
 
-const RELATION_TABLE_SCHEMA = {
+const RELATION_TABLE_SCHEMA: any = {
   id: 'RELATION_TABLE_SCHEMA_ID',
   name: 'relationTableSchema',
   displayName: 'Relation Table Schema',
@@ -166,9 +166,9 @@ const RELATION_TABLE_SCHEMA = {
   ],
 };
 
-let mockCreateValidate = null;
+let mockCreateValidate: any = null;
 
-jest.mock('@8base/validate', () => (...args) => mockCreateValidate(...args));
+jest.mock('@8base/validate', () => (...args: any) => mockCreateValidate(...args));
 
 describe('As a developer, while I implementet a form,', () => {
   mockCreateValidate = jest.fn((fieldSchema) => () => fieldSchema.name);
@@ -194,7 +194,7 @@ describe('As a developer, while I implementet a form,', () => {
     <TableSchemaContext.Provider value={ [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }>
       <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ jest.fn() }>
         {
-          (renderProps) => TestForm(renderProps, ({ handleSubmit }) => (
+          (renderProps) => TestForm(renderProps, ({ handleSubmit }: any) => (
             <form onSubmit={ handleSubmit }>
               <Field name="scalar" component={ TestField } />
               <FieldArray name="scalarList">

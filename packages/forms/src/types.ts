@@ -1,68 +1,41 @@
-// @flow
-import type { FormApi, FieldState as FinalFieldState } from 'final-form';
-import type { FormProps as FinalFormProps, FieldProps as FinalFieldProps } from 'react-final-form';
-import type { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
-import type { FieldType } from '@8base/utils';
-import type { PreparedValidator } from '@8base/validate';
+import React from 'react';
+import { FormApi, FieldState as FinalFieldState } from 'final-form';
+import { FormProps as FinalFormProps, FieldProps as FinalFieldProps } from 'react-final-form';
+import { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays';
+import { FieldType, TableSchema, FieldSchema, Schema } from '@8base/utils';
+import { PreparedValidator } from '@8base/validate';
 
-type FieldSchema = {
-  name: string,
-  displayName?: string,
-  description: ?string,
-  fieldType: FieldType,
-  fieldTypeAttributes: Object,
-  isList: boolean,
-  isRequired: boolean,
-  isUnique: boolean,
-  defaultValue: any,
-  relation: ?Object,
-};
-
-type TableSchema = {
-  name: string,
-  displayName?: string,
-  isSystem: boolean,
-  fields: Array<FieldSchema>,
-};
-
-type Schema = Array<TableSchema>;
 
 type SchemaContextValue = Schema;
 
 type RenderableProps = {
-  component?: React$ComponentType<any>,
-  children?: ((props: Object) => React$Node) | React$Node,
-  render?: (props: Object) => React$Node,
+  component?: React.ComponentType<any>,
+  children?: ((props: Object) => React.ReactNode) | React.ReactNode,
+  render?: (props: Object) => React.ReactNode,
 };
 
-type FormContextValue = {|
+type FormContextValue = {
   tableSchema?: TableSchema,
-|};
+};
 
 type FormProps = {
-  tableSchema?: TableSchema,
-  schema?: Schema,
+  tableSchemaName?: string,
   type?: 'CREATE' | 'UPDATE',
   ignoreNonTableFields?: boolean,
   formatRelationToIds?: boolean,
-  permissions?: Object,
-  onSuccess: (result: any, form: FormApi) => void,
+  permissions?: any,
+  onSuccess?: (result: any, form: FormApi) => void,
 } & FinalFormProps;
 
 type FieldsetProps = {
-  tableSchema: TableSchema,
-  children: React$Node,
+  tableSchemaName?: string,
 } & RenderableProps;
 
 type FieldProps = {
-  fieldSchema?: FieldSchema,
-  validate?: (value: ?any, allValues: Object, meta: ?FinalFieldState, validateFieldSchema: PreparedValidator) => ?any,
+  validate?: (value: any, allValues: Object, meta: FinalFieldState | null, validateFieldSchema: PreparedValidator) => any,
 } & FinalFieldProps;
 
-type FieldArrayProps = FinalFieldArrayProps;
-
-export type {
-  FieldArrayProps,
+export {
   FieldProps,
   FieldSchema,
   FieldsetProps,

@@ -1,3 +1,8 @@
-export * from './validator';
+import { validatorFacade } from './validator';
+import defaultTo from 'ramda/es/defaultTo';
 
-export { validatorFacade as default } from './validator';
+export * from './validator';
+export const createValidate = validatorFacade;
+export default createValidate;
+
+console.log(createValidate);

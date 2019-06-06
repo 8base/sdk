@@ -1,8 +1,7 @@
-// @flow
 import React from 'react';
 
 import { logError } from './log';
-import type { RenderableProps } from '../types';
+import { RenderableProps } from '../types';
 
 const renderComponent = (props: RenderableProps) => {
   const { render, children, component, ...rest } = props;

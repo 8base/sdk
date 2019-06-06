@@ -1,39 +1,40 @@
-// @flow
 import React from 'react';
 import { compose, setDisplayName } from 'recompose';
 
 import { FormContext } from './FormContext';
-import { withTableSchema, renderComponent } from './utils';
-import type { FieldsetProps, FormContextValue } from './types';
+import { withTableSchema, renderComponent, WithTableSchemaProps } from './utils';
+import { FieldsetProps, FormContextValue, RenderableProps } from './types';
+
+const enhacner: any = compose(
+  withTableSchema,
+  setDisplayName('Fieldset'),
+)
 
 /**
  * `Fieldset` passes relation table schema to the children fields.
  * @prop {TableSchema} [tableSchema] - The 8base API table schema.
  * @prop {string} [tableSchemaName] - The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
  */
-class Fieldset extends React.Component<FieldsetProps> {
-  collectContextValue = (): FormContextValue => {
-    const { tableSchema } = this.props;
+const Fieldset: React.ComponentType<FieldsetProps> = enhacner(
+  class Fieldset extends React.Component<FieldsetProps & WithTableSchemaProps> {
+    collectContextValue = (): FormContextValue => {
+      const { tableSchema } = this.props;
 
-    return { tableSchema };
-  };
+      return { tableSchema };
+    };
 
-  render() {
-    const contextValue: FormContextValue = this.collectContextValue();
+    render() {
+      const contextValue: FormContextValue = this.collectContextValue();
 
-    const rendered = renderComponent(this.props);
+      const rendered = renderComponent(this.props);
 
-    return (
-      <FormContext.Provider value={ contextValue }>
-        { rendered }
-      </FormContext.Provider>
-    );
+      return (
+        <FormContext.Provider value={ contextValue }>
+          { rendered }
+        </FormContext.Provider>
+      );
+    }
   }
-}
-
-Fieldset = compose(
-  withTableSchema,
-  setDisplayName('Fieldset'),
-)(Fieldset);
+)
 
 export { Fieldset };

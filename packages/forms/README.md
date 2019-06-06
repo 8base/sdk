@@ -114,7 +114,7 @@ const TABLE_SCHEMA = {
 };
 
 render(
-  <Form type="CREATE" tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
+  <Form type="CREATE" onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
         <form onSubmit={ handleSubmit }>
@@ -200,7 +200,7 @@ const TABLE_SCHEMA = {
 };
 
 render(
-  <Form type="CREATE" tableSchema={TABLE_SCHEMA} onSubmit={onSubmit}>
+  <Form type="CREATE" onSubmit={onSubmit}>
     {
       ({ handleSubmit }) => (
         <form onSubmit={ handleSubmit }>

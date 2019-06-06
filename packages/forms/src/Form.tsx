@@ -1,119 +1,121 @@
-// @flow
 import React from 'react';
-import * as R from 'ramda';
+import R from 'ramda';
 import { FORM_ERROR } from 'final-form';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
-import type { FormProps as FinalFormProps } from 'react-final-form';
-import { formatDataForMutation, formatDataAfterQuery, MUTATION_TYPE } from '@8base/utils';
+import { FormProps as FinalFormProps } from 'react-final-form';
+import { formatDataForMutation, formatDataAfterQuery, MUTATION_TYPE, FieldSchema } from '@8base/utils';
 import errorCodes from '@8base/error-codes';
 import { isAllowed } from '@8base/permissions-provider';
 
 import { FormContext } from './FormContext';
-import { withTableSchema } from './utils';
-import type { FormProps, FormContextValue } from './types';
+import { withTableSchema, WithTableSchemaProps } from './utils';
+import { FormProps, FormContextValue } from './types';
+
+const enhancer: any = compose(
+  withTableSchema,
+  setDisplayName('Form'),
+)
 
 /**
  * `Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FormProps`](https://github.com/final-form/react-final-form#formprops) props and some extra props for easy working with 8base API.
  * @prop {TableSchema} [tableSchema] - The 8base API table schema.
  * @prop {string} [tableSchemaName] - The name of the 8base API table schema.
  */
-class Form extends React.Component<FormProps> {
-  static defaultProps = {
-    mutators: {},
-    ignoreNonTableFields: true,
-  };
-
-  collectProps = (): FinalFormProps => {
-    const {
-      mutators,
-      tableSchema,
-      type,
-      schema,
-      onSubmit,
-      initialValues,
-      onSuccess,
-      ignoreNonTableFields,
-      permissions,
-      formatRelationToIds,
-      ...restProps
-    } = this.props;
-
-    const collectedProps = {
-      mutators: R.merge(arrayMutators, mutators),
-      tableSchema,
-      onSubmit,
-      initialValues,
-      ...restProps,
+const Form: React.ComponentType<FormProps> = enhancer(
+  class Form extends React.Component<FormProps & WithTableSchemaProps> {
+    static defaultProps = {
+      mutators: {},
+      ignoreNonTableFields: true,
     };
 
-    if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
-      collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, { formatRelationToIds });
-    }
+    collectProps = (): FinalFormProps => {
+      const {
+        mutators,
+        tableSchema,
+        type,
+        schema,
+        onSubmit,
+        initialValues,
+        onSuccess,
+        ignoreNonTableFields,
+        permissions,
+        formatRelationToIds,
+        ...restProps
+      } = this.props;
 
-    const skipData = (value, fieldSchema) =>
-      !isAllowed({
-        resource: tableSchema && tableSchema.name,
-        type: 'data',
-        permission: type && type.toLowerCase(),
-        field: fieldSchema.name,
-      }, permissions);
+      const collectedProps = {
+        mutators: R.merge(arrayMutators, mutators),
+        tableSchema,
+        onSubmit,
+        initialValues,
+        ...restProps,
+      };
 
-    collectedProps.onSubmit = async (data, ...rest) => {
-      let result = null;
-
-      try {
-        const formattedData = (type && tableSchema && schema)
-          ? formatDataForMutation(type, tableSchema.name, data, schema, { ignoreNonTableFields, skip: permissions && skipData })
-          : data;
-
-        result = await onSubmit(formattedData, ...rest);
-      } catch (e) {
-        result = R.assoc('errors', e.graphQLErrors, result);
+      if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
+        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, { formatRelationToIds });
       }
 
-      const errors = R.pathOr([], ['errors'], result);
+      const skipData = (value: any, fieldSchema: FieldSchema) =>
+        !isAllowed({
+          resource: tableSchema && tableSchema.name,
+          type: 'data',
+          permission: type && type.toLowerCase(),
+          field: fieldSchema.name,
+        }, permissions);
 
-      if (errors.length > 0) {
-        const error = errors[0];
+      collectedProps.onSubmit = async (data, ...rest) => {
+        let result = null;
 
-        if (error.code === errorCodes.ValidationErrorCode) {
-          return error.details;
+        try {
+          const formattedData = (type && tableSchema && schema)
+            ? formatDataForMutation(type, tableSchema.name, data, schema, { ignoreNonTableFields, skip: permissions && skipData })
+            : data;
+
+          result = await onSubmit(formattedData, ...rest);
+        } catch (e) {
+          result = R.assoc('errors', e.graphQLErrors, result);
         }
 
-        return { [FORM_ERROR]: error.message };
-      }
+        const errors = R.pathOr([], ['errors'], result);
 
-      if (typeof onSuccess === 'function') {
-        onSuccess(result, ...rest);
-      }
+        if (errors.length > 0) {
+          const error = errors[0];
+
+          if (error.code === errorCodes.ValidationErrorCode) {
+            return error.details;
+          }
+
+          return { [FORM_ERROR]: error.message };
+        }
+
+        if (typeof onSuccess === 'function') {
+          // @ts-ignore
+          onSuccess(result, ...rest);
+        }
+      };
+
+      return collectedProps;
     };
 
-    return collectedProps;
-  };
+    collectContextValue = (): FormContextValue => {
+      const { tableSchema } = this.props;
 
-  collectContextValue = (): FormContextValue => {
-    const { tableSchema } = this.props;
+      return { tableSchema };
+    };
 
-    return { tableSchema };
-  };
+    render() {
+      const props: FinalFormProps = this.collectProps();
+      const contextValue: FormContextValue = this.collectContextValue();
 
-  render() {
-    const props: FinalFormProps = this.collectProps();
-    const contextValue: FormContextValue = this.collectContextValue();
-
-    return (
-      <FormContext.Provider value={ contextValue }>
-        <FinalForm { ...props } />
-      </FormContext.Provider>
-    );
+      return (
+        <FormContext.Provider value={ contextValue }>
+          <FinalForm { ...props } />
+        </FormContext.Provider>
+      );
+    }
   }
-}
-
-Form = compose(
-  withTableSchema,
-  setDisplayName('Form'),
-)(Form);
+)
 
 export { Form };

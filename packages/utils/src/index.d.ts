@@ -181,6 +181,7 @@ export const createTableRowUpdateTag: Function;
 export const createTableRowDeleteTag: Function;
 export const createTableRowQueryTag: Function;
 export const createTableFilterGraphqlTag: Function;
+export const formatDataAfterQuery: Function;
 
 export type AuthState = {
   email?: string,

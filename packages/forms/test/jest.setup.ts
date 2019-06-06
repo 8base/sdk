@@ -1,4 +1,4 @@
-import TestUtils from 'react-dom/test-utils';
+import * as TestUtils from 'react-dom/test-utils';
 
 global.sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 

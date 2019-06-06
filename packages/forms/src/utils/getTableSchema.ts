@@ -1,9 +1,8 @@
-// @flow
-import * as R from 'ramda';
+import R from 'ramda';
 
-import type { TableSchema, Schema } from '../types';
+import { TableSchema, Schema } from '../types';
 
-const getTableSchema = (schema: Schema, tableName: string): ?TableSchema => R.find(
+const getTableSchema = (schema: Schema, tableName: string): TableSchema  | void=> R.find(
   R.propEq('name', tableName),
   schema,
 );

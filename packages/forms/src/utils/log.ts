@@ -1,6 +1,5 @@
-//@flow
 
-const executeIfNotProduction = (func) => {
+const executeIfNotProduction = (func: Function) => {
   if (process.env.NODE_ENV !== 'production') {
     func();
   }
