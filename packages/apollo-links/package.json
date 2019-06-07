@@ -6,10 +6,8 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build:clean": "rimraf dist",
-    "build:ts": "tsc",
-    "build": "yarn build:clean && yarn build:ts",
-    "watch": "yarn build --watch",
+    "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
     "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
     "test": "NPM_ENV=test jest"
   },

@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "eslint": "eslint .",
-    "flow": "flow check",
     "postinstall": "lerna bootstrap",
     "build-packages": "lerna run build",
     "link-packages": "./bin/link-packages.sh",
@@ -11,14 +10,6 @@
     "bump": "lerna version --force-publish"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
     "@types/enzyme": "^3.9.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.13",
@@ -26,14 +17,6 @@
     "@types/react": "^16.8.19",
     "@types/react-test-renderer": "^16.8.1",
     "@types/recompose": "^0.30.6",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.7.0",
-    "eslint-config-react-app": "^3.0.4",
-    "eslint-plugin-flowtype": "^2.41.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "flow-bin": "^0.76.0",
     "lerna": "^3.4.3",
     "rimraf": "^2.6.3",
     "utility-types": "^3.7.0"

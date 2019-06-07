@@ -11,8 +11,6 @@ install:
 - yarn build-packages
 
 script:
-- yarn flow
-- yarn eslint
 - yarn test
 
 deploy:

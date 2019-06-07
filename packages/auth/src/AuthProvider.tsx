@@ -1,6 +1,4 @@
-// @flow
-
-import * as React from 'react';
+import React from 'react';
 import { AuthState, AuthClient, Authorizable } from '@8base/utils';
 
 import { AuthContext } from './AuthContext';

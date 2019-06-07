@@ -1,9 +1,0 @@
-coverage
-node_modules
-lib
-dist
-build
-es
-flow-typed
-packages/local-*
-packages/*
