@@ -52,7 +52,13 @@ it('As a developer, I can send queries with graphql tag.', async () => {
 
   const client = new Client('https://api.test.8base.com');
 
-  await client.request(gql`query { companyName }`);
+  await client.request(
+    gql`
+      query {
+        companyName
+      }
+    `,
+  );
 
   const request = await requestPromise;
 
@@ -64,10 +70,10 @@ it('When client receive token expired error, it should refresh token and repeat 
     errors: [
       {
         code: errorCodes.TokenExpiredErrorCode,
-        message: 'Token expired',
         details: {
           token: 'jwt expired',
         },
+        message: 'Token expired',
       },
     ],
   });
@@ -75,8 +81,8 @@ it('When client receive token expired error, it should refresh token and repeat 
   const refreshTokenRequestPromise = global.mockRequest('https://api.test.8base.com', 200, {
     data: {
       userRefreshToken: {
-        refreshToken: 'newRefreshToken',
         idToken: 'newIdToken',
+        refreshToken: 'newRefreshToken',
       },
     },
   });
@@ -101,10 +107,12 @@ it('When client receive token expired error, it should refresh token and repeat 
 
 it('When client receive other errors, it should throw that error.', async () => {
   global.mockRequest('https://api.test.8base.com', 502, {
-    errors: [{
-      code: errorCodes.InvalidTokenErrorCode,
-    }],
     data: null,
+    errors: [
+      {
+        code: errorCodes.InvalidTokenErrorCode,
+      },
+    ],
   });
 
   global.mockRequest('https://api.test.8base.com');
@@ -117,7 +125,13 @@ it('When client receive other errors, it should throw that error.', async () => 
   let error = null;
 
   try {
-    await client.request(gql`query { companyName }`);
+    await client.request(
+      gql`
+        query {
+          companyName
+        }
+      `,
+    );
   } catch (err) {
     error = err;
   }
@@ -138,7 +152,13 @@ it('When client receive network errors, it should throw that error.', async () =
   let error = null;
 
   try {
-    await client.request(gql`query { companyName }`);
+    await client.request(
+      gql`
+        query {
+          companyName
+        }
+      `,
+    );
   } catch (err) {
     error = err;
   }
@@ -172,9 +192,7 @@ it('When client receive refresh token expired error, it should throw cant refres
             column: 3,
           },
         ],
-        path: [
-          'userRefreshToken',
-        ],
+        path: ['userRefreshToken'],
         code: errorCodes.TokenExpiredErrorCode,
         details: {
           refreshToken: 'Refresh Token has expired',
@@ -191,7 +209,13 @@ it('When client receive refresh token expired error, it should throw cant refres
   let error = null;
 
   try {
-    await client.request(gql`query { companyName }`);
+    await client.request(
+      gql`
+        query {
+          companyName
+        }
+      `,
+    );
   } catch (err) {
     error = err;
   }

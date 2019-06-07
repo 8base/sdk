@@ -1,9 +1,6 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
-const isEmpty = R.anyPass([
-  R.isEmpty,
-  R.isNil,
-]);
+const isEmpty = R.anyPass([R.isEmpty, R.isNil]);
 
 export const isEmptyAddress = R.anyPass([
   isEmpty,

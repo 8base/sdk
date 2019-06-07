@@ -1,21 +1,14 @@
 import { not, has } from 'ramda';
-import {
-  ApolloLink,
-  Observable,
-  Operation,
-  NextLink,
-  FetchResult,
-} from 'apollo-link';
+import { ApolloLink, Observable, Operation, NextLink, FetchResult } from 'apollo-link';
 
-
-type SuccessHandler = (options: { operation: Operation, data: any }) => void;
+type SuccessHandler = (options: { operation: Operation; data: any }) => void;
 
 type SuccessLinkParameters = {
-  successHandler: SuccessHandler,
+  successHandler: SuccessHandler;
 };
 
 export class SuccessLink extends ApolloLink {
-  successHandler: SuccessHandler;
+  public successHandler: SuccessHandler;
 
   constructor({ successHandler }: SuccessLinkParameters) {
     super();
@@ -23,21 +16,19 @@ export class SuccessLink extends ApolloLink {
     this.successHandler = successHandler;
   }
 
-  request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    return new Observable(
-      observer => {
-        forward(operation).subscribe({
-          next: (data) => {
-            if (not(has('errors', data))) {
-              this.successHandler({ operation, data });
-            }
+  public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
+    return new Observable(observer => {
+      forward(operation).subscribe({
+        complete: (...args) => observer.complete(...args),
+        error: (...args) => observer.error(...args),
+        next: data => {
+          if (not(has('errors', data))) {
+            this.successHandler({ operation, data });
+          }
 
-            observer.next(data);
-          },
-          error: (...args) => observer.error(...args),
-          complete: (...args) => observer.complete(...args),
-        });
-      },
-    );
+          observer.next(data);
+        },
+      });
+    });
   }
 }

@@ -1,15 +1,9 @@
-import {
-  Observable,
-  execute,
-  ApolloLink,
-  DocumentNode,
-  Operation,
-} from 'apollo-link';
+import { Observable, execute, ApolloLink, DocumentNode, Operation } from 'apollo-link';
 import gql from 'graphql-tag';
 
 import { AuthLink } from '../../src/AuthLink';
 
-describe('As a developer, I can use \'AuthLink\' to send authorized requests and refresh token when it required', () => {
+describe("As a developer, I can use 'AuthLink' to send authorized requests and refresh token when it required", () => {
   const query: DocumentNode = gql`
     mutation {
       sample {
@@ -22,20 +16,17 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
   const stubLink: any = jest.fn(() => Observable.of());
   const onIdTokenExpired = jest.fn();
   const authLink: ApolloLink = new AuthLink({
-    getAuthState: () => Promise.resolve({
-      workspaceId,
-      token,
-    }),
+    getAuthState: () =>
+      Promise.resolve({
+        workspaceId,
+        token,
+      }),
     onIdTokenExpired,
   });
-  const links: ApolloLink = ApolloLink.from([
-    authLink,
-    stubLink,
-  ]);
+  const links: ApolloLink = ApolloLink.from([authLink, stubLink]);
 
-  it(
-    'adds headers for the authorization by default',
-    () => new Promise((resolve, reject) => {
+  it('adds headers for the authorization by default', () =>
+    new Promise((resolve, reject) => {
       execute(links, { query }).subscribe(
         () => null,
         () => reject(),
@@ -54,6 +45,5 @@ describe('As a developer, I can use \'AuthLink\' to send authorized requests and
           resolve();
         },
       );
-    }),
-  );
+    }));
 });

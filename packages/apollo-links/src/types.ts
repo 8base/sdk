@@ -1,17 +1,17 @@
 export type ErrorObject = {
-  code: string,
-  message: string,
+  code: string;
+  message: string;
 };
 
 export type RefreshTokenQueryInput = {
-  refreshToken: string,
-  email: string,
+  refreshToken: string;
+  email: string;
 };
 
 type GraphQLError = {
-  code: string,
-  details: {},
-  message: string,
+  code: string;
+  details: {};
+  message: string;
 };
 
 export type TokenRefreshLinkParameters = {
@@ -20,24 +20,23 @@ export type TokenRefreshLinkParameters = {
 };
 
 export type ErrorLinkParameters = {
-  onGraphQLErrors?: (error: GraphQLError[]) => void,
-  onNetworkError?: (error: {}) => void,
+  onGraphQLErrors?: (error: GraphQLError[]) => void;
+  onNetworkError?: (error: {}) => void;
 };
 
 export type AuthState = {
-  workspaceId?: string,
-  token?: string,
-  email?: string,
+  workspaceId?: string;
+  token?: string;
+  email?: string;
 };
 
 export type AuthHeadersLinkParameters = {
-  getAuthState: () => Promise<AuthState>,
+  getAuthState: () => Promise<AuthState>;
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;
 
 export type SignUpLinkParameters = {
-  getAuthState: () => Promise<AuthState>,
-  authProfileId: string,
+  getAuthState: () => Promise<AuthState>;
+  authProfileId: string;
 };
-

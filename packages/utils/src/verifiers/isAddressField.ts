@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
 import { FIELD_TYPE, SMART_FORMATS } from '../constants';
 import { FieldSchema } from '../types';

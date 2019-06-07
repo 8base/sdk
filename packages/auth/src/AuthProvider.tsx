@@ -1,25 +1,24 @@
 import React from 'react';
-import { AuthState, AuthClient, Authorizable } from '@8base/utils';
+import { AuthState, IAuthClient, IAuthorizable } from '@8base/utils';
 
 import { AuthContext } from './AuthContext';
 
 type AuthProviderProps = {
-  children: React.ReactNode,
-  authClient: AuthClient & Authorizable,
+  children: React.ReactNode;
+  authClient: IAuthClient & IAuthorizable;
 };
 
 type AuthProviderState = {
-  isAuthorized: boolean,
-  authState: AuthState,
+  isAuthorized: boolean;
+  authState: AuthState;
 };
 
 /**
  * Provides access to the authentication state.
  * @property {React$Node} children Children of the provider.
- * @property {AuthClient} authClient Instance of the auth client.
+ * @property {IAuthClient} authClient Instance of the auth client.
  */
 class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState> {
-
   constructor(props: AuthProviderProps) {
     super(props);
 
@@ -28,12 +27,12 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     }
 
     this.state = {
-      isAuthorized: false,
       authState: {},
+      isAuthorized: false,
     };
   }
 
-  updateState = async () => {
+  public updateState = async () => {
     const { authClient } = this.props;
 
     const isAuthorized = await authClient.checkIsAuthorized();
@@ -42,18 +41,18 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     this.setState({ isAuthorized, authState });
   };
 
-  async componentDidMount() {
+  public async componentDidMount() {
     await this.updateState();
   }
 
-  setAuthState = async (state: AuthState): Promise<void> => {
+  public setAuthState = async (state: AuthState): Promise<void> => {
     const { authClient } = this.props;
 
     await authClient.setAuthState(state);
     await this.updateState();
   };
 
-  purgeAuthState = async (): Promise<void> => {
+  public purgeAuthState = async (): Promise<void> => {
     const { authClient } = this.props;
 
     await authClient.purgeAuthState();
@@ -61,7 +60,7 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     await this.updateState();
   };
 
-  render() {
+  public render() {
     const { children, authClient } = this.props;
     const { isAuthorized, authState } = this.state;
 
@@ -69,13 +68,13 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
       <AuthContext.Provider
         value={{
           ...authClient,
-          setAuthState: this.setAuthState,
-          purgeAuthState: this.purgeAuthState,
-          isAuthorized,
           authState,
+          isAuthorized,
+          purgeAuthState: this.purgeAuthState,
+          setAuthState: this.setAuthState,
         }}
       >
-        { children }
+        {children}
       </AuthContext.Provider>
     );
   }

@@ -1,12 +1,5 @@
-import {
-  ApolloLink,
-  Observable,
-  createOperation,
-  Operation,
-  NextLink,
-  FetchResult,
-} from 'apollo-link';
-import * as R from 'ramda';
+import { ApolloLink, Observable, createOperation, Operation, NextLink, FetchResult } from 'apollo-link';
+import R from 'ramda';
 import { ZenObservable } from 'zen-observable-ts';
 
 import { hasUserNotExistError } from './utils';
@@ -20,10 +13,10 @@ import { SIGNUP_MUTATION } from './graphql/mutations';
  * @param {String} options.authProfileId - Auth Profile Id copied from 8base authentication page.
  */
 export class SignUpLink extends ApolloLink {
-  getAuthState: () => Promise<AuthState>;
-  authProfileId: string;
-  signUpPromise: Promise<undefined> | null;
-  fetching: boolean;
+  public getAuthState: () => Promise<AuthState>;
+  public authProfileId: string;
+  public signUpPromise: Promise<undefined> | null;
+  public fetching: boolean;
 
   constructor({ getAuthState, authProfileId }: SignUpLinkParameters) {
     super();
@@ -34,7 +27,7 @@ export class SignUpLink extends ApolloLink {
     this.fetching = false;
   }
 
-  request(operation: Operation, forward: NextLink): Observable<FetchResult> {
+  public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     return new Observable(observer => {
       let subscription: ZenObservable.Subscription | null = null;
 
@@ -49,19 +42,13 @@ export class SignUpLink extends ApolloLink {
           })
           .catch(error => {
             observer.error(error);
-          })
+          });
       };
 
       const subscriber = {
-        next: (data: any) => {
-          const errors = data.errors || [];
-
-          if (hasUserNotExistError(errors)) {
-            this.fetching = true;
-
-            handleUserNotExistError();
-          } else {
-            observer.next(data);
+        complete: () => {
+          if (!this.fetching) {
+            observer.complete();
           }
         },
         error: (error: any) => {
@@ -73,9 +60,15 @@ export class SignUpLink extends ApolloLink {
             observer.error(error);
           }
         },
-        complete: () => {
-          if (!this.fetching) {
-            observer.complete();
+        next: (data: any) => {
+          const errors = data.errors || [];
+
+          if (hasUserNotExistError(errors)) {
+            this.fetching = true;
+
+            handleUserNotExistError();
+          } else {
+            observer.next(data);
           }
         },
       };
@@ -84,25 +77,26 @@ export class SignUpLink extends ApolloLink {
     });
   }
 
-  async sendSignUp(operation: Operation, forward: NextLink) {
+  public async sendSignUp(operation: Operation, forward: NextLink) {
     const { email } = await this.getAuthState();
 
     if (this.signUpPromise === null) {
       this.signUpPromise = new Promise((resolve, reject) => {
-        const signUpOperation = createOperation(
-          operation.getContext(),
-          {
-            query: SIGNUP_MUTATION,
-            variables: {
-              user: {
-                email,
-              },
-              authProfileId: this.authProfileId,
+        const signUpOperation = createOperation(operation.getContext(), {
+          query: SIGNUP_MUTATION,
+          variables: {
+            authProfileId: this.authProfileId,
+            user: {
+              email,
             },
           },
-        );
+        });
 
         forward(signUpOperation).subscribe({
+          complete: () => {
+            this.signUpPromise = null;
+            this.fetching = false;
+          },
           error: reject,
           next: data => {
             if (R.path(['data', 'userSignUp', 'id'], data)) {
@@ -111,10 +105,6 @@ export class SignUpLink extends ApolloLink {
               reject(data);
             }
           },
-          complete: () => {
-            this.signUpPromise = null;
-            this.fetching = false;
-          },
         });
       });
     }
@@ -122,4 +112,3 @@ export class SignUpLink extends ApolloLink {
     return this.signUpPromise;
   }
 }
-

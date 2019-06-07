@@ -11,6 +11,8 @@ install:
 - yarn build-packages
 
 script:
+- yarn lint
+- yarn prettier:check
 - yarn test
 
 deploy:

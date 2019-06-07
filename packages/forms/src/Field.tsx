@@ -10,7 +10,7 @@ import { FieldProps } from './types';
 const enhancer: any = compose(
   withFieldSchema,
   setDisplayName('Field'),
-)
+);
 
 /**
  * `Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props and some extra props for easy working with 8base API.
@@ -19,27 +19,24 @@ const enhancer: any = compose(
  */
 const Field: React.ComponentType<FinalFieldProps<any>> = enhancer(
   class Field extends React.Component<FieldProps & WithFieldSchemaProps> {
-    collectProps: any = R.pipe(
-      R.when(
-        R.has('fieldSchema'),
-        ({ validate, ...rest }: any) => ({
-          name: rest.name || rest.fieldSchema.name, 
-          validate: typeof validate === 'function' ? (...args: any) => validate(...args, createValidate(rest.fieldSchema)) : createValidate(rest.fieldSchema),
-          ...rest,
-        }),
-      ),
-      R.when(
-        R.propIs(String, 'component'),
-        R.dissoc('fieldSchema'),
-      ),
+    public collectProps: any = R.pipe(
+      R.when(R.has('fieldSchema'), ({ validate, ...rest }: any) => ({
+        name: rest.name || rest.fieldSchema.name,
+        validate:
+          typeof validate === 'function'
+            ? (...args: any) => validate(...args, createValidate(rest.fieldSchema))
+            : createValidate(rest.fieldSchema),
+        ...rest,
+      })),
+      R.when(R.propIs(String, 'component'), R.dissoc('fieldSchema')),
     );
 
-    render() {
+    public render() {
       const collectedProps: FieldProps = this.collectProps(this.props);
 
-      return <FinalField { ...collectedProps } />;
+      return <FinalField {...collectedProps} />;
     }
-  }
-)
+  },
+);
 
 export { Field };

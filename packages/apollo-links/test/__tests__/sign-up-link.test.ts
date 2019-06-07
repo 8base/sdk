@@ -1,14 +1,8 @@
-import {
-  ApolloLink,
-  execute,
-  Observable,
-  Operation,
-  RequestHandler,
-} from 'apollo-link';
+import { ApolloLink, execute, Observable, Operation, RequestHandler } from 'apollo-link';
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
 
-import { SignUpLink } from '../../src'; 
+import { SignUpLink } from '../../src';
 import { SIGNUP_MUTATION } from '../../src//graphql/mutations';
 
 const DYNO_QUERY = gql`
@@ -26,7 +20,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
   let getAuthState: any = null;
   let signUpLink: any = null;
   let stubRequestHandler: any = null;
-  let mergedLink: any = null; 
+  let mergedLink: any = null;
 
   beforeEach(() => {
     getAuthState = jest.fn().mockResolvedValue({
@@ -38,40 +32,43 @@ describe('As a developer, I can use sign up link to register new users.', () => 
       authProfileId: AUTH_PROFILE_ID,
     });
 
-    stubRequestHandler = jest
-      .fn((operation) => Observable.of({
+    stubRequestHandler = jest.fn(operation =>
+      Observable.of({
         data: {
           sample: {
             success: true,
-          }
-        }
-      }))
+          },
+        },
+      }),
+    );
 
-    mergedLink = ApolloLink.from([
-      signUpLink, stubRequestHandler,
-    ]);
+    mergedLink = ApolloLink.from([signUpLink, stubRequestHandler]);
   });
 
   it('As a developer, I can use sign up link to register new users', () => {
     stubRequestHandler
-      .mockReturnValueOnce(Observable.of({
-        errors: [
-          {
-            code: errorCodes.UserNotExistErrorCode,
+      .mockReturnValueOnce(
+        Observable.of({
+          errors: [
+            {
+              code: errorCodes.UserNotExistErrorCode,
+            },
+          ],
+        }),
+      )
+      .mockReturnValueOnce(
+        Observable.of({
+          data: {
+            userSignUp: {
+              id: 'someUserId',
+            },
           },
-        ],
-      }))
-      .mockReturnValueOnce(Observable.of({
-        data: {
-          userSignUp: {
-            id: 'someUserId',
-          },
-        },
-      }));
+        }),
+      );
 
     return new Promise((resolve, reject) => {
       execute(mergedLink, { query: DYNO_QUERY }).subscribe(
-        (data) => {
+        data => {
           expect(data).toEqual({
             data: {
               sample: {
@@ -110,18 +107,19 @@ describe('As a developer, I can use sign up link to register new users.', () => 
   });
 
   it('Passess another errors', () => {
-    stubRequestHandler
-      .mockReturnValueOnce(Observable.of({
+    stubRequestHandler.mockReturnValueOnce(
+      Observable.of({
         errors: [
           {
             code: errorCodes.TokenExpiredErrorCode,
           },
         ],
-      }))
+      }),
+    );
 
     return new Promise((resolve, reject) => {
       execute(mergedLink, { query: DYNO_QUERY }).subscribe(
-        (data) => {
+        data => {
           expect(data).toEqual({
             errors: [
               {
@@ -145,4 +143,3 @@ describe('As a developer, I can use sign up link to register new users.', () => 
     });
   });
 });
-

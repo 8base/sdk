@@ -6,7 +6,7 @@ import { AuthProvider, withAuth, WithAuthProps } from '../../src';
 import { SampleAuthClient } from '../utils';
 
 type StubComponentProps = {
-  foo: number,
+  foo: number;
 } & WithAuthProps;
 
 const NotAuthorizedComponent = () => <span>I am not authorider</span>;
@@ -15,8 +15,8 @@ const AuthorizedComponent = () => <span>I am authorized</span>;
 
 const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>
-    { isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent /> }
-    { foo }
+    {isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent />}
+    {foo}
   </div>
 );
 
@@ -25,8 +25,8 @@ const EnhancedStubComponent = withAuth(StubComponent);
 describe('withAuth', () => {
   const authClient = new SampleAuthClient();
   const testRenderer = TestRenderer.create(
-    <AuthProvider authClient={ authClient }>
-      <EnhancedStubComponent foo={ 42 } />
+    <AuthProvider authClient={authClient}>
+      <EnhancedStubComponent foo={42} />
     </AuthProvider>,
   );
   const testInstance = testRenderer.root;
@@ -48,4 +48,3 @@ describe('withAuth', () => {
     expect(props.foo).toBe(42);
   });
 });
-

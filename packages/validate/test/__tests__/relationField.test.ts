@@ -36,4 +36,3 @@ describe('As developer, i can create relation field vaidator', () => {
     expect(validate('relationValue')).toBeUndefined();
   });
 });
-

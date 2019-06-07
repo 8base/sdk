@@ -1,4 +1,3 @@
-
 import { isEmptyAddress, isEmptyPhone } from '../../src';
 
 const EMPTY_ADDRESSES = [
@@ -6,14 +5,17 @@ const EMPTY_ADDRESSES = [
   ['undefined', undefined],
   ['empty object', {}],
   ['empty string', ''],
-  ['full address with all empty subfields', {
-    street1: '',
-    street2: undefined,
-    zip: null,
-    country: '',
-    city: '',
-    state: '',
-  }],
+  [
+    'full address with all empty subfields',
+    {
+      city: '',
+      country: '',
+      state: '',
+      street1: '',
+      street2: undefined,
+      zip: null,
+    },
+  ],
 ];
 
 const EMPTY_PHONES = [
@@ -21,40 +23,55 @@ const EMPTY_PHONES = [
   ['undefined', undefined],
   ['empty object', {}],
   ['empty string', ''],
-  ['full phone with all empty subfields', {
-    code: '',
-    number: undefined,
-  }],
+  [
+    'full phone with all empty subfields',
+    {
+      code: '',
+      number: undefined,
+    },
+  ],
 ];
 
 const NOT_EMPTY_ADDRESSES = [
-  ['full address', {
-    street1: 'Blessed',
-    street2: 'Oliphant',
-    zip: 'Turbinatoconcave',
-    country: 'Interdine',
-    city: 'Backbitingly',
-    state: 'Muddybreast',
-  }],
-  ['partial address', {
-    street1: '',
-    street2: undefined,
-    zip: null,
-    country: 'Interdine',
-    city: 'Backbitingly',
-    state: 'Muddybreast',
-  }],
+  [
+    'full address',
+    {
+      city: 'Backbitingly',
+      country: 'Interdine',
+      state: 'Muddybreast',
+      street1: 'Blessed',
+      street2: 'Oliphant',
+      zip: 'Turbinatoconcave',
+    },
+  ],
+  [
+    'partial address',
+    {
+      city: 'Backbitingly',
+      country: 'Interdine',
+      state: 'Muddybreast',
+      street1: '',
+      street2: undefined,
+      zip: null,
+    },
+  ],
 ];
 
 const NOT_EMPTY_PHONES = [
-  ['full phone', {
-    code: '+78',
-    number: '5637821',
-  }],
-  ['partial address', {
-    code: '+78',
-    number: '',
-  }],
+  [
+    'full phone',
+    {
+      code: '+78',
+      number: '5637821',
+    },
+  ],
+  [
+    'partial address',
+    {
+      code: '+78',
+      number: '',
+    },
+  ],
 ];
 
 it.each<any>(EMPTY_ADDRESSES)('Should return `true` if address is empty (%s)', (name, value) => {

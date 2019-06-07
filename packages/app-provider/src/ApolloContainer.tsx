@@ -1,37 +1,67 @@
-import * as React from 'react';
-import * as R from 'ramda';
+import React from 'react';
+import R from 'ramda';
 import { ApolloProvider } from 'react-apollo';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { AuthClient, Authorizable, AuthState } from '@8base/utils';
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher,
+} from 'apollo-cache-inmemory';
+import { withAuth, WithAuthProps } from '@8base/auth';
+import { EightBaseApolloClient } from '@8base/apollo-client';
+
 import { ApolloContainerPassedProps } from './types';
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
 
-import { withAuth, WithAuthProps } from '@8base/auth';
-const { EightBaseApolloClient } = require('@8base/apollo-client');
-
 type ApolloContainerProps = ApolloContainerPassedProps & {
-  withAuth: boolean,
-  children: React.ReactNode,
-}
+  withAuth: boolean;
+  children: React.ReactNode;
+};
 
 type ApolloContainerHocProps = WithAuthProps & ApolloContainerProps;
 
-
 const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
   class ApolloContainer extends React.Component<ApolloContainerHocProps> {
-    client: any;
-
-    static defaultProps = {
-      withAuth: true,
+    public static defaultProps = {
       autoSignUp: false,
-    }
+      withAuth: true,
+    };
+    public client: any;
 
-    onIdTokenExpired = async () => {
+    public createClient = R.memoizeWith(R.identity, fragmentsSchema => {
+      const { withAuth, autoSignUp, authProfileId } = this.props;
+
+      const commonOptions = {
+        cache: new InMemoryCache({
+          fragmentMatcher: new IntrospectionFragmentMatcher({
+            introspectionQueryResultData: fragmentsSchema,
+          }),
+        }),
+        extendLinks: this.props.extendLinks,
+        onRequestError: this.props.onRequestError,
+        onRequestSuccess: this.props.onRequestSuccess,
+        uri: this.props.uri,
+      };
+
+      const eightBaseApolloClientData = withAuth
+        ? {
+            ...commonOptions,
+            authProfileId,
+            autoSignUp,
+            getAuthState: this.getAuthState,
+            onAuthError: this.onAuthError,
+            onIdTokenExpired: this.onIdTokenExpired,
+            withAuth: true,
+          }
+        : {
+            ...commonOptions,
+            withAuth: false,
+          };
+
+      return new EightBaseApolloClient(eightBaseApolloClientData);
+    });
+
+    public onIdTokenExpired = async () => {
       const {
-        auth: {
-          setAuthState,
-          renewToken,
-        },
+        auth: { setAuthState, renewToken },
       } = this.props;
 
       const { idToken } = await renewToken({});
@@ -39,12 +69,9 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       await setAuthState({ token: idToken });
     };
 
-    onAuthError = async () => {
+    public onAuthError = async () => {
       const {
-        auth: {
-          purgeAuthState,
-          logout,
-        },
+        auth: { purgeAuthState, logout },
       } = this.props;
 
       await purgeAuthState();
@@ -54,50 +81,21 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       }
     };
 
-    getAuthState = async () => {
+    public getAuthState = async () => {
       const {
-        auth: {
-          authState,
-        },
+        auth: { authState },
       } = this.props;
 
       return authState;
     };
 
-    createClient = R.memoizeWith(R.identity, (fragmentsSchema) => {
-      const {
-        withAuth,
-        autoSignUp,
-        authProfileId,
-      } = this.props;
-
-      const commonOptions = {
-        uri: this.props.uri,
-        onRequestSuccess: this.props.onRequestSuccess,
-        onRequestError: this.props.onRequestError,
-        extendLinks: this.props.extendLinks,
-        cache: new InMemoryCache({ fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData: fragmentsSchema }) }),
-      };
-
-      const eightBaseApolloClientData = withAuth
-        ? {
-          ...commonOptions,
-          onIdTokenExpired: this.onIdTokenExpired,
-          getAuthState: this.getAuthState,
-          onAuthError: this.onAuthError,
-          withAuth: true,
-          autoSignUp,
-          authProfileId,
-        }
-        : {
-          ...commonOptions,
-          withAuth: false,
-        }
-
-      return new EightBaseApolloClient(eightBaseApolloClientData);
-    });
-
-    renderContent = ({ loading, fragmentsSchema }: { loading: boolean, fragmentsSchema: Object | null }) => {
+    public renderContent = ({
+      loading,
+      fragmentsSchema,
+    }: {
+      loading: boolean;
+      fragmentsSchema: object | null;
+    }) => {
       if (loading) {
         return null;
       }
@@ -105,23 +103,22 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       this.client = this.createClient(fragmentsSchema);
 
       return (
-        <ApolloProvider client={ this.client }>
-          { this.props.children }
+        <ApolloProvider client={this.client}>
+          {this.props.children}
         </ApolloProvider>
       );
     };
 
-    render() {
+    public render() {
       const { uri } = this.props;
 
       return (
-        <FragmentsSchemaContainer uri={ uri }>
-          { this.renderContent }
+        <FragmentsSchemaContainer uri={uri}>
+          {this.renderContent}
         </FragmentsSchemaContainer>
       );
     }
-  }
-)
+  },
+);
 
 export { ApolloContainer };
-

@@ -1,9 +1,8 @@
-
 class SDKError extends Error {
-  name: string;
-  code: string;
-  packageName: string;
-  message: string;
+  public name: string;
+  public code: string;
+  public packageName: string;
+  public message: string;
 
   constructor(code: string, packageName: string, message: string) {
     super(message);
@@ -14,19 +13,18 @@ class SDKError extends Error {
     this.message = message;
   }
 
-  toString() {
+  public toString() {
     return `${this.name} in ${this.packageName}: ${this.code}, ${this.message}`;
   }
 
-  toJSON() {
+  public toJSON() {
     return {
-      name: this.name,
-      packageName: this.packageName,
       code: this.code,
       message: this.message,
+      name: this.name,
+      packageName: this.packageName,
     };
   }
 }
 
 export { SDKError };
-

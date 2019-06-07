@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { MutationResult, MutationFn } from "react-apollo";
-import { TableConsumer } from "@8base/table-schema-provider";
-import { TableSchema, SDKError, ERROR_CODES } from "@8base/utils";
+import React, { Component } from 'react';
+import { MutationResult, MutationFn } from 'react-apollo';
+import { TableConsumer } from '@8base/table-schema-provider';
+import { TableSchema, SDKError, ERROR_CODES } from '@8base/utils';
 
-import { RecordCrud } from "./RecordCrud";
+import { RecordCrud } from './RecordCrud';
 
-interface ChildrenPropObject {
+interface IChildrenPropObject {
   tableMetaResult: TableSchema | null;
   mutateResult: MutationResult;
 }
@@ -16,7 +16,7 @@ type RecordDeleteProps = {
 
   children: (
     mutateFunction: (id: string, force: boolean) => Promise<any>,
-    result: ChildrenPropObject
+    result: IChildrenPropObject,
   ) => React.ReactNode;
 };
 
@@ -30,33 +30,25 @@ type RecordDeleteProps = {
  */
 
 export class RecordDelete extends Component<RecordDeleteProps> {
-  renderQuery = (tableMetaResult: TableSchema | null) => {
+  public renderQuery = (tableMetaResult: TableSchema | null) => {
     const { children, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new SDKError(
-        ERROR_CODES.TABLE_NOT_FOUND,
-        '@8base/crud',
-        `Table doesn't find`
-      );
+      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, '@8base/crud', `Table doesn't find`);
     }
 
     return (
       <RecordCrud {...rest} tableMeta={tableMetaResult} mode="delete">
         {(mutateFunction, mutateResult) =>
-          children(
-            (id: string, force: boolean) =>
-              mutateFunction({ filter: { id }, force }),
-            {
-              tableMetaResult,
-              mutateResult
-            }
-          )
+          children((id: string, force: boolean) => mutateFunction({ filter: { id }, force }), {
+            mutateResult,
+            tableMetaResult,
+          })
         }
       </RecordCrud>
     );
   };
-  render() {
+  public render() {
     const { tableName, tableId } = this.props;
 
     return (

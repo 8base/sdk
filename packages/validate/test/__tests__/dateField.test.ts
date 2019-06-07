@@ -87,4 +87,3 @@ describe('As developer, i can create date field vaidator', () => {
     expect(validate('2018-06-06T21:00:00.000Z')).toBeUndefined();
   });
 });
-

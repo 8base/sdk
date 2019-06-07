@@ -1,34 +1,23 @@
 import jwtDecode from 'jwt-decode';
 import R from 'ramda';
 import { Subtract } from 'utility-types';
-import {
-  AuthState,
-  AuthData,
-  AuthClient,
-  Authorizable,
-} from '@8base/utils';
+import { AuthState, AuthData, IAuthClient, IAuthorizable } from '@8base/utils';
 import * as asyncStorageAccessor from './asyncStorageAccessor';
 
-const { AuthSession } = require('expo');
-
+const { AuthSession } = require('expo'); // tslint:disable-line
 
 type ReactNativeAuth0AuthClientOptions = {
-  clientId: string,
-  domain: string,
+  clientId: string;
+  domain: string;
 };
 
 const toQueryString = R.pipe(
-  R.mapObjIndexed(
-    (value: any, key: string) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-  ),
+  R.mapObjIndexed((value: any, key: string) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`),
   R.values,
   R.join('&'),
 );
 
-const isEmptyOrNil = R.either(
-  R.isNil,
-  R.isEmpty,
-);
+const isEmptyOrNil = R.either(R.isNil, R.isEmpty);
 
 const getError = R.path(['params', 'error']);
 
@@ -45,33 +34,33 @@ const isEmailVerified = R.pathOr<boolean>(false, ['email_verified']);
  * @param {string} domain Domain. See auth0 documentation.
  * @param {string} clientId Client id. See auth0 documentation.
  */
-class ReactNativeAuth0AuthClient implements AuthClient, Subtract<Authorizable, { logout: any }> {
-  clientId: string;
-  domain: string;
+class ReactNativeAuth0AuthClient implements IAuthClient, Subtract<IAuthorizable, { logout: any }> {
+  public clientId: string;
+  public domain: string;
 
   constructor({ clientId, domain }: ReactNativeAuth0AuthClientOptions) {
     this.clientId = clientId;
     this.domain = domain;
   }
 
-  setAuthState = async (state: AuthState): Promise<void> => {
+  public setAuthState = async (state: AuthState): Promise<void> => {
     await asyncStorageAccessor.setAuthState(state);
   };
 
-  getAuthState = async (): Promise<AuthState> => asyncStorageAccessor.getAuthState();
+  public getAuthState = async (): Promise<AuthState> => asyncStorageAccessor.getAuthState();
 
-  purgeAuthState = async (): Promise<void> => {
+  public purgeAuthState = async (): Promise<void> => {
     await asyncStorageAccessor.purgeAuthState();
     AuthSession.dismiss();
   };
 
-  checkIsAuthorized = async (): Promise<boolean> => {
+  public checkIsAuthorized = async (): Promise<boolean> => {
     const { token } = await asyncStorageAccessor.getAuthState();
 
     return R.not(isEmptyOrNil(token));
   };
 
-  authorize = async (options: Object = {}): Promise<AuthData> => {
+  public authorize = async (options: object = {}): Promise<AuthData> => {
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({
       authUrl: `${this.domain}/authorize?${toQueryString({
@@ -89,9 +78,7 @@ class ReactNativeAuth0AuthClient implements AuthClient, Subtract<Authorizable, {
       if (error) {
         const errorDescription = getErrorDescription(result);
 
-        throw new Error(
-          errorDescription || 'something went wrong while logging in',
-        );
+        throw new Error(errorDescription || 'something went wrong while logging in');
       }
 
       const encodedIdToken = getIdToken(result);
@@ -102,9 +89,9 @@ class ReactNativeAuth0AuthClient implements AuthClient, Subtract<Authorizable, {
       });
 
       return {
+        email: getEmail(decodedIdToken) || '',
         idToken: encodedIdToken || '',
         idTokenPayload: decodedIdToken,
-        email: getEmail(decodedIdToken) || '',
         isEmailVerified: isEmailVerified(decodedIdToken),
       };
     } else {
@@ -112,14 +99,13 @@ class ReactNativeAuth0AuthClient implements AuthClient, Subtract<Authorizable, {
     }
   };
 
-  renewToken = () => {
-    throw new Error('The function isn\'t implemented yet');
+  public renewToken = () => {
+    throw new Error(`The function isn't implemented yet`);
   };
 
-  changePassword = () => {
-    throw new Error('The function isn\'t implemented yet');
+  public changePassword = () => {
+    throw new Error(`The function isn't implemented yet`);
   };
 }
 
 export { ReactNativeAuth0AuthClient };
-

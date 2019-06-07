@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { withAuth, WithAuthProps } from '@8base/auth';
@@ -21,9 +21,9 @@ const USER_PERMISSIONS_QUERY = gql`
   }
 `;
 
-type PermissionsProviderProps ={
-  children: (renderProp: { loading?: boolean }) => React.ReactNode,
-  notifyOnNetworkStatusChange?: boolean,
+type PermissionsProviderProps = {
+  children: (renderProp: { loading?: boolean }) => React.ReactNode;
+  notifyOnNetworkStatusChange?: boolean;
 };
 
 /**
@@ -32,21 +32,19 @@ type PermissionsProviderProps ={
  */
 const PermissionsProvider: React.ComponentType<PermissionsProviderProps> = withAuth(
   class PermissionsProvider extends React.Component<WithAuthProps & PermissionsProviderProps> {
-    renderContent = ({ data, loading }: { data: RequestPermissions, loading: boolean }) => {
+    public renderContent = ({ data, loading }: { data: RequestPermissions; loading: boolean }) => {
       const { children } = this.props;
 
-      if (loading) return children({ loading });
+      if (loading) {
+        return children({ loading });
+      }
 
       const permissions = getPermissions(data);
 
-      return (
-        <PermissionsContext.Provider value={ permissions }>
-          { children({ loading }) }
-        </PermissionsContext.Provider>
-      );
+      return <PermissionsContext.Provider value={permissions}>{children({ loading })}</PermissionsContext.Provider>;
     };
 
-    render() {
+    public render() {
       const {
         auth: { isAuthorized },
         notifyOnNetworkStatusChange,
@@ -57,11 +55,8 @@ const PermissionsProvider: React.ComponentType<PermissionsProviderProps> = withA
 
       if (isAuthorized) {
         rendered = (
-          <Query
-            query={ USER_PERMISSIONS_QUERY }
-            notifyOnNetworkStatusChange={ notifyOnNetworkStatusChange }
-          >
-            { this.renderContent }
+          <Query query={USER_PERMISSIONS_QUERY} notifyOnNetworkStatusChange={notifyOnNetworkStatusChange}>
+            {this.renderContent}
           </Query>
         );
       } else {
@@ -70,7 +65,7 @@ const PermissionsProvider: React.ComponentType<PermissionsProviderProps> = withA
 
       return rendered;
     }
-  }
-)
+  },
+);
 
 export { PermissionsProvider };

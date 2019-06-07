@@ -8,35 +8,25 @@ const TOKEN = 'some token';
 
 type StubComponentProps = {
   auth: {
-    isAuthorized: boolean,
-    setAuthState: Function,
-    authState: Object,
-  },
+    isAuthorized: boolean;
+    setAuthState: Function;
+    authState: object;
+  };
 };
 
 const NotAuthorizedComponent = () => <span>I am not authorider</span>;
 
 const AuthorizedComponent = () => <span>I am authorized</span>;
 
-const StubComponent = ({ auth: { isAuthorized }}: StubComponentProps) => {
-  return isAuthorized ? (
-    <AuthorizedComponent />
-  ) : (
-    <NotAuthorizedComponent />
-  );
+const StubComponent = ({ auth: { isAuthorized } }: StubComponentProps) => {
+  return isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent />;
 };
 
 describe('AuthContext', () => {
   const authClient = new SampleAuthClient();
   const testRenderer = TestRenderer.create(
-    <AuthProvider authClient={ authClient }>
-      <AuthContext.Consumer>
-        {
-          (auth: any) => (
-            <StubComponent auth={ auth } />
-          )
-        }
-      </AuthContext.Consumer>
+    <AuthProvider authClient={authClient}>
+      <AuthContext.Consumer>{(auth: any) => <StubComponent auth={auth} />}</AuthContext.Consumer>
     </AuthProvider>,
   );
   const testInstance = testRenderer.root;
@@ -85,4 +75,3 @@ describe('AuthContext', () => {
     expect((children[0] as any).type).toBe(NotAuthorizedComponent);
   });
 });
-

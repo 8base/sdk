@@ -9,7 +9,7 @@ import { AuthProvider, withLogout, WithAuthProps } from '../../src';
 import { SampleAuthClient } from '../utils';
 
 type StubComponentProps = {
-  foo: number,
+  foo: number;
 } & WithAuthProps;
 
 const NotAuthorizedComponent = () => <span>I am not authorider</span>;
@@ -18,8 +18,8 @@ const AuthorizedComponent = () => <span>I am authorized</span>;
 
 const StubComponent: any = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
   <div>
-    { isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent /> }
-    { foo }
+    {isAuthorized ? <AuthorizedComponent /> : <NotAuthorizedComponent />}
+    {foo}
   </div>
 );
 
@@ -33,10 +33,11 @@ describe('withLogout', () => {
     cache: new InMemoryCache(),
   });
   const testRenderer = TestRenderer.create(
-    <ApolloProvider client={ apolloClient }>
-      <AuthProvider authClient={ authClient }>
-        <EnhancedStubComponent foo={ 42 } />
-      </AuthProvider>,
+    <ApolloProvider client={apolloClient}>
+      <AuthProvider authClient={authClient}>
+        <EnhancedStubComponent foo={42} />
+      </AuthProvider>
+      ,
     </ApolloProvider>,
   );
   const testInstance = testRenderer.root;
@@ -57,4 +58,3 @@ describe('withLogout', () => {
     expect(props.foo).toBe(42);
   });
 });
-

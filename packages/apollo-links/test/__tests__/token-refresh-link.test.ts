@@ -30,67 +30,72 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
 
     stub = jest.fn();
 
-    stub.mockReturnValueOnce(Observable.of({
-      errors: [
-        {
-          code: errorCodes.TokenExpiredErrorCode,
-          message: 'Token expired',
-          details: {
-            token: 'jwt expired',
+    stub.mockReturnValueOnce(
+      Observable.of({
+        errors: [
+          {
+            code: errorCodes.TokenExpiredErrorCode,
+            message: 'Token expired',
+            details: {
+              token: 'jwt expired',
+            },
           },
-        },
-      ],
-    }));
+        ],
+      }),
+    );
 
-    link = ApolloLink.from([
-      tokenRefreshLink, stub,
-    ]);
+    link = ApolloLink.from([tokenRefreshLink, stub]);
   });
 
   it('When Apollo Link catch a token expired error - link should send request to refresh token.', () => {
     onIdTokenExpired.mockImplementation(() => Promise.resolve());
-    stub.mockReturnValueOnce(Observable.of({
-      data: {
-        sample: { 
-          success: true,
-        }
-      },
-    }));
-
-    return new Promise((resolve, reject) => execute(link, { query: DYNO_QUERY }).subscribe(
-      (data) => {
-        expect(data).toEqual({
-          data: {
-            sample: {
-              success: true,
-            },
+    stub.mockReturnValueOnce(
+      Observable.of({
+        data: {
+          sample: {
+            success: true,
           },
-        });
-      },
-      () => reject(),
-      () => {
-        expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
-        expect(stub).toHaveBeenCalledTimes(2);
+        },
+      }),
+    );
 
-        resolve();
-      },
-    ));
+    return new Promise((resolve, reject) =>
+      execute(link, { query: DYNO_QUERY }).subscribe(
+        data => {
+          expect(data).toEqual({
+            data: {
+              sample: {
+                success: true,
+              },
+            },
+          });
+        },
+        () => reject(),
+        () => {
+          expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
+          expect(stub).toHaveBeenCalledTimes(2);
+
+          resolve();
+        },
+      ),
+    );
   });
 
   it('When Apollo Link catch a refresh token error - auth failed callback should be called.', () => {
     onIdTokenExpired.mockImplementation(() => Promise.reject());
 
-    return new Promise((resolve, reject) => execute(link, { query: DYNO_QUERY }).subscribe(
-      () => null,
-      () => reject(),
-      () => {
-        expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
-        expect(onAuthError).toHaveBeenCalledTimes(1);
-        expect(stub).toHaveBeenCalledTimes(1);
+    return new Promise((resolve, reject) =>
+      execute(link, { query: DYNO_QUERY }).subscribe(
+        () => null,
+        () => reject(),
+        () => {
+          expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
+          expect(onAuthError).toHaveBeenCalledTimes(1);
+          expect(stub).toHaveBeenCalledTimes(1);
 
-        resolve();
-      },
-    ));
-
+          resolve();
+        },
+      ),
+    );
   });
 });

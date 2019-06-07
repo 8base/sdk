@@ -5,22 +5,26 @@ import { TableSchema, FieldSchema } from '../types';
 
 export const getTable = (table: TableSchema) => table;
 
-export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> =
-  ({ fields } : TableSchema, fieldId: string) =>
-    R.find(
-      R.pipe(R.prop('id'), R.equals(fieldId)),
-      fields,
-    );
-
-export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema | void> =
-  (tableSchema: TableSchema, fieldName: string) => R.find(
-    R.propEq('name', fieldName),
-    tableSchema.fields,
+export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> = (
+  { fields }: TableSchema,
+  fieldId: string,
+) =>
+  R.find(
+    R.pipe(
+      R.prop('id'),
+      R.equals(fieldId),
+    ),
+    fields,
   );
+
+export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema | void> = (
+  tableSchema: TableSchema,
+  fieldName: string,
+) => R.find(R.propEq('name', fieldName), tableSchema.fields);
 
 export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = createSelector(
   getFieldById,
-  R.propOr('', 'fieldType')
+  R.propOr('', 'fieldType'),
 );
 
 export const isRelationField: ParametricSelector<TableSchema, string, boolean> = createSelector(
@@ -50,7 +54,7 @@ export const isListField = createSelector(
 
 export const getFieldNameById = createSelector(
   getFieldById,
-  R.propOr('', 'name')
+  R.propOr('', 'name'),
 );
 
 export const hasNonMetaFields: (schema?: TableSchema) => boolean = R.pipe(
@@ -85,7 +89,8 @@ export const hasSwitchFields = R.pipe(
 
 export const hasScalarFields = R.pipe(
   getTable,
-  ({ fields }: TableSchema) => !!fields.find(({ fieldType }) => fieldType === FIELD_TYPE.TEXT || fieldType === FIELD_TYPE.NUMBER),
+  ({ fields }: TableSchema) =>
+    !!fields.find(({ fieldType }) => fieldType === FIELD_TYPE.TEXT || fieldType === FIELD_TYPE.NUMBER),
 );
 
 export const hasSmartFields = R.pipe(
@@ -95,10 +100,16 @@ export const hasSmartFields = R.pipe(
 
 export const hasAddressFields = R.pipe(
   getTable,
-  ({ fields }: TableSchema) => !!fields.find(({ fieldTypeAttributes = {}}) => fieldTypeAttributes && fieldTypeAttributes.format === SMART_FORMATS.ADDRESS),
+  ({ fields }: TableSchema) =>
+    !!fields.find(
+      ({ fieldTypeAttributes = {} }) => fieldTypeAttributes && fieldTypeAttributes.format === SMART_FORMATS.ADDRESS,
+    ),
 );
 
 export const hasPhoneFields = R.pipe(
   getTable,
-  ({ fields }: TableSchema) => !!fields.find(({ fieldTypeAttributes = {}}) => fieldTypeAttributes && fieldTypeAttributes.format === SMART_FORMATS.PHONE),
+  ({ fields }: TableSchema) =>
+    !!fields.find(
+      ({ fieldTypeAttributes = {} }) => fieldTypeAttributes && fieldTypeAttributes.format === SMART_FORMATS.PHONE,
+    ),
 );

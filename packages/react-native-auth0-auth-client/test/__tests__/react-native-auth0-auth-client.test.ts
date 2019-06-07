@@ -9,36 +9,38 @@ const CLIENT_ID = 'some client id';
 jest.mock('expo', () => ({
   AuthSession: {
     getRedirectUrl: jest.fn(() => 'https://auth.expo.io/@vorobeez/react-native-example'),
-    startAsync: jest.fn(() => Promise.resolve({
-      type: 'success',
-      params: {
-        id_token: 'encoded id token',
-      },
-    })),
-    dismiss: jest.fn(() => {}),
+    startAsync: jest.fn(() =>
+      Promise.resolve({
+        type: 'success',
+        params: {
+          id_token: 'encoded id token',
+        },
+      }),
+    ),
+    dismiss: jest.fn(() => {}), // tslint:disable-line
   },
 }));
 
-jest.mock('jwt-decode', () => jest.fn(
-  () => ({
+jest.mock('jwt-decode', () =>
+  jest.fn(() => ({
     another_data: 'some data',
     email: 'test@test.com',
     email_verified: true,
-  }),
-));
+  })),
+);
 
 jest.mock('react-native', () => {
   const storage: any = {};
 
   return {
     AsyncStorage: {
-      getItem: jest.fn((key) => Promise.resolve(storage[key] || null)),
+      getItem: jest.fn(key => Promise.resolve(storage[key] || null)),
       setItem: jest.fn((key, value) => {
         storage[key] = value;
 
         return Promise.resolve();
       }),
-      removeItem: jest.fn((key) => {
+      removeItem: jest.fn(key => {
         storage[key] = null;
 
         return Promise.resolve();
@@ -47,7 +49,7 @@ jest.mock('react-native', () => {
   };
 });
 
-const { AuthSession } = require('expo');
+const { AuthSession } = require('expo'); // tslint:disable-line
 
 describe('ReactNativeAuth0AuthClient', () => {
   const client = new ReactNativeAuth0AuthClient({
@@ -72,13 +74,16 @@ describe('ReactNativeAuth0AuthClient', () => {
     });
 
     expect(AuthSession.startAsync).toHaveBeenCalledWith({
-      authUrl: `${DOMAIN}/authorize?`
-        + `${encodeURIComponent('client_id')}=${encodeURIComponent(CLIENT_ID)}&`
-        + `${encodeURIComponent('response_type')}=${encodeURIComponent('id_token')}&`
-        + `${encodeURIComponent('scope')}=${encodeURIComponent('openid email profile')}&`
-        + `${encodeURIComponent('redirect_uri')}=${encodeURIComponent('https://auth.expo.io/@vorobeez/react-native-example')}&`
-        + `${encodeURIComponent('nonce')}=${encodeURIComponent('fakenonce')}&`
-        + `${encodeURIComponent('customParam')}=${encodeURIComponent('custom data')}`,
+      authUrl:
+        `${DOMAIN}/authorize?` +
+        `${encodeURIComponent('client_id')}=${encodeURIComponent(CLIENT_ID)}&` +
+        `${encodeURIComponent('response_type')}=${encodeURIComponent('id_token')}&` +
+        `${encodeURIComponent('scope')}=${encodeURIComponent('openid email profile')}&` +
+        `${encodeURIComponent('redirect_uri')}=${encodeURIComponent(
+          'https://auth.expo.io/@vorobeez/react-native-example',
+        )}&` +
+        `${encodeURIComponent('nonce')}=${encodeURIComponent('fakenonce')}&` +
+        `${encodeURIComponent('customParam')}=${encodeURIComponent('custom data')}`,
     });
   });
 
@@ -112,4 +117,3 @@ describe('ReactNativeAuth0AuthClient', () => {
     expect(AuthSession.dismiss).toHaveBeenCalled();
   });
 });
-

@@ -7,6 +7,10 @@
     "link-packages": "./bin/link-packages.sh",
     "unlink-packages": "./bin/unlink-packages.sh",
     "test": "./bin/test.sh",
+    "lint": "tslint packages/*/{src,test}/{.,**}/*.{ts,tsx}",
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier:check": "npm run prettier:base -- --list-different \"packages/*/{src,test}/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"packages/*/{src,test}/**/*.{ts,tsx}\"",
     "bump": "lerna version --force-publish"
   },
   "devDependencies": {
@@ -18,7 +22,13 @@
     "@types/react-test-renderer": "^16.8.1",
     "@types/recompose": "^0.30.6",
     "lerna": "^3.4.3",
+    "prettier": "^1.18.0",
     "rimraf": "^2.6.3",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.5.1",
     "utility-types": "^3.7.0"
   }
 }

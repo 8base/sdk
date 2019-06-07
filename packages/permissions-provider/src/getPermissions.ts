@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import R from 'ramda';
 import { RequestPermissions, TransformedPermissions, ApolloPermission } from './types';
 
 export const getPermissions: (data: RequestPermissions) => TransformedPermissions = R.pipe(
@@ -9,4 +9,3 @@ export const getPermissions: (data: RequestPermissions) => TransformedPermission
     R.mapObjIndexed(R.indexBy<ApolloPermission>(R.prop('resource'))),
   ),
 );
-

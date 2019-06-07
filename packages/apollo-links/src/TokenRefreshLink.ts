@@ -1,17 +1,7 @@
-import * as R from 'ramda';
-import {
-  ApolloLink,
-  Observable,
-  Operation,
-  NextLink,
-  FetchResult,
-} from 'apollo-link';
+import R from 'ramda';
+import { ApolloLink, Observable, Operation, NextLink, FetchResult } from 'apollo-link';
 
-import {
-  hasIdTokenExpiredError,
-  hasRefreshTokenExpiredError,
-  hasTokenInvalidError,
-} from './utils';
+import { hasIdTokenExpiredError, hasRefreshTokenExpiredError, hasTokenInvalidError } from './utils';
 
 import { TokenRefreshLinkParameters } from './types';
 
@@ -23,20 +13,17 @@ import { TokenRefreshLinkParameters } from './types';
  * @param {Function} [options.onIdTokenExpired] - The callback which called when id token is expired.
  */
 export class TokenRefreshLink extends ApolloLink {
-  onAuthError?: (error?: {}) => void;
-  onIdTokenExpired?: () => Promise<any>;
+  public onAuthError?: (error?: {}) => void;
+  public onIdTokenExpired?: () => Promise<any>;
 
-  constructor({
-    onIdTokenExpired,
-    onAuthError,
-  } : TokenRefreshLinkParameters) {
+  constructor({ onIdTokenExpired, onAuthError }: TokenRefreshLinkParameters) {
     super();
 
     this.onAuthError = onAuthError;
     this.onIdTokenExpired = onIdTokenExpired;
   }
 
-  request(operation: Operation, forward: NextLink): Observable<FetchResult> {
+  public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     return new Observable(observer => {
       let subscription: any = null;
       let handling = false;
@@ -54,7 +41,7 @@ export class TokenRefreshLink extends ApolloLink {
 
             subscription = observable.subscribe(subscriber);
           })
-          .catch((err) => {
+          .catch(err => {
             this.handleAuthFailed(err);
 
             handling = false;
@@ -64,16 +51,9 @@ export class TokenRefreshLink extends ApolloLink {
       };
 
       const subscriber = {
-        next: (data: any) => {
-          const dataErrors = data.errors || [];
-
-          if (hasIdTokenExpiredError(dataErrors)) {
-            handling = true;
-            handleTokenRefresh();
-          } else if (hasRefreshTokenExpiredError(dataErrors) || hasTokenInvalidError(dataErrors)) {
-            this.handleAuthFailed();
-          } else {
-            observer.next(data);
+        complete: () => {
+          if (!handling) {
+            observer.complete();
           }
         },
         error: (error: any) => {
@@ -88,9 +68,16 @@ export class TokenRefreshLink extends ApolloLink {
             observer.error(error);
           }
         },
-        complete: () => {
-          if (!handling) {
-            observer.complete();
+        next: (data: any) => {
+          const dataErrors = data.errors || [];
+
+          if (hasIdTokenExpiredError(dataErrors)) {
+            handling = true;
+            handleTokenRefresh();
+          } else if (hasRefreshTokenExpiredError(dataErrors) || hasTokenInvalidError(dataErrors)) {
+            this.handleAuthFailed();
+          } else {
+            observer.next(data);
           }
         },
       };
@@ -101,7 +88,7 @@ export class TokenRefreshLink extends ApolloLink {
     });
   }
 
-  handleTokenExpired() {
+  public handleTokenExpired() {
     if (typeof this.onIdTokenExpired === 'function') {
       return this.onIdTokenExpired();
     }
@@ -109,10 +96,9 @@ export class TokenRefreshLink extends ApolloLink {
     return Promise.reject();
   }
 
-  handleAuthFailed(err?: Object) {
+  public handleAuthFailed(err?: object) {
     if (typeof this.onAuthError === 'function') {
       this.onAuthError(err);
     }
   }
 }
-

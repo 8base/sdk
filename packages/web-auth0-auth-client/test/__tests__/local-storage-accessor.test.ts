@@ -60,4 +60,3 @@ describe('localStorageAccessor', () => {
     expect(authState).toEqual({});
   });
 });
-

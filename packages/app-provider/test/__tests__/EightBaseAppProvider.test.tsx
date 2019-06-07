@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
 
-const { WebAuth0AuthClient } = require('@8base/web-auth0-auth-client');
-const { EightBaseApolloClient } = require('@8base/apollo-client');
-const { AuthProvider } = require('@8base/auth');
+import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
+import { EightBaseApolloClient } from '@8base/apollo-client';
+import { AuthProvider } from '@8base/auth';
 
 import { EightBaseAppProvider } from '../../src';
 
