@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import { MutationResult, MutationFn } from 'react-apollo';
-import { TableConsumer } from '@8base/table-schema-provider';
-import { TableSchema } from '@8base/utils';
+import React, { Component } from "react";
+import { MutationResult, MutationFn } from "react-apollo";
+import { TableConsumer } from "@8base/table-schema-provider";
+import { TableSchema, SDKError, ERROR_CODES } from "@8base/utils";
 
-import { RecordCrud } from './RecordCrud';
+import { RecordCrud } from "./RecordCrud";
 
 interface ChildrenPropObject {
-  tableMetaResult: TableSchema | null,
-  mutateResult: MutationResult,
+  tableMetaResult: TableSchema | null;
+  mutateResult: MutationResult;
 }
 
 type RecordDeleteProps = {
-  tableName?: string,
-  tableId?: string,
+  tableName?: string;
+  tableId?: string;
 
-  children: (mutateFunction: (id: string, force: boolean) => Promise<any>, result: ChildrenPropObject) => React.ReactNode,
-}
+  children: (
+    mutateFunction: (id: string, force: boolean) => Promise<any>,
+    result: ChildrenPropObject
+  ) => React.ReactNode;
+};
 
 /**
  * Component for deleting the record of the table
@@ -31,34 +34,34 @@ export class RecordDelete extends Component<RecordDeleteProps> {
     const { children, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new Error('Table doesn\'t find');
+      throw new SDKError(
+        ERROR_CODES.TABLE_NOT_FOUND,
+        '@8base/crud',
+        `Table doesn't find`
+      );
     }
 
     return (
-      <RecordCrud
-        {...rest}
-        tableMeta={tableMetaResult}
-        mode="delete"
-      >
+      <RecordCrud {...rest} tableMeta={tableMetaResult} mode="delete">
         {(mutateFunction, mutateResult) =>
           children(
-            (id: string, force: boolean) => mutateFunction({ filter: { id }, force }),
+            (id: string, force: boolean) =>
+              mutateFunction({ filter: { id }, force }),
             {
               tableMetaResult,
-              mutateResult,
-            })}
+              mutateResult
+            }
+          )
+        }
       </RecordCrud>
-    )
-  }
+    );
+  };
   render() {
     const { tableName, tableId } = this.props;
 
     return (
-      <TableConsumer
-        name={ tableName }
-        id={ tableId }
-      >
-        { this.renderQuery }
+      <TableConsumer name={tableName} id={tableId}>
+        {this.renderQuery}
       </TableConsumer>
     );
   }

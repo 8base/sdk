@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MutationResult, MutationFn } from 'react-apollo';
 import { TableConsumer } from '@8base/table-schema-provider';
-import { TableSchema } from '@8base/utils';
+import { TableSchema, SDKError, ERROR_CODES } from "@8base/utils";
 
 import { RecordCrud } from './RecordCrud';
 
@@ -31,7 +31,11 @@ export class RecordCreate extends Component<RecordCreateProps> {
     const { children, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new Error('Table doesn\'t find');
+      throw new SDKError(
+        ERROR_CODES.TABLE_NOT_FOUND,
+        '@8base/crud',
+        `Table doesn't find`
+      );
     }
 
     return (

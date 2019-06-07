@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
-import { TableConsumer } from '@8base/table-schema-provider';
-import { MutationFn, MutationResult, QueryResult } from 'react-apollo';
-import { TableSchema } from '@8base/utils';
+import React, { Component } from "react";
+import { TableConsumer } from "@8base/table-schema-provider";
+import { MutationFn, MutationResult, QueryResult } from "react-apollo";
+import { TableSchema, SDKError, ERROR_CODES } from "@8base/utils";
 
-import { RecordCrud } from './RecordCrud';
-import { RecordData } from './RecordData';
-
+import { RecordCrud } from "./RecordCrud";
+import { RecordData } from "./RecordData";
 
 /** Results of the record update queries and mutation */
 interface ChildrenPropObject {
-  tableMetaResult: TableSchema | null,
-  recordDataResult: QueryResult,
-  mutateResult: MutationResult,
+  tableMetaResult: TableSchema | null;
+  recordDataResult: QueryResult;
+  mutateResult: MutationResult;
 }
 
 type RecordUpdateProps = {
-  tableName?: string,
-  tableId?: string,
-  recordId: string,
+  tableName?: string;
+  tableId?: string;
+  recordId: string;
 
-  children: (mutateFunction: MutationFn, result: ChildrenPropObject) => React.ReactNode,
-}
+  children: (
+    mutateFunction: MutationFn,
+    result: ChildrenPropObject
+  ) => React.ReactNode;
+};
 
 /**
  * Component for updating the record of the table
@@ -31,12 +33,15 @@ type RecordUpdateProps = {
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
 export class RecordUpdate extends Component<RecordUpdateProps> {
-  
   renderQuery = (tableMetaResult: TableSchema | null) => {
     const { tableName, tableId, children, recordId, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new Error('Table doesn\'t find');
+      throw new SDKError(
+        ERROR_CODES.TABLE_NOT_FOUND,
+        '@8base/crud',
+        `Table doesn't find`
+      );
     }
 
     return (
@@ -46,36 +51,30 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
         tableId={tableId}
         recordId={recordId}
       >
-        {(recordDataResult) => (
-          <RecordCrud
-            {...rest}
-            tableMeta={tableMetaResult}
-            mode="update"
-          >
+        {recordDataResult => (
+          <RecordCrud {...rest} tableMeta={tableMetaResult} mode="update">
             {(mutateFunction, mutateResult) =>
               children(
-                (data) => mutateFunction({ data, filter: { id: recordId } }),
+                data => mutateFunction({ data, filter: { id: recordId } }),
                 {
                   tableMetaResult,
                   recordDataResult,
-                  mutateResult,
-                })}
+                  mutateResult
+                }
+              )
+            }
           </RecordCrud>
         )}
       </RecordData>
-    )
-  }
+    );
+  };
 
-  
   render() {
     const { tableName, tableId } = this.props;
 
     return (
-      <TableConsumer
-        name={ tableName }
-        id={ tableId }
-      >
-        {this.renderQuery }
+      <TableConsumer name={tableName} id={tableId}>
+        {this.renderQuery}
       </TableConsumer>
     );
   }
