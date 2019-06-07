@@ -1,7 +1,5 @@
-// @flow
-
-import { AsyncStorage } from 'react-native';
-import type { AuthState } from '@8base/utils';
+import { AuthState } from '@8base/utils';
+const { AsyncStorage } = require('react-native');
 
 const AUTH_ASYNCSTORAGE_KEY = 'auth';
 

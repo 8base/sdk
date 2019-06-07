@@ -74,7 +74,7 @@ export type AuthState = {
 }
 
 export type AuthData = {
-  state: Object,
+  state?: Object,
   isEmailVerified: boolean,
   idToken: string,
   email: string,

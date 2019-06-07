@@ -28,7 +28,7 @@ jest.mock('jwt-decode', () => jest.fn(
 ));
 
 jest.mock('react-native', () => {
-  const storage = {};
+  const storage: any = {};
 
   return {
     AsyncStorage: {
