@@ -1,4 +1,3 @@
-// @flow
 import { AuthState, AuthClient } from '@8base/utils';
 
 type ApiTokenAuthClientOptions = {

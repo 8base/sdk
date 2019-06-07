@@ -7,10 +7,8 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build:clean": "rimraf dist",
-    "build:ts": "tsc",
-    "build": "yarn build:clean && yarn build:ts",
-    "watch": "yarn build --watch",
+    "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
     "doc": "NODE_ENV=test documentation readme",
     "docs": "yarn doc src/index.js --section=WebAuth0AuthClient",
     "test": "NPM_ENV=test jest"
@@ -24,7 +22,6 @@
     "@types/auth0-js": "^9.10.2",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
-    "@types/ramda": "^0.26.8",
     "documentation": "^8.0.0",
     "jest": "24",
     "jest-localstorage-mock": "^2.4.0",

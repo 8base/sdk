@@ -1,6 +1,5 @@
-// @flow
 import { DocumentNode } from 'graphql';
-import * as R from 'ramda';
+import R from 'ramda';
 
 import { importData } from './importData';
 import { importTables } from './importTables';

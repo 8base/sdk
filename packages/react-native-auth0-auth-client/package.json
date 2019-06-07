@@ -19,25 +19,43 @@
     "ramda": "^0.26.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "@types/jest": "^24.0.13",
+    "@types/jwt-decode": "^2.2.1",
+    "@types/node": "^12.0.7",
     "documentation": "^8.0.0",
     "expo": "^32.0.1",
-    "flow-copy-source": "^2.0.2",
-    "jest": "^23.1.0",
+    "jest": "24",
     "prettier": "^1.16.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
   },
   "peerDependencies": {
     "expo": "^32.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"

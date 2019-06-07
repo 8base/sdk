@@ -2,9 +2,9 @@ import * as R from 'ramda';
 import { TransformedPermissions } from './types';
 
 type IsAllowedArgs = {
-  resource: string,
+  resource?: string,
   type: string,
-  permission: string,
+  permission?: string,
   field?: any,
 }
 
@@ -14,6 +14,10 @@ export const isAllowed = ({
   permission,
   field,
 }: IsAllowedArgs, permissions: TransformedPermissions) => {
+  if (!resource || !permission) {
+    return false;
+  }
+
   const path: string[] = [type, resource, 'permission', permission, 'allow'];
 
   if (field) {

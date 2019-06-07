@@ -1,11 +1,10 @@
-// @flow
-import * as R from 'ramda';
+import R from 'ramda';
 import errorCodes from '@8base/error-codes';
 import { Schema, FieldSchema } from '@8base/utils';
 import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, TABLE_CREATE_MUTATION, FIELD_CREATE_MUTATION } from './constants';
-import { TableSchemaResponse } from './types';
+import { SchemaResponse } from './types';
 
 type ImportTablesOptions = {
   debug?: boolean,
@@ -47,7 +46,7 @@ export const importTables = async (
     }
   }
 
-  const tablesListData = await request<TableSchemaResponse>(TABLES_LIST_QUERY, {
+  const tablesListData = await request<SchemaResponse>(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
     },

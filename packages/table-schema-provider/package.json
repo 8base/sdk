@@ -20,7 +20,6 @@
   },
   "dependencies": {
     "@8base/utils": "^0.26.0",
-    "@babel/runtime": "^7.3.1",
     "apollo-client": "^2.5.1",
     "graphql-tag": "^2.10.1",
     "ramda": "^0.26.1",
@@ -28,23 +27,41 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "@types/graphql": "^14.2.0",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.4",
     "documentation": "^8.0.0",
-    "flow-copy-source": "^2.0.2",
     "graphql": "^0.13.0",
-    "jest": "^23.1.0",
+    "jest": "24",
     "react": "^16.8.6",
     "react-apollo": "2.5.2",
     "react-dom": "^16.8.6",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
     "collectCoverageFrom": [
       "<rootDir>/src/**",
       "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
   },
   "license": "MIT"

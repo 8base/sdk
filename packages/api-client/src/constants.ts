@@ -1,4 +1,3 @@
-// @flow
 export const USER_REFRESH_TOKEN_QUERY = `
   mutation UserRefreshToken($refreshToken: String!, $email: String!) {
     userRefreshToken(data: {
