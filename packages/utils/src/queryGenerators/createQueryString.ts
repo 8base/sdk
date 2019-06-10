@@ -1,20 +1,19 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
 import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from '../constants';
 import { TableSchema, QueryGeneratorConfig } from '../types';
 
 export type CheckedRule = {
-  id: string,
-  name: string,
-  checked: boolean,
-}
+  id: string;
+  name: string;
+  checked: boolean;
+};
 
 const DEFAULT_DEPTH = 1;
 
 const getTableByName = (tablesList: TableSchema[], tableName: string) =>
   tablesList.find(({ name }) => tableName === name);
-
 
 export const createQueryString = (
   tablesList: TableSchema[],
@@ -23,22 +22,15 @@ export const createQueryString = (
   prevKey: string = '',
 ): string => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
-  const {
-    deep = DEFAULT_DEPTH,
-    withMeta = true,
-    relationItemsCount,
-    includeColumns,
-  } = queryObjectConfig;
+  const { deep = DEFAULT_DEPTH, withMeta = true, relationItemsCount, includeColumns } = queryObjectConfig;
 
   let queryObject = '';
 
   fields
-    .filter((field) => {
+    .filter(field => {
       const isMeta = tableFieldSelectors.isMetaField(field);
 
-      return withMeta
-        ? true
-        : !isMeta;
+      return withMeta ? true : !isMeta;
     })
     .forEach(field => {
       let fieldContent = field.name;
@@ -64,14 +56,16 @@ export const createQueryString = (
             }`;
         } else {
           const includeAllrelationFields = R.contains(currentKeyString, includeColumns || []);
-          const relationIncludeColumns = includeAllrelationFields
-            ? null
-            : includeColumns;
+          const relationIncludeColumns = includeAllrelationFields ? null : includeColumns;
 
           const innerFields = createQueryString(
             tablesList,
             refTableName,
-            { deep: deep - 1, withMeta, includeColumns: relationIncludeColumns },
+            {
+              deep: deep - 1,
+              includeColumns: relationIncludeColumns,
+              withMeta,
+            },
             currentKeyString,
           );
 
@@ -93,10 +87,10 @@ export const createQueryString = (
           meta
         }`;
       } else if (isSmart) {
-        fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce(
-          (accum: string, { name }: { name: string }) => { accum += `\n${name}`; return accum; },
-          '',
-        )}}`;
+        fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce((accum: string, { name }: { name: string }) => {
+          accum += `\n${name}`;
+          return accum;
+        }, '')}}`;
       }
 
       if (isList && (isRelation || isFile) && fieldContent !== null) {
@@ -106,9 +100,7 @@ export const createQueryString = (
         }`;
       }
 
-      const needsInclude = !!includeColumns
-        ? R.contains(currentKeyString, includeColumns)
-        : true;
+      const needsInclude = !!includeColumns ? R.contains(currentKeyString, includeColumns) : true;
 
       if (fieldContent !== null && (needsInclude || isNotEmptyRelation)) {
         if (!!relationItemsCount && isList && isRelation) {

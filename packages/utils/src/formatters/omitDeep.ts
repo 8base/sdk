@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
 const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
   if (!objectForOmitting || !R.is(Object, objectForOmitting)) {
@@ -16,10 +16,7 @@ const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
     return value;
   };
 
-  const fullOmitedObject = R.mapObjIndexed(
-    omitValue,
-    currentLevelOmitedObject,
-  );
+  const fullOmitedObject = R.mapObjIndexed(omitValue, currentLevelOmitedObject);
 
   return fullOmitedObject;
 };

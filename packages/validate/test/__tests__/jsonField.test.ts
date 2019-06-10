@@ -14,9 +14,7 @@ describe('As developer, i can create JSON field vaidator', () => {
 
     const validate = validator(JSONField);
 
-    expect(validate('{ "key": }')).toBe(
-      VALIDATION_ERROR.NOT_A_JSON('Unexpected token } in JSON at position 9'),
-    );
+    expect(validate('{ "key": }')).toBe(VALIDATION_ERROR.NOT_A_JSON('Unexpected token } in JSON at position 9'));
   });
 
   it('should check invalid value by "isRequired" attribute and provide error message', () => {
@@ -46,4 +44,3 @@ describe('As developer, i can create JSON field vaidator', () => {
     expect(validate('{ "key": "value" }')).toBeUndefined();
   });
 });
-

@@ -6,4 +6,3 @@ export { withLogout } from './withLogout';
 export { WithAuthProps } from './withAuth';
 export { AuthContextProps } from './AuthContext';
 export { AuthState } from '@8base/utils';
-

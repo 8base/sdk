@@ -7,25 +7,23 @@ import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
 import { AuthState, SDKError, ERROR_CODES } from '@8base/utils';
 
-
 type EightBaseApolloClientCommon = {
-  uri: string,
-  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<AuthState> }) => ApolloLink[],
+  uri: string;
+  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<AuthState> }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
-  onRequestSuccess?: (options: { operation: Operation, data: any }) => void;
-  onRequestError?: ErrorHandler,
+  onRequestSuccess?: (options: { operation: Operation; data: any }) => void;
+  onRequestError?: ErrorHandler;
 } & Partial<ApolloClientOptions<any>>;
 
 type EightBaseApolloClientOptions = {
-  withAuth?: boolean,
-  autoSignUp?: boolean,
-  authProfileId?: string,
-  getAuthState?: () => Promise<AuthState>,
-  getRefreshTokenParameters?: Function,
-  onAuthSuccess?: Function,
+  withAuth?: boolean;
+  autoSignUp?: boolean;
+  authProfileId?: string;
+  getAuthState?: () => Promise<AuthState>;
+  getRefreshTokenParameters?: Function;
+  onAuthSuccess?: Function;
 } & EightBaseApolloClientCommon;
-
 
 /**
  * Extended Apollo Client by 8base several links.
@@ -69,7 +67,6 @@ class EightBaseApolloClient extends ApolloClient<Object> {
 
     const batchHttpLink = new BatchHttpLink({ uri });
 
-
     let links: ApolloLink[] = [batchHttpLink];
 
     if (withAuth) {
@@ -78,8 +75,8 @@ class EightBaseApolloClient extends ApolloClient<Object> {
         getAuthState,
         // @ts-ignore. Needs to check and remove this parameter.
         getRefreshTokenParameters,
-        onAuthSuccess,
         onAuthError,
+        onAuthSuccess,
         onIdTokenExpired,
       });
 
@@ -95,9 +92,9 @@ class EightBaseApolloClient extends ApolloClient<Object> {
         }
 
         const signUpLink = new SignUpLink({
+          authProfileId,
           // @ts-ignore
           getAuthState,
-          authProfileId,
         });
 
         links = [signUpLink, ...links];
@@ -123,4 +120,3 @@ class EightBaseApolloClient extends ApolloClient<Object> {
 }
 
 export { EightBaseApolloClient, gql, InMemoryCache };
-

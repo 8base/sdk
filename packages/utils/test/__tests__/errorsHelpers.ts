@@ -2,14 +2,7 @@ import { throwIfMissingRequiredParameters, SDKError, ERROR_CODES } from '../../s
 
 describe('throwIfMissingRequiredOption', () => {
   const testFunction = (parameters: any) => {
-    throwIfMissingRequiredParameters(
-      [
-        'key2',
-        ['key1', 'nestedKey1'],
-      ],
-      '@8base/test',
-      parameters,
-    );
+    throwIfMissingRequiredParameters(['key2', ['key1', 'nestedKey1']], '@8base/test', parameters);
   };
 
   it('throws if there is a missing option', () => {
@@ -20,11 +13,7 @@ describe('throwIfMissingRequiredOption', () => {
         },
         key3: 'someValue',
       });
-    }).toThrow(new SDKError(
-      ERROR_CODES.MISSING_PARAMETER,
-      '@8base/test',
-      'Missing parameter: key2',
-    ));
+    }).toThrow(new SDKError(ERROR_CODES.MISSING_PARAMETER, '@8base/test', 'Missing parameter: key2'));
   });
 
   it('throws if there is a missing option: nested check', () => {
@@ -33,14 +22,10 @@ describe('throwIfMissingRequiredOption', () => {
         key2: 'someValue',
         key3: 'someValue',
       });
-    }).toThrow(new SDKError(
-      ERROR_CODES.MISSING_PARAMETER,
-      '@8base/test',
-      'Missing parameter: key1.nestedKey1',
-    ));
+    }).toThrow(new SDKError(ERROR_CODES.MISSING_PARAMETER, '@8base/test', 'Missing parameter: key1.nestedKey1'));
   });
 
-  it('doesn\'t throw if there isn\'t a missing option', () => {
+  it("doesn't throw if there isn't a missing option", () => {
     expect(() => {
       testFunction({
         key1: {
@@ -52,4 +37,3 @@ describe('throwIfMissingRequiredOption', () => {
     }).not.toThrow();
   });
 });
-

@@ -30,7 +30,7 @@ describe('EightBaseApolloClient', () => {
   });
 
   it('should create EightBaseApolloClient with auth', () => {
-    new EightBaseApolloClient({
+    const temp = new EightBaseApolloClient({
       uri,
       onRequestError,
       onRequestSuccess,
@@ -58,7 +58,7 @@ describe('EightBaseApolloClient', () => {
   });
 
   it('should create EightBaseApolloClient without auto sign up', () => {
-    new EightBaseApolloClient({
+    const temp = new EightBaseApolloClient({
       uri,
       onRequestError,
       onRequestSuccess,
@@ -82,14 +82,14 @@ describe('EightBaseApolloClient', () => {
   });
 
   it('should create EightBaseApolloClient without auth', () => {
-    new EightBaseApolloClient({
-      withAuth: false,
-      uri,
-      onRequestError,
-      onRequestSuccess,
+    const temp = new EightBaseApolloClient({
       getAuthState,
       getRefreshTokenParameters,
       onAuthSuccess,
+      onRequestError,
+      onRequestSuccess,
+      uri,
+      withAuth: false,
     });
 
     expect(AuthLink).not.toHaveBeenCalled();

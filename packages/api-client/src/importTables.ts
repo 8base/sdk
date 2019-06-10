@@ -7,27 +7,27 @@ import { TABLES_LIST_QUERY, TABLE_CREATE_MUTATION, FIELD_CREATE_MUTATION } from 
 import { SchemaResponse } from './types';
 
 type ImportTablesOptions = {
-  debug?: boolean,
+  debug?: boolean;
 };
 
 const handleError = (message: string, e: { response: any }, debug: boolean) => {
-  // eslint-disable-next-line no-console
+  // tslint:disable-next-line no-console
   console.warn(message);
 
   if (debug) {
-    // eslint-disable-next-line no-console
+    // tslint:disable-next-line no-console
     console.warn(JSON.stringify(e.response, null, 2));
   } else if (R.pathEq(['response', 'errors', 0, 'code'], errorCodes.ValidationErrorCode, e)) {
-    // eslint-disable-next-line no-console
+    // tslint:disable-next-line no-console
     console.warn(JSON.stringify(R.path(['response', 'errors', 0, 'details'], e), null, 2));
   } else {
-    // eslint-disable-next-line no-console
+    // tslint:disable-next-line no-console
     console.warn(R.path(['response', 'errors', 0, 'message'], e));
   }
 };
 
 export const importTables = async (
-  request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>,
+  request: <T extends object>(query: string | DocumentNode, variables?: object) => Promise<T>,
   schema: Schema,
   options: ImportTablesOptions = {},
 ) => {
@@ -37,8 +37,8 @@ export const importTables = async (
     try {
       await request(TABLE_CREATE_MUTATION, {
         data: {
-          name: table.name,
           displayName: table.displayName,
+          name: table.name,
         },
       });
     } catch (e) {
@@ -66,33 +66,39 @@ export const importTables = async (
         continue;
       }
 
-      const field: Partial<FieldSchema> = R.pick([
-        'name',
-        'displayName',
-        'fieldType',
-        'isList',
-        'isRequired',
-        'isUnique',
-        'defaultValue',
-        'description',
-        'fieldTypeAttributes',
-        'relation',
-        'tableId',
-      ], schemaField);
+      const field: Partial<FieldSchema> = R.pick(
+        [
+          'name',
+          'displayName',
+          'fieldType',
+          'isList',
+          'isRequired',
+          'isUnique',
+          'defaultValue',
+          'description',
+          'fieldTypeAttributes',
+          'relation',
+          'tableId',
+        ],
+        schemaField,
+      );
 
       if (field.fieldTypeAttributes) {
-        field.fieldTypeAttributes = R.pick([
-          'format',
-          'fieldSize',
-          'listOptions',
-          'precision',
-          'currency',
-          'minValue',
-          'maxValue',
-          'maxSize',
-          'typeRestrictions',
-          'isBigInt',
-        ], field.fieldTypeAttributes);
+        field.fieldTypeAttributes = R.pick(
+          [
+            'format',
+            'fieldSize',
+            'listOptions',
+            'precision',
+            'currency',
+            'minValue',
+            'maxValue',
+            'maxSize',
+            'typeRestrictions',
+            'isBigInt',
+          ],
+          field.fieldTypeAttributes,
+        );
       }
 
       if (field.relation) {
@@ -102,26 +108,21 @@ export const importTables = async (
 
         // @ts-ignore. Check what does do relations prop.
         if (refTable.relations && refTable.relations[schemaTable.name]) {
-        // @ts-ignore. Check what does do relations prop.
+          // @ts-ignore. Check what does do relations prop.
           if (refTable.relations[schemaTable.name].includes(field.name)) {
             continue;
           }
         }
 
         field.relation = {
-          ...R.pick([
-            'refFieldIsList',
-            'refFieldIsRequired',
-            'refFieldName',
-            'refFieldDisplayName',
-          ], field.relation),
+          ...R.pick(['refFieldIsList', 'refFieldIsRequired', 'refFieldName', 'refFieldDisplayName'], field.relation),
           refTableId: refTable.id,
         } as any;
 
-          // @ts-ignore. Check what does relations prop do.
+        // @ts-ignore. Check what does relations prop do.
         table.relations = table.relations || {};
 
-          // @ts-ignore. Check what does relations prop do.
+        // @ts-ignore. Check what does relations prop do.
         if (table.relations[refTableName]) {
           // @ts-ignore. Check what does relations prop do.
           table.relations[refTableName].push(field.relation.refFieldName);

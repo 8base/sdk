@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import * as renderer from 'react-test-renderer';
 import { TableConsumer, TableSchemaContext, TableSchemaProvider } from '../../src';
 
@@ -17,12 +17,13 @@ const MOCK_TABLES_SCHEMA = {
 };
 
 jest.mock('react-apollo', () => ({
-  Query: ({ children, skip }: any) => skip ?
-    children({ data: undefined, loading: false }) :
-    children({ data: { tablesList: MOCK_TABLES_SCHEMA }, loading: false }),
+  Query: ({ children, skip }: any) =>
+    skip
+      ? children({ data: undefined, loading: false })
+      : children({ data: { tablesList: MOCK_TABLES_SCHEMA }, loading: false }),
 }));
 
-const { Query } = require('react-apollo');
+const { Query } = require('react-apollo'); // tslint:disable-line
 
 describe('TableSchemaProvider', () => {
   beforeEach(() => {
@@ -30,18 +31,10 @@ describe('TableSchemaProvider', () => {
   });
 
   const testContentFn = jest.fn(() => <div />);
-  const testConsumerFn = jest.fn(() => (
-    <TableConsumer name="tableName">
-      { testContentFn }
-    </TableConsumer>
-  ));
+  const testConsumerFn = jest.fn(() => <TableConsumer name="tableName">{testContentFn}</TableConsumer>);
 
   it('As a developer, I can use TableSchemaProvider to get tableSchema', async () => {
-    renderer.create(
-      <TableSchemaProvider>
-        { testConsumerFn }
-      </TableSchemaProvider>,
-    );
+    renderer.create(<TableSchemaProvider>{testConsumerFn}</TableSchemaProvider>);
 
     expect(testConsumerFn).toHaveBeenCalledTimes(1);
     expect(testConsumerFn).toHaveBeenCalledWith({ loading: false });
@@ -50,11 +43,7 @@ describe('TableSchemaProvider', () => {
   });
 
   it('As a developer, I can skip TableSchemaProvider', () => {
-    const testRenderer = renderer.create(
-      <TableSchemaProvider skip>
-        { testConsumerFn }
-      </TableSchemaProvider>,
-    );
+    const testRenderer = renderer.create(<TableSchemaProvider skip={true}>{testConsumerFn}</TableSchemaProvider>);
     const testInstance = testRenderer.root;
 
     expect(testInstance.findByType(Query).props.skip).toBe(true);
@@ -74,10 +63,8 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={ MOCK_TABLES_SCHEMA.items }>
-        <TableConsumer name="tableName">
-          { testRenderFn }
-        </TableConsumer>
+      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
+        <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
@@ -87,10 +74,8 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={ MOCK_TABLES_SCHEMA.items }>
-        <TableConsumer id="1">
-          { testRenderFn }
-        </TableConsumer>
+      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
+        <TableConsumer id="1">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
@@ -98,4 +83,3 @@ describe('TableConsumer', () => {
     expect(testRenderFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[0]);
   });
 });
-

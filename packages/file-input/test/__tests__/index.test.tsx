@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import * as renderer from 'react-test-renderer';
 
 import { FileInput } from '../../src';
 
-let mock_onUploadDone: any = null;
-let mock_client: any = null;
+let mockOnUploadDone: any = null;
+let mocClient: any = null;
 
 jest.mock('react-apollo', () => {
   const client = {
     query: jest.fn(() => {
-      mock_client = client;
+      mocClient = client;
 
       return {
         data: {
@@ -25,14 +25,14 @@ jest.mock('react-apollo', () => {
   };
 
   return {
-    withApollo: (BaseComponent: any) => (props: any) => <BaseComponent { ...props } client={ client } />,
+    withApollo: (BaseComponent: any) => (props: any) => <BaseComponent {...props} client={client} />,
   };
 });
 
 jest.mock('filestack-js', () => {
   const picker = jest.fn(({ onUploadDone }) => ({
     open: () => {
-      mock_onUploadDone = onUploadDone;
+      mockOnUploadDone = onUploadDone;
     },
   }));
 
@@ -48,7 +48,7 @@ jest.mock('filestack-js', () => {
   };
 });
 
-const filestack = require('filestack-js');
+const filestack = require('filestack-js'); // tslint:disable-line
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -59,35 +59,38 @@ describe('should call onChange when file is uploaded', () => {
     const renderFileInputView: any = jest.fn(() => null);
     const onChange: any = jest.fn();
 
-    renderer.create(
-      <FileInput onChange={ onChange }>
-        { renderFileInputView }
-      </FileInput>,
-    );
+    renderer.create(<FileInput onChange={onChange}>{renderFileInputView}</FileInput>);
 
     expect(renderFileInputView).toHaveBeenCalledTimes(1);
 
     await renderFileInputView.mock.calls[0][0].pick();
 
-    expect(mock_client.query).toHaveBeenCalledTimes(1);
-    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+    expect(mocClient.query).toHaveBeenCalledTimes(1);
+    expect(mocClient.query.mock.calls[0]).toMatchSnapshot();
 
     const originalFile = new File([''], 'filename');
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/handle' }] });
+    await mockOnUploadDone({
+      filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/handle' }],
+    });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: false, downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle' });
+    expect(onChange.mock.calls[0][0]).toEqual({
+      fileId: 'handle',
+      filename: 'filename',
+      public: false,
+      downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle',
+    });
     expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
-  it('for single file input with public modifier', async() => {
+  it('for single file input with public modifier', async () => {
     const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
     renderer.create(
-      <FileInput onChange={ onChange } public>
-        { renderFileInputView }
+      <FileInput onChange={onChange} public={true}>
+        {renderFileInputView}
       </FileInput>,
     );
 
@@ -95,25 +98,32 @@ describe('should call onChange when file is uploaded', () => {
 
     await renderFileInputView.mock.calls[0][0].pick();
 
-    expect(mock_client.query).toHaveBeenCalledTimes(1);
-    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+    expect(mocClient.query).toHaveBeenCalledTimes(1);
+    expect(mocClient.query.mock.calls[0]).toMatchSnapshot();
 
     const originalFile = new File([''], 'filename');
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/handle' }] });
+    await mockOnUploadDone({
+      filesUploaded: [{ handle: 'handle', filename: 'filename', originalFile, url: 'https://url.com/handle' }],
+    });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', public: true, downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle' });
+    expect(onChange.mock.calls[0][0]).toEqual({
+      fileId: 'handle',
+      filename: 'filename',
+      public: true,
+      downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle',
+    });
     expect(onChange.mock.calls[0][1]).toEqual(originalFile);
   });
 
-  it('for multiple files input', async() => {
+  it('for multiple files input', async () => {
     const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
     renderer.create(
-      <FileInput onChange={ onChange } maxFiles={ 3 }>
-        { renderFileInputView }
+      <FileInput onChange={onChange} maxFiles={3}>
+        {renderFileInputView}
       </FileInput>,
     );
 
@@ -121,14 +131,14 @@ describe('should call onChange when file is uploaded', () => {
 
     await renderFileInputView.mock.calls[0][0].pick();
 
-    expect(mock_client.query).toHaveBeenCalledTimes(1);
-    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+    expect(mocClient.query).toHaveBeenCalledTimes(1);
+    expect(mocClient.query.mock.calls[0]).toMatchSnapshot();
 
     const originalFile1 = new File([''], 'filename1');
     const originalFile2 = new File([''], 'filename2');
     const originalFile3 = new File([''], 'filename3');
 
-    await mock_onUploadDone({
+    await mockOnUploadDone({
       filesUploaded: [
         { handle: 'handle1', filename: 'filename1', originalFile: originalFile1, url: 'https://url.com/handle1' },
         { handle: 'handle2', filename: 'filename2', originalFile: originalFile2, url: 'https://url.com/handle2' },
@@ -137,35 +147,43 @@ describe('should call onChange when file is uploaded', () => {
     });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual(
-      [
-        { fileId: 'handle1', filename: 'filename1', public: false, downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle1' },
-        { fileId: 'handle2', filename: 'filename2', public: false, downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle2' },
-        { fileId: 'handle3', filename: 'filename3', public: false, downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle3' },
-      ],
-    );
-    expect(onChange.mock.calls[0][1]).toEqual(
-      [
-        originalFile1,
-        originalFile2,
-        originalFile3,
-      ],
-    );
+    expect(onChange.mock.calls[0][0]).toEqual([
+      {
+        fileId: 'handle1',
+        filename: 'filename1',
+        public: false,
+        downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle1',
+      },
+      {
+        fileId: 'handle2',
+        filename: 'filename2',
+        public: false,
+        downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle2',
+      },
+      {
+        fileId: 'handle3',
+        filename: 'filename3',
+        public: false,
+        downloadUrl: 'https://url.com/security=p:policy-key,s:signature-key/handle3',
+      },
+    ]);
+    expect(onChange.mock.calls[0][1]).toEqual([originalFile1, originalFile2, originalFile3]);
   });
 
-  it('for input with custom on upload handler', async() => {
+  it('for input with custom on upload handler', async () => {
     const renderFileInputView: any = jest.fn(() => null);
     const onChange = jest.fn();
 
-    const onUploadDone: any = (value: any) => new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
-      }, 50);
-    });
+    const onUploadDone: any = (value: any) =>
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
+        }, 50);
+      });
 
     renderer.create(
-      <FileInput onChange={ onChange } onUploadDone={ onUploadDone }>
-        { renderFileInputView }
+      <FileInput onChange={onChange} onUploadDone={onUploadDone}>
+        {renderFileInputView}
       </FileInput>,
     );
 
@@ -173,13 +191,19 @@ describe('should call onChange when file is uploaded', () => {
 
     await renderFileInputView.mock.calls[0][0].pick();
 
-    expect(mock_client.query).toHaveBeenCalledTimes(1);
-    expect(mock_client.query.mock.calls[0]).toMatchSnapshot();
+    expect(mocClient.query).toHaveBeenCalledTimes(1);
+    expect(mocClient.query.mock.calls[0]).toMatchSnapshot();
 
-    await mock_onUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
+    await mockOnUploadDone({ filesUploaded: [{ handle: 'handle', filename: 'filename' }] });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0]).toEqual({ fileId: 'handle', filename: 'filename', id: 'id', downloadUrl: 'downloadUrl', public: false });
+    expect(onChange.mock.calls[0][0]).toEqual({
+      fileId: 'handle',
+      filename: 'filename',
+      id: 'id',
+      downloadUrl: 'downloadUrl',
+      public: false,
+    });
   });
 });
 
@@ -191,11 +215,7 @@ describe('FileInput', () => {
   it('allows to pass custom options to pick method', async () => {
     const renderFileInputView: any = jest.fn(() => null);
 
-    renderer.create(
-      <FileInput>
-        { renderFileInputView }
-      </FileInput>,
-    );
+    renderer.create(<FileInput>{renderFileInputView}</FileInput>);
 
     await renderFileInputView.mock.calls[0][0].pick({
       accept: ['image/*'],
@@ -214,14 +234,10 @@ describe('FileInput', () => {
     });
   });
 
-  it('doesn\'t allow to rewrite maxFiles and onUploadDone options', async () => {
+  it("doesn't allow to rewrite maxFiles and onUploadDone options", async () => {
     const renderFileInputView: any = jest.fn(() => null);
 
-    renderer.create(
-      <FileInput maxFiles={ 3 }>
-        { renderFileInputView }
-      </FileInput>,
-    );
+    renderer.create(<FileInput maxFiles={3}>{renderFileInputView}</FileInput>);
 
     await renderFileInputView.mock.calls[0][0].pick({
       accept: ['image/*'],

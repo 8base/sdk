@@ -16,7 +16,7 @@ import { FormProps, FormContextValue } from './types';
 const enhancer: any = compose(
   withTableSchema,
   setDisplayName('Form'),
-)
+);
 
 /**
  * `Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FormProps`](https://github.com/final-form/react-final-form#formprops) props and some extra props for easy working with 8base API.
@@ -25,12 +25,12 @@ const enhancer: any = compose(
  */
 const Form: React.ComponentType<FormProps> = enhancer(
   class Form extends React.Component<FormProps & WithTableSchemaProps> {
-    static defaultProps = {
-      mutators: {},
+    public static defaultProps = {
       ignoreNonTableFields: true,
+      mutators: {},
     };
 
-    collectProps = (): FinalFormProps => {
+    public collectProps = (): FinalFormProps => {
       const {
         mutators,
         tableSchema,
@@ -46,32 +46,41 @@ const Form: React.ComponentType<FormProps> = enhancer(
       } = this.props;
 
       const collectedProps = {
-        mutators: R.merge(arrayMutators, mutators),
-        tableSchema,
-        onSubmit,
         initialValues,
+        mutators: R.merge(arrayMutators, mutators),
+        onSubmit,
+        tableSchema,
         ...restProps,
       };
 
       if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
-        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, { formatRelationToIds });
+        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, {
+          formatRelationToIds,
+        });
       }
 
       const skipData = (value: any, fieldSchema: FieldSchema) =>
-        !isAllowed({
-          resource: tableSchema && tableSchema.name,
-          type: 'data',
-          permission: type && type.toLowerCase(),
-          field: fieldSchema.name,
-        }, permissions);
+        !isAllowed(
+          {
+            field: fieldSchema.name,
+            permission: type && type.toLowerCase(),
+            resource: tableSchema && tableSchema.name,
+            type: 'data',
+          },
+          permissions,
+        );
 
       collectedProps.onSubmit = async (data, ...rest) => {
         let result = null;
 
         try {
-          const formattedData = (type && tableSchema && schema)
-            ? formatDataForMutation(type, tableSchema.name, data, schema, { ignoreNonTableFields, skip: permissions && skipData })
-            : data;
+          const formattedData =
+            type && tableSchema && schema
+              ? formatDataForMutation(type, tableSchema.name, data, schema, {
+                  ignoreNonTableFields,
+                  skip: permissions && skipData,
+                })
+              : data;
 
           result = await onSubmit(formattedData, ...rest);
         } catch (e) {
@@ -99,23 +108,23 @@ const Form: React.ComponentType<FormProps> = enhancer(
       return collectedProps;
     };
 
-    collectContextValue = (): FormContextValue => {
+    public collectContextValue = (): FormContextValue => {
       const { tableSchema } = this.props;
 
       return { tableSchema };
     };
 
-    render() {
+    public render() {
       const props: FinalFormProps = this.collectProps();
       const contextValue: FormContextValue = this.collectContextValue();
 
       return (
-        <FormContext.Provider value={ contextValue }>
-          <FinalForm { ...props } />
+        <FormContext.Provider value={contextValue}>
+          <FinalForm {...props} />
         </FormContext.Provider>
       );
     }
-  }
-)
+  },
+);
 
 export { Form };

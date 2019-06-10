@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { TransformedPermissions } from './types';
 
 const PermissionsContext = React.createContext<TransformedPermissions>({});

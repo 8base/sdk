@@ -171,61 +171,47 @@ let mockCreateValidate: any = null;
 jest.mock('@8base/validate', () => (...args: any) => mockCreateValidate(...args));
 
 describe('As a developer, while I implementet a form,', () => {
-  mockCreateValidate = jest.fn((fieldSchema) => () => fieldSchema.name);
+  mockCreateValidate = jest.fn(fieldSchema => () => fieldSchema.name);
 
   const INITIAL_VALUES = {
     scalar: 'Scalar Value',
-    scalarList: [
-      'Scalar List Value',
-    ],
+    scalarList: ['Scalar List Value'],
     relation: {
       scalar: 'Relation Scalar Value',
     },
-    relationList: [{
-      scalar: 'Relation List Scalar Value',
-    }],
+    relationList: [
+      {
+        scalar: 'Relation List Scalar Value',
+      },
+    ],
   };
 
   const TestForm = jest.fn((props, renderProp) => renderProp(props));
   const TestFieldset = jest.fn((props, renderProp) => renderProp(props));
-  const TestField = jest.fn((props) => <input { ...props.input } />);
+  const TestField = jest.fn(props => <input {...props.input} />);
 
   const form = renderer.create(
-    <TableSchemaContext.Provider value={ [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }>
-      <Form tableSchemaName="tableSchema" initialValues={ INITIAL_VALUES } onSubmit={ jest.fn() }>
-        {
-          (renderProps) => TestForm(renderProps, ({ handleSubmit }: any) => (
-            <form onSubmit={ handleSubmit }>
-              <Field name="scalar" component={ TestField } />
+    <TableSchemaContext.Provider value={[TABLE_SCHEMA, RELATION_TABLE_SCHEMA]}>
+      <Form tableSchemaName="tableSchema" initialValues={INITIAL_VALUES} onSubmit={jest.fn()}>
+        {renderProps =>
+          TestForm(renderProps, ({ handleSubmit }: any) => (
+            <form onSubmit={handleSubmit}>
+              <Field name="scalar" component={TestField} />
               <FieldArray name="scalarList">
-                {
-                  ({ fields }) => (
-                    fields.map((name) => (
-                      <Field key={ name } name={ name } component={ TestField } />
-                    ))
-                  )
-                }
+                {({ fields }) => fields.map(name => <Field key={name} name={name} component={TestField} />)}
               </FieldArray>
               <Fieldset tableSchemaName="relationTableSchema">
-                {
-                  (renderProps) => TestFieldset(renderProps, () => (
-                    <Field name="relation.scalar" component={ TestField } />
-                  ))
-                }
+                {renderProps => TestFieldset(renderProps, () => <Field name="relation.scalar" component={TestField} />)}
               </Fieldset>
               <FieldArray name="relationList">
-                {
-                  ({ fields }) => (
-                    fields.map((name) => (
-                      <Fieldset tableSchemaName="relationTableSchema" key={ name }>
-                        {
-                          (renderProps) => TestFieldset(renderProps, () => (
-                            <Field name={ `${name}.scalar` } component={ TestField } />
-                          ))
-                        }
-                      </Fieldset>
-                    ))
-                  )
+                {({ fields }) =>
+                  fields.map(name => (
+                    <Fieldset tableSchemaName="relationTableSchema" key={name}>
+                      {renderProps =>
+                        TestFieldset(renderProps, () => <Field name={`${name}.scalar`} component={TestField} />)
+                      }
+                    </Fieldset>
+                  ))
                 }
               </FieldArray>
             </form>

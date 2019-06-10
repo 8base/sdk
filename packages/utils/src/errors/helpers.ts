@@ -2,20 +2,12 @@ import R from 'ramda';
 import { SDKError } from './SDKError';
 import { ERROR_CODES } from './codes';
 
-const hasParameter = R.ifElse(
-  R.is(String),
-  R.has,
-  R.hasPath,
-);
+const hasParameter = R.ifElse(R.is(String), R.has, R.hasPath);
 
-const stringifyPath = R.ifElse(
-  R.is(String),
-  (path) => path,
-  R.join('.'),
-);
+const stringifyPath = R.ifElse(R.is(String), path => path, R.join('.'));
 
 export const throwIfMissingRequiredParameters = (
-  requiredParameterPaths: Array<Array<string> | string>,
+  requiredParameterPaths: Array<string[] | string>,
   packageName: string,
   parameters: {},
 ): void => {
@@ -31,4 +23,3 @@ export const throwIfMissingRequiredParameters = (
     }
   });
 };
-

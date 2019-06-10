@@ -1,24 +1,29 @@
-import * as React from 'react';
-import * as R from 'ramda';
+import React from 'react';
+import R from 'ramda';
 
 type FragmentsSchemaContainerProps = {
-  uri: string,
-  children: (args: { loading: boolean, fragmentsSchema: Object | null }) => React.ReactNode,
-}
+  uri: string;
+  children: (args: {
+    loading: boolean;
+    fragmentsSchema: object | null;
+  }) => React.ReactNode;
+};
 
 type FragmentsSchemaContainerState = {
-  loading: boolean,
-  fragmentsSchema: null | Object,
+  loading: boolean;
+  fragmentsSchema: null | Object;
+};
 
-}
-
-class FragmentsSchemaContainer extends React.PureComponent<FragmentsSchemaContainerProps, FragmentsSchemaContainerState> {
-  state: FragmentsSchemaContainerState = {
-    loading: true,
+class FragmentsSchemaContainer extends React.PureComponent<
+  FragmentsSchemaContainerProps,
+  FragmentsSchemaContainerState
+> {
+  public state: FragmentsSchemaContainerState = {
     fragmentsSchema: null,
+    loading: true,
   };
 
-  async componentDidMount() {
+  public async componentDidMount() {
     const { uri } = this.props;
 
     this.setState({ loading: true });
@@ -28,7 +33,7 @@ class FragmentsSchemaContainer extends React.PureComponent<FragmentsSchemaContai
     this.setState({ loading: false, fragmentsSchema });
   }
 
-  render() {
+  public render() {
     const { loading, fragmentsSchema } = this.state;
     const { children } = this.props;
 
@@ -38,8 +43,6 @@ class FragmentsSchemaContainer extends React.PureComponent<FragmentsSchemaContai
 
 const fetchFragmentsSchema = async (uri: string): Promise<Object | null> => {
   const result: { data: any } = await fetch(uri, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       operationName: 'FragmentsSchema',
       query: `
@@ -56,7 +59,11 @@ const fetchFragmentsSchema = async (uri: string): Promise<Object | null> => {
         }
       `,
     }),
-  }).then(result => result.json()).catch(() => ({ data: null }));
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  })
+    .then(result => result.json())
+    .catch(() => ({ data: null }));
 
   if (R.isNil(result.data)) {
     return null;

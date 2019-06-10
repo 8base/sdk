@@ -1,11 +1,7 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
 import { FieldSchema } from '../types';
 
-const isBigInt: (fieldSchema: FieldSchema) => boolean = R.pathEq(
-  ['fieldTypeAttributes', 'isBigInt'],
-  true,
-);
+const isBigInt: (fieldSchema: FieldSchema) => boolean = R.pathEq(['fieldTypeAttributes', 'isBigInt'], true);
 
 export { isBigInt };
-

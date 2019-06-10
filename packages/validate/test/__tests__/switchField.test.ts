@@ -36,4 +36,3 @@ describe('As developer, i can create switch field vaidator', () => {
     expect(validate('switchValue')).toBeUndefined();
   });
 });
-

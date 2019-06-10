@@ -39,18 +39,15 @@ describe('As developer, i can create text field vaidator', () => {
     expect(validate('text')).toBeUndefined();
   });
 
-  it(
-    `should check invalid value by "fieldSize" attribute
-    and provide error message with allowed fieldSize`,
-    () => {
-      const fieldSize = 5;
-      const format = TEXT_FORMATS.UNFORMATTED;
-      const textField = mockTextField({ fieldSize, format });
-      const validate = validator(textField);
+  it(`should check invalid value by "fieldSize" attribute
+    and provide error message with allowed fieldSize`, () => {
+    const fieldSize = 5;
+    const format = TEXT_FORMATS.UNFORMATTED;
+    const textField = mockTextField({ fieldSize, format });
+    const validate = validator(textField);
 
-      expect(validate('text text text')).toBe(VALIDATION_ERROR.MAX_FIELD_SIZE(fieldSize));
-    },
-  );
+    expect(validate('text text text')).toBe(VALIDATION_ERROR.MAX_FIELD_SIZE(fieldSize));
+  });
 
   it('should check empty value by "fieldSize" attribute and return undefined', () => {
     const fieldSize = 5;

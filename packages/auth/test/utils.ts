@@ -1,10 +1,10 @@
-export const SampleAuthClient: any = function () {
+export const SampleAuthClient: any = function() {
   let authState: any = {};
 
   const purgeAuthState = jest.fn(async () => {
     authState = {};
   });
-  const setAuthState = jest.fn(async (state) => {
+  const setAuthState = jest.fn(async state => {
     authState = state;
   });
   const getAuthState = jest.fn(async () => {
@@ -23,5 +23,3 @@ export const SampleAuthClient: any = function () {
   // @ts-ignore
   this.checkIsAuthorized = checkIsAuthorized;
 };
-
-

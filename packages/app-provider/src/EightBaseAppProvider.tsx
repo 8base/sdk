@@ -1,15 +1,14 @@
-import * as React from 'react';
-import { AuthClient, Authorizable } from '@8base/utils';
+import React from 'react';
+import { IAuthClient, IAuthorizable } from '@8base/utils';
 import { AuthProvider } from '@8base/auth';
 import { ApolloContainer } from './ApolloContainer';
 import { ApolloContainerPassedProps } from './types';
+import { TableSchemaProvider } from '@8base/table-schema-provider';
 
-const { TableSchemaProvider } = require('@8base/table-schema-provider');
-
-type EightBaseAppProviderProps = ApolloContainerPassedProps & { 
-  authClient?: AuthClient & Authorizable,
-  children: (renderProps: { loading: boolean }) => React.ReactNode,
-}
+type EightBaseAppProviderProps = ApolloContainerPassedProps & {
+  authClient?: IAuthClient & IAuthorizable;
+  children: (renderProps: { loading?: boolean }) => React.ReactNode;
+};
 
 /**
  * `EightBaseAppProvider` universal provider which loads fragments schema and provides Apollo client with it, authentication and table schema.
@@ -30,36 +29,30 @@ const EightBaseAppProvider = ({
   autoSignUp,
   authProfileId,
 }: EightBaseAppProviderProps): any =>
-  !!authClient
-    ? (
-      <AuthProvider authClient={ authClient }>
-        <ApolloContainer
-          withAuth
-          uri={ uri }
-          extendLinks={ extendLinks }
-          onRequestSuccess={ onRequestSuccess }
-          onRequestError={ onRequestError }
-          autoSignUp={ autoSignUp }
-          authProfileId={ authProfileId }
-        >
-          <TableSchemaProvider>
-            { children }
-          </TableSchemaProvider>
-        </ApolloContainer>
-      </AuthProvider>
-    ) : (
+  !!authClient ? (
+    <AuthProvider authClient={authClient}>
       <ApolloContainer
-        withAuth={ false }
-        uri={ uri }
-        extendLinks={ extendLinks }
-        onRequestSuccess={ onRequestSuccess }
-        onRequestError={ onRequestError }
+        withAuth={true}
+        uri={uri}
+        extendLinks={extendLinks}
+        onRequestSuccess={onRequestSuccess}
+        onRequestError={onRequestError}
+        autoSignUp={autoSignUp}
+        authProfileId={authProfileId}
       >
-        <TableSchemaProvider>
-          { children }
-        </TableSchemaProvider>
+        <TableSchemaProvider>{children}</TableSchemaProvider>
       </ApolloContainer>
-    );
+    </AuthProvider>
+  ) : (
+    <ApolloContainer
+      withAuth={false}
+      uri={uri}
+      extendLinks={extendLinks}
+      onRequestSuccess={onRequestSuccess}
+      onRequestError={onRequestError}
+    >
+      <TableSchemaProvider>{children}</TableSchemaProvider>
+    </ApolloContainer>
+  );
 
 export { EightBaseAppProvider };
-

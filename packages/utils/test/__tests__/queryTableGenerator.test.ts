@@ -10,7 +10,6 @@ import {
 
 import * as fixtures from '../__fixtures__';
 
-
 describe('As a developer, I can generate table columns  by table schema', () => {
   it('should generate table columns list ', () => {
     const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', {
@@ -24,18 +23,13 @@ describe('As a developer, I can generate table columns  by table schema', () => 
   it('should generate table columns list with included columns', () => {
     const columnsList = createQueryColumnsList(fixtures.SCHEMA, 'tableSchema', {
       deep: 3,
+      includeColumns: ['number', 'relation.scalarList', 'relation.numberanother', 'relationList'],
       withMeta: false,
-      includeColumns: [
-        'number',
-        'relation.scalarList',
-        'relation.numberanother',
-        'relationList',
-      ] });
+    });
 
     expect(columnsList).toMatchSnapshot();
   });
 });
-
 
 describe('As a developer, I can generate graphql query for list by table schema', () => {
   it('should generate query string ', () => {
@@ -85,7 +79,6 @@ describe('As a developer, I can generate graphql query for list by table schema'
     expect(tag).toMatchSnapshot();
   });
 });
-
 
 describe('As a developer, I can generate graphql mutation for create entity by table schema', () => {
   it('should generate graphql tag for create mutation by common table schema ', () => {
@@ -228,4 +221,3 @@ describe('As a developer, I can generate graphql mutation for delete entity by t
     expect(tag).toMatchSnapshot();
   });
 });
-

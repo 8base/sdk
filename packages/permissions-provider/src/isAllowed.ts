@@ -1,19 +1,17 @@
-import * as R from 'ramda';
+import R from 'ramda';
 import { TransformedPermissions } from './types';
 
 type IsAllowedArgs = {
-  resource?: string,
-  type: string,
-  permission?: string,
-  field?: any,
-}
+  resource?: string;
+  type: string;
+  permission?: string;
+  field?: any;
+};
 
-export const isAllowed = ({
-  resource,
-  type,
-  permission,
-  field,
-}: IsAllowedArgs, permissions: TransformedPermissions) => {
+export const isAllowed = (
+  { resource, type, permission, field }: IsAllowedArgs,
+  permissions: TransformedPermissions,
+) => {
   if (!resource || !permission) {
     return false;
   }

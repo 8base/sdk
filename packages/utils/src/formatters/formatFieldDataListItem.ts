@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import R from 'ramda';
 
 import { isRelationField, isFileField } from '../verifiers';
 import { getTableSchemaById } from '../selectors';
@@ -12,18 +12,18 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
 
   if (R.isNil(nextData)) {
     return {
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
       data: {},
+      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
     };
   } else if (typeof nextData === 'string') {
     return {
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
       data: { id: nextData },
+      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
     };
   } else if (typeof nextData.id === 'string') {
     return {
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
       data: { id: nextData.id },
+      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
     };
   }
 
@@ -42,7 +42,7 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
   }
 
   return {
-    type: 'create',
     data: nextData,
+    type: 'create',
   };
 };

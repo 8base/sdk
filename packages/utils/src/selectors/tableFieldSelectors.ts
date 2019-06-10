@@ -1,11 +1,9 @@
-
-import * as R from 'ramda';
+import R from 'ramda';
 import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
 import { FieldSchema, Format } from '../types';
 
 export const getTableField = (tableField: FieldSchema) => tableField;
-
 
 export const getFieldType: any = createSelector(
   getTableField,
@@ -41,7 +39,6 @@ export const isMetaField = createSelector(
   getTableField,
   R.propEq('isMeta', true),
 );
-
 
 export const isListField = createSelector(
   getTableField,

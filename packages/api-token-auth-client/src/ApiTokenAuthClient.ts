@@ -1,16 +1,16 @@
-import { AuthState, AuthClient } from '@8base/utils';
+import { AuthState, IAuthClient } from '@8base/utils';
 
 type ApiTokenAuthClientOptions = {
-  apiToken: string,
+  apiToken: string;
 };
 
 /**
  * Create instacne of the api token auth client
  * @param {string} apiToken Api Token generated in 8base app.
  */
-class ApiTokenAuthClient implements AuthClient {
-  apiToken: string;
-  state: {};
+class ApiTokenAuthClient implements IAuthClient {
+  public apiToken: string;
+  public state: {};
 
   constructor({ apiToken }: ApiTokenAuthClientOptions) {
     if (!apiToken) {
@@ -21,12 +21,12 @@ class ApiTokenAuthClient implements AuthClient {
     this.state = {};
   }
 
-  getAuthState = async (): Promise<AuthState> => ({
+  public getAuthState = async (): Promise<AuthState> => ({
     token: this.apiToken,
     ...this.state,
   });
 
-  setAuthState = async (state: AuthState): Promise<void> => {
+  public setAuthState = async (state: AuthState): Promise<void> => {
     this.state = {
       ...this.state,
       ...state,
@@ -34,12 +34,11 @@ class ApiTokenAuthClient implements AuthClient {
     };
   };
 
-  purgeAuthState = async (): Promise<void> => {
+  public purgeAuthState = async (): Promise<void> => {
     this.state = {};
   };
 
-  checkIsAuthorized = async (): Promise<boolean> => true;
+  public checkIsAuthorized = async (): Promise<boolean> => true;
 }
 
 export { ApiTokenAuthClient };
-

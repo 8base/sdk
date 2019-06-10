@@ -1,167 +1,165 @@
-
 export const FIELD_TYPE: {
-  DATE: 'DATE',
-  FILE: 'FILE',
-  ID: 'ID',
-  NUMBER: 'NUMBER',
-  RELATION: 'RELATION',
-  SWITCH: 'SWITCH',
-  TEXT: 'TEXT',
-  SMART: 'SMART',
-  JSON: 'JSON',
+  DATE: 'DATE';
+  FILE: 'FILE';
+  ID: 'ID';
+  JSON: 'JSON';
+  NUMBER: 'NUMBER';
+  RELATION: 'RELATION';
+  SMART: 'SMART';
+  SWITCH: 'SWITCH';
+  TEXT: 'TEXT';
 } = {
   DATE: 'DATE',
   FILE: 'FILE',
   ID: 'ID',
+  JSON: 'JSON',
   NUMBER: 'NUMBER',
   RELATION: 'RELATION',
+  SMART: 'SMART',
   SWITCH: 'SWITCH',
   TEXT: 'TEXT',
-  SMART: 'SMART',
-  JSON: 'JSON',
 };
 
-export const SWITCH_FORMATS: { 
-  ON_OFF: 'ON_OFF',
-  YES_NO: 'YES_NO',
-  TRUE_FALSE: 'TRUE_FALSE',
+export const SWITCH_FORMATS: {
+  ACTIVE_INACTIVE: 'ACTIVE_INACTIVE';
+  CUSTOM: 'CUSTOM';
+  HIGH_LOW: 'HIGH_LOW';
+  ON_OFF: 'ON_OFF';
+  TRUE_FALSE: 'TRUE_FALSE';
+  YES_NO: 'YES_NO';
+} = {
   ACTIVE_INACTIVE: 'ACTIVE_INACTIVE',
-  HIGH_LOW: 'HIGH_LOW',
   CUSTOM: 'CUSTOM',
- } = {
+  HIGH_LOW: 'HIGH_LOW',
   ON_OFF: 'ON_OFF',
-  YES_NO: 'YES_NO',
   TRUE_FALSE: 'TRUE_FALSE',
-  ACTIVE_INACTIVE: 'ACTIVE_INACTIVE',
-  HIGH_LOW: 'HIGH_LOW',
-  CUSTOM: 'CUSTOM',
+  YES_NO: 'YES_NO',
 };
 
 export const SWITCH_VALUES: {
-  ON_OFF: {
-    true: 'On',
-    false: 'Off',
-  },
-  YES_NO: {
-    true: 'Yes',
-    false: 'No',
-  },
-  TRUE_FALSE: {
-    true: 'True',
-    false: 'False',
-  },
   ACTIVE_INACTIVE: {
-    true: 'Active',
-    false: 'Inactive',
-  },
+    false: 'Inactive';
+    true: 'Active';
+  };
   HIGH_LOW: {
-    true: 'High',
-    false: 'Low',
-  },
+    false: 'Low';
+    true: 'High';
+  };
+  ON_OFF: {
+    false: 'Off';
+    true: 'On';
+  };
+  TRUE_FALSE: {
+    false: 'False';
+    true: 'True';
+  };
+  YES_NO: {
+    false: 'No';
+    true: 'Yes';
+  };
 } = {
-  ON_OFF: {
-    true: 'On',
-    false: 'Off',
-  },
-  YES_NO: {
-    true: 'Yes',
-    false: 'No',
-  },
-  TRUE_FALSE: {
-    true: 'True',
-    false: 'False',
-  },
   ACTIVE_INACTIVE: {
-    true: 'Active',
     false: 'Inactive',
+    true: 'Active',
   },
   HIGH_LOW: {
-    true: 'High',
     false: 'Low',
+    true: 'High',
+  },
+  ON_OFF: {
+    false: 'Off',
+    true: 'On',
+  },
+  TRUE_FALSE: {
+    false: 'False',
+    true: 'True',
+  },
+  YES_NO: {
+    false: 'No',
+    true: 'Yes',
   },
 };
 
 export const TEXT_FORMATS: {
-  UNFORMATTED: 'UNFORMATTED',
-  NAME: 'NAME',
-  SSN: 'SSN',
-  EIN: 'EIN',
-  PHONE: 'PHONE',
-  EMAIL: 'EMAIL',
+  EIN: 'EIN';
+  EMAIL: 'EMAIL';
+  NAME: 'NAME';
+  PHONE: 'PHONE';
+  SSN: 'SSN';
+  UNFORMATTED: 'UNFORMATTED';
 } = {
-  UNFORMATTED: 'UNFORMATTED',
-  NAME: 'NAME',
-  SSN: 'SSN',
   EIN: 'EIN',
-  PHONE: 'PHONE',
   EMAIL: 'EMAIL',
+  NAME: 'NAME',
+  PHONE: 'PHONE',
+  SSN: 'SSN',
+  UNFORMATTED: 'UNFORMATTED',
 };
 
 export const NUMBER_FORMATS: {
-  NUMBER: 'NUMBER',
-  CURRENCY: 'CURRENCY',
-  PERCENTAGE: 'PERCENTAGE',
-  FRACTION: 'FRACTION',
-  SCIENTIFIC: 'SCIENTIFIC',
+  CURRENCY: 'CURRENCY';
+  FRACTION: 'FRACTION';
+  NUMBER: 'NUMBER';
+  PERCENTAGE: 'PERCENTAGE';
+  SCIENTIFIC: 'SCIENTIFIC';
 } = {
-  NUMBER: 'NUMBER',
   CURRENCY: 'CURRENCY',
-  PERCENTAGE: 'PERCENTAGE',
   FRACTION: 'FRACTION',
+  NUMBER: 'NUMBER',
+  PERCENTAGE: 'PERCENTAGE',
   SCIENTIFIC: 'SCIENTIFIC',
 };
 
 export const FILE_FORMATS: {
-  FILE: 'FILE',
-  IMAGE: 'IMAGE',
+  FILE: 'FILE';
+  IMAGE: 'IMAGE';
 } = {
   FILE: 'FILE',
   IMAGE: 'IMAGE',
 };
 
 export const SMART_FORMATS: {
-  ADDRESS: 'ADDRESS',
-  PHONE: 'PHONE',
-
+  ADDRESS: 'ADDRESS';
+  PHONE: 'PHONE';
 } = {
   ADDRESS: 'ADDRESS',
   PHONE: 'PHONE',
 };
 
-export const DATE_FORMATS: { 
-  DATE: 'DATE',
-  DATETIME: 'DATETIME',
+export const DATE_FORMATS: {
+  DATE: 'DATE';
+  DATETIME: 'DATETIME';
 } = {
   DATE: 'DATE',
   DATETIME: 'DATETIME',
 };
 
-export const MUTATION_TYPE: { 
-  CREATE: 'CREATE',
-  UPDATE: 'UPDATE',
+export const MUTATION_TYPE: {
+  CREATE: 'CREATE';
+  UPDATE: 'UPDATE';
 } = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
 };
 
 export const SYSTEM_TABLES: {
-  USERS: 'Users',
-  FILES: 'Files',
-  SETTINGS: 'Settings',
-  ROLES: 'Roles',
-  INVITATIONS: 'Invitations',
-  PERMISSIONS: 'Permissions',
-  API_TOKENS: 'ApiTokens',
-  ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
+  API_TOKENS: 'ApiTokens';
+  ENVIRONMENT_VARIABLES: 'EnvironmentVariables';
+  FILES: 'Files';
+  INVITATIONS: 'Invitations';
+  PERMISSIONS: 'Permissions';
+  ROLES: 'Roles';
+  SETTINGS: 'Settings';
+  USERS: 'Users';
 } = {
-  USERS: 'Users',
-  FILES: 'Files',
-  SETTINGS: 'Settings',
-  ROLES: 'Roles',
-  INVITATIONS: 'Invitations',
-  PERMISSIONS: 'Permissions',
   API_TOKENS: 'ApiTokens',
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
+  FILES: 'Files',
+  INVITATIONS: 'Invitations',
+  PERMISSIONS: 'Permissions',
+  ROLES: 'Roles',
+  SETTINGS: 'Settings',
+  USERS: 'Users',
 };
 
 export const MUTATION_FILE_FIELDS = ['fileId', 'public', 'filename', 'meta', 'mods'];

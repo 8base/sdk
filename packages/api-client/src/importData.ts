@@ -1,8 +1,8 @@
-import { 
-  formatDataForMutation, 
-  getTableSchemaByName, 
+import {
+  formatDataForMutation,
+  getTableSchemaByName,
   tableFieldSelectors,
-  tableSelectors, 
+  tableSelectors,
   MUTATION_TYPE,
   FieldSchema,
   TableSchema,
@@ -15,7 +15,12 @@ import { DocumentNode } from 'graphql';
 import { TABLES_LIST_QUERY, USER_QUERY, FILE_UPLOAD_INFO_QUERY } from './constants';
 import { SchemaResponse } from './types';
 
-const getRemoteEntityId = (localData: { [key:string]: any }, fieldSchema: FieldSchema, $id: string, userId: string) => {
+const getRemoteEntityId = (
+  localData: { [key: string]: any },
+  fieldSchema: FieldSchema,
+  $id: string,
+  userId: string,
+) => {
   let id = null;
 
   if ($id === '$currentUserId' && fieldSchema.relation.refTable.name === 'Users') {
@@ -43,17 +48,25 @@ const uploadFiles = async (record: any, tableSchema: TableSchema, filestackClien
       if (tableFieldSelectors.isListField(fieldSchema)) {
         if (Array.isArray(record[fieldName])) {
           for (let j = 0; j < record[fieldName].length; j++) {
-            nextRecord = R.assocPath([fieldName, j, 'fileId'], (await (filestackClient.storeURL(record[fieldName][j].url, {
-              path,
-            }))).handle, nextRecord);
+            nextRecord = R.assocPath(
+              [fieldName, j, 'fileId'],
+              (await filestackClient.storeURL(record[fieldName][j].url, {
+                path,
+              })).handle,
+              nextRecord,
+            );
             nextRecord = R.dissocPath([fieldName, j, 'url'], nextRecord);
           }
         }
       } else {
         if (record[fieldName]) {
-          nextRecord = R.assocPath([fieldName, 'fileId'], (await (filestackClient.storeURL(record[fieldName].url, {
-            path,
-          }))).handle, nextRecord);
+          nextRecord = R.assocPath(
+            [fieldName, 'fileId'],
+            (await filestackClient.storeURL(record[fieldName].url, {
+              path,
+            })).handle,
+            nextRecord,
+          );
           nextRecord = R.dissocPath([fieldName, 'url'], nextRecord);
         }
       }
@@ -64,15 +77,17 @@ const uploadFiles = async (record: any, tableSchema: TableSchema, filestackClien
 };
 
 type ImportOptions = {
-  maxThreads?: number,
+  maxThreads?: number;
 };
 
 export const importData = async (
-  request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>,
+  request: <T extends object>(query: string | DocumentNode, variables?: object) => Promise<T>,
   schemaData: { [key: string]: any },
   options: ImportOptions = {},
 ) => {
-  const { tablesList: { items: schema } } = await request<SchemaResponse>(TABLES_LIST_QUERY, {
+  const {
+    tablesList: { items: schema },
+  } = await request<SchemaResponse>(TABLES_LIST_QUERY, {
     filter: {
       onlyUserTables: false,
     },
@@ -80,12 +95,11 @@ export const importData = async (
 
   let fileUploadInfo = {} as any;
 
-
   try {
     ({ fileUploadInfo } = await request(FILE_UPLOAD_INFO_QUERY));
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Can\'t fetch file upload info', e);
+    // tslint:disable-next-line no-console
+    console.log("Can't fetch file upload info", e);
   }
 
   const filestackClient = filestack.init(fileUploadInfo.apiKey, {
@@ -101,9 +115,9 @@ export const importData = async (
 
   for (const tableName of Object.keys(schemaData)) {
     localData[tableName] = {};
-    
-    const tableSchema = getTableSchemaByName(schema, tableName)
-    
+
+    const tableSchema = getTableSchemaByName(schema, tableName);
+
     if (!tableSchema) {
       throw new Error(`Table with name ${tableName} not found`);
     }
@@ -111,45 +125,49 @@ export const importData = async (
     for (let i = 0; i < schemaData[tableName].length / maxThreads; i++) {
       const tempData = schemaData[tableName].slice(i * maxThreads, (i + 1) * maxThreads);
 
-      await Promise.all(tempData.map(async (item: any) => {
-        item = await uploadFiles(item, tableSchema, filestackClient, fileUploadInfo.path);
+      await Promise.all(
+        tempData.map(async (item: any) => {
+          item = await uploadFiles(item, tableSchema, filestackClient, fileUploadInfo.path);
 
-        const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, schema, {
-          skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
-        });
+          const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, schema, {
+            skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
+          });
 
-        const fieldData = await request<{ field: { id: string }}>(`
+          const fieldData = await request<{ field: { id: string } }>(
+            `
           mutation create($data: ${SchemaNameGenerator.getCreateInputName(tableName)}!) {
             field: ${SchemaNameGenerator.getCreateItemFieldName(tableName)}(data: $data) {
               id
             }
           }
-        `, {
-          data,
-        });
+        `,
+            {
+              data,
+            },
+          );
 
-        if (item.$id) {
-          localData[tableName][item.$id] = fieldData.field;
-        }
-      }));
+          if (item.$id) {
+            localData[tableName][item.$id] = fieldData.field;
+          }
+        }),
+      );
     }
   }
 
   let userId = '';
 
   try {
-    const userData = await request<{ user: { id: string }}>(USER_QUERY);
+    const userData = await request<{ user: { id: string } }>(USER_QUERY);
 
     userId = userData.user.id;
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Can\'t fetch user info', e);
+    // tslint:disable-next-line no-console
+    console.log(`Can't fetch user info`, e);
   }
 
   for (const tableName of Object.keys(schemaData)) {
     for (const item of schemaData[tableName]) {
       const data = formatDataForMutation(MUTATION_TYPE.UPDATE, tableName, item, schema, {
-        skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
         mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
           if (Array.isArray(plainValue)) {
             return {
@@ -165,22 +183,26 @@ export const importData = async (
 
           const id = getRemoteEntityId(localData, fieldSchema, plainValue.$id, userId);
 
-          return { connect: { id }};
+          return { connect: { id } };
         },
+        skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
       });
 
-      await request(`
+      await request(
+        `
         mutation update($data: ${SchemaNameGenerator.getUpdateInputName(tableName)}!) {
           field: ${SchemaNameGenerator.getUpdateItemFieldName(tableName)}(data: $data) {
             id
           }
         }
-      `, {
-        data: {
-          ...data,
-          id: localData[tableName][item.$id].id,
+      `,
+        {
+          data: {
+            ...data,
+            id: localData[tableName][item.$id].id,
+          },
         },
-      });
+      );
     }
   }
 };

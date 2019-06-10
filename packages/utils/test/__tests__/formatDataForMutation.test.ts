@@ -1,4 +1,3 @@
-
 import { formatDataForMutation, MUTATION_TYPE } from '../../src';
 import { SCHEMA } from '../__fixtures__';
 
@@ -48,9 +47,7 @@ describe('As developer, I can format for create mutation,', () => {
     const data = {
       relation: {
         scalar: 'Relation Scalar Value',
-        scalarList: [
-          'Relation Scalar List Value',
-        ],
+        scalarList: ['Relation Scalar List Value'],
       },
     };
 
@@ -58,9 +55,7 @@ describe('As developer, I can format for create mutation,', () => {
       relation: {
         create: {
           scalar: 'Relation Scalar Value',
-          scalarList: [
-            'Relation Scalar List Value',
-          ],
+          scalarList: ['Relation Scalar List Value'],
         },
       },
     });
@@ -125,40 +120,34 @@ describe('As developer, I can format for create mutation,', () => {
 
   it('Data with relation list reference.', () => {
     const data = {
-      relationList: [
-        '5b32159b66a450c047285628',
-        '5b32159b66a450fae928562a',
-      ],
+      relationList: ['5b32159b66a450c047285628', '5b32159b66a450fae928562a'],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
-        connect: [
-          { id: '5b32159b66a450c047285628' },
-          { id: '5b32159b66a450fae928562a' },
-        ],
+        connect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
       },
     });
   });
 
   it('Data with relation list.', () => {
     const data = {
-      relationList: [{
-        scalar: 'Relation List Scalar Value',
-        scalarList: [
-          'Relation List Scalar List Value',
-        ],
-      }],
+      relationList: [
+        {
+          scalar: 'Relation List Scalar Value',
+          scalarList: ['Relation List Scalar List Value'],
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
-        create: [{
-          scalar: 'Relation List Scalar Value',
-          scalarList: [
-            'Relation List Scalar List Value',
-          ],
-        }],
+        create: [
+          {
+            scalar: 'Relation List Scalar Value',
+            scalarList: ['Relation List Scalar List Value'],
+          },
+        ],
       },
     });
   });
@@ -186,10 +175,14 @@ describe('As developer, I can format for create mutation,', () => {
   });
 
   it('Data with list of the file objects.', () => {
-    const fileList = [{
-      fileId: 'file-id',
-      filename: 'Screenshot at авг. 13 15-22-49.png',
-    }, null, null];
+    const fileList = [
+      {
+        fileId: 'file-id',
+        filename: 'Screenshot at авг. 13 15-22-49.png',
+      },
+      null,
+      null,
+    ];
 
     const data = {
       fileList,
@@ -234,13 +227,16 @@ describe('As developer, I can format for create mutation,', () => {
 
   it('List of phones', () => {
     const data = {
-      phones: [{
-        code: '',
-        number: '',
-      }, {
-        code: '+78',
-        number: '3242342',
-      }],
+      phones: [
+        {
+          code: '',
+          number: '',
+        },
+        {
+          code: '+78',
+          number: '3242342',
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -250,20 +246,23 @@ describe('As developer, I can format for create mutation,', () => {
 
   it('List of addresses', () => {
     const data = {
-      addresses: [{
-        street1: '',
-        street2: '',
-        zip: '',
-        city: '',
-        state: '',
-        country: '',
-      }, {
-        street1: 'Pamelia Quall',
-        street2: 'Lasonya Friedly',
-        zip: 'Timothy Ingleton',
-        city: 'Kenia Urhahn',
-        state: 'Scottie Swailes',
-      }],
+      addresses: [
+        {
+          street1: '',
+          street2: '',
+          zip: '',
+          city: '',
+          state: '',
+          country: '',
+        },
+        {
+          street1: 'Pamelia Quall',
+          street2: 'Lasonya Friedly',
+          zip: 'Timothy Ingleton',
+          city: 'Kenia Urhahn',
+          state: 'Scottie Swailes',
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -274,25 +273,23 @@ describe('As developer, I can format for create mutation,', () => {
   it('Compelex data.', () => {
     const data = {
       scalar: 'Scalar Value',
-      scalarList: [
-        'Scalar List Value',
-      ],
+      scalarList: ['Scalar List Value'],
       relation: {
         scalar: 'Relation Scalar Value',
       },
-      relationList: [{
-        scalar: 'Relation List Scalar Value',
-        scalarList: [
-          'Relation List Scalar List Value',
-        ],
-        nestedRelation: '5b32159b66a450c047285628',
-        nestedRelationList: [{
-          scalar: 'Relation List Nested Relation List Scalar Value',
-          scalarList: [
-            'Relation List Nested Relation List Scalar List Value',
+      relationList: [
+        {
+          scalar: 'Relation List Scalar Value',
+          scalarList: ['Relation List Scalar List Value'],
+          nestedRelation: '5b32159b66a450c047285628',
+          nestedRelationList: [
+            {
+              scalar: 'Relation List Nested Relation List Scalar Value',
+              scalarList: ['Relation List Nested Relation List Scalar List Value'],
+            },
           ],
-        }],
-      }],
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();
@@ -301,37 +298,24 @@ describe('As developer, I can format for create mutation,', () => {
   it('Data with JSON field', () => {
     const data = {
       json: '{ "somePropArray": ["someValue1", "someValue2", "someValue3"] }',
-      jsonList: [
-        '{ "someProp": "someValue" }',
-        '{ "somePropArray": ["someValue1", "someValue2"] }',
-      ],
+      jsonList: ['{ "someProp": "someValue" }', '{ "somePropArray": ["someValue1", "someValue2"] }'],
     };
 
-    expect(
-      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA),
-    ).toEqual({
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
       json: {
         somePropArray: ['someValue1', 'someValue2', 'someValue3'],
       },
-      jsonList: [
-        { someProp: 'someValue' },
-        { somePropArray: ['someValue1', 'someValue2'] },
-      ],
+      jsonList: [{ someProp: 'someValue' }, { somePropArray: ['someValue1', 'someValue2'] }],
     });
   });
 
   it('Data with BigInt field', () => {
     const data = {
       bigInt: '999999999999999999999999999999',
-      bigIntList: [
-        '999999999999999999999999999999',
-        '111111111111111111111111111111',
-      ],
+      bigIntList: ['999999999999999999999999999999', '111111111111111111111111111111'],
     };
 
-    expect(
-      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA),
-    ).toEqual(data);
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual(data);
   });
 
   it('should leave non-table fields if option ignoreNonTableFields is false', () => {
@@ -390,9 +374,7 @@ describe('As developer, I can format for update mutation,', () => {
     const data = {
       relation: {
         scalar: 'Relation Scalar Value',
-        scalarList: [
-          'Relation Scalar List Value',
-        ],
+        scalarList: ['Relation Scalar List Value'],
       },
     };
 
@@ -400,9 +382,7 @@ describe('As developer, I can format for update mutation,', () => {
       relation: {
         create: {
           scalar: 'Relation Scalar Value',
-          scalarList: [
-            'Relation Scalar List Value',
-          ],
+          scalarList: ['Relation Scalar List Value'],
         },
       },
     });
@@ -413,9 +393,7 @@ describe('As developer, I can format for update mutation,', () => {
       relation: {
         id: 'id',
         scalar: 'Relation Scalar Value',
-        scalarList: [
-          'Relation Scalar List Value',
-        ],
+        scalarList: ['Relation Scalar List Value'],
       },
     };
 
@@ -517,40 +495,34 @@ describe('As developer, I can format for update mutation,', () => {
 
   it('Data with relation list reference.', () => {
     const data = {
-      relationList: [
-        '5b32159b66a450c047285628',
-        '5b32159b66a450fae928562a',
-      ],
+      relationList: ['5b32159b66a450c047285628', '5b32159b66a450fae928562a'],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
-        reconnect: [
-          { id: '5b32159b66a450c047285628' },
-          { id: '5b32159b66a450fae928562a' },
-        ],
+        reconnect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
       },
     });
   });
 
   it('Data with relation list.', () => {
     const data = {
-      relationList: [{
-        scalar: 'Relation List Scalar Value',
-        scalarList: [
-          'Relation List Scalar List Value',
-        ],
-      }],
+      relationList: [
+        {
+          scalar: 'Relation List Scalar Value',
+          scalarList: ['Relation List Scalar List Value'],
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
-        create: [{
-          scalar: 'Relation List Scalar Value',
-          scalarList: [
-            'Relation List Scalar List Value',
-          ],
-        }],
+        create: [
+          {
+            scalar: 'Relation List Scalar Value',
+            scalarList: ['Relation List Scalar List Value'],
+          },
+        ],
         reconnect: [],
       },
     });
@@ -582,30 +554,36 @@ describe('As developer, I can format for update mutation,', () => {
 
   it('Data with relation list with existed id.', () => {
     const data = {
-      relationList: [{
-        id: '1',
-        scalar: 'Relation List Scalar Value',
-        scalarList: [
-          'Relation List Scalar List Value',
-        ],
-      }],
+      relationList: [
+        {
+          id: '1',
+          scalar: 'Relation List Scalar Value',
+          scalarList: ['Relation List Scalar List Value'],
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       relationList: {
-        reconnect: [{
-          id: data.relationList[0].id,
-        }],
+        reconnect: [
+          {
+            id: data.relationList[0].id,
+          },
+        ],
       },
     });
   });
 
   it('Data with list of the file objects.', () => {
-    const fileList: [any, null, null] = [{
-      id: '1234',
-      fileId: 'file-id',
-      filename: 'Screenshot at авг. 13 15-22-49.png',
-    }, null, null];
+    const fileList: [any, null, null] = [
+      {
+        id: '1234',
+        fileId: 'file-id',
+        filename: 'Screenshot at авг. 13 15-22-49.png',
+      },
+      null,
+      null,
+    ];
 
     const data = {
       fileList,
@@ -613,9 +591,11 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       fileList: {
-        reconnect: [{
-          id: fileList[0].id,
-        }],
+        reconnect: [
+          {
+            id: fileList[0].id,
+          },
+        ],
       },
     });
   });
@@ -652,20 +632,23 @@ describe('As developer, I can format for update mutation,', () => {
 
   it('List of addresses', () => {
     const data = {
-      addresses: [{
-        street1: '',
-        street2: '',
-        zip: '',
-        city: '',
-        state: '',
-        country: '',
-      }, {
-        street1: 'Pamelia Quall',
-        street2: 'Lasonya Friedly',
-        zip: 'Timothy Ingleton',
-        city: 'Kenia Urhahn',
-        state: 'Scottie Swailes',
-      }],
+      addresses: [
+        {
+          street1: '',
+          street2: '',
+          zip: '',
+          city: '',
+          state: '',
+          country: '',
+        },
+        {
+          street1: 'Pamelia Quall',
+          street2: 'Lasonya Friedly',
+          zip: 'Timothy Ingleton',
+          city: 'Kenia Urhahn',
+          state: 'Scottie Swailes',
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -675,13 +658,16 @@ describe('As developer, I can format for update mutation,', () => {
 
   it('List of phones', () => {
     const data = {
-      phones: [{
-        code: '',
-        number: '',
-      }, {
-        code: '+89',
-        number: '4567823',
-      }],
+      phones: [
+        {
+          code: '',
+          number: '',
+        },
+        {
+          code: '+89',
+          number: '4567823',
+        },
+      ],
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
@@ -702,35 +688,37 @@ describe('As developer, I can format for update mutation,', () => {
         state: 'Scottie Swailes',
       },
       scalar: 'Scalar Value',
-      scalarList: [
-        'Scalar List Value',
-      ],
+      scalarList: ['Scalar List Value'],
       relation: {
         scalar: 'Relation Scalar Value',
       },
-      fileList: [{
-        id: '1234',
-        fileId: 'file-id',
-        filename: 'Screenshot at авг. 13 15-22-49.png',
-        nonFileField: 'non file field',
-      }, null, {
-        fileId: 'file-id',
-        filename: 'Screenshot at авг. 13 15-22-49.png',
-        nonFileField: 'non file field',
-      }],
-      relationList: [{
-        scalar: 'Relation List Scalar Value',
-        scalarList: [
-          'Relation List Scalar List Value',
-        ],
-        nestedRelation: '5b32159b66a450c047285628',
-        nestedRelationList: [{
-          scalar: 'Relation List Nested Relation List Scalar Value',
-          scalarList: [
-            'Relation List Nested Relation List Scalar List Value',
+      fileList: [
+        {
+          id: '1234',
+          fileId: 'file-id',
+          filename: 'Screenshot at авг. 13 15-22-49.png',
+          nonFileField: 'non file field',
+        },
+        null,
+        {
+          fileId: 'file-id',
+          filename: 'Screenshot at авг. 13 15-22-49.png',
+          nonFileField: 'non file field',
+        },
+      ],
+      relationList: [
+        {
+          scalar: 'Relation List Scalar Value',
+          scalarList: ['Relation List Scalar List Value'],
+          nestedRelation: '5b32159b66a450c047285628',
+          nestedRelationList: [
+            {
+              scalar: 'Relation List Nested Relation List Scalar Value',
+              scalarList: ['Relation List Nested Relation List Scalar List Value'],
+            },
           ],
-        }],
-      }],
+        },
+      ],
       _description: 'Description',
       __typename: 'Address',
     };
@@ -741,36 +729,23 @@ describe('As developer, I can format for update mutation,', () => {
   it('Data with JSON field', () => {
     const data = {
       json: '{ "somePropArray": ["someValue1", "someValue2", "someValue3"] }',
-      jsonList: [
-        '{ "someProp": "someValue" }',
-        '{ "somePropArray": ["someValue1", "someValue2"] }',
-      ],
+      jsonList: ['{ "someProp": "someValue" }', '{ "somePropArray": ["someValue1", "someValue2"] }'],
     };
 
-    expect(
-      formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA),
-    ).toEqual({
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
       json: {
         somePropArray: ['someValue1', 'someValue2', 'someValue3'],
       },
-      jsonList: [
-        { someProp: 'someValue' },
-        { somePropArray: ['someValue1', 'someValue2'] },
-      ],
+      jsonList: [{ someProp: 'someValue' }, { somePropArray: ['someValue1', 'someValue2'] }],
     });
   });
 
   it('Data with BigInt field', () => {
     const data = {
       bigInt: '999999999999999999999999999999',
-      bigIntList: [
-        '999999999999999999999999999999',
-        '111111111111111111111111111111',
-      ],
+      bigIntList: ['999999999999999999999999999999', '111111111111111111111111111111'],
     };
 
-    expect(
-      formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA),
-    ).toEqual(data);
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual(data);
   });
 });

@@ -14,23 +14,23 @@ export const FORMAT_PATTERN: Partial<Record<Format, RegExp>> = {
 };
 
 export const VALIDATION_ERROR = {
-  IS_REQUIRED: (): string => 'Value is required',
-  NOT_A_NUMBER: (): string => 'Value isn\'t a number',
-  NOT_A_JSON: (parseError: string): string => `Value isn't a valid JSON: ${parseError}.`,
-  MAX_PRECISION: (maxPrecision: number): string => `Maximum allowed precision is ${maxPrecision}. It was exceeded.`,
-  MIN_VALUE: (minValue: number): string => `Value is lower than minimum allowed value ${minValue}.`,
-  MAX_VALUE: (maxValue: number): string => `Value is greater than maximum allowed value ${maxValue}.`,
-  FORMAT: (format: Format): string => `Value doesn't match ${format} format.`,
-  MAX_FIELD_SIZE: (maxFieldSize: number): string => `Maximum allowed field size is ${maxFieldSize}. It was exceeded.`,
-  [TEXT_FORMATS.UNFORMATTED]: (): string => '',
-  [TEXT_FORMATS.NAME]: (): string => '',
-  [SMART_FORMATS.ADDRESS]: (): string => '',
-  [TEXT_FORMATS.EMAIL]: (): string => 'Invalid email.',
-  [TEXT_FORMATS.PHONE]: (): string => 'Invalid phone number.',
-  [TEXT_FORMATS.SSN]: (): string => 'Invalid Social Security Number.',
-  [TEXT_FORMATS.EIN]: (): string => 'Invalid Employer Identification Number.',
   [DATE_FORMATS.DATE]: (): string => 'Invalid date.',
   [DATE_FORMATS.DATETIME]: (): string => 'Invalid datetime.',
+  [SMART_FORMATS.ADDRESS]: (): string => '',
+  [TEXT_FORMATS.EIN]: (): string => 'Invalid Employer Identification Number.',
+  [TEXT_FORMATS.EMAIL]: (): string => 'Invalid email.',
+  [TEXT_FORMATS.NAME]: (): string => '',
+  [TEXT_FORMATS.PHONE]: (): string => 'Invalid phone number.',
+  [TEXT_FORMATS.SSN]: (): string => 'Invalid Social Security Number.',
+  [TEXT_FORMATS.UNFORMATTED]: (): string => '',
+  FORMAT: (format: Format): string => `Value doesn't match ${format} format.`,
+  IS_REQUIRED: (): string => 'Value is required',
+  MAX_FIELD_SIZE: (maxFieldSize: number): string => `Maximum allowed field size is ${maxFieldSize}. It was exceeded.`,
+  MAX_PRECISION: (maxPrecision: number): string => `Maximum allowed precision is ${maxPrecision}. It was exceeded.`,
+  MAX_VALUE: (maxValue: number): string => `Value is greater than maximum allowed value ${maxValue}.`,
+  MIN_VALUE: (minValue: number): string => `Value is lower than minimum allowed value ${minValue}.`,
+  NOT_A_JSON: (parseError: string): string => `Value isn't a valid JSON: ${parseError}.`,
+  NOT_A_NUMBER: (): string => `Value isn't a number`,
 };
 
 export type ValidationError = keyof typeof VALIDATION_ERROR;

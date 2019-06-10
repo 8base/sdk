@@ -6,7 +6,6 @@ import { FieldArrayProps } from 'react-final-form-arrays';
 
 import { withFieldSchema, WithFieldSchemaProps } from './utils';
 
-
 const enhacner: any = compose(
   withFieldSchema,
   setDisplayName('FieldArray'),
@@ -17,14 +16,14 @@ const enhacner: any = compose(
  */
 const FieldArray: React.ComponentType<FieldArrayProps> = enhacner(
   class FieldArray extends React.Component<FieldArrayProps & WithFieldSchemaProps> {
-    collectProps = () => {
+    public collectProps = () => {
       const { fieldSchema, name, isEqual, ...restProps } = this.props;
 
       if (fieldSchema) {
         return {
-          name: name || fieldSchema.name,
           fieldSchema,
           isEqual: isEqual || R.equals,
+          name: name || fieldSchema.name,
           ...restProps,
         };
       }
@@ -32,12 +31,12 @@ const FieldArray: React.ComponentType<FieldArrayProps> = enhacner(
       return this.props;
     };
 
-    render() {
+    public render() {
       const collectedProps = this.collectProps();
 
-      return <FinalFieldArray { ...collectedProps } />;
+      return <FinalFieldArray {...collectedProps} />;
     }
-  }
-)
+  },
+);
 
 export { FieldArray };

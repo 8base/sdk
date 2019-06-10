@@ -8,7 +8,7 @@ import { FieldsetProps, FormContextValue, RenderableProps } from './types';
 const enhacner: any = compose(
   withTableSchema,
   setDisplayName('Fieldset'),
-)
+);
 
 /**
  * `Fieldset` passes relation table schema to the children fields.
@@ -17,24 +17,20 @@ const enhacner: any = compose(
  */
 const Fieldset: React.ComponentType<FieldsetProps> = enhacner(
   class Fieldset extends React.Component<FieldsetProps & WithTableSchemaProps> {
-    collectContextValue = (): FormContextValue => {
+    public collectContextValue = (): FormContextValue => {
       const { tableSchema } = this.props;
 
       return { tableSchema };
     };
 
-    render() {
+    public render() {
       const contextValue: FormContextValue = this.collectContextValue();
 
       const rendered = renderComponent(this.props);
 
-      return (
-        <FormContext.Provider value={ contextValue }>
-          { rendered }
-        </FormContext.Provider>
-      );
+      return <FormContext.Provider value={contextValue}>{rendered}</FormContext.Provider>;
     }
-  }
-)
+  },
+);
 
 export { Fieldset };

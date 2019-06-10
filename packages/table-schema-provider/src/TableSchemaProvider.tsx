@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as R from 'ramda';
+import React from 'react';
+import R from 'ramda';
 import gql from 'graphql-tag';
 import { Query, QueryProps } from 'react-apollo';
 import { Subtract } from 'utility-types';
@@ -134,7 +134,7 @@ export const TABLES_SCHEMA_QUERY = gql`
 `;
 
 type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
-  children: (props: { loading?: boolean }) => React.ReactNode,
+  children: (props: { loading?: boolean }) => React.ReactNode;
 };
 
 /**
@@ -142,29 +142,25 @@ type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
  * @property {Function} children Children of the provider. Could be either react node or function with loading state.
  */
 class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
-  renderContent = ({ data, loading }: { data?: any, loading?: boolean } = {}) => {
+  public renderContent = ({ data, loading }: { data?: any; loading?: boolean } = {}) => {
     const { children } = this.props;
 
     return (
-      <TableSchemaContext.Provider value={ R.pathOr([], ['tablesList', 'items'], data) }>
-        { children({ loading }) }
+      <TableSchemaContext.Provider value={R.pathOr([], ['tablesList', 'items'], data)}>
+        {children({ loading })}
       </TableSchemaContext.Provider>
     );
   };
 
-  render() {
-    const {
-      children,
-      ...rest
-    } = this.props;
+  public render() {
+    const { children, ...rest } = this.props;
 
     return (
-      <Query query={ TABLES_SCHEMA_QUERY } { ...rest } >
-        { this.renderContent }
+      <Query query={TABLES_SCHEMA_QUERY} {...rest}>
+        {this.renderContent}
       </Query>
     );
   }
 }
 
 export { TableSchemaProvider };
-

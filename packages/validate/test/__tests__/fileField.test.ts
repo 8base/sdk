@@ -36,4 +36,3 @@ describe('As developer, i can create file field vaidator', () => {
     expect(validate('fileValue')).toBeUndefined();
   });
 });
-

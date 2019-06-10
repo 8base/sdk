@@ -1,17 +1,17 @@
-import * as React from 'react';
+import React from 'react';
 import { QueryResult } from 'react-apollo';
 import { Schema, TableSchema } from '@8base/utils';
 import * as selectors from './selectors';
 import { TableSchemaContext } from './TableSchemaContext';
 
 type TableConsumerProps = {
-  id?: string,
-  name?: string,
-  children: (tableSchema: TableSchema | null) => React.ReactNode,
+  id?: string;
+  name?: string;
+  children: (tableSchema: TableSchema | null) => React.ReactNode;
 };
 
 class TableConsumer extends React.Component<TableConsumerProps> {
-  renderWithSchemaResponse = (schema?: Schema) => {
+  public renderWithSchemaResponse = (schema?: Schema) => {
     const { id, name, children } = this.props;
 
     let tableSchema: TableSchema | void | null = null;
@@ -23,16 +23,11 @@ class TableConsumer extends React.Component<TableConsumerProps> {
     }
 
     return children(tableSchema || null);
-  }
+  };
 
-  render() {
-    return (
-      <TableSchemaContext.Consumer>
-        { this.renderWithSchemaResponse }
-      </TableSchemaContext.Consumer>
-    );
+  public render() {
+    return <TableSchemaContext.Consumer>{this.renderWithSchemaResponse}</TableSchemaContext.Consumer>;
   }
 }
-
 
 export { TableConsumer };

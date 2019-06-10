@@ -21,9 +21,4 @@ const purgeAuthState = () => {
   localStorage.removeItem(AUTH_LOCALSTORAGE_KEY);
 };
 
-export {
-  getAuthState,
-  setAuthState,
-  purgeAuthState,
-};
-
+export { getAuthState, setAuthState, purgeAuthState };

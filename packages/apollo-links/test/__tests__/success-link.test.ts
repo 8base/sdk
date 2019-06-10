@@ -13,16 +13,13 @@ const TEST_QUERY = gql`
 `;
 
 describe('As a developer i can use SuccessLink to handle success graphql operations', () => {
-  it('calls handler on successful operation', (done) => {
+  it('calls handler on successful operation', done => {
     const terminatingLink: any = () => Observable.of({});
     const successHandler = jest.fn();
 
-    const links = ApolloLink.from([
-      new SuccessLink({ successHandler }),
-      terminatingLink,
-    ]);
+    const links = ApolloLink.from([new SuccessLink({ successHandler }), terminatingLink]);
 
-    execute(links, { query: TEST_QUERY, variables: {}}).subscribe({
+    execute(links, { query: TEST_QUERY, variables: {} }).subscribe({
       complete: () => {
         expect(successHandler).toHaveBeenCalled();
 
@@ -31,26 +28,24 @@ describe('As a developer i can use SuccessLink to handle success graphql operati
     });
   });
 
-  it('doesn\'t call handler on operation with error', (done) => {
-    const terminatingLink: any = () => Observable.of({
-      errors: [
-        {
-          code: errorCodes.TokenExpiredErrorCode,
-          message: 'Token expired',
-          details: {
-            token: 'jwt expired',
+  it("doesn't call handler on operation with error", done => {
+    const terminatingLink: any = () =>
+      Observable.of({
+        errors: [
+          {
+            code: errorCodes.TokenExpiredErrorCode,
+            message: 'Token expired',
+            details: {
+              token: 'jwt expired',
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
     const successHandler = jest.fn();
 
-    const links = ApolloLink.from([
-      new SuccessLink({ successHandler }),
-      terminatingLink,
-    ]);
+    const links = ApolloLink.from([new SuccessLink({ successHandler }), terminatingLink]);
 
-    execute(links, { query: TEST_QUERY, variables: {}}).subscribe({
+    execute(links, { query: TEST_QUERY, variables: {} }).subscribe({
       complete: () => {
         expect(successHandler).not.toHaveBeenCalled();
 

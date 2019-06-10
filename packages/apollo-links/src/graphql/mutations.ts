@@ -7,4 +7,3 @@ export const SIGNUP_MUTATION = gql`
     }
   }
 `;
-

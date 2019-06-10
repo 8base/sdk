@@ -5,34 +5,38 @@ import { FieldArrayProps as FinalFieldArrayProps } from 'react-final-form-arrays
 import { FieldType, TableSchema, FieldSchema, Schema } from '@8base/utils';
 import { PreparedValidator } from '@8base/validate';
 
-
 type SchemaContextValue = Schema;
 
 type RenderableProps = {
-  component?: React.ComponentType<any>,
-  children?: ((props: Object) => React.ReactNode) | React.ReactNode,
-  render?: (props: Object) => React.ReactNode,
+  component?: React.ComponentType<any>;
+  children?: ((props: object) => React.ReactNode) | React.ReactNode;
+  render?: (props: object) => React.ReactNode;
 };
 
 type FormContextValue = {
-  tableSchema?: TableSchema,
+  tableSchema?: TableSchema;
 };
 
 type FormProps = {
-  tableSchemaName?: string,
-  type?: 'CREATE' | 'UPDATE',
-  ignoreNonTableFields?: boolean,
-  formatRelationToIds?: boolean,
-  permissions?: any,
-  onSuccess?: (result: any, form: FormApi) => void,
+  tableSchemaName?: string;
+  type?: 'CREATE' | 'UPDATE';
+  ignoreNonTableFields?: boolean;
+  formatRelationToIds?: boolean;
+  permissions?: any;
+  onSuccess?: (result: any, form: FormApi) => void;
 } & FinalFormProps;
 
 type FieldsetProps = {
-  tableSchemaName?: string,
+  tableSchemaName?: string;
 } & RenderableProps;
 
 type FieldProps = {
-  validate?: (value: any, allValues: Object, meta: FinalFieldState | null, validateFieldSchema: PreparedValidator) => any,
+  validate?: (
+    value: any,
+    allValues: object,
+    meta: FinalFieldState | null,
+    validateFieldSchema: PreparedValidator,
+  ) => any;
 } & FinalFieldProps<any>;
 
 export {

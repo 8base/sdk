@@ -5,11 +5,10 @@ const ANOTHER_API_TOKEN = 'another api token';
 const WORKSPACE_ID = 'workspace id';
 
 describe('ApiTokenClient', () => {
-
-  it('Throws an error if apiToken haven\'t provided', () => {
+  it("Throws an error if apiToken haven't provided", () => {
     expect(() => {
       // @ts-ignore
-      new ApiTokenAuthClient({});
+      const temp = new ApiTokenAuthClient({});
     }).toThrow('apiToken is required');
   });
 
@@ -23,7 +22,7 @@ describe('ApiTokenClient', () => {
     });
   });
 
-  it('As a developer, i can\'t rewrite apiToken state param', async () => {
+  it("As a developer, i can't rewrite apiToken state param", async () => {
     await authClient.setAuthState({
       token: ANOTHER_API_TOKEN,
       workspaceId: WORKSPACE_ID,
@@ -35,7 +34,7 @@ describe('ApiTokenClient', () => {
     });
   });
 
-  it('As a developer, i can\'t purge apiToken state param', async () => {
+  it("As a developer, i can't purge apiToken state param", async () => {
     await authClient.purgeAuthState();
 
     expect(await authClient.getAuthState()).toEqual({
@@ -43,8 +42,7 @@ describe('ApiTokenClient', () => {
     });
   });
 
-  it('ApiTokenClient\'s instance is always authorized', async () => {
+  it("ApiTokenClient's instance is always authorized", async () => {
     expect(await authClient.checkIsAuthorized()).toBe(true);
   });
 });
-

@@ -26,22 +26,22 @@ jest.mock('auth0-js', () => {
   });
 
   return {
-    authorize,
-    parseHash,
-    logout,
-    checkSession,
     WebAuth,
+    authorize,
+    checkSession,
+    logout,
+    parseHash,
   };
 });
 
-const auth0 = require('auth0-js');
+const auth0 = require('auth0-js'); // tslint:disable-line
 
 describe('WebAuth0AuthClient', () => {
   const authClient = new WebAuth0AuthClient({
-    domain: DOMAIN,
     clientId: CLIENT_ID,
-    redirectUri: REDIRECT_URI,
+    domain: DOMAIN,
     logoutRedirectUri: LOGOUT_REDIRECT_URI,
+    redirectUri: REDIRECT_URI,
   });
 
   it('As a developer, i can authorize by the client', async () => {
@@ -69,14 +69,14 @@ describe('WebAuth0AuthClient', () => {
     const authData = await authClient.getAuthorizedData();
 
     expect(authData).toEqual({
-      idToken: ID_TOKEN,
       email: EMAIL,
-      isEmailVerified: true,
+      idToken: ID_TOKEN,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,
         someProp: 'someValue',
       },
+      isEmailVerified: true,
     });
   });
 
@@ -121,14 +121,14 @@ describe('WebAuth0AuthClient', () => {
   it('As a developer, i can renew token', async () => {
     auth0.checkSession.mockImplementation((options: any, callback: any) => {
       callback(null, {
-        idToken: ANOTHER_ID_TOKEN,
         email: EMAIL,
-        isEmailVerified: true,
+        idToken: ANOTHER_ID_TOKEN,
         idTokenPayload: {
           email: EMAIL,
           email_verified: true,
           someProp: 'someValue',
         },
+        isEmailVerified: true,
       });
     });
 
@@ -137,12 +137,12 @@ describe('WebAuth0AuthClient', () => {
     expect(authData).toEqual({
       email: EMAIL,
       idToken: ANOTHER_ID_TOKEN,
-      isEmailVerified: true,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,
         someProp: 'someValue',
       },
+      isEmailVerified: true,
     });
   });
 
@@ -161,4 +161,3 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 });
-
