@@ -3,7 +3,7 @@ import R from 'ramda';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { TableConsumer } from '@8base/table-schema-provider';
-import { createTableFilterGraphqlTag, TableSchema, SDKError, ERROR_CODES } from '@8base/utils';
+import { createTableFilterGraphqlTag, TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type RecordsListFlattenData<T = object,> = {
   items: T[];
@@ -62,7 +62,7 @@ export class RecordsList extends Component<RecordsListProps> {
     const { children, deep, relationItemsCount, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, '@8base/crud', `Table doesn't find`);
+      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
     }
 
     const query = gql(

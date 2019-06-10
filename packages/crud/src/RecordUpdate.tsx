@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TableConsumer } from '@8base/table-schema-provider';
 import { MutationFn, MutationResult, QueryResult } from 'react-apollo';
-import { TableSchema, SDKError, ERROR_CODES } from '@8base/utils';
+import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 import { RecordCrud } from './RecordCrud';
 import { RecordData } from './RecordData';
@@ -34,7 +34,7 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
     const { tableName, tableId, children, recordId, ...rest } = this.props;
 
     if (!tableMetaResult) {
-      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, '@8base/crud', `Table doesn't find`);
+      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
     }
 
     return (

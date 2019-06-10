@@ -5,7 +5,7 @@ import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
-import { AuthState, SDKError, ERROR_CODES } from '@8base/utils';
+import { AuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type EightBaseApolloClientCommon = {
   uri: string;
@@ -86,7 +86,7 @@ class EightBaseApolloClient extends ApolloClient<Object> {
         if (!authProfileId) {
           throw new SDKError(
             ERROR_CODES.MISSING_PARAMETER,
-            '@8base/apollo-client',
+            PACKAGES.APOLLO_CLIENT,
             'Please provide authProfileId if you want to enable auto sign up.',
           );
         }

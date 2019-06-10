@@ -1,10 +1,13 @@
+import { ERROR_CODES } from './codes';
+import { PACKAGES } from './packages';
+
 class SDKError extends Error {
   public name: string;
-  public code: string;
-  public packageName: string;
+  public code: ERROR_CODES;
+  public packageName: PACKAGES;
   public message: string;
 
-  constructor(code: string, packageName: string, message: string) {
+  constructor(code: ERROR_CODES, packageName: PACKAGES, message: string) {
     super(message);
 
     this.name = 'SDKError';
