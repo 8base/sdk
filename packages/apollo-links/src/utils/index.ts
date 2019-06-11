@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import errorCodes from '@8base/error-codes';
 
 export const hasIdTokenExpiredError = R.any(

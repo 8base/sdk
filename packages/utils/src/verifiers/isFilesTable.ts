@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { SYSTEM_TABLES } from '../constants';
 import { TableSchema } from '../types';

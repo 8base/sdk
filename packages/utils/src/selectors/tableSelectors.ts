@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { createSelector, ParametricSelector } from 'reselect';
 import { FIELD_TYPE, SMART_FORMATS } from '../constants';
 import { TableSchema, FieldSchema } from '../types';

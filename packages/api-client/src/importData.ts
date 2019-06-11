@@ -12,7 +12,7 @@ import {
 } from '@8base/utils';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import * as filestack from 'filestack-js';
-import R from 'ramda';
+import * as R from 'ramda';
 import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, USER_QUERY, FILE_UPLOAD_INFO_QUERY } from './constants';

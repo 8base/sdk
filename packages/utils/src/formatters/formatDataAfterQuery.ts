@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { tableSelectors, getTableSchemaByName, getTableSchemaById } from '../selectors';
 import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';

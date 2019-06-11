@@ -1,5 +1,5 @@
 import { DocumentNode } from 'graphql';
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { importData } from './importData';
 import { importTables } from './importTables';

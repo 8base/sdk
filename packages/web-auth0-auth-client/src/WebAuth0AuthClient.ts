@@ -1,5 +1,5 @@
 import * as auth0 from 'auth0-js';
-import R from 'ramda';
+import * as R from 'ramda';
 import { throwIfMissingRequiredParameters } from '@8base/utils';
 
 import { AuthState, AuthData, IAuthClient, IAuthorizable, PACKAGES } from '@8base/utils';

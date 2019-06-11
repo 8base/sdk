@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import errorCodes from '@8base/error-codes';
 import { Schema, FieldSchema } from '@8base/utils';
 import { DocumentNode } from 'graphql';
