@@ -12,20 +12,14 @@ export type CheckedRule = {
 
 const DEFAULT_DEPTH = 1;
 
-
 export const createQueryString = (
   tablesList: TableSchema[],
   tableId: string,
   queryObjectConfig: QueryGeneratorConfig = {},
   prevKey: string = '',
 ): string => {
-  const { fields = [] } = tablesListSelectors.getTableById(tablesList, tableId);
-  const {
-    deep = DEFAULT_DEPTH,
-    withMeta = true,
-    relationItemsCount,
-    includeColumns,
-  } = queryObjectConfig;
+  const fields = tablesListSelectors.getTableFields(tablesList, tableId);
+  const { deep = DEFAULT_DEPTH, withMeta = true, relationItemsCount, includeColumns } = queryObjectConfig;
 
   let queryObject = '';
 
@@ -47,8 +41,8 @@ export const createQueryString = (
       const refTable = tablesListSelectors.getTableById(tablesList, refTableId);
 
       const isSettingsRefTable =
-        tableFieldSelectors.isSystemField(field)
-        && tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
+        tableFieldSelectors.isSystemField(field) &&
+        tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
 
       const currentKeyString = prevKey ? `${prevKey}.${field.name}` : field.name;
       let isNotEmptyRelation = false;

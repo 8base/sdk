@@ -66,7 +66,7 @@ describe('As a developer, I can generate graphql query for list by table schema'
   });
 
   it('should generate graphql tag for the table content by table schema with some relation count', () => {
-    const tag = createTableFilterGraphqlTag([fixtures.TABLE_SCHEMA_WITH_RELATION], 'Relation', {
+    const tag = createTableFilterGraphqlTag([fixtures.TABLE_SCHEMA_WITH_RELATION], 'RELATION_ID', {
       relationItemsCount: 5,
     });
 
@@ -80,7 +80,10 @@ describe('As a developer, I can generate graphql query for list by table schema'
   });
 
   it('should generate graphql tag for the table content by table schema for application', () => {
-    const tag = createTableFilterGraphqlTag([fixtures.COMMON_SALESFORCE_TABLE_SCHEMA], 'COMMON_SALESFORCE_TABLE_SCHEMA_ID');
+    const tag = createTableFilterGraphqlTag(
+      [fixtures.COMMON_SALESFORCE_TABLE_SCHEMA],
+      'COMMON_SALESFORCE_TABLE_SCHEMA_ID',
+    );
 
     expect(tag).toMatchSnapshot();
   });
@@ -150,13 +153,19 @@ describe('As a developer, I can generate graphql mutation for create many entiti
   });
 
   it('should generate graphql tag for create mutation by table schema with smart fields', () => {
-    const tag = createTableRowCreateManyTag([fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS], 'TABLE_WITHOUT_USER_FIELDS_ID');
+    const tag = createTableRowCreateManyTag(
+      [fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS],
+      'TABLE_WITHOUT_USER_FIELDS_ID',
+    );
 
     expect(tag).toMatchSnapshot();
   });
 
   it('should generate graphql tag for create mutation by table schema for application', () => {
-    const tag = createTableRowCreateManyTag([fixtures.COMMON_SALESFORCE_TABLE_SCHEMA], 'COMMON_SALESFORCE_TABLE_SCHEMA_ID');
+    const tag = createTableRowCreateManyTag(
+      [fixtures.COMMON_SALESFORCE_TABLE_SCHEMA],
+      'COMMON_SALESFORCE_TABLE_SCHEMA_ID',
+    );
 
     expect(tag).toMatchSnapshot();
   });
@@ -250,7 +259,6 @@ describe('As a developer, I can generate graphql mutation for delete entity by t
 
     expect(tag).toMatchSnapshot();
   });
-
 
   it('should generate graphql tag for delete mutation by table schema for application', () => {
     const tag = createTableRowDeleteTag([fixtures.COMMON_SALESFORCE_TABLE_SCHEMA], 'COMMON_SALESFORCE_TABLE_SCHEMA_ID');

@@ -40,7 +40,6 @@ export const isSmartField = createSelector(
   R.equals(FIELD_TYPE.SMART),
 );
 
-
 export const isIdField = createSelector(
   getFieldType,
   R.equals(FIELD_TYPE.ID),

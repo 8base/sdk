@@ -3,7 +3,9 @@ export const FIELD_TYPE: {
   FILE: 'FILE';
   ID: 'ID';
   JSON: 'JSON';
+  MISSING_RELATION: 'MISSING_RELATION';
   NUMBER: 'NUMBER';
+  ONE_WAY_RELATION: 'ONE_WAY_RELATION';
   RELATION: 'RELATION';
   SMART: 'SMART';
   SWITCH: 'SWITCH';
@@ -13,7 +15,9 @@ export const FIELD_TYPE: {
   FILE: 'FILE',
   ID: 'ID',
   JSON: 'JSON',
+  MISSING_RELATION: 'MISSING_RELATION',
   NUMBER: 'NUMBER',
+  ONE_WAY_RELATION: 'ONE_WAY_RELATION',
   RELATION: 'RELATION',
   SMART: 'SMART',
   SWITCH: 'SWITCH',
@@ -163,3 +167,15 @@ export const SYSTEM_TABLES: {
 };
 
 export const MUTATION_FILE_FIELDS = ['fileId', 'public', 'filename', 'meta', 'mods'];
+
+export const APP_STATUS: {
+  ACTIVE: 'ACTIVE';
+  INACTIVE: 'INACTIVE';
+} = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+};
+
+export const APP_TYPES = {
+  SALESFORCE: 'salesforce',
+};

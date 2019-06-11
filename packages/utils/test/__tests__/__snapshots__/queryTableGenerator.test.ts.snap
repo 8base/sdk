@@ -213,80 +213,9 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
   Salesforce {
     commonUpdate(data: $data, filter: $filter) {
       id
-      fileId
-      filename
-      downloadUrl
-      shareUrl
-      meta
-    }
-    fileList {
-      items {
-        id
-        fileId
-        filename
-        downloadUrl
-        shareUrl
-        meta
-      }
-      count
-    }
-  }
-}"
-`;
-
-exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
-"mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!, $filter: RelationKeyFilter) {
-  relationUpdate(data: $data, filter: $filter) {
-    id
-    field1 {
-      id
-      _description
-    }
-    field2
-    field3
-    field4 {
-      items {
-        id
-        _description
-      }
-      count
-    }
-  }
-}"
-`;
-
-exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
-"mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!, $filter: SmartFieldKeyFilter) {
-  smartFieldUpdate(data: $data, filter: $filter) {
-    id
-    phone {
-      code
-      number
-    }
-    address {
-      street1
-      street2
-      zip
-      city
-      state
-    }
-    phoneList {
-      code
-      number
-    }
-  }
-}"
-`;
-
-exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
-"query CommonsTableContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
-    items {
-      id
       field1
       field2
       field3
-      _description
     }
   }
 }"
@@ -384,6 +313,9 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
         id
+        field1
+        field2
+        field3
         _description
       }
       count
@@ -473,6 +405,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
       phoneList {
         code
         number
+      }
+      _description
+    }
+    count
+  }
+}"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with some relation count 1`] = `
+"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    items {
+      id
+      field1 {
+        id
+        _description
+      }
+      field2
+      field3
+      field4(first: 5) {
+        items {
+          id
+          _description
+        }
+        count
       }
       _description
     }

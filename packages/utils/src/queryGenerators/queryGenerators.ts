@@ -4,12 +4,13 @@ import { tablesListSelectors } from '../selectors';
 import gqlPrettier from 'graphql-prettier';
 import * as tableSelectors from '../selectors/tableSelectors';
 import { TableSchema, QueryGeneratorConfig } from '../types';
+import { SDKError, PACKAGES, ERROR_CODES } from '../errors';
 import { createQueryString } from './createQueryString';
 
 type QueryTableFilterConfig = {
-  tableContentName?: string,
-  appContentName?: string,
-} & QueryGeneratorConfig
+  tableContentName?: string;
+  appContentName?: string;
+} & QueryGeneratorConfig;
 
 const upperFirst = (str: string) => R.toUpper(R.head(str)) + R.tail(str);
 
@@ -24,9 +25,22 @@ const wrapInAppName = (appName: string, appContentName?: string) => (queryString
     }`;
 };
 
-
-export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableId: string, config: QueryTableFilterConfig = {}) => {
+const getTable = (tablesList: TableSchema[], tableId: string) => {
   const table = tablesListSelectors.getTableById(tablesList, tableId);
+
+  if (!table) {
+    throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.UTILS, `Table schema with ${tableId} id not found.`);
+  }
+
+  return table;
+};
+
+export const createTableFilterGraphqlTag = (
+  tablesList: TableSchema[],
+  tableId: string,
+  config: QueryTableFilterConfig = {},
+) => {
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
@@ -41,7 +55,9 @@ export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableId: 
     $skip: Int
   ) {
   ${wrapInAppName(appName, config.appContentName)(`
-  ${config.tableContentName ? `${config.tableContentName}: ` : ''}${SchemaNameGenerator.getTableListFieldName(table.name, appName)}(
+  ${config.tableContentName ? `${config.tableContentName}: ` : ''}${SchemaNameGenerator.getTableListFieldName(
+    table.name,
+  )}(
       filter: $filter
       orderBy: $orderBy
       after: $after
@@ -52,7 +68,7 @@ export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableId: 
     ) {
       items {
         id
-        ${withResultData ? createQueryString(tablesList, table.id, { ...restConfig, prevSpaceCount: 6 }) : ''}
+        ${withResultData ? createQueryString(tablesList, table.id, { ...restConfig }) : ''}
         _description
       }
       count
@@ -60,18 +76,21 @@ export const createTableFilterGraphqlTag = (tablesList: TableSchema[], tableId: 
   }`);
 };
 
-export const createTableRowCreateTag = (tablesList: TableSchema[], tableId: string, config: QueryGeneratorConfig = {}) => {
-  const table = tablesListSelectors.getTableById(tablesList, tableId);
+export const createTableRowCreateTag = (
+  tablesList: TableSchema[],
+  tableId: string,
+  config: QueryGeneratorConfig = {},
+) => {
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
-  const { withResultData = true, ...restConfig } = config;
-
   const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
+  const { withResultData = true, ...restConfig } = config;
 
   if (hasNonMetaFields) {
     return gqlPrettier(`
   mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name, appName)}!) {
     ${wrapInAppName(appName)(`
-    ${SchemaNameGenerator.getCreateItemFieldName(table.name, appName)}(data: $data) {
+    ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
       }`)}
@@ -81,42 +100,46 @@ export const createTableRowCreateTag = (tablesList: TableSchema[], tableId: stri
   return gqlPrettier(`
   mutation ${upperFirst(table.name)}Create {
   ${wrapInAppName(appName)(`
-    ${SchemaNameGenerator.getCreateItemFieldName(table.name, appName)} {
+    ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
       }`)}
-    }`,
-  );
+    }`);
 };
 
 export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableId: string) => {
-  const table = tablesListSelectors.getTableById(tablesList, tableId);
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
-
   const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
 
   if (hasNonMetaFields) {
     return gqlPrettier(`
-  mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(table.name, appName)}]!) {
+  mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(
+      table.name,
+      appName,
+    )}]!) {
     ${wrapInAppName(appName)(`
-      ${SchemaNameGenerator.getCreateManyItemFieldName(table.name, appName)}(data: $data) {
+      ${SchemaNameGenerator.getCreateManyItemFieldName(table.name)}(data: $data) {
           count
         }`)}
-      }`,
-    );
+      }`);
   }
 
   return `
   mutation ${upperFirst(table.name)}CreateMany {
   ${wrapInAppName(appName)(`
-  ${SchemaNameGenerator.getCreateManyItemFieldName(table.name, appName)} {
+  ${SchemaNameGenerator.getCreateManyItemFieldName(table.name)} {
       count
     }`)}
   }`;
 };
 
-export const createTableRowUpdateTag = (tablesList: TableSchema[], tableId: string, config: QueryGeneratorConfig = {}) => {
-  const table = tablesListSelectors.getTableById(tablesList, tableId);
+export const createTableRowUpdateTag = (
+  tablesList: TableSchema[],
+  tableId: string,
+  config: QueryGeneratorConfig = {},
+) => {
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
@@ -126,22 +149,26 @@ export const createTableRowUpdateTag = (tablesList: TableSchema[], tableId: stri
       $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name, appName)}
     ) {
     ${wrapInAppName(appName)(`
-      ${SchemaNameGenerator.getUpdateItemFieldName(table.name, appName)}(data: $data, filter: $filter) {
+      ${SchemaNameGenerator.getUpdateItemFieldName(table.name)}(data: $data, filter: $filter) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
         }`)}
       }`);
 };
 
-export const createTableRowQueryTag = (tablesList: TableSchema[], tableId: string, config: QueryGeneratorConfig = {}) => {
-  const table = tablesListSelectors.getTableById(tablesList, tableId);
+export const createTableRowQueryTag = (
+  tablesList: TableSchema[],
+  tableId: string,
+  config: QueryGeneratorConfig = {},
+) => {
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
   return gqlPrettier(`
     query ${upperFirst(table.name)}Entity($id: ID!) {
     ${wrapInAppName(appName)(`
-      ${SchemaNameGenerator.getTableItemFieldName(table.name, appName)}(id: $id) {
+      ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { ...restConfig }) : ''}
         }`)}
@@ -149,13 +176,16 @@ export const createTableRowQueryTag = (tablesList: TableSchema[], tableId: strin
 };
 
 export const createTableRowDeleteTag = (tablesList: TableSchema[], tableId: string) => {
-  const table = tablesListSelectors.getTableById(tablesList, tableId);
+  const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
 
   return gqlPrettier(`
-    mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name, appName)}!, $force: Boolean) {
+    mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(
+    table.name,
+    appName,
+  )}!, $force: Boolean) {
     ${wrapInAppName(appName)(`
-      ${SchemaNameGenerator.getDeleteItemFieldName(table.name, appName)}(filter: $filter, force: $force) {
+      ${SchemaNameGenerator.getDeleteItemFieldName(table.name)}(filter: $filter, force: $force) {
           success
         }`)}
       }`);

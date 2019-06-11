@@ -2,7 +2,7 @@ import React from 'react';
 import * as renderer from 'react-test-renderer';
 import { TableConsumer, TableSchemaContext, TableSchemaProvider } from '../../src';
 
-const MOCK_TABLES_SCHEMA = {
+const MOCK_TABLES_SCHEMA: any = {
   items: [
     {
       id: '1',
@@ -75,10 +75,8 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
-        <TableConsumer name="tableName">
-          { testRenderFn }
-        </TableConsumer>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [] }}>
+        <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
@@ -88,9 +86,9 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name and application name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [] }}>
         <TableConsumer name="tableName" app="Salesforce">
-          { testRenderFn }
+          {testRenderFn}
         </TableConsumer>
       </TableSchemaContext.Provider>,
     );
@@ -101,10 +99,8 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
-        <TableConsumer id="1">
-          { testRenderFn }
-        </TableConsumer>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [] }}>
+        <TableConsumer id="1">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 

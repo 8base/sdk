@@ -6,9 +6,4 @@ import * as applicationsListSelectors from './applicationsListSelectors';
 export { getTableSchemaByName } from './getTableSchemaByName';
 export { getTableSchemaById } from './getTableSchemaById';
 
-export {
-  applicationsListSelectors,
-  tableSelectors,
-  tablesListSelectors,
-  tableFieldSelectors,
-};
+export { applicationsListSelectors, tableSelectors, tablesListSelectors, tableFieldSelectors };

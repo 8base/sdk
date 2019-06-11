@@ -16,7 +16,7 @@ export const createQueryColumnsList = (
   tableId: string,
   config: CreateQueryColumnsListConfig = {},
   prevKey: string = '',
-) => {
+): Array<{ name: string; title: string; meta: object }> => {
   const { fields = [] } = tablesListSelectors.getTableById(tablesList, tableId) || {};
   const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 
@@ -59,9 +59,13 @@ export const createQueryColumnsList = (
           },
         ];
       } else if (isRelation && isList) {
-        return [{
-          name: currentKeyString, title, meta,
-        }];
+        return [
+          {
+            name: currentKeyString,
+            title,
+            meta,
+          },
+        ];
       } else if (isRelation && refTableId && refTable && deep > 1) {
         const innerKeys = createQueryColumnsList(
           tablesList,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Schema, TableSchema, tablesListSelectors } from '@8base/utils';
-import { TableSchemaContext } from './TableSchemaContext';
+import { TableSchema, tablesListSelectors } from '@8base/utils';
+import { TableSchemaContext, ITableSchemaContext } from './TableSchemaContext';
 
 type TableConsumerProps = {
   id?: string;
@@ -10,7 +10,7 @@ type TableConsumerProps = {
 };
 
 class TableConsumer extends React.Component<TableConsumerProps> {
-  public renderWithSchemaResponse = (tablesList?: Schema) => {
+  public renderWithSchemaResponse = ({ tablesList }: ITableSchemaContext) => {
     const { id, name, app, children } = this.props;
 
     let tableSchema: TableSchema | void | null = null;

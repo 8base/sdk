@@ -1,13 +1,14 @@
 import React from 'react';
 import { Subtract } from 'utility-types';
 
-import { TableSchemaContext } from '@8base/table-schema-provider';
-import { getTableSchema } from './getTableSchema';
+import { tablesListSelectors } from '@8base/utils';
+import { TableSchemaContext, ITableSchemaContext } from '@8base/table-schema-provider';
 import { logError } from './log';
-import { Schema, TableSchema, SchemaContextValue } from '../types';
+import { Schema, TableSchema } from '../types';
 
 type TableSchemaConsumerProps = {
   tableSchemaName: string;
+  appName?: string;
 };
 
 export type WithTableSchemaProps = {
@@ -19,14 +20,14 @@ const withTableSchema = <T extends WithTableSchemaProps & TableSchemaConsumerPro
   WrappedComponent: React.ComponentType<Subtract<T, TableSchemaConsumerProps>>,
 ) => {
   return class TableSchemaConsumer extends React.Component<Subtract<T, WithTableSchemaProps>> {
-    public renderWithSchema = (contextSchema?: SchemaContextValue) => {
-      const { tableSchemaName, ...restProps } = this.props;
+    public renderWithSchema = ({ tablesList }: ITableSchemaContext) => {
+      const { tableSchemaName, appName, ...restProps } = this.props;
 
-      if (contextSchema && tableSchemaName) {
-        const tableSchema = getTableSchema(contextSchema, tableSchemaName);
+      if (tablesList && tableSchemaName) {
+        const tableSchema = tablesListSelectors.getTableByName(tablesList, tableSchemaName, appName);
 
         if (tableSchema) {
-          return <WrappedComponent {...(restProps as T)} tableSchema={tableSchema} schema={contextSchema} />;
+          return <WrappedComponent {...(restProps as T)} tableSchema={tableSchema} schema={tablesList} />;
         }
 
         logError(`Error: schema doesn't contain table schema with ${tableSchemaName} name.`);
