@@ -1,4 +1,4 @@
-import { AuthState, IAuthClient } from '@8base/utils';
+import { AuthState, IAuthClient, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApiTokenAuthClientOptions = {
   apiToken: string;
@@ -14,7 +14,7 @@ class ApiTokenAuthClient implements IAuthClient {
 
   constructor({ apiToken }: ApiTokenAuthClientOptions) {
     if (!apiToken) {
-      throw new Error('apiToken is required');
+      throw new SDKError(ERROR_CODES.MISSING_PARAMETER, PACKAGES.API_TOKEN_AUTH_CLIENT, 'apiToken is required');
     }
 
     this.apiToken = apiToken;

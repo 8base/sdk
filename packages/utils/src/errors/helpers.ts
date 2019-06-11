@@ -1,6 +1,7 @@
 import R from 'ramda';
 import { SDKError } from './SDKError';
 import { ERROR_CODES } from './codes';
+import { PACKAGES } from './packages';
 
 const hasParameter = R.ifElse(R.is(String), R.has, R.hasPath);
 
@@ -8,7 +9,7 @@ const stringifyPath = R.ifElse(R.is(String), path => path, R.join('.'));
 
 export const throwIfMissingRequiredParameters = (
   requiredParameterPaths: Array<string[] | string>,
-  packageName: string,
+  packageName: PACKAGES,
   parameters: {},
 ): void => {
   requiredParameterPaths.forEach(parameterPath => {

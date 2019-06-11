@@ -5,6 +5,7 @@ import { tableSelectors, getTableSchemaByName } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
+import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
 import { MutationType, FieldSchema, TableSchema, Schema } from '../types';
 
 interface IOptions {
@@ -28,7 +29,7 @@ const formatDataForMutation = (
   options: IOptions = {},
 ) => {
   if (R.not(type in MUTATION_TYPE)) {
-    throw new Error(`Invalid mutation type: ${type}`);
+    throw new SDKError(ERROR_CODES.INVALID_ARGUMENT, PACKAGES.UTILS, `Invalid mutation type: ${type}`);
   }
 
   if (R.isNil(data)) {
@@ -38,7 +39,11 @@ const formatDataForMutation = (
   const tableSchema = getTableSchemaByName(schema, tableName);
 
   if (!tableSchema) {
-    throw new Error(`Table schema with ${tableName} name not found in schema.`);
+    throw new SDKError(
+      ERROR_CODES.TABLE_NOT_FOUND,
+      PACKAGES.UTILS,
+      `Table schema with ${tableName} name not found in schema.`,
+    );
   }
 
   const formatedData = R.reduce(
@@ -55,7 +60,6 @@ const formatDataForMutation = (
       const { skip, mutate, ignoreNonTableFields = true } = options;
 
       if (!fieldSchema) {
-        // throw new Error(`Field schema with ${fieldName} name not found in table schema with ${tableSchema.name} name.`);
         if (ignoreNonTableFields) {
           return result;
         }

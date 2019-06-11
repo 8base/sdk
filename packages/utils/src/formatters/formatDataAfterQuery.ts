@@ -4,6 +4,7 @@ import { tableSelectors, getTableSchemaByName, getTableSchemaById } from '../sel
 import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';
 
 import { TableSchema, Schema, FormatDataAfterQueryOptions } from '../types';
+import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
 
 /**
  * Remove unnecessary data after fetch entity data by query
@@ -21,7 +22,11 @@ const formatDataAfterQuery = (
   const tableSchema = getTableSchemaByName(schema, tableName);
 
   if (!tableSchema) {
-    throw new Error(`Table schema with ${tableName} name not found in schema.`);
+    throw new SDKError(
+      ERROR_CODES.TABLE_NOT_FOUND,
+      PACKAGES.UTILS,
+      `Table schema with ${tableName} name not found in schema.`,
+    );
   }
 
   const formatedData = R.reduce(
@@ -55,7 +60,11 @@ const formatDataAfterQuery = (
           const relationTableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
 
           if (!relationTableSchema) {
-            throw new Error(`Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`);
+            throw new SDKError(
+              ERROR_CODES.TABLE_NOT_FOUND,
+              PACKAGES.UTILS,
+              `Relation table schema with ${fieldSchema.relation.refTable.id} id not found in schema.`,
+            );
           }
 
           if (isListField(fieldSchema)) {

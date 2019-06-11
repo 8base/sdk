@@ -2,6 +2,7 @@ import { throwIfMissingRequiredParameters, SDKError, ERROR_CODES } from '../../s
 
 describe('throwIfMissingRequiredOption', () => {
   const testFunction = (parameters: any) => {
+    // @ts-ignore
     throwIfMissingRequiredParameters(['key2', ['key1', 'nestedKey1']], '@8base/test', parameters);
   };
 
@@ -13,6 +14,7 @@ describe('throwIfMissingRequiredOption', () => {
         },
         key3: 'someValue',
       });
+      // @ts-ignore
     }).toThrow(new SDKError(ERROR_CODES.MISSING_PARAMETER, '@8base/test', 'Missing parameter: key2'));
   });
 
@@ -22,6 +24,7 @@ describe('throwIfMissingRequiredOption', () => {
         key2: 'someValue',
         key3: 'someValue',
       });
+      // @ts-ignore
     }).toThrow(new SDKError(ERROR_CODES.MISSING_PARAMETER, '@8base/test', 'Missing parameter: key1.nestedKey1'));
   });
 

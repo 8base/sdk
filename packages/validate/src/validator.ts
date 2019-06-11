@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { SDKError, ERROR_CODES, FIELD_TYPE, FieldType, Format } from '@8base/utils';
+import { SDKError, ERROR_CODES, PACKAGES, FIELD_TYPE, FieldType, Format } from '@8base/utils';
 import { Decimal } from 'decimal.js';
 
 import { VALIDATION_ERROR, FORMAT_PATTERN } from './validator.constants';
@@ -280,7 +280,7 @@ export const validatorFacade: ValidatorFacade = R.pipe(
         field => {
           throw new SDKError(
             ERROR_CODES.UNSUPPORTED_FIELD_TYPE,
-            '@8base/validator',
+            PACKAGES.VALIDATE,
             `Validator doesn't support field type ${field.fieldType}`,
           );
         },

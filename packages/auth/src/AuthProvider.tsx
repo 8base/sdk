@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthState, IAuthClient, IAuthorizable } from '@8base/utils';
+import { AuthState, IAuthClient, IAuthorizable, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 import { AuthContext } from './AuthContext';
 
@@ -23,7 +23,11 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     super(props);
 
     if (props.authClient === undefined || props.authClient === null) {
-      throw new Error('Property authClient in the AuthProvider should be specified');
+      throw new SDKError(
+        ERROR_CODES.MISSING_PARAMETER,
+        PACKAGES.AUTH,
+        'Property authClient in the AuthProvider should be specified',
+      );
     }
 
     this.state = {

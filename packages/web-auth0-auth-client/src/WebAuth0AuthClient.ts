@@ -2,7 +2,7 @@ import * as auth0 from 'auth0-js';
 import R from 'ramda';
 import { throwIfMissingRequiredParameters } from '@8base/utils';
 
-import { AuthState, AuthData, IAuthClient, IAuthorizable } from '@8base/utils';
+import { AuthState, AuthData, IAuthClient, IAuthorizable, PACKAGES } from '@8base/utils';
 
 import * as localStorageAccessor from './localStorageAccessor';
 
@@ -43,7 +43,7 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
   constructor(options: WebAuth0AuthClientOptions) {
     throwIfMissingRequiredParameters(
       ['domain', 'clientId', 'redirectUri', 'logoutRedirectUri'],
-      '@8base/web-auth0-auth-client',
+      PACKAGES.WEB_AUTH0_AUTH_CLIENT,
       options,
     );
 

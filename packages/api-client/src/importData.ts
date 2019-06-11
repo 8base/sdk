@@ -6,6 +6,9 @@ import {
   MUTATION_TYPE,
   FieldSchema,
   TableSchema,
+  SDKError,
+  ERROR_CODES,
+  PACKAGES,
 } from '@8base/utils';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import * as filestack from 'filestack-js';
@@ -119,7 +122,7 @@ export const importData = async (
     const tableSchema = getTableSchemaByName(schema, tableName);
 
     if (!tableSchema) {
-      throw new Error(`Table with name ${tableName} not found`);
+      throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.API_CLIENT, `Table with name ${tableName} not found`);
     }
 
     for (let i = 0; i < schemaData[tableName].length / maxThreads; i++) {

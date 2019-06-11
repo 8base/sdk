@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import R from 'ramda';
 import { Subtract } from 'utility-types';
-import { AuthState, AuthData, IAuthClient, IAuthorizable } from '@8base/utils';
+import { AuthState, AuthData, IAuthClient, IAuthorizable, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 import * as asyncStorageAccessor from './asyncStorageAccessor';
 
 const { AuthSession } = require('expo'); // tslint:disable-line
@@ -78,7 +78,11 @@ class ReactNativeAuth0AuthClient implements IAuthClient, Subtract<IAuthorizable,
       if (error) {
         const errorDescription = getErrorDescription(result);
 
-        throw new Error(errorDescription || 'something went wrong while logging in');
+        throw new SDKError(
+          ERROR_CODES.AUTH_FAILED,
+          PACKAGES.REACT_NATIVE_AUTH0_AUTH_CLIENT,
+          errorDescription || 'something went wrong while logging in',
+        );
       }
 
       const encodedIdToken = getIdToken(result);
@@ -95,16 +99,24 @@ class ReactNativeAuth0AuthClient implements IAuthClient, Subtract<IAuthorizable,
         isEmailVerified: isEmailVerified(decodedIdToken),
       };
     } else {
-      throw new Error('Auth was failed');
+      throw new SDKError(ERROR_CODES.AUTH_FAILED, PACKAGES.REACT_NATIVE_AUTH0_AUTH_CLIENT, 'Auth was failed');
     }
   };
 
   public renewToken = () => {
-    throw new Error(`The function isn't implemented yet`);
+    throw new SDKError(
+      ERROR_CODES.NOT_IMPLEMENTED,
+      PACKAGES.REACT_NATIVE_AUTH0_AUTH_CLIENT,
+      `The function isn't implemented yet`,
+    );
   };
 
   public changePassword = () => {
-    throw new Error(`The function isn't implemented yet`);
+    throw new SDKError(
+      ERROR_CODES.NOT_IMPLEMENTED,
+      PACKAGES.REACT_NATIVE_AUTH0_AUTH_CLIENT,
+      `The function isn't implemented yet`,
+    );
   };
 }
 
