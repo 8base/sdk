@@ -1,0 +1,60 @@
+{
+  "name": "@8base/react-sdk",
+  "version": "0.27.1",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/react-sdk#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8base/sdk.git"
+  },
+  "scripts": {
+    "build": "../../bin/build-package.sh",
+    "watch": "../../bin/watch-package.sh",
+    "test": "NPM_ENV=test jest"
+  },
+  "dependencies": {
+    "@8base/apollo-client": "^0.27.1",
+    "@8base/app-provider": "^0.27.1",
+    "@8base/web-auth0-auth-client": "^0.27.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "jest": "24",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "react-apollo": "^2.5.0",
+    "react-dom": "^16.3.0"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
+    "collectCoverageFrom": [
+      "<rootDir>/src/**",
+      "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/8base/sdk/issues"
+  }
+}
