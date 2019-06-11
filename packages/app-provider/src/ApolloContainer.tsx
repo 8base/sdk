@@ -6,7 +6,7 @@ import {
   IntrospectionFragmentMatcher,
 } from 'apollo-cache-inmemory';
 import { withAuth, WithAuthProps } from '@8base/auth';
-import { EightBaseApolloClient } from '@8base/apollo-client';
+import { ApolloClient } from '@8base/apollo-client';
 
 import { ApolloContainerPassedProps } from './types';
 import { FragmentsSchemaContainer } from './FragmentsSchemaContainer';
@@ -41,7 +41,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
         uri: this.props.uri,
       };
 
-      const eightBaseApolloClientData = withAuth
+      const apolloClientOptions = withAuth
         ? {
             ...commonOptions,
             authProfileId,
@@ -56,7 +56,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
             withAuth: false,
           };
 
-      return new EightBaseApolloClient(eightBaseApolloClientData);
+      return new ApolloClient(apolloClientOptions);
     });
 
     public onIdTokenExpired = async () => {

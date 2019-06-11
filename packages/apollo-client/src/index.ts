@@ -1,5 +1,8 @@
 import gql from 'graphql-tag';
-import { ApolloClientOptions, ApolloClient } from 'apollo-client';
+import {
+  ApolloClientOptions as OriginalApolloClientOptions,
+  ApolloClient as OriginalApolloClient,
+} from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
@@ -7,23 +10,23 @@ import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
 import { AuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
-type EightBaseApolloClientCommon = {
+type ApolloClientCommon = {
   uri: string;
   extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<AuthState> }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
   onRequestSuccess?: (options: { operation: Operation; data: any }) => void;
   onRequestError?: ErrorHandler;
-} & Partial<ApolloClientOptions<any>>;
+} & Partial<OriginalApolloClientOptions<any>>;
 
-type EightBaseApolloClientOptions = {
+type ApolloClientOptions = {
   withAuth?: boolean;
   autoSignUp?: boolean;
   authProfileId?: string;
   getAuthState?: () => Promise<AuthState>;
   getRefreshTokenParameters?: Function;
   onAuthSuccess?: Function;
-} & EightBaseApolloClientCommon;
+} & ApolloClientCommon;
 
 /**
  * Extended Apollo Client by 8base several links.
@@ -41,8 +44,8 @@ type EightBaseApolloClientOptions = {
  *
  * @return instance of the Apollo Client
  */
-class EightBaseApolloClient extends ApolloClient<Object> {
-  constructor(config: EightBaseApolloClientOptions) {
+class ApolloClient extends OriginalApolloClient<Object> {
+  constructor(config: ApolloClientOptions) {
     const {
       uri,
       getAuthState,
@@ -119,4 +122,4 @@ class EightBaseApolloClient extends ApolloClient<Object> {
   }
 }
 
-export { EightBaseApolloClient, gql, InMemoryCache };
+export { ApolloClient, gql, InMemoryCache };
