@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
 import { tableSelectors, getTableSchemaByName } from '../selectors';

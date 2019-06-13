@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
   if (!objectForOmitting || !R.is(Object, objectForOmitting)) {

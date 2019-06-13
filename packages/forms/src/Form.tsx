@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { FORM_ERROR } from 'final-form';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';

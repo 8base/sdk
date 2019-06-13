@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { ApolloLink, Operation, NextLink, Observable, FetchResult } from 'apollo-link';
 
 import { AuthHeadersLinkParameters, AuthState } from './types';

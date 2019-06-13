@@ -1,5 +1,5 @@
 import { ApolloLink, Observable, createOperation, Operation, NextLink, FetchResult } from 'apollo-link';
-import R from 'ramda';
+import * as R from 'ramda';
 import { ZenObservable } from 'zen-observable-ts';
 
 import { hasUserNotExistError } from './utils';

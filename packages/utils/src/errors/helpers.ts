@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { SDKError } from './SDKError';
 import { ERROR_CODES } from './codes';
 import { PACKAGES } from './packages';

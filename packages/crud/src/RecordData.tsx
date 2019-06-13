@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Query, QueryResult } from 'react-apollo';
 import gql from 'graphql-tag';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';

@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from '../constants';

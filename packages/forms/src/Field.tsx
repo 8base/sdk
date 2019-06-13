@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Field as FinalField, FieldProps as FinalFieldProps } from 'react-final-form';
 import { compose, setDisplayName } from 'recompose';
 import createValidate from '@8base/validate';

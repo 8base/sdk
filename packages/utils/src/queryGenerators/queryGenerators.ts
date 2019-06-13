@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 
 import gqlPrettier from 'graphql-prettier';

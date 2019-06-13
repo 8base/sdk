@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Subtract } from 'utility-types';
 import { AuthState, AuthData, IAuthClient, IAuthorizable, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 import * as asyncStorageAccessor from './asyncStorageAccessor';

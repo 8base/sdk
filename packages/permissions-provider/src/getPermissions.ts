@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { RequestPermissions, TransformedPermissions, ApolloPermission } from './types';
 
 export const getPermissions: (data: RequestPermissions) => TransformedPermissions = R.pipe(

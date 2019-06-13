@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { Query, QueryProps } from 'react-apollo';
 import { Subtract } from 'utility-types';

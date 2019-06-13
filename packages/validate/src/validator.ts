@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { SDKError, ERROR_CODES, PACKAGES, FIELD_TYPE, FieldType, Format } from '@8base/utils';
 import { Decimal } from 'decimal.js';
 

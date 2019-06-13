@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 import { GraphQLClient } from 'graphql-request';

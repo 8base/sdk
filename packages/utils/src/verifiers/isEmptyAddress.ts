@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 const isEmpty = R.anyPass([R.isEmpty, R.isNil]);
 

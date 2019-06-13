@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { FieldArray as FinalFieldArray } from 'react-final-form-arrays';
 import { compose, setDisplayName } from 'recompose';
 import { FieldArrayProps } from 'react-final-form-arrays';
