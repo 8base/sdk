@@ -1,6 +1,6 @@
 import { ApolloLink } from 'apollo-link';
 import { AuthLink, SignUpLink } from '@8base/apollo-links';
-import { EightBaseApolloClient } from '../../src';
+import { ApolloClient } from '../../src';
 
 jest.mock('apollo-client', () => ({
   ApolloClient: jest.fn(args => args),
@@ -14,7 +14,7 @@ jest.mock('@8base/apollo-links', () => {
   };
 });
 
-describe('EightBaseApolloClient', () => {
+describe('ApolloClient', () => {
   const onRequestError = jest.fn();
   const onRequestSuccess = jest.fn();
   const getAuthState = jest.fn();
@@ -29,8 +29,8 @@ describe('EightBaseApolloClient', () => {
     jest.clearAllMocks();
   });
 
-  it('should create EightBaseApolloClient with auth', () => {
-    const temp = new EightBaseApolloClient({
+  it('should create ApolloClient with auth', () => {
+    const temp = new ApolloClient({
       uri,
       onRequestError,
       onRequestSuccess,
@@ -57,8 +57,8 @@ describe('EightBaseApolloClient', () => {
     });
   });
 
-  it('should create EightBaseApolloClient without auto sign up', () => {
-    const temp = new EightBaseApolloClient({
+  it('should create ApolloClient without auto sign up', () => {
+    const temp = new ApolloClient({
       uri,
       onRequestError,
       onRequestSuccess,
@@ -81,8 +81,8 @@ describe('EightBaseApolloClient', () => {
     expect(SignUpLink).not.toHaveBeenCalled();
   });
 
-  it('should create EightBaseApolloClient without auth', () => {
-    const temp = new EightBaseApolloClient({
+  it('should create ApolloClient without auth', () => {
+    const temp = new ApolloClient({
       getAuthState,
       getRefreshTokenParameters,
       onAuthSuccess,

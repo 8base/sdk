@@ -88,7 +88,7 @@ export interface IAuthClient {
 }
 
 export interface IAuthorizable {
-  authorize(options?: object): Promise<AuthData>;
+  authorize(options?: object): Promise<void>;
   renewToken(options?: object): Promise<AuthData>;
   changePassword(): Promise<{ email: string }>;
   logout(options?: object): Promise<void>;

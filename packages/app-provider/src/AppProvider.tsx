@@ -5,13 +5,13 @@ import { ApolloContainer } from './ApolloContainer';
 import { ApolloContainerPassedProps } from './types';
 import { TableSchemaProvider } from '@8base/table-schema-provider';
 
-type EightBaseAppProviderProps = ApolloContainerPassedProps & {
+type AppProviderProps = ApolloContainerPassedProps & {
   authClient?: IAuthClient & IAuthorizable;
   children: (renderProps: { loading?: boolean }) => React.ReactNode;
 };
 
 /**
- * `EightBaseAppProvider` universal provider which loads fragments schema and provides Apollo client with it, authentication and table schema.
+ * `AppProvider` universal provider which loads fragments schema and provides Apollo client with it, authentication and table schema.
  * @prop {string} [uri] - The 8base API field schema.
  * @prop {Object} [authClient] - The 8base auth client.
  * @prop {Function} [onRequestSuccess] - The callback which called when request is success.
@@ -19,7 +19,7 @@ type EightBaseAppProviderProps = ApolloContainerPassedProps & {
  * @prop {Function} [extendLinks] - Function to extend standart array of the links.
  * @prop {Function} [children] - The render function.
  */
-const EightBaseAppProvider = ({
+const AppProvider = ({
   uri,
   authClient,
   onRequestSuccess,
@@ -28,7 +28,7 @@ const EightBaseAppProvider = ({
   children,
   autoSignUp,
   authProfileId,
-}: EightBaseAppProviderProps): any =>
+}: AppProviderProps): any =>
   !!authClient ? (
     <AuthProvider authClient={authClient}>
       <ApolloContainer
@@ -55,4 +55,4 @@ const EightBaseAppProvider = ({
     </ApolloContainer>
   );
 
-export { EightBaseAppProvider };
+export { AppProvider };

@@ -60,6 +60,7 @@ class ReactNativeAuth0AuthClient implements IAuthClient, Subtract<IAuthorizable,
     return R.not(isEmptyOrNil(token));
   };
 
+  // @ts-ignore
   public authorize = async (options: object = {}): Promise<AuthData> => {
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({

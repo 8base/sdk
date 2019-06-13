@@ -2,10 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
-import { EightBaseApolloClient } from '@8base/apollo-client';
+import { ApolloClient } from '@8base/apollo-client';
 import { AuthProvider } from '@8base/auth';
 
-import { EightBaseAppProvider } from '../../src';
+import { AppProvider } from '../../src';
 
 jest.mock('../../src/FragmentsSchemaContainer', () => ({
   FragmentsSchemaContainer: ({ children }: any) => (
@@ -24,7 +24,7 @@ jest.mock('@8base/apollo-client', () => {
   const { ApolloLink } = require('apollo-link');
 
   return {
-    EightBaseApolloClient: jest.fn(
+    ApolloClient: jest.fn(
       () =>
         new ApolloClient({
           cache: new InMemoryCache(),
@@ -34,7 +34,7 @@ jest.mock('@8base/apollo-client', () => {
   };
 });
 
-describe('EightBaseAppProvider', () => {
+describe('AppProvider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -53,7 +53,7 @@ describe('EightBaseAppProvider', () => {
     });
 
     mount(
-      <EightBaseAppProvider
+      <AppProvider
         uri={uri}
         authClient={authClient}
         extendLinks={extendLinks}
@@ -63,15 +63,15 @@ describe('EightBaseAppProvider', () => {
         authProfileId="someProfileId"
       >
         {() => <div />}
-      </EightBaseAppProvider>,
+      </AppProvider>,
     );
 
     const {
       cache,
       ...apolloClientProps
-    } = (EightBaseApolloClient as any).mock.calls[0][0];
+    } = (ApolloClient as any).mock.calls[0][0];
 
-    expect(EightBaseApolloClient).toHaveBeenCalled();
+    expect(ApolloClient).toHaveBeenCalled();
     expect(apolloClientProps.extendLinks).toEqual(extendLinks);
     expect(apolloClientProps.onRequestError).toEqual(onRequestError);
     expect(apolloClientProps.onRequestSuccess).toEqual(onRequestSuccess);
@@ -106,7 +106,7 @@ describe('EightBaseAppProvider', () => {
     });
 
     const wrapper = mount(
-      <EightBaseAppProvider
+      <AppProvider
         uri={uri}
         authClient={authClient}
         extendLinks={extendLinks}
@@ -115,18 +115,18 @@ describe('EightBaseAppProvider', () => {
         autoSignUp={false}
       >
         {() => <div />}
-      </EightBaseAppProvider>,
+      </AppProvider>,
     );
 
     const {
       cache,
       ...apolloClientProps
-    } = (EightBaseApolloClient as any).mock.calls[0][0];
+    } = (ApolloClient as any).mock.calls[0][0];
 
     expect(AuthProvider).toHaveBeenCalled();
     expect(wrapper.find(AuthProvider).prop('authClient')).toEqual(authClient);
 
-    expect(EightBaseApolloClient).toHaveBeenCalled();
+    expect(ApolloClient).toHaveBeenCalled();
     expect(apolloClientProps.withAuth).toBeTruthy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
@@ -152,23 +152,23 @@ describe('EightBaseAppProvider', () => {
     const onRequestSuccess = jest.fn();
 
     mount(
-      <EightBaseAppProvider
+      <AppProvider
         uri={uri}
         extendLinks={extendLinks}
         onRequestError={onRequestError}
         onRequestSuccess={onRequestSuccess}
       >
         {() => <div />}
-      </EightBaseAppProvider>,
+      </AppProvider>,
     );
 
     const {
       cache,
       ...apolloClientProps
-    } = (EightBaseApolloClient as any).mock.calls[0][0];
+    } = (ApolloClient as any).mock.calls[0][0];
 
     expect(AuthProvider).not.toHaveBeenCalled();
-    expect(EightBaseApolloClient).toHaveBeenCalled();
+    expect(ApolloClient).toHaveBeenCalled();
     expect(apolloClientProps.withAuth).toBeFalsy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`

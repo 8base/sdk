@@ -61,7 +61,6 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
     });
   }
 
-  // @ts-ignore Check this logic. Why in the interface defines Promise<AuthData> in return value?
   public authorize = async (options: object = {}): Promise<void> => {
     // @ts-ignore
     this.auth0.authorize({
