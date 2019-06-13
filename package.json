@@ -30,5 +30,6 @@
     "tslint-react": "^4.0.0",
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0"
-  }
+  },
+  "version": "0.0.0"
 }
