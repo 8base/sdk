@@ -57,6 +57,8 @@ const Form: React.ComponentType<FormProps> = enhancer(
         collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, {
           formatRelationToIds,
         });
+
+        collectedProps.initialValuesEqual = R.equals;
       }
 
       const skipData = (value: any, fieldSchema: FieldSchema) =>
