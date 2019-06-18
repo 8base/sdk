@@ -26,38 +26,43 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     };
     public client: any;
 
-    public createClient = R.memoizeWith(R.identity, fragmentsSchema => {
-      const { withAuth, autoSignUp, authProfileId } = this.props;
+    public createClient = R.memoizeWith(
+      R.identity,
+      introspectionQueryResultData => {
+        const { withAuth, autoSignUp, authProfileId } = this.props;
 
-      const commonOptions = {
-        cache: new InMemoryCache({
-          fragmentMatcher: new IntrospectionFragmentMatcher({
-            introspectionQueryResultData: fragmentsSchema,
-          }),
-        }),
-        extendLinks: this.props.extendLinks,
-        onRequestError: this.props.onRequestError,
-        onRequestSuccess: this.props.onRequestSuccess,
-        uri: this.props.uri,
-      };
+        const commonOptions = {
+          cache: introspectionQueryResultData
+            ? new InMemoryCache({
+                fragmentMatcher: new IntrospectionFragmentMatcher({
+                  introspectionQueryResultData,
+                }),
+              })
+            : new InMemoryCache(),
+          extendLinks: this.props.extendLinks,
+          onRequestError: this.props.onRequestError,
+          onRequestSuccess: this.props.onRequestSuccess,
+          uri: this.props.uri,
+        };
 
-      const apolloClientOptions = withAuth
-        ? {
-            ...commonOptions,
-            authProfileId,
-            autoSignUp,
-            getAuthState: this.getAuthState,
-            onAuthError: this.onAuthError,
-            onIdTokenExpired: this.onIdTokenExpired,
-            withAuth: true,
-          }
-        : {
-            ...commonOptions,
-            withAuth: false,
-          };
+        const apolloClientOptions = withAuth
+          ? {
+              ...commonOptions,
+              authProfileId,
+              autoSignUp,
+              getAuthState: this.getAuthState,
+              onAuthError: this.onAuthError,
+              onIdTokenExpired: this.onIdTokenExpired,
+              withAuth: true,
+            }
+          : {
+              ...commonOptions,
+              withAuth: false,
+            };
 
-      return new ApolloClient(apolloClientOptions);
-    });
+        return new ApolloClient(apolloClientOptions);
+      },
+    );
 
     public onIdTokenExpired = async () => {
       const {
@@ -91,16 +96,16 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
 
     public renderContent = ({
       loading,
-      fragmentsSchema,
+      introspectionQueryResultData,
     }: {
       loading: boolean;
-      fragmentsSchema: object | null;
+      introspectionQueryResultData: object | null;
     }) => {
       if (loading) {
         return null;
       }
 
-      this.client = this.createClient(fragmentsSchema);
+      this.client = this.createClient(introspectionQueryResultData);
 
       return (
         <ApolloProvider client={this.client}>
@@ -110,7 +115,14 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     };
 
     public render() {
-      const { uri } = this.props;
+      const { uri, introspectionQueryResultData } = this.props;
+
+      if (introspectionQueryResultData !== undefined) {
+        return this.renderContent({
+          loading: false,
+          introspectionQueryResultData,
+        });
+      }
 
       return (
         <FragmentsSchemaContainer uri={uri}>

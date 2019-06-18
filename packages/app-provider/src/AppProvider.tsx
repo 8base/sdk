@@ -18,6 +18,7 @@ type AppProviderProps = ApolloContainerPassedProps & {
  * @prop {Function} [onRequestError] - The callback which called when request is fail.
  * @prop {Function} [extendLinks] - Function to extend standart array of the links.
  * @prop {Function} [children] - The render function.
+ * @prop {Object} [introspectionQueryResultData] - The fragment type for introspection fragments matcher.
  */
 const AppProvider = ({
   uri,
@@ -28,6 +29,7 @@ const AppProvider = ({
   children,
   autoSignUp,
   authProfileId,
+  introspectionQueryResultData,
 }: AppProviderProps): any =>
   !!authClient ? (
     <AuthProvider authClient={authClient}>
@@ -39,6 +41,7 @@ const AppProvider = ({
         onRequestError={onRequestError}
         autoSignUp={autoSignUp}
         authProfileId={authProfileId}
+        introspectionQueryResultData={introspectionQueryResultData}
       >
         <TableSchemaProvider>{children}</TableSchemaProvider>
       </ApolloContainer>
@@ -50,6 +53,7 @@ const AppProvider = ({
       extendLinks={extendLinks}
       onRequestSuccess={onRequestSuccess}
       onRequestError={onRequestError}
+      introspectionQueryResultData={introspectionQueryResultData}
     >
       <TableSchemaProvider>{children}</TableSchemaProvider>
     </ApolloContainer>

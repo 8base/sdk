@@ -11,4 +11,5 @@ export type ApolloContainerPassedProps = {
     links: ApolloLink[],
     options: { getAuthState?: () => Promise<AuthState> },
   ) => ApolloLink[];
+  introspectionQueryResultData?: Object;
 };

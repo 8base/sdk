@@ -5,13 +5,13 @@ type FragmentsSchemaContainerProps = {
   uri: string;
   children: (args: {
     loading: boolean;
-    fragmentsSchema: object | null;
+    introspectionQueryResultData: object | null;
   }) => React.ReactNode;
 };
 
 type FragmentsSchemaContainerState = {
   loading: boolean;
-  fragmentsSchema: null | Object;
+  introspectionQueryResultData: null | Object;
 };
 
 class FragmentsSchemaContainer extends React.PureComponent<
@@ -19,7 +19,7 @@ class FragmentsSchemaContainer extends React.PureComponent<
   FragmentsSchemaContainerState
 > {
   public state: FragmentsSchemaContainerState = {
-    fragmentsSchema: null,
+    introspectionQueryResultData: null,
     loading: true,
   };
 
@@ -28,16 +28,16 @@ class FragmentsSchemaContainer extends React.PureComponent<
 
     this.setState({ loading: true });
 
-    const fragmentsSchema = await fetchFragmentsSchema(uri);
+    const introspectionQueryResultData = await fetchFragmentsSchema(uri);
 
-    this.setState({ loading: false, fragmentsSchema });
+    this.setState({ loading: false, introspectionQueryResultData });
   }
 
   public render() {
-    const { loading, fragmentsSchema } = this.state;
+    const { loading, introspectionQueryResultData } = this.state;
     const { children } = this.props;
 
-    return children({ loading, fragmentsSchema });
+    return children({ loading, introspectionQueryResultData });
   }
 }
 
