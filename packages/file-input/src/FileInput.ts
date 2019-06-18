@@ -62,10 +62,9 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo(
 
       return nextState;
     }
-    // @ts-ignore
-    public filestack: { [key: string]: any };
-    // @ts-ignore
-    public filestackPromise: Promise<void>;
+
+    public filestack?: { [key: string]: any };
+    public filestackPromise?: Promise<void>;
 
     constructor(props: FileInputProps & { client: ApolloClient<any> }) {
       super(props);
@@ -108,6 +107,10 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo(
     }
 
     public onUploadDone = async ({ filesUploaded }: any) => {
+      if (!this.filestack) {
+        return;
+      }
+
       const { policy = '""', signature = '""' } = this.filestack.session;
 
       let value = filesUploaded.map(({ handle, filename, url }: any) => {
@@ -157,6 +160,10 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo(
 
     public pick = async (options = {}) => {
       await this.filestackPromise;
+
+      if (!this.filestack) {
+        return;
+      }
 
       if ('maxFiles' in options) {
         console.warn('Specify "maxFiles" as a prop for FileInput component'); // tslint:disable-line
