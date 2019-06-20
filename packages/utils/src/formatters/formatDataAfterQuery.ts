@@ -6,12 +6,9 @@ import { isRelationField, isFileField, isListField, isMetaField } from '../verif
 import { TableSchema, Schema, FormatDataAfterQueryOptions } from '../types';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
 
-
-interface IFormatDataAfterQueryArgs {
-  tableName: string,
-  data: { [key: string]: any },
-  schema: Schema,
-  options?: FormatDataAfterQueryOptions,
+interface IFormatDataAfterQueryMeta {
+  tableName: string;
+  schema: Schema;
 }
 
 /**
@@ -21,12 +18,11 @@ interface IFormatDataAfterQueryArgs {
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  * @param {FormatDataAfterQueryOptions} options
  */
-const formatDataAfterQuery = ({
-  tableName,
-  data,
-  schema,
-  options = {},
-}: IFormatDataAfterQueryArgs) => {
+const formatDataAfterQuery = (
+  data: { [key: string]: any },
+  { tableName, schema }: IFormatDataAfterQueryMeta,
+  options: FormatDataAfterQueryOptions = {},
+) => {
   const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
 
   if (!tableSchema) {
@@ -77,17 +73,15 @@ const formatDataAfterQuery = ({
 
           if (isListField(fieldSchema)) {
             result[fieldName] = result[fieldName].map((item: any) =>
-              formatDataAfterQuery({
-                tableName: relationTableSchema.name, 
-                data: item, 
-                schema
+              formatDataAfterQuery(item, {
+                tableName: relationTableSchema.name,
+                schema,
               }),
             );
           } else {
-            result[fieldName] = formatDataAfterQuery({
-              tableName: relationTableSchema.name, 
-              data: result[fieldName], 
-              schema
+            result[fieldName] = formatDataAfterQuery(result[fieldName], {
+              tableName: relationTableSchema.name,
+              schema,
             });
           }
         }

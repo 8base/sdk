@@ -1,8 +1,6 @@
 import React from 'react';
-import { QueryResult } from 'react-apollo';
-import { Schema, TableSchema } from '@8base/utils';
-import * as selectors from './selectors';
-import { TableSchemaContext } from './TableSchemaContext';
+import { TableSchema, tablesListSelectors } from '@8base/utils';
+import { TableSchemaContext, ITableSchemaContext } from './TableSchemaContext';
 
 type TableConsumerProps = {
   id?: string;
@@ -11,15 +9,15 @@ type TableConsumerProps = {
 };
 
 class TableConsumer extends React.Component<TableConsumerProps> {
-  public renderWithSchemaResponse = (schema?: Schema) => {
+  public renderWithSchemaResponse = ({ tablesList }: ITableSchemaContext) => {
     const { id, name, children } = this.props;
 
     let tableSchema: TableSchema | void | null = null;
 
     if (id) {
-      tableSchema = selectors.tableList.getTableById(schema, id);
+      tableSchema = tablesListSelectors.getTableById(tablesList, id);
     } else if (name) {
-      tableSchema = selectors.tableList.getTableByName(schema, name);
+      tableSchema = tablesListSelectors.getTableByName(tablesList, name);
     }
 
     return children(tableSchema || null);

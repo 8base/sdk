@@ -411,8 +411,9 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema according permissions 1`] = `
-"query DataViewerCommonsRow($id: ID!) {
+"query CommonsEntity($id: ID!) {
   common(id: $id) {
+    id
     field2
     field3
   }
@@ -468,8 +469,9 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation according permissions 1`] = `
-"query DataViewerTableSchemaRow($id: ID!) {
+"query TableSchemaEntity($id: ID!) {
   tableSchema(id: $id) {
+    id
     numberanother
     number
     numberList

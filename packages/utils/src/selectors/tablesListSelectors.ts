@@ -13,10 +13,7 @@ export const getTableById: ParametricSelector<TableSchema[], string, TableSchema
 export const getTableByName: (state: TableSchema[], tableName: string) => TableSchema = createSelector(
   getTableList,
   (_: any, tableName: string) => tableName,
-  (tables, tableName) =>
-    tables &&
-    tables
-      .find(({ name }) => name.toLowerCase() === tableName.toLowerCase()),
+  (tables, tableName) => tables && tables.find(({ name }) => name.toLowerCase() === tableName.toLowerCase()),
 ) as any;
 
 export const getTableFields: ParametricSelector<TableSchema[], string, FieldSchema[]> = createSelector(

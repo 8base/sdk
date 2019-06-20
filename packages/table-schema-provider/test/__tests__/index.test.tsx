@@ -63,7 +63,7 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
         <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
@@ -74,7 +74,7 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={MOCK_TABLES_SCHEMA.items}>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
         <TableConsumer id="1">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );

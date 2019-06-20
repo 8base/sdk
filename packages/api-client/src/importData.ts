@@ -132,15 +132,17 @@ export const importData = async (
         tempData.map(async (item: any) => {
           item = await uploadFiles(item, tableSchema, filestackClient, fileUploadInfo.path);
 
-          const data = formatDataForMutation({
-            type: MUTATION_TYPE.CREATE,
-            tableName,
-            data: item,
-            schema,
-            options: {
+          const data = formatDataForMutation(
+            MUTATION_TYPE.CREATE,
+            item,
+            {
+              tableName,
+              schema,
+            },
+            {
               skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
-            }
-          });
+            },
+          );
 
           const fieldData = await request<{ field: { id: string } }>(
             `
@@ -176,12 +178,14 @@ export const importData = async (
 
   for (const tableName of Object.keys(schemaData)) {
     for (const item of schemaData[tableName]) {
-      const data = formatDataForMutation({
-        type: MUTATION_TYPE.UPDATE,
-        tableName,
-        data: item,
-        schema,
-        options: {
+      const data = formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        item,
+        {
+          tableName,
+          schema,
+        },
+        {
           mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
             if (Array.isArray(plainValue)) {
               return {
@@ -200,8 +204,8 @@ export const importData = async (
             return { connect: { id } };
           },
           skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
-        }
-      });
+        },
+      );
 
       await request(
         `

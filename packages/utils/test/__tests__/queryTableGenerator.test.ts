@@ -173,7 +173,7 @@ describe('As a developer, I can generate graphql query for read entity by table 
   });
 
   it('should generate graphql tag for row query by common table schema according permissions', () => {
-    const tag = createTableRowQueryTag([fixtures.COMMON_TABLE_SCHEMA], 'commons', {
+    const tag = createTableRowQueryTag([fixtures.COMMON_TABLE_SCHEMA], 'COMMONS_ID', {
       permissions: {
         data: {
           commons: {
@@ -194,7 +194,7 @@ describe('As a developer, I can generate graphql query for read entity by table 
   });
 
   it('should generate graphql tag for row query by table schema with relation according permissions', () => {
-    const tag = createTableRowQueryTag(fixtures.SCHEMA, 'tableSchema', {
+    const tag = createTableRowQueryTag(fixtures.SCHEMA, 'TABLE_SCHEMA_ID', {
       permissions: {
         data: {
           relationTableSchema: {

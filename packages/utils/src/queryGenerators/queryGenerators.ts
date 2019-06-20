@@ -152,7 +152,9 @@ export const createTableRowDeleteTag = (tablesList: TableSchema[], tableId: stri
   const table = getTable(tablesList, tableId);
 
   return gqlPrettier(`
-    mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name)}!, $force: Boolean) {
+    mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(
+    table.name,
+  )}!, $force: Boolean) {
       ${SchemaNameGenerator.getDeleteItemFieldName(table.name)}(filter: $filter, force: $force) {
           success
         }

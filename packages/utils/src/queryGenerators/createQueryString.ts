@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { SYSTEM_TABLES } from '../constants';
 import { TableSchema, QueryGeneratorConfig } from '../types';
 import { tablesListSelectors, tableFieldSelectors } from '../selectors';
+import { SDKError, PACKAGES, ERROR_CODES } from '../errors';
 
 export type CheckedRule = {
   id: string;
@@ -18,7 +19,14 @@ export const createQueryString = (
   queryObjectConfig: QueryGeneratorConfig = {},
   prevKey: string = '',
 ): string => {
-  const fields = tablesListSelectors.getTableFields(tablesList, tableId) || [];
+  const table = tablesListSelectors.getTableById(tablesList, tableId);
+
+  if (!table) {
+    throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.UTILS, `Table with id ${tableId} not found`);
+  }
+
+  const { fields, name: tableName } = table;
+
   const {
     deep = DEFAULT_DEPTH,
     withMeta = true,

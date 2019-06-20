@@ -1,6 +1,12 @@
 import React from 'react';
-import { Schema } from '@8base/utils';
+import { TableSchema } from '@8base/utils';
 
-const TableSchemaContext = React.createContext<Schema>([]);
+export interface ITableSchemaContext {
+  tablesList: TableSchema[];
+}
+
+const TableSchemaContext = React.createContext<ITableSchemaContext>({
+  tablesList: [],
+});
 
 export { TableSchemaContext };

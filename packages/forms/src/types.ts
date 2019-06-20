@@ -37,7 +37,7 @@ type FieldProps = {
     meta: FinalFieldState | null,
     validateFieldSchema: PreparedValidator,
   ) => any;
-} & FinalFieldProps;
+} & FinalFieldProps<any>;
 
 export {
   FieldProps,

@@ -14,13 +14,10 @@ interface IOptions {
   ignoreNonTableFields?: boolean;
 }
 
-interface IFormatDataForMutationArgs {
-  type: MutationType,
-  tableName: string,
-  appName?: string,
-  data: any,
-  schema: Schema,
-  options?: IOptions,
+interface IFormatDataForMutationMeta {
+  tableName: string;
+  appName?: string;
+  schema: Schema;
 }
 
 /**
@@ -30,13 +27,12 @@ interface IFormatDataForMutationArgs {
  * @param {Object} data - The entity data for format.
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  */
-const formatDataForMutation = ({
-  type,
-  tableName,
-  data,
-  schema,
-  options = {},
-}: IFormatDataForMutationArgs) => {
+const formatDataForMutation = (
+  type: MutationType,
+  data: any,
+  { tableName, schema }: IFormatDataForMutationMeta,
+  options: IOptions = {},
+) => {
   if (R.not(type in MUTATION_TYPE)) {
     throw new SDKError(ERROR_CODES.INVALID_ARGUMENT, PACKAGES.UTILS, `Invalid mutation type: ${type}`);
   }
@@ -98,7 +94,7 @@ const formatDataForMutation = ({
         }
       }
 
-      formatedFieldData = formatFieldDataForMutation({ type, fieldSchema, data: formatedFieldData, schema });
+      formatedFieldData = formatFieldDataForMutation(type, formatedFieldData, { fieldSchema, schema });
 
       if (typeof mutate === 'function') {
         formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);

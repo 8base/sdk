@@ -2,15 +2,13 @@ import { formatFieldDataListItem } from './formatFieldDataListItem';
 
 import { MutationType, FieldSchema, Schema } from '../types';
 
-interface IFormatFieldDataArgs {
-  type: MutationType, 
-  fieldSchema: FieldSchema, 
-  data: any, 
-  schema: Schema
+interface IFormatFieldDataMeta {
+  fieldSchema: FieldSchema;
+  schema: Schema;
 }
 
-export const formatFieldData = ({ type, fieldSchema, data, schema }: IFormatFieldDataArgs) => {
-  const nextData = formatFieldDataListItem(type, fieldSchema, data, schema);
+export const formatFieldData = (type: MutationType, data: any, { fieldSchema, schema }: IFormatFieldDataMeta) => {
+  const nextData = formatFieldDataListItem(type, data, { fieldSchema, schema });
 
   return {
     [nextData.type]: nextData.data,

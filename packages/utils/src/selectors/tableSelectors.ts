@@ -32,7 +32,7 @@ export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = cr
   R.propOr('', 'fieldType'),
 );
 
-export const isSystem = createSelector(
+export const isSystemField = createSelector(
   getTable,
   R.propEq('isSystem', true),
 );
