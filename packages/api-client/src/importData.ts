@@ -1,6 +1,6 @@
 import {
   formatDataForMutation,
-  getTableSchemaByName,
+  tablesListSelectors,
   tableFieldSelectors,
   tableSelectors,
   MUTATION_TYPE,
@@ -119,7 +119,7 @@ export const importData = async (
   for (const tableName of Object.keys(schemaData)) {
     localData[tableName] = {};
 
-    const tableSchema = getTableSchemaByName(schema, tableName);
+    const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
 
     if (!tableSchema) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.API_CLIENT, `Table with name ${tableName} not found`);
@@ -132,8 +132,14 @@ export const importData = async (
         tempData.map(async (item: any) => {
           item = await uploadFiles(item, tableSchema, filestackClient, fileUploadInfo.path);
 
-          const data = formatDataForMutation(MUTATION_TYPE.CREATE, tableName, item, schema, {
-            skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
+          const data = formatDataForMutation({
+            type: MUTATION_TYPE.CREATE,
+            tableName,
+            data: item,
+            schema,
+            options: {
+              skip: (value: any, fieldSchema: FieldSchema) => tableFieldSelectors.isRelationField(fieldSchema),
+            }
           });
 
           const fieldData = await request<{ field: { id: string } }>(
@@ -170,25 +176,31 @@ export const importData = async (
 
   for (const tableName of Object.keys(schemaData)) {
     for (const item of schemaData[tableName]) {
-      const data = formatDataForMutation(MUTATION_TYPE.UPDATE, tableName, item, schema, {
-        mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
-          if (Array.isArray(plainValue)) {
-            return {
-              connect: plainValue.map(({ $id }) => ({
-                id: getRemoteEntityId(localData, fieldSchema, $id, userId),
-              })),
-            };
-          }
+      const data = formatDataForMutation({
+        type: MUTATION_TYPE.UPDATE,
+        tableName,
+        data: item,
+        schema,
+        options: {
+          mutate: (value: any, plainValue: any, fieldSchema: FieldSchema) => {
+            if (Array.isArray(plainValue)) {
+              return {
+                connect: plainValue.map(({ $id }) => ({
+                  id: getRemoteEntityId(localData, fieldSchema, $id, userId),
+                })),
+              };
+            }
 
-          if (!plainValue) {
-            return null;
-          }
+            if (!plainValue) {
+              return null;
+            }
 
-          const id = getRemoteEntityId(localData, fieldSchema, plainValue.$id, userId);
+            const id = getRemoteEntityId(localData, fieldSchema, plainValue.$id, userId);
 
-          return { connect: { id } };
-        },
-        skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
+            return { connect: { id } };
+          },
+          skip: (value: any, fieldSchema: FieldSchema) => !tableFieldSelectors.isRelationField(fieldSchema),
+        }
       });
 
       await request(

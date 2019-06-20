@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
 import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
-import { tableSelectors, getTableSchemaByName } from '../selectors';
+import { tableSelectors, tablesListSelectors } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
@@ -14,6 +14,15 @@ interface IOptions {
   ignoreNonTableFields?: boolean;
 }
 
+interface IFormatDataForMutationArgs {
+  type: MutationType,
+  tableName: string,
+  appName?: string,
+  data: any,
+  schema: Schema,
+  options?: IOptions,
+}
+
 /**
  * Formats entity data for create or update mutation based on passed schema.
  * @param {MutationType} type - The type of the mutation.
@@ -21,13 +30,13 @@ interface IOptions {
  * @param {Object} data - The entity data for format.
  * @param {Schema} schema - The schema of the used tables from the 8base API.
  */
-const formatDataForMutation = (
-  type: MutationType,
-  tableName: string,
-  data: any,
-  schema: Schema,
-  options: IOptions = {},
-) => {
+const formatDataForMutation = ({
+  type,
+  tableName,
+  data,
+  schema,
+  options = {},
+}: IFormatDataForMutationArgs) => {
   if (R.not(type in MUTATION_TYPE)) {
     throw new SDKError(ERROR_CODES.INVALID_ARGUMENT, PACKAGES.UTILS, `Invalid mutation type: ${type}`);
   }
@@ -36,7 +45,7 @@ const formatDataForMutation = (
     return data;
   }
 
-  const tableSchema = getTableSchemaByName(schema, tableName);
+  const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
 
   if (!tableSchema) {
     throw new SDKError(
@@ -89,7 +98,7 @@ const formatDataForMutation = (
         }
       }
 
-      formatedFieldData = formatFieldDataForMutation(type, fieldSchema, formatedFieldData, schema);
+      formatedFieldData = formatFieldDataForMutation({ type, fieldSchema, data: formatedFieldData, schema });
 
       if (typeof mutate === 'function') {
         formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);

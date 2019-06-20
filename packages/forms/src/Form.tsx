@@ -54,8 +54,13 @@ const Form: React.ComponentType<FormProps> = enhancer(
       };
 
       if (tableSchema && schema && type === MUTATION_TYPE.UPDATE && collectedProps.initialValues) {
-        collectedProps.initialValues = formatDataAfterQuery(tableSchema.name, collectedProps.initialValues, schema, {
-          formatRelationToIds,
+        collectedProps.initialValues = formatDataAfterQuery({
+          tableName: tableSchema.name,
+          data: collectedProps.initialValues,
+          schema,
+          options: {
+            formatRelationToIds,
+          }
         });
 
         collectedProps.initialValuesEqual = R.equals;
@@ -78,10 +83,15 @@ const Form: React.ComponentType<FormProps> = enhancer(
         try {
           const formattedData =
             type && tableSchema && schema
-              ? formatDataForMutation(type, tableSchema.name, data, schema, {
+              ? formatDataForMutation({
+                type,
+                tableName: tableSchema.name,
+                data, schema,
+                options: {
                   ignoreNonTableFields,
                   skip: permissions && skipData,
-                })
+                }
+              })
               : data;
 
           result = await onSubmit(formattedData, ...rest);

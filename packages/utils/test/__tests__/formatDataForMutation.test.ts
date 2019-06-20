@@ -8,7 +8,7 @@ describe('As developer, I can format for create mutation,', () => {
       scalarList: ['Scalar List Value'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual(data);
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual(data);
   });
 
   it('Data with empty number.', () => {
@@ -16,7 +16,7 @@ describe('As developer, I can format for create mutation,', () => {
       number: '',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       number: null,
     });
   });
@@ -26,7 +26,7 @@ describe('As developer, I can format for create mutation,', () => {
       numberList: ['', null],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       numberList: [],
     });
   });
@@ -36,7 +36,7 @@ describe('As developer, I can format for create mutation,', () => {
       relation: '5b32159b66a4500f96285626',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         connect: { id: '5b32159b66a4500f96285626' },
       },
@@ -51,7 +51,7 @@ describe('As developer, I can format for create mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         create: {
           scalar: 'Relation Scalar Value',
@@ -66,7 +66,7 @@ describe('As developer, I can format for create mutation,', () => {
       relation: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         connect: {},
       },
@@ -78,7 +78,7 @@ describe('As developer, I can format for create mutation,', () => {
       file: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         connect: {},
       },
@@ -90,7 +90,7 @@ describe('As developer, I can format for create mutation,', () => {
       file: '5b32159b66a4500f96285626',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         connect: { id: '5b32159b66a4500f96285626' },
       },
@@ -111,7 +111,7 @@ describe('As developer, I can format for create mutation,', () => {
       file: { ...file, ...nonFileFields },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         create: file,
       },
@@ -123,7 +123,7 @@ describe('As developer, I can format for create mutation,', () => {
       relationList: ['5b32159b66a450c047285628', '5b32159b66a450fae928562a'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         connect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
       },
@@ -140,7 +140,7 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         create: [
           {
@@ -157,7 +157,7 @@ describe('As developer, I can format for create mutation,', () => {
       fileList: ['5b32159b66a4500f96285626'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       fileList: {
         connect: [{ id: '5b32159b66a4500f96285626' }],
       },
@@ -171,7 +171,7 @@ describe('As developer, I can format for create mutation,', () => {
       fileList,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({});
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({});
   });
 
   it('Data with list of the file objects.', () => {
@@ -188,7 +188,7 @@ describe('As developer, I can format for create mutation,', () => {
       fileList,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       fileList: {
         create: fileList.slice(0, 1),
       },
@@ -207,7 +207,7 @@ describe('As developer, I can format for create mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       address: null,
     });
   });
@@ -220,7 +220,7 @@ describe('As developer, I can format for create mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       phone: null,
     });
   });
@@ -239,7 +239,7 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       phones: [data.phones[1]],
     });
   });
@@ -265,7 +265,7 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       addresses: [data.addresses[1]],
     });
   });
@@ -292,7 +292,7 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toMatchSnapshot();
   });
 
   it('Data with JSON field', () => {
@@ -301,7 +301,7 @@ describe('As developer, I can format for create mutation,', () => {
       jsonList: ['{ "someProp": "someValue" }', '{ "somePropArray": ["someValue1", "someValue2"] }'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       json: {
         somePropArray: ['someValue1', 'someValue2', 'someValue3'],
       },
@@ -315,7 +315,7 @@ describe('As developer, I can format for create mutation,', () => {
       bigIntList: ['999999999999999999999999999999', '111111111111111111111111111111'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA)).toEqual(data);
+    expect(formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual(data);
   });
 
   it('should leave non-table fields if option ignoreNonTableFields is false', () => {
@@ -326,7 +326,7 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(
-      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA, { ignoreNonTableFields: false }),
+      formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA, options: { ignoreNonTableFields: false }}),
     ).toEqual(data);
   });
 
@@ -343,7 +343,7 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(
-      formatDataForMutation(MUTATION_TYPE.CREATE, 'tableSchema', data, SCHEMA, { ignoreNonTableFields: true }),
+      formatDataForMutation({ type: MUTATION_TYPE.CREATE, tableName: 'tableSchema', data, schema: SCHEMA, options: { ignoreNonTableFields: true } }),
     ).toEqual(expectedResult);
   });
 });
@@ -355,7 +355,7 @@ describe('As developer, I can format for update mutation,', () => {
       scalarList: ['Scalar List Value'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual(data);
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual(data);
   });
 
   it('Data with relation reference.', () => {
@@ -363,7 +363,7 @@ describe('As developer, I can format for update mutation,', () => {
       relation: '5b32159b66a4500f96285626',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         reconnect: { id: '5b32159b66a4500f96285626' },
       },
@@ -378,7 +378,7 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         create: {
           scalar: 'Relation Scalar Value',
@@ -397,7 +397,7 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         reconnect: {
           id: 'id',
@@ -411,7 +411,7 @@ describe('As developer, I can format for update mutation,', () => {
       relation: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relation: {
         reconnect: {},
       },
@@ -423,7 +423,7 @@ describe('As developer, I can format for update mutation,', () => {
       file: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         reconnect: {},
       },
@@ -444,7 +444,7 @@ describe('As developer, I can format for update mutation,', () => {
       file: { ...file, ...nonFileFields },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         create: file,
       },
@@ -462,7 +462,7 @@ describe('As developer, I can format for update mutation,', () => {
       file,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         reconnect: { id: file.id },
       },
@@ -474,7 +474,7 @@ describe('As developer, I can format for update mutation,', () => {
       file: '5b32159b66a4500f96285626',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       file: {
         reconnect: { id: '5b32159b66a4500f96285626' },
       },
@@ -486,7 +486,7 @@ describe('As developer, I can format for update mutation,', () => {
       fileList: ['5b32159b66a4500f96285626'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       fileList: {
         reconnect: [{ id: '5b32159b66a4500f96285626' }],
       },
@@ -498,7 +498,7 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: ['5b32159b66a450c047285628', '5b32159b66a450fae928562a'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         reconnect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
       },
@@ -515,7 +515,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         create: [
           {
@@ -533,7 +533,7 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         reconnect: [],
       },
@@ -545,7 +545,7 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: [],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         reconnect: [],
       },
@@ -563,7 +563,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       relationList: {
         reconnect: [
           {
@@ -589,7 +589,7 @@ describe('As developer, I can format for update mutation,', () => {
       fileList,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       fileList: {
         reconnect: [
           {
@@ -612,7 +612,7 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       address: null,
     });
   });
@@ -625,7 +625,7 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       phone: null,
     });
   });
@@ -651,7 +651,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       addresses: [data.addresses[1]],
     });
   });
@@ -670,7 +670,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       phones: [data.phones[1]],
     });
   });
@@ -723,7 +723,7 @@ describe('As developer, I can format for update mutation,', () => {
       __typename: 'Address',
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toMatchSnapshot();
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toMatchSnapshot();
   });
 
   it('Data with JSON field', () => {
@@ -732,7 +732,7 @@ describe('As developer, I can format for update mutation,', () => {
       jsonList: ['{ "someProp": "someValue" }', '{ "somePropArray": ["someValue1", "someValue2"] }'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual({
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual({
       json: {
         somePropArray: ['someValue1', 'someValue2', 'someValue3'],
       },
@@ -746,6 +746,6 @@ describe('As developer, I can format for update mutation,', () => {
       bigIntList: ['999999999999999999999999999999', '111111111111111111111111111111'],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, 'tableSchema', data, SCHEMA)).toEqual(data);
+    expect(formatDataForMutation({ type: MUTATION_TYPE.UPDATE, tableName: 'tableSchema', data, schema: SCHEMA })).toEqual(data);
   });
 });

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
 import { isRelationField, isFileField } from '../verifiers';
-import { getTableSchemaById } from '../selectors';
+import { tablesListSelectors } from '../selectors';
 import { MUTATION_TYPE, SYSTEM_TABLES } from '../constants';
 import { formatDataForMutation } from './formatDataForMutation';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
@@ -28,7 +28,7 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
   }
 
   if (isRelationField(fieldSchema)) {
-    const relationTableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
+    const relationTableSchema = tablesListSelectors.getTableById(schema, fieldSchema.relation.refTable.id);
 
     if (!relationTableSchema) {
       throw new SDKError(
@@ -38,11 +38,21 @@ export const formatFieldDataListItem = (type: MutationType, fieldSchema: FieldSc
       );
     }
 
-    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, relationTableSchema.name, nextData, schema);
+    nextData = formatDataForMutation({
+      type: MUTATION_TYPE.CREATE, 
+      tableName: relationTableSchema.name, 
+      data: nextData, 
+      schema
+    });
   }
 
   if (isFileField(fieldSchema)) {
-    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, SYSTEM_TABLES.FILES, nextData, schema);
+    nextData = formatDataForMutation({
+      type: MUTATION_TYPE.CREATE, 
+      tableName: SYSTEM_TABLES.FILES, 
+      data: nextData, 
+      schema
+    });
   }
 
   return {

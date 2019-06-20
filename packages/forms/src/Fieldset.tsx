@@ -3,7 +3,7 @@ import { compose, setDisplayName } from 'recompose';
 
 import { FormContext } from './FormContext';
 import { withTableSchema, renderComponent, WithTableSchemaProps } from './utils';
-import { FieldsetProps, FormContextValue, RenderableProps } from './types';
+import { FieldsetProps, FormContextValue } from './types';
 
 const enhacner: any = compose(
   withTableSchema,

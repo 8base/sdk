@@ -22,9 +22,19 @@ export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema
   fieldName: string,
 ) => R.find(R.propEq('name', fieldName), tableSchema.fields);
 
-export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = createSelector(
+const getFieldByIdOrEmpty: ParametricSelector<TableSchema, string, FieldSchema | {}> = createSelector(
   getFieldById,
+  field => field || {},
+);
+
+export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = createSelector(
+  getFieldByIdOrEmpty,
   R.propOr('', 'fieldType'),
+);
+
+export const isSystem = createSelector(
+  getTable,
+  R.propEq('isSystem', true),
 );
 
 export const isRelationField: ParametricSelector<TableSchema, string, boolean> = createSelector(
@@ -43,17 +53,17 @@ export const isSmartField = createSelector(
 );
 
 export const isMetaField = createSelector(
-  getFieldById,
+  getFieldByIdOrEmpty,
   R.propEq('isMeta', true),
 );
 
 export const isListField = createSelector(
-  getFieldById,
+  getFieldByIdOrEmpty,
   R.propEq('isList', true),
 );
 
 export const getFieldNameById = createSelector(
-  getFieldById,
+  getFieldByIdOrEmpty,
   R.propOr('', 'name'),
 );
 

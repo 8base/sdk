@@ -67,7 +67,7 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataAfterQuery('tableSchema', data, SCHEMA)).toMatchSnapshot();
+    expect(formatDataAfterQuery({ tableName: 'tableSchema', data, schema: SCHEMA })).toMatchSnapshot();
   });
 
   it('Compelex data with formatRelationToIds option.', () => {
@@ -135,6 +135,11 @@ describe('As developer, I can format for create mutation,', () => {
       ],
     };
 
-    expect(formatDataAfterQuery('tableSchema', data, SCHEMA, { formatRelationToIds: true })).toMatchSnapshot();
+    expect(formatDataAfterQuery({
+      tableName: 'tableSchema',
+      data,
+      schema: SCHEMA,
+      options: { formatRelationToIds: true }
+    })).toMatchSnapshot();
   });
 });

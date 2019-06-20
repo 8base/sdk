@@ -5,7 +5,14 @@ import { formatFieldDataListItem } from './formatFieldDataListItem';
 
 import { MutationType, FieldSchema, Schema } from '../types';
 
-export const formatFieldDataList = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) =>
+interface IFormatFieldDataListArgs {
+  type: MutationType,
+  fieldSchema: FieldSchema,
+  data: any,
+  schema: Schema
+}
+
+export const formatFieldDataList = ({ type, fieldSchema, data, schema }: IFormatFieldDataListArgs) =>
   R.pipe(
     R.map(item => formatFieldDataListItem(type, fieldSchema, item, schema)),
     R.groupBy(R.prop('type')),

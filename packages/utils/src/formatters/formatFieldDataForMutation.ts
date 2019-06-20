@@ -14,14 +14,22 @@ const formatJSON = (data: any) => {
   return JSON.parse(data);
 };
 
-const formatFieldDataForMutation = (type: MutationType, fieldSchema: FieldSchema, data: any, schema: Schema) => {
+interface IFormatFieldDataForMutation {
+  type: MutationType,
+  fieldSchema: FieldSchema,
+  data: any,
+  schema: Schema
+}
+
+
+const formatFieldDataForMutation = ({ type, fieldSchema, data, schema }: IFormatFieldDataForMutation) => {
   let nextData = data;
 
   if (verifiers.isFileField(fieldSchema) || verifiers.isRelationField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {
-      nextData = formatFieldDataList(type, fieldSchema, data, schema);
+      nextData = formatFieldDataList({ type, fieldSchema, data, schema });
     } else {
-      nextData = formatFieldData(type, fieldSchema, data, schema);
+      nextData = formatFieldData({ type, fieldSchema, data, schema });
     }
   } else if (verifiers.isAddressField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {

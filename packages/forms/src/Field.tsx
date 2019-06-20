@@ -17,7 +17,7 @@ const enhancer: any = compose(
  * @prop {FieldSchema} [fieldSchema] - The 8base API field schema.
  * @prop {string} [name] - The name of field, based on the 8base API table schema.
  */
-const Field: React.ComponentType<FinalFieldProps<any>> = enhancer(
+const Field: React.ComponentType<FinalFieldProps> = enhancer(
   class Field extends React.Component<FieldProps & WithFieldSchemaProps> {
     public collectProps: any = R.pipe(
       R.when(R.has('fieldSchema'), ({ validate, ...rest }: any) => ({
