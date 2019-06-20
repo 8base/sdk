@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by common table schema  1`] = `
-"mutation DataViewerCommonsRowCreate($data: CommonCreateInput!) {
+"mutation CommonsCreate($data: CommonCreateInput!) {
   commonCreate(data: $data) {
     id
     field1
@@ -12,7 +12,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
-"mutation DataViewerFilesRowCreate($data: FileCreateInput!) {
+"mutation FilesCreate($data: FileCreateInput!) {
   fileCreate(data: $data) {
     id
     file {
@@ -39,7 +39,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
-"mutation DataViewerRelationRowCreate($data: RelationCreateInput!) {
+"mutation RelationCreate($data: RelationCreateInput!) {
   relationCreate(data: $data) {
     id
     field1 {
@@ -60,7 +60,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
-"mutation DataViewerSmartFieldsRowCreate($data: SmartFieldCreateInput!) {
+"mutation SmartFieldsCreate($data: SmartFieldCreateInput!) {
   smartFieldCreate(data: $data) {
     id
     phone {
@@ -83,7 +83,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
-"mutation DataViewerTableWithoutUserFieldsRowCreate {
+"mutation TableWithoutUserFieldsCreate {
   tableWithoutUserFieldCreate {
     id
   }
@@ -91,7 +91,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by common table schema  1`] = `
-"mutation DataViewerCommonsRowCreateMany($data: [CommonCreateManyInput]!) {
+"mutation CommonsCreateMany($data: [CommonCreateManyInput]!) {
   commonCreateMany(data: $data) {
     count
   }
@@ -99,7 +99,7 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
-"mutation DataViewerFilesRowCreateMany($data: [FileCreateManyInput]!) {
+"mutation FilesCreateMany($data: [FileCreateManyInput]!) {
   fileCreateMany(data: $data) {
     count
   }
@@ -107,7 +107,7 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
-"mutation DataViewerRelationRowCreateMany($data: [RelationCreateManyInput]!) {
+"mutation RelationCreateMany($data: [RelationCreateManyInput]!) {
   relationCreateMany(data: $data) {
     count
   }
@@ -115,7 +115,7 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
-"mutation DataViewerSmartFieldsRowCreateMany($data: [SmartFieldCreateManyInput]!) {
+"mutation SmartFieldsCreateMany($data: [SmartFieldCreateManyInput]!) {
   smartFieldCreateMany(data: $data) {
     count
   }
@@ -123,15 +123,16 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
-"mutation DataViewerTableWithoutUserFieldsRowCreateMany {
+"
+  mutation TableWithoutUserFieldsCreateMany {
   tableWithoutUserFieldCreateMany {
-    count
-  }
-}"
+      count
+    }
+  }"
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by common table schema  1`] = `
-"mutation DataViewerCommonsRowDelete($filter: CommonKeyFilter!, $force: Boolean) {
+"mutation CommonsDelete($filter: CommonKeyFilter!, $force: Boolean) {
   commonDelete(filter: $filter, force: $force) {
     success
   }
@@ -139,7 +140,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
-"mutation DataViewerFilesRowDelete($filter: FileKeyFilter!, $force: Boolean) {
+"mutation FilesDelete($filter: FileKeyFilter!, $force: Boolean) {
   fileDelete(filter: $filter, force: $force) {
     success
   }
@@ -147,7 +148,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
-"mutation DataViewerRelationRowDelete($filter: RelationKeyFilter!, $force: Boolean) {
+"mutation RelationDelete($filter: RelationKeyFilter!, $force: Boolean) {
   relationDelete(filter: $filter, force: $force) {
     success
   }
@@ -155,7 +156,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
-"mutation DataViewerSmartFieldsRowDelete($filter: SmartFieldKeyFilter!, $force: Boolean) {
+"mutation SmartFieldsDelete($filter: SmartFieldKeyFilter!, $force: Boolean) {
   smartFieldDelete(filter: $filter, force: $force) {
     success
   }
@@ -163,7 +164,7 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
-"mutation DataViewerCommonsRowUpdate($data: CommonUpdateInput!, $filter: CommonKeyFilter) {
+"mutation CommonsUpdate($data: CommonUpdateInput!, $filter: CommonKeyFilter) {
   commonUpdate(data: $data, filter: $filter) {
     id
     field1
@@ -174,7 +175,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
-"mutation DataViewerFilesRowUpdate($data: FileUpdateInput!, $filter: FileKeyFilter) {
+"mutation FilesUpdate($data: FileUpdateInput!, $filter: FileKeyFilter) {
   fileUpdate(data: $data, filter: $filter) {
     id
     file {
@@ -201,7 +202,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
-"mutation DataViewerRelationRowUpdate($data: RelationUpdateInput!, $filter: RelationKeyFilter) {
+"mutation RelationUpdate($data: RelationUpdateInput!, $filter: RelationKeyFilter) {
   relationUpdate(data: $data, filter: $filter) {
     id
     field1 {
@@ -222,7 +223,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
-"mutation DataViewerSmartFieldsRowUpdate($data: SmartFieldUpdateInput!, $filter: SmartFieldKeyFilter) {
+"mutation SmartFieldsUpdate($data: SmartFieldUpdateInput!, $filter: SmartFieldKeyFilter) {
   smartFieldUpdate(data: $data, filter: $filter) {
     id
     phone {
@@ -399,8 +400,9 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema  1`] = `
-"query DataViewerCommonsRow($id: ID!) {
+"query CommonsEntity($id: ID!) {
   common(id: $id) {
+    id
     field1
     field2
     field3
@@ -418,8 +420,9 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
-"query DataViewerFilesRow($id: ID!) {
+"query FilesEntity($id: ID!) {
   file(id: $id) {
+    id
     file {
       id
       fileId
@@ -444,8 +447,9 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
-"query DataViewerRelationRow($id: ID!) {
+"query RelationEntity($id: ID!) {
   relation(id: $id) {
+    id
     field1 {
       id
       _description
@@ -522,7 +526,7 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with smart fields 1`] = `
-"query DataViewerSmartFieldsRow($id: ID!) {
+"query SmartFieldsEntity($id: ID!) {
   smartField(id: $id) {
     id
     createdAt
@@ -907,12 +911,36 @@ Array [
   },
   Object {
     "meta": Object {
+      "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
+      "isList": false,
+    },
+    "name": "relation.nestedRelation.scalar",
+    "title": "Scalar",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "TEXT",
+      "fieldTypeAttributes": Object {
+        "fieldSize": 100,
+        "format": "UNFORMATTED",
+      },
+      "isList": true,
+    },
+    "name": "relation.nestedRelation.scalarList",
+    "title": "ScalarList",
+  },
+  Object {
+    "meta": Object {
       "fieldType": "RELATION",
       "fieldTypeAttributes": null,
       "isList": false,
     },
-    "name": "relation.relation",
-    "title": "Relation",
+    "name": "relation.nestedRelation.nestedRelation",
+    "title": "NestedRelation",
   },
   Object {
     "meta": Object {
@@ -920,8 +948,8 @@ Array [
       "fieldTypeAttributes": null,
       "isList": true,
     },
-    "name": "relation.relationList",
-    "title": "RelationList",
+    "name": "relation.nestedRelation.nestedRelationList",
+    "title": "NestedRelationList",
   },
   Object {
     "meta": Object {

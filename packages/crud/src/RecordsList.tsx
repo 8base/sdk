@@ -69,7 +69,7 @@ export class RecordsList extends Component<RecordsListProps> {
     }
 
     const query = gql(
-      createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.name, {
+      createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.id, {
         deep,
         relationItemsCount,
         tableContentName: 'tableContent',

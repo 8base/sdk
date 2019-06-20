@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.12",
-    "@8base/schema-name-generator": "^0.1.1",
+    "@8base/schema-name-generator": "^0.1.5",
     "@8base/utils": "^0.28.5",
     "filestack-js": "^1.14.6",
     "graphql": "0.13.0",

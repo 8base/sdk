@@ -1,4 +1,19 @@
+export const COMMON_SALESFORCE_TABLE_SCHEMA: any = {
+  id: 'COMMON_SALESFORCE_TABLE_SCHEMA_ID',
+  name: 'commons',
+  application: {
+    id: 'SALESFORCE',
+    name: 'Salesforce',
+  },
+  fields: [
+    { name: 'field1', id: '1', isMeta: false, isSystem: false },
+    { name: 'field2', id: '2', isMeta: false, isSystem: false },
+    { name: 'field3', id: '3', isMeta: false, isSystem: false },
+  ],
+};
+
 export const COMMON_TABLE_SCHEMA: any = {
+  id: 'COMMONS_ID',
   name: 'commons',
   fields: [
     { name: 'field1', id: '1', isMeta: false, isSystem: false },
@@ -8,6 +23,7 @@ export const COMMON_TABLE_SCHEMA: any = {
 };
 
 export const TABLE_SCHEMA_WITH_RELATION: any = {
+  id: 'RELATION_ID',
   name: 'Relation',
   fields: [
     { name: 'field1', isMeta: false, isSystem: false, id: '1', fieldType: 'RELATION' },
@@ -18,6 +34,7 @@ export const TABLE_SCHEMA_WITH_RELATION: any = {
 };
 
 export const TABLE_SCHEMA_WITH_FILES: any = {
+  id: 'FILES_ID',
   name: 'Files',
   fields: [
     {
@@ -62,6 +79,7 @@ export const TABLE_SCHEMA_WITH_FILES: any = {
 };
 
 export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
+  id: 'SMART_FIELD_ID',
   name: 'SmartFields',
   fields: [
     {
@@ -320,6 +338,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
 };
 
 export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
+  id: 'TABLE_WITHOUT_USER_FIELDS_ID',
   name: 'TableWithoutUserFields',
   fields: [
     {
@@ -403,7 +422,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
   ],
 };
 
-export const SCHEMA: any = [
+export const SCHEMA: any[] = [
   {
     id: 'TABLE_SCHEMA_ID',
     name: 'tableSchema',
@@ -961,48 +980,48 @@ export const SCHEMA: any = [
         defaultValue: 'Scalar List Default Value 1',
         relation: null,
       },
-      {
-        name: 'relation',
-        displayName: 'Relation',
-        description: null,
-        fieldType: 'RELATION',
-        fieldTypeAttributes: null,
-        isList: false,
-        isRequired: false,
-        isUnique: null,
-        defaultValue: null,
-        relation: {
-          id: 'RELATION_FIELD_ID_3',
-          relationTableName: 'RELATION_TABLE_NAME_1',
-          relationFieldName: 'aid',
-          refTable: {
-            id: 'TABLE_SCHEMA_ID',
-          },
-          refFieldIsList: false,
-          refFieldIsRequired: true,
+      /*     {
+      name: 'relation',
+      displayName: 'Relation',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: false,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_3',
+        relationTableName: 'RELATION_TABLE_NAME_1',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
         },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
       },
-      {
-        name: 'relationList',
-        displayName: 'RelationList',
-        description: null,
-        fieldType: 'RELATION',
-        fieldTypeAttributes: null,
-        isList: true,
-        isRequired: false,
-        isUnique: null,
-        defaultValue: null,
-        relation: {
-          id: 'RELATION_FIELD_ID_4',
-          relationTableName: 'RELATION_TABLE_NAME_2',
-          relationFieldName: 'aid',
-          refTable: {
-            id: 'TABLE_SCHEMA_ID',
-          },
-          refFieldIsList: false,
-          refFieldIsRequired: true,
+    },
+    {
+      name: 'relationList',
+      displayName: 'RelationList',
+      description: null,
+      fieldType: 'RELATION',
+      fieldTypeAttributes: null,
+      isList: true,
+      isRequired: false,
+      isUnique: null,
+      defaultValue: null,
+      relation: {
+        id: 'RELATION_FIELD_ID_4',
+        relationTableName: 'RELATION_TABLE_NAME_2',
+        relationFieldName: 'aid',
+        refTable: {
+          id: 'TABLE_SCHEMA_ID',
         },
+        refFieldIsList: false,
+        refFieldIsRequired: true,
       },
+    }, */
       {
         name: 'nestedRelation',
         displayName: 'Nested Relation',
