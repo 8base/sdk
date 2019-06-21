@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`importData with files should import 1`] = `
+exports[`importData strict mode should not terminate process on error when strict mode is OFF 1`] = `
 Array [
   Object {
     "body": Object {
@@ -8,6 +8,7 @@ Array [
   query User {
     user {
       id
+      email
     }
   }
 ",
@@ -27,7 +28,394 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "79",
+        "92",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query FileUploadInfo {
+    fileUploadInfo {
+      apiKey
+      policy
+      signature
+      path
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "146",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query TableList($filter: TableListFilter) {
+    tablesList(filter: $filter) {
+      items {
+        ...TableFragment
+      }
+    }
+  }
+
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...SmartFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
+    id
+    name
+    displayName
+    description
+    fieldType
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+    }
+    isList
+    isRequired
+    isUnique
+    defaultValue
+    isSystem
+    isMeta
+    relation {
+      refFieldName
+      refFieldDisplayName
+      relationTableName
+      relationFieldName
+      refTable {
+        id
+        name
+      }
+      refFieldIsList
+      refFieldIsRequired
+    }
+  }
+
+  fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
+    format
+  }
+
+  fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
+    format
+    fieldSize
+  }
+
+  fragment NumberFieldTypeAttributes on NumberFieldTypeAttributes {
+    format
+    precision
+    currency
+    minValue
+    maxValue
+    isBigInt
+  }
+
+  fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
+    format
+    maxSize
+    typeRestrictions
+  }
+
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
+    format
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+  }
+
+  fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
+    format
+    listOptions
+  }
+",
+      "variables": Object {
+        "filter": Object {
+          "tableNames": Array [
+            "Files",
+          ],
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "2338",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation create($data: FirstCreateInput!) {
+      remoteEntry: firstCreate(data: $data) {
+        id
+
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "date": "2019-06-01",
+          "isRed": true,
+          "name": "First",
+          "values": Array [
+            1,
+            2,
+            3,
+          ],
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "230",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation create($data: FirstCreateInput!) {
+      remoteEntry: firstCreate(data: $data) {
+        id
+
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "isRed": false,
+          "name": "First",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "194",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation create($data: SecondCreateInput!) {
+      remoteEntry: secondCreate(data: $data) {
+        id
+
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "date": "2019-06-01",
+          "name": "Second",
+          "switch": true,
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "217",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+]
+`;
+
+exports[`importData strict mode should terminate process on error when strict mode is ON 1`] = `
+[Error: 
+[First]: {
+  "test": "Details error message"
+}]
+`;
+
+exports[`importData with files should import 1`] = `
+Array [
+  Object {
+    "body": Object {
+      "query": "
+  query User {
+    user {
+      id
+      email
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "92",
       ],
       "content-type": Array [
         "application/json",
@@ -343,7 +731,7 @@ Array [
 ]
 `;
 
-exports[`importData with relations (required and non-required) should fetch tables and import 1`] = `
+exports[`importData with postponed relations should import 1`] = `
 Array [
   Object {
     "body": Object {
@@ -351,6 +739,7 @@ Array [
   query User {
     user {
       id
+      email
     }
   }
 ",
@@ -370,7 +759,422 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "79",
+        "92",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query FileUploadInfo {
+    fileUploadInfo {
+      apiKey
+      policy
+      signature
+      path
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "146",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+  query TableList($filter: TableListFilter) {
+    tablesList(filter: $filter) {
+      items {
+        ...TableFragment
+      }
+    }
+  }
+
+  fragment TableFragment on Table {
+    id
+    name
+    displayName
+    isSystem
+    fields {
+      ...TableFieldFragment
+    }
+  }
+
+  fragment TableFieldFragment on TableField {
+    ...CommonTableFieldFragment
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+      ...SmartFieldTypesAttributes
+    }
+  }
+
+  fragment CommonTableFieldFragment on TableField {
+    id
+    name
+    displayName
+    description
+    fieldType
+    fieldTypeAttributes {
+      ...TextFieldTypeAttributes
+      ...NumberFieldTypeAttributes
+      ...FileFieldTypeAttributes
+      ...DateFieldTypeAttributes
+      ...SwitchFieldTypeAttributes
+    }
+    isList
+    isRequired
+    isUnique
+    defaultValue
+    isSystem
+    isMeta
+    relation {
+      refFieldName
+      refFieldDisplayName
+      relationTableName
+      relationFieldName
+      refTable {
+        id
+        name
+      }
+      refFieldIsList
+      refFieldIsRequired
+    }
+  }
+
+  fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
+    format
+  }
+
+  fragment TextFieldTypeAttributes on TextFieldTypeAttributes {
+    format
+    fieldSize
+  }
+
+  fragment NumberFieldTypeAttributes on NumberFieldTypeAttributes {
+    format
+    precision
+    currency
+    minValue
+    maxValue
+    isBigInt
+  }
+
+  fragment FileFieldTypeAttributes on FileFieldTypeAttributes {
+    format
+    maxSize
+    typeRestrictions
+  }
+
+  fragment SmartFieldTypesAttributes on SmartFieldTypeAttributes {
+    format
+    innerFields {
+      name
+      displayName
+      description
+      fieldType
+      isList
+      isRequired
+      isUnique
+      fieldTypeAttributes {
+        ...TextFieldTypeAttributes
+        ...NumberFieldTypeAttributes
+        ...FileFieldTypeAttributes
+        ...DateFieldTypeAttributes
+        ...SwitchFieldTypeAttributes
+      }
+    }
+  }
+
+  fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
+    format
+    listOptions
+  }
+",
+      "variables": Object {
+        "filter": Object {
+          "tableNames": Array [
+            "Files",
+          ],
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "2338",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation create($data: PropertyCreateInput!) {
+      remoteEntry: propertyCreate(data: $data) {
+        id
+
+        listings {
+          
+        items {
+          id
+
+        broker {
+          id
+
+        }
+      
+        }
+      
+        }
+      
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "listings": Object {
+            "connect": Array [],
+            "create": Array [
+              Object {
+                "broker": Object {
+                  "create": Object {
+                    "name": "Broker-01",
+                  },
+                },
+                "name": "Listing-01",
+              },
+              Object {
+                "broker": Object {},
+                "name": "Listing-02",
+              },
+              Object {
+                "broker": Object {},
+                "name": "Listing-03",
+              },
+            ],
+          },
+          "name": "Property-01",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "516",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation update($data: ListingUpdateInput!) {
+      remoteEntry: listingUpdate(data: $data) {
+        id
+
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "broker": Object {
+            "connect": Object {
+              "id": "remote-broker-01",
+            },
+          },
+          "id": "remote-listing-02",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "241",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+  Object {
+    "body": Object {
+      "query": "
+    mutation update($data: ListingUpdateInput!) {
+      remoteEntry: listingUpdate(data: $data) {
+        id
+
+      }
+    }
+  ",
+      "variables": Object {
+        "data": Object {
+          "broker": Object {
+            "connect": Object {
+              "id": "remote-broker-01",
+            },
+          },
+          "id": "remote-listing-03",
+        },
+      },
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "241",
+      ],
+      "content-type": Array [
+        "application/json",
+      ],
+      "host": "api.test.8base.com",
+      "user-agent": Array [
+        "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+      ],
+      "workspace": Array [
+        "workspaceId",
+      ],
+    },
+  },
+]
+`;
+
+exports[`importData with relations (required and non-required) should fetch tables and import 1`] = `
+Array [
+  Object {
+    "body": Object {
+      "query": "
+  query User {
+    user {
+      id
+      email
+    }
+  }
+",
+      "variables": Object {},
+    },
+    "headers": Object {
+      "accept": Array [
+        "*/*",
+      ],
+      "accept-encoding": Array [
+        "gzip,deflate",
+      ],
+      "authorization": Array [
+        "Bearer idToken",
+      ],
+      "connection": Array [
+        "close",
+      ],
+      "content-length": Array [
+        "92",
       ],
       "content-type": Array [
         "application/json",
@@ -716,6 +1520,7 @@ Array [
   query User {
     user {
       id
+      email
     }
   }
 ",
@@ -735,7 +1540,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "79",
+        "92",
       ],
       "content-type": Array [
         "application/json",
@@ -1083,6 +1888,7 @@ Array [
   query User {
     user {
       id
+      email
     }
   }
 ",
@@ -1102,7 +1908,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "79",
+        "92",
       ],
       "content-type": Array [
         "application/json",

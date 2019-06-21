@@ -1,4 +1,5 @@
 export { WORKSPACE_WITH_RELATIONS } from './workspace-with-relations';
+export { WORKSPACE_WITH_RELATIONS_2 } from './workspace-with-relations-2';
 export { WORKSPACE_WITHOUT_RELATIONS } from './workspace-without-relations';
 export { WORKSPACE_WITH_FILES } from './workspace-with-files';
 

@@ -1,7 +1,12 @@
 import * as nock from 'nock';
 import * as filestack from 'filestack-js';
 
-import { WORKSPACE_WITH_RELATIONS, WORKSPACE_WITHOUT_RELATIONS, WORKSPACE_WITH_FILES } from '../__fixtures__';
+import {
+  WORKSPACE_WITH_RELATIONS,
+  WORKSPACE_WITH_RELATIONS_2,
+  WORKSPACE_WITHOUT_RELATIONS,
+  WORKSPACE_WITH_FILES,
+} from '../__fixtures__';
 import { Client, importData } from '../../src';
 
 let init: jest.SpyInstance;
@@ -154,6 +159,76 @@ describe('importData', () => {
     });
   });
 
+  describe('with postponed relations', () => {
+    it('should import', async () => {
+      const mocks = [
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            user: {
+              id: 'currentUserId',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            fileUploadInfo: {
+              apiKey: 'apiKey',
+              policy: 'policy',
+              signature: 'signature',
+              path: 'path',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            tablesList: {
+              items: [],
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-property-1',
+              listings: {
+                items: [
+                  {
+                    id: 'remote-listing-01',
+                    broker: {
+                      id: 'remote-broker-01',
+                    },
+                  },
+                  { id: 'remote-listing-02' },
+                  { id: 'remote-listing-03' },
+                ],
+              },
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-listing-02',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-listing-03',
+            },
+          },
+        }),
+      ];
+
+      await importData(client.request.bind(client), WORKSPACE_WITH_RELATIONS_2.data, {
+        tablesSchema: WORKSPACE_WITH_RELATIONS_2.tables,
+      });
+
+      expect(await Promise.all(mocks)).toMatchSnapshot();
+    });
+  });
+
   describe('without relations', () => {
     it('should import', async () => {
       const mocks = [
@@ -276,6 +351,140 @@ describe('importData', () => {
       expect(storeURL).toBeCalledTimes(1);
       expect(upload).toBeCalledTimes(3);
       expect(await Promise.all(mocks)).toMatchSnapshot();
+    });
+  });
+
+  describe('strict mode', () => {
+    it('should not terminate process on error when strict mode is OFF', async () => {
+      const mocks = [
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            user: {
+              id: 'currentUserId',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            fileUploadInfo: {
+              apiKey: 'apiKey',
+              policy: 'policy',
+              signature: 'signature',
+              path: 'path',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            tablesList: {
+              items: [],
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-first-1',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: null,
+          errors: [
+            {
+              message: 'The request is invalid.',
+              path: ['remoteEntry'],
+              code: 'ValidationError',
+              details: {
+                test: 'Details error message',
+              },
+            },
+          ],
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-second-1',
+            },
+          },
+        }),
+      ];
+
+      await importData(client.request.bind(client), WORKSPACE_WITHOUT_RELATIONS.data, {
+        tablesSchema: WORKSPACE_WITHOUT_RELATIONS.tables,
+        strict: false,
+      });
+
+      expect(await Promise.all(mocks)).toMatchSnapshot();
+    });
+
+    it('should terminate process on error when strict mode is ON', async () => {
+      const mocks = [
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            user: {
+              id: 'currentUserId',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            fileUploadInfo: {
+              apiKey: 'apiKey',
+              policy: 'policy',
+              signature: 'signature',
+              path: 'path',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            tablesList: {
+              items: [],
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-first-1',
+            },
+          },
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: null,
+          errors: [
+            {
+              message: 'The request is invalid.',
+              path: ['remoteEntry'],
+              code: 'ValidationError',
+              details: {
+                test: 'Details error message',
+              },
+            },
+          ],
+        }),
+        global.mockRequest('https://api.test.8base.com', 200, {
+          data: {
+            remoteEntry: {
+              id: 'remote-second-1',
+            },
+          },
+        }),
+      ];
+
+      let error;
+
+      try {
+        await importData(client.request.bind(client), WORKSPACE_WITHOUT_RELATIONS.data, {
+          tablesSchema: WORKSPACE_WITHOUT_RELATIONS.tables,
+          strict: true,
+        });
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error).toMatchSnapshot();
     });
   });
 });

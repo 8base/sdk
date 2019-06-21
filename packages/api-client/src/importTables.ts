@@ -34,6 +34,10 @@ export const importTables = async (
   const debug: boolean = R.propOr(false, 'debug', options);
 
   for (const table of schema) {
+    if (table.isSystem) {
+      continue;
+    }
+
     try {
       await request(TABLE_CREATE_MUTATION, {
         data: {

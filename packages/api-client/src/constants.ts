@@ -144,6 +144,7 @@ export const USER_QUERY = `
   query User {
     user {
       id
+      email
     }
   }
 `;

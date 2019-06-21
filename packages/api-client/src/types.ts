@@ -15,3 +15,8 @@ export type FileUploadInfoResponse = {
 };
 
 export type FilestackClient = ReturnType<typeof filestack.init>;
+
+export type User = {
+  id: string;
+  email: string;
+};

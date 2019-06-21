@@ -4,34 +4,39 @@ import {
   tableSelectors,
   FieldSchema,
   TableSchema,
-  SDKError,
-  ERROR_CODES,
-  PACKAGES,
   SYSTEM_TABLES,
   isFilesTable,
-  Relation,
 } from '@8base/utils';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
+import errorCodes from '@8base/error-codes';
 import * as filestack from 'filestack-js';
 import * as R from 'ramda';
 import { DocumentNode } from 'graphql';
 
 import { TABLES_LIST_QUERY, USER_QUERY, FILE_UPLOAD_INFO_QUERY } from './constants';
-import { SchemaResponse, FileUploadInfoResponse, FilestackClient } from './types';
+import { SchemaResponse, FileUploadInfoResponse, FilestackClient, User } from './types';
+
+// -- TYPES
 
 type ImportOptions = {
   tablesSchema?: TableSchema[];
+  strict?: boolean;
 };
 
 type ConstructorOptions = {
   request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>;
   data: Record<string, any>;
   tablesSchema: TableSchema[];
-  currentUserId?: string;
+  currentUser?: User;
   fileUploadInfo?: FileUploadInfoResponse;
+  strict?: boolean;
 };
 
-const IGNORED_FIELDS = ['id', 'createdAt', 'createdBy', 'updatedAt'];
+// -- CONSTANTS
+
+const IGNORED_FIELDS = ['id', 'createdAt', 'createdBy', 'updatedAt', 'is8base', 'uuid'];
+
+// -- HELPERS
 
 const isRelationFileField = (value: any, fieldSchema: FieldSchema) =>
   value && tableFieldSelectors.isFileField(fieldSchema)
@@ -39,6 +44,15 @@ const isRelationFileField = (value: any, fieldSchema: FieldSchema) =>
       ? value.some((item: any) => item.$id)
       : value.$id
     : false;
+
+function handleError(message: string, opts: { shouldThrow?: boolean } = {}) {
+  if (opts.shouldThrow) {
+    throw new Error(message);
+  } else {
+    // tslint:disable-next-line no-console
+    console.warn(message);
+  }
+}
 
 async function uploadOrStoreFile(url: string, path: string, filestackClient: FilestackClient) {
   return /\w+:\/\//.test(url)
@@ -84,10 +98,15 @@ async function uploadFiles(record: any, filestackClient: FilestackClient, path: 
   return nextRecord;
 }
 
-function buildQueryFromTree(queryTree: any[], tableName: string) {
+function buildQueryFromTree(queryTree: any[], tableName: string, type: 'create' | 'update' = 'create') {
+  const getInputName =
+    type === 'create' ? SchemaNameGenerator.getCreateInputName : SchemaNameGenerator.getUpdateInputName;
+  const getItemFieldName =
+    type === 'create' ? SchemaNameGenerator.getCreateItemFieldName : SchemaNameGenerator.getUpdateItemFieldName;
+
   return `
-    mutation create($data: ${SchemaNameGenerator.getCreateInputName(tableName)}!) {
-      remoteEntry: ${SchemaNameGenerator.getCreateItemFieldName(tableName)}(data: $data) {
+    mutation ${type}($data: ${getInputName(tableName)}!) {
+      remoteEntry: ${getItemFieldName(tableName)}(data: $data) {
         ${buildQueryFields(queryTree)}
       }
     }
@@ -156,24 +175,45 @@ function mergeTrees(firstTree: any[], secondTree: any[]) {
   return newTree;
 }
 
+// -- MAIN
+
 class DataImporter {
   private uploadedData: Record<string, Record<string, { id: string } | undefined> | undefined>;
   private busyEntries: Record<string, string[] | undefined>;
   private tablesSchema: TableSchema[];
   private data: Record<string, any>;
+  private postponedRelations: Record<string, any>;
   private request: <T extends object>(query: string | DocumentNode, variables?: Object) => Promise<T>;
-  private currentUserId?: string;
+  private currentUser?: User;
   private filestackClient?: FilestackClient;
   private fileUploadInfo?: FileUploadInfoResponse;
+  private strict?: boolean;
 
   constructor(options: ConstructorOptions) {
     this.uploadedData = {};
     this.busyEntries = {};
+    this.postponedRelations = {};
     this.data = options.data;
     this.request = options.request;
     this.tablesSchema = options.tablesSchema;
-    this.currentUserId = options.currentUserId;
+    this.currentUser = options.currentUser;
     this.fileUploadInfo = options.fileUploadInfo;
+    this.strict = options.strict;
+
+    if (this.currentUser) {
+      const { id, email } = this.currentUser;
+      const currentUserInData =
+        this.data[SYSTEM_TABLES.USERS] && this.data[SYSTEM_TABLES.USERS].find((item: any) => item.email === email);
+
+      this.uploadedData[SYSTEM_TABLES.USERS] = {
+        $currentUserId: { id },
+      };
+
+      if (currentUserInData) {
+        const { $id } = currentUserInData;
+        this.uploadedData[SYSTEM_TABLES.USERS]![$id] = { id };
+      }
+    }
 
     if (this.fileUploadInfo) {
       this.filestackClient = filestack.init(this.fileUploadInfo.apiKey, {
@@ -195,14 +235,57 @@ class DataImporter {
       const tableSchema = this.tablesSchema.find(schema => schema.name === tableName);
 
       if (!tableSchema) {
-        throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.API_CLIENT, `Table with name ${tableName} not found`);
+        handleError(`\n[${tableName}]: Table schema not found`, {
+          shouldThrow: this.strict,
+        });
+
+        continue;
       }
 
       const entries = this.data[tableName];
 
       for (let entry of entries) {
         if (isFilesTable(tableSchema) && this.fileUploadInfo && this.filestackClient) {
-          entry = await uploadFiles(entry, this.filestackClient, this.fileUploadInfo.path);
+          try {
+            entry = await uploadFiles(entry, this.filestackClient, this.fileUploadInfo.path);
+          } catch {
+            handleError(`\n[${tableName}]: Couldn't upload file`, { shouldThrow: this.strict });
+            continue;
+          }
+        }
+
+        const workResult = !this.isUploaded(entry, tableName) && (await this.workWithEntry(entry, tableSchema));
+        this.busyEntries = {};
+
+        if (!workResult) {
+          continue;
+        }
+
+        const query = buildQueryFromTree(workResult.queryTree, tableName);
+
+        try {
+          const { remoteEntry } = await this.request<{ remoteEntry: any }>(query, {
+            data: workResult.mutationInput,
+          });
+
+          this.addToUploaded(workResult.relationMap, remoteEntry, tableSchema);
+        } catch (e) {
+          handleError(`\n[${tableName}]: ${this.getEntryErrorMessage(e, entry.$id)}`, { shouldThrow: this.strict });
+        }
+      }
+    }
+
+    const postponedTables = Object.keys(this.postponedRelations);
+
+    for (const tableName of postponedTables) {
+      const tableSchema = this.tablesSchema.find(schema => schema.name === tableName) as TableSchema;
+      const entries = this.postponedRelations[tableName];
+
+      for (const entry of entries) {
+        const remoteEntry = this.uploadedData[tableName] && this.uploadedData[tableName]![entry.$id];
+
+        if (!remoteEntry) {
+          continue;
         }
 
         const workResult = await this.workWithEntry(entry, tableSchema);
@@ -212,24 +295,23 @@ class DataImporter {
           continue;
         }
 
-        const query = buildQueryFromTree(workResult.queryTree, tableName);
-        const { remoteEntry } = await this.request<{ remoteEntry: any }>(query, {
-          data: workResult.mutationInput,
-        });
+        const query = buildQueryFromTree(workResult.queryTree, tableName, 'update');
 
-        this.addToUploaded(workResult.relationMap, remoteEntry, tableSchema);
+        try {
+          await this.request(query, {
+            data: { id: remoteEntry.id, ...workResult.mutationInput },
+          });
+        } catch (e) {
+          handleError(`\n[${tableName}]: ${this.getEntryErrorMessage(e, entry.$id)}`, { shouldThrow: this.strict });
+        }
       }
     }
   }
 
-  private async workWithEntry(entry: any, tableSchema: TableSchema, ignoredRelation?: string) {
+  private async workWithEntry(entry: any, tableSchema: TableSchema, ignoredRelation?: string | null) {
     const tableName = tableSchema.name;
 
-    if (
-      !entry ||
-      (Array.isArray(this.busyEntries[tableName]) && this.busyEntries[tableName]!.indexOf(entry.$id) !== -1) ||
-      this.isUploaded(entry, tableName)
-    ) {
+    if (!entry || this.isBusyEntry(entry, tableName)) {
       return false;
     }
 
@@ -250,24 +332,33 @@ class DataImporter {
         continue;
       }
 
+      const { isRequired } = fieldSchema;
+
       if (!tableFieldSelectors.isRelationField(fieldSchema) && !tableFieldSelectors.isFileField(fieldSchema)) {
         mutationInput[fieldName] = fieldValue;
         continue;
       }
 
       if (tableFieldSelectors.isFileField(fieldSchema)) {
-        mutationInput[fieldName] = await this.workWithFileField(fieldValue, fieldSchema);
+        try {
+          mutationInput[fieldName] = await this.workWithFileField(fieldValue, fieldSchema);
+        } catch {
+          handleError(`\n[${tableName}]: Couldn't upload file`, { shouldThrow: this.strict });
+
+          if (isRequired) {
+            return false;
+          }
+        }
+
         continue;
       }
 
-      const relation: Partial<Relation> = fieldSchema.relation || {};
+      const relationTableName = fieldSchema.relation && fieldSchema.relation.relationTableName;
+      const isListField = tableFieldSelectors.isListField(fieldSchema);
       const refTableName = tableFieldSelectors.getRelationTableName(fieldSchema);
       const refTableSchema = getTableSchemaByName(this.tablesSchema, refTableName);
-      const isListField = tableFieldSelectors.isListField(fieldSchema);
-      const { relationTableName } = relation;
-      const { isRequired } = fieldSchema;
 
-      if (ignoredRelation === relationTableName) {
+      if (ignoredRelation && ignoredRelation === relationTableName) {
         continue;
       }
 
@@ -292,42 +383,38 @@ class DataImporter {
       for (const relationId of relationsIds) {
         let newWorkResult;
         let shouldConnect = true;
-        let relationEntry: any;
-
-        if (relationId === '$currentUserId' && refTableName === SYSTEM_TABLES.USERS && this.currentUserId) {
-          relationEntry = {
-            id: this.currentUserId,
-          };
-        } else {
-          relationEntry = this.uploadedData[refTableName] && this.uploadedData[refTableName]![relationId];
-        }
+        let relationEntry: any = this.uploadedData[refTableName] && this.uploadedData[refTableName]![relationId];
 
         if (!relationEntry) {
           shouldConnect = false;
           relationEntry =
             this.data[refTableName] && this.data[refTableName].find((item: any) => item.$id === relationId);
           newWorkResult = await this.workWithEntry(relationEntry, refTableSchema, relationTableName);
-          relationEntry = typeof newWorkResult === 'object' && newWorkResult.mutationInput;
-        }
 
-        if (!relationEntry) {
-          if (isRequired) {
-            this.busyEntries[tableName] = this.busyEntries[tableName]!.filter(id => id !== entry.$id);
-            return false;
+          if (!newWorkResult) {
+            if (isRequired) {
+              this.busyEntries[tableName] = this.busyEntries[tableName]!.filter(id => id !== entry.$id);
+              return false;
+            }
+
+            if (this.isBusyEntry(relationEntry, refTableName)) {
+              this.postponeRelation(tableName, fieldName, relationId, entry.$id, isListField);
+            }
+
+            continue;
           }
 
-          continue;
+          if (typeof newWorkResult === 'object') {
+            relationEntry = newWorkResult.mutationInput;
+            relationMap[fieldName].items.push(newWorkResult.relationMap);
+            relationsQueryTrees.push(newWorkResult.queryTree);
+          }
         }
 
         if (shouldConnect) {
           mutationInput[fieldName].connect.push(relationEntry);
         } else {
           mutationInput[fieldName].create.push(relationEntry);
-
-          if (typeof newWorkResult === 'object') {
-            relationMap[fieldName].items.push(newWorkResult.relationMap);
-            relationsQueryTrees.push(newWorkResult.queryTree);
-          }
         }
       }
 
@@ -384,6 +471,39 @@ class DataImporter {
     }
   }
 
+  private postponeRelation(
+    tableName: string,
+    fieldName: string,
+    relationId: string,
+    entryId: string,
+    isListField: boolean,
+  ) {
+    if (!this.postponedRelations[tableName]) {
+      this.postponedRelations[tableName] = [];
+    }
+
+    const postponedTable = this.postponedRelations[tableName];
+    const foundEntry = postponedTable.find((item: any) => item.$id === relationId);
+    const postponedRelation = { $id: relationId };
+
+    if (foundEntry) {
+      if (isListField) {
+        foundEntry[fieldName].push(postponedRelation);
+      } else {
+        foundEntry[fieldName] = postponedRelation;
+      }
+    } else {
+      postponedTable.push({
+        $id: entryId,
+        [fieldName]: postponedRelation,
+      });
+    }
+  }
+
+  private isBusyEntry(entry: any, tableName: string) {
+    return Array.isArray(this.busyEntries[tableName]) && this.busyEntries[tableName]!.indexOf(entry.$id) !== -1;
+  }
+
   private isUploaded(entry: any, tableName: string) {
     return entry && this.uploadedData[tableName] && this.uploadedData[tableName]![entry.$id];
   }
@@ -429,6 +549,18 @@ class DataImporter {
       }
     }
   }
+
+  private getEntryErrorMessage(e: any, entryId: string) {
+    const responseError: any = R.path(['response', 'errors', 0], e);
+
+    if (responseError) {
+      return responseError.code === errorCodes.ValidationErrorCode
+        ? JSON.stringify(responseError.details, null, 2)
+        : responseError.message;
+    }
+
+    return R.path(['response', 'errors', 0, 'message'], e) || `Couldn't create entry with $id '${entryId}'`;
+  }
 }
 
 export const importData = async (
@@ -436,13 +568,14 @@ export const importData = async (
   data: Record<string, any>,
   options: ImportOptions = {},
 ) => {
+  const { strict } = options;
   let { tablesSchema } = options;
   let fileUploadInfo: any = {};
-  let currentUserId: string | undefined;
+  let currentUser: User | undefined;
 
   try {
-    const { user } = await request<{ user: { id: string } }>(USER_QUERY);
-    currentUserId = user.id;
+    const { user } = await request<{ user: User }>(USER_QUERY);
+    currentUser = user;
   } catch (e) {
     // tslint:disable-next-line no-console
     console.log("Can't fetch user info", e);
@@ -474,7 +607,7 @@ export const importData = async (
     }
   }
 
-  const importer = new DataImporter({ request, currentUserId, data, tablesSchema, fileUploadInfo });
+  const importer = new DataImporter({ request, currentUser, data, tablesSchema, fileUploadInfo, strict });
 
   return await importer.import();
 };
