@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { TableConsumer } from '@8base/table-schema-provider';
+import { PermissionsContext } from '@8base/permissions-provider';
 import { createTableFilterGraphqlTag, TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type RecordsListFlattenData<T = object,> = {
@@ -30,6 +31,8 @@ type RecordsListProps = {
  * @prop {(recordsListResult: object) => React.ReactNode} children - Render prop with result of the query
  */
 export class RecordsList extends Component<RecordsListProps> {
+  public static contextType = PermissionsContext;
+
   public isFetchingNewTable: boolean = false;
 
   public componentDidUpdate(prevProps: RecordsListProps) {
@@ -70,6 +73,7 @@ export class RecordsList extends Component<RecordsListProps> {
         deep,
         relationItemsCount,
         tableContentName: 'tableContent',
+        permissions: this.context,
       }),
     );
 
