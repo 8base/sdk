@@ -408,6 +408,15 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 }"
 `;
 
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema according permissions 1`] = `
+"query DataViewerCommonsRow($id: ID!) {
+  common(id: $id) {
+    field2
+    field3
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
 "query DataViewerFilesRow($id: ID!) {
   file(id: $id) {
@@ -450,6 +459,64 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       }
       count
     }
+  }
+}"
+`;
+
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation according permissions 1`] = `
+"query DataViewerTableSchemaRow($id: ID!) {
+  tableSchema(id: $id) {
+    numberanother
+    number
+    numberList
+    meta
+    phone {
+      code
+      number
+    }
+    phones {
+      code
+      number
+    }
+    address {
+      street1
+      street2
+      zip
+      city
+      state
+    }
+    addresses {
+      street1
+      street2
+      zip
+      city
+      state
+    }
+    scalar
+    file {
+      id
+      fileId
+      filename
+      downloadUrl
+      shareUrl
+      meta
+    }
+    fileList {
+      items {
+        id
+        fileId
+        filename
+        downloadUrl
+        shareUrl
+        meta
+      }
+      count
+    }
+    scalarList
+    json
+    jsonList
+    bigInt
+    bigIntList
   }
 }"
 `;

@@ -22,15 +22,39 @@ export const createQueryString = (
   prevKey: string = '',
 ): string => {
   const { fields = [] } = getTableByName(tablesList, tableName) || {};
-  const { deep = DEFAULT_DEPTH, withMeta = true, relationItemsCount, includeColumns } = queryObjectConfig;
+  const {
+    deep = DEFAULT_DEPTH,
+    withMeta = true,
+    relationItemsCount,
+    includeColumns,
+    permissions = {},
+  } = queryObjectConfig;
 
   let queryObject = '';
 
   fields
     .filter(field => {
       const isMeta = tableFieldSelectors.isMetaField(field);
+      const isRelation = tableFieldSelectors.isRelationField(field);
 
-      return withMeta ? true : !isMeta;
+      let shouldIncludeField = withMeta ? true : !isMeta;
+
+      if (isRelation) {
+        const refTableName = tableFieldSelectors.getRelationTableName(field);
+        const refTableAllowed = R.pathOr(true, ['data', refTableName, 'permission', 'read', 'allow'], permissions);
+
+        shouldIncludeField = refTableAllowed && shouldIncludeField;
+      } else {
+        const fieldAllowed = R.pathOr(
+          true,
+          ['data', tableName, 'permission', 'read', 'fields', field.name],
+          permissions,
+        );
+
+        shouldIncludeField = fieldAllowed && shouldIncludeField;
+      }
+
+      return shouldIncludeField;
     })
     .forEach(field => {
       let fieldContent = field.name;

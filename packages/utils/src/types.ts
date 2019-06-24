@@ -99,6 +99,7 @@ export type QueryGeneratorConfig = {
   withMeta?: boolean;
   relationItemsCount?: number;
   includeColumns?: null | string[];
+  permissions?: Object;
 };
 
 export type FormatDataAfterQueryOptions = {
