@@ -1,6 +1,6 @@
 {
   "name": "@8base/react-sdk",
-  "version": "0.28.3",
+  "version": "0.28.4",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react-sdk#readme",
   "license": "MIT",
   "main": "dist/index.js",
@@ -15,9 +15,9 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.28.3",
-    "@8base/app-provider": "^0.28.3",
-    "@8base/web-auth0-auth-client": "^0.28.3"
+    "@8base/apollo-client": "^0.28.4",
+    "@8base/app-provider": "^0.28.4",
+    "@8base/web-auth0-auth-client": "^0.28.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
