@@ -70,7 +70,9 @@ const mockPermissionsData = {
 };
 
 jest.mock('@8base/auth', () => ({
-  withAuth: (Component: any) => (props: any) => <Component {...props} auth={{ isAuthorized: true }} />,
+  withAuth: (Component: any) => (props: any) => (
+    <Component {...props} auth={{ isAuthorized: true, authState: { workspaceId: 'some-workspace-id' } }} />
+  ),
 }));
 
 jest.mock('react-apollo', () => ({

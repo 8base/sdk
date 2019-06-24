@@ -23,7 +23,6 @@ const USER_PERMISSIONS_QUERY = gql`
 
 type PermissionsProviderProps = {
   children: (renderProp: { loading?: boolean }) => React.ReactNode;
-  notifyOnNetworkStatusChange?: boolean;
 };
 
 /**
@@ -46,24 +45,16 @@ const PermissionsProvider: React.ComponentType<PermissionsProviderProps> = withA
 
     public render() {
       const {
-        auth: { isAuthorized },
-        notifyOnNetworkStatusChange,
+        auth: { isAuthorized, authState },
         children,
+        ...rest
       } = this.props;
 
-      let rendered = null;
-
-      if (isAuthorized) {
-        rendered = (
-          <Query query={USER_PERMISSIONS_QUERY} notifyOnNetworkStatusChange={notifyOnNetworkStatusChange}>
-            {this.renderContent}
-          </Query>
-        );
-      } else {
-        rendered = children({});
-      }
-
-      return rendered;
+      return (
+        <Query query={USER_PERMISSIONS_QUERY} skip={!isAuthorized || !authState.workspaceId} {...rest}>
+          {this.renderContent}
+        </Query>
+      );
     }
   },
 );
