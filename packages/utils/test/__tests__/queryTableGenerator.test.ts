@@ -168,6 +168,45 @@ describe('As a developer, I can generate graphql query for read entity by table 
 
     expect(tag).toMatchSnapshot();
   });
+
+  it('should generate graphql tag for row query by common table schema according permissions', () => {
+    const tag = createTableRowQueryTag([fixtures.COMMON_TABLE_SCHEMA], 'commons', {
+      permissions: {
+        data: {
+          commons: {
+            permission: {
+              read: {
+                allow: true,
+                fields: {
+                  field1: false,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    expect(tag).toMatchSnapshot();
+  });
+
+  it('should generate graphql tag for row query by table schema with relation according permissions', () => {
+    const tag = createTableRowQueryTag(fixtures.SCHEMA, 'tableSchema', {
+      permissions: {
+        data: {
+          relationTableSchema: {
+            permission: {
+              read: {
+                allow: false,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    expect(tag).toMatchSnapshot();
+  });
 });
 
 describe('As a developer, I can generate graphql mutation for update entity by table schema', () => {
