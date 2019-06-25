@@ -191,7 +191,7 @@ describe('As a developer, while I implementet a form,', () => {
   const TestField = jest.fn(props => <input {...props.input} />);
 
   const form = renderer.create(
-    <TableSchemaContext.Provider value={[TABLE_SCHEMA, RELATION_TABLE_SCHEMA]}>
+    <TableSchemaContext.Provider value={{ tablesList: [TABLE_SCHEMA, RELATION_TABLE_SCHEMA] }}>
       <Form tableSchemaName="tableSchema" initialValues={INITIAL_VALUES} onSubmit={jest.fn()}>
         {renderProps =>
           TestForm(renderProps, ({ handleSubmit }: any) => (

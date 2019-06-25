@@ -1,7 +1,7 @@
 import React from 'react';
 import { wrapDisplayName } from 'recompose';
 import { TableSchema } from '@8base/utils';
-import { TableSchemaContext } from './TableSchemaContext';
+import { TableSchemaContext, ITableSchemaContext } from './TableSchemaContext';
 import { Subtract } from 'utility-types';
 
 export type WithTablesListProps = {
@@ -12,7 +12,7 @@ const withTablesList = <T extends WithTablesListProps>(WrappedComponent: React.C
   return class WithTablesList extends React.Component<Subtract<T, WithTablesListProps>> {
     public static displayName = wrapDisplayName(WrappedComponent, 'withTablesList');
 
-    public renderContent = (tablesList: TableSchema[]) => (
+    public renderContent = ({ tablesList }: ITableSchemaContext) => (
       <WrappedComponent {...(this.props as T)} tablesList={tablesList} />
     );
 

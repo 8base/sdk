@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
 import { MUTATION_TYPE, MUTATION_FILE_FIELDS } from '../constants';
-import { tableSelectors, getTableSchemaByName } from '../selectors';
+import { tableSelectors, tablesListSelectors } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
 import { omitDeep } from './omitDeep';
@@ -14,6 +14,12 @@ interface IOptions {
   ignoreNonTableFields?: boolean;
 }
 
+interface IFormatDataForMutationMeta {
+  tableName: string;
+  appName?: string;
+  schema: Schema;
+}
+
 /**
  * Formats entity data for create or update mutation based on passed schema.
  * @param {MutationType} type - The type of the mutation.
@@ -23,9 +29,8 @@ interface IOptions {
  */
 const formatDataForMutation = (
   type: MutationType,
-  tableName: string,
   data: any,
-  schema: Schema,
+  { tableName, schema }: IFormatDataForMutationMeta,
   options: IOptions = {},
 ) => {
   if (R.not(type in MUTATION_TYPE)) {
@@ -36,7 +41,7 @@ const formatDataForMutation = (
     return data;
   }
 
-  const tableSchema = getTableSchemaByName(schema, tableName);
+  const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
 
   if (!tableSchema) {
     throw new SDKError(
@@ -89,7 +94,7 @@ const formatDataForMutation = (
         }
       }
 
-      formatedFieldData = formatFieldDataForMutation(type, fieldSchema, formatedFieldData, schema);
+      formatedFieldData = formatFieldDataForMutation(type, formatedFieldData, { fieldSchema, schema });
 
       if (typeof mutate === 'function') {
         formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);

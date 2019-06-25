@@ -45,6 +45,11 @@ export const isListField = createSelector(
   R.propEq('isList', true),
 );
 
+export const isSystemField = createSelector(
+  getTableField,
+  R.propEq('isSystem', true),
+);
+
 export const getFieldName = createSelector(
   getTableField,
   R.prop('name'),

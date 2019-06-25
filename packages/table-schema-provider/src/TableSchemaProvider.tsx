@@ -146,7 +146,11 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
     const { children } = this.props;
 
     return (
-      <TableSchemaContext.Provider value={R.pathOr([], ['tablesList', 'items'], data)}>
+      <TableSchemaContext.Provider
+        value={{
+          tablesList: R.pathOr([], ['tablesList', 'items'], data),
+        }}
+      >
         {children({ loading })}
       </TableSchemaContext.Provider>
     );

@@ -1,10 +1,15 @@
 import * as R from 'ramda';
 
-import { tableSelectors, getTableSchemaByName, getTableSchemaById } from '../selectors';
+import { tableSelectors, tablesListSelectors } from '../selectors';
 import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';
 
 import { TableSchema, Schema, FormatDataAfterQueryOptions } from '../types';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
+
+interface IFormatDataAfterQueryMeta {
+  tableName: string;
+  schema: Schema;
+}
 
 /**
  * Remove unnecessary data after fetch entity data by query
@@ -14,12 +19,11 @@ import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
  * @param {FormatDataAfterQueryOptions} options
  */
 const formatDataAfterQuery = (
-  tableName: string,
   data: { [key: string]: any },
-  schema: Schema,
+  { tableName, schema }: IFormatDataAfterQueryMeta,
   options: FormatDataAfterQueryOptions = {},
 ) => {
-  const tableSchema = getTableSchemaByName(schema, tableName);
+  const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
 
   if (!tableSchema) {
     throw new SDKError(
@@ -57,7 +61,7 @@ const formatDataAfterQuery = (
             result = R.assoc(fieldName, result[fieldName].id, result);
           }
         } else {
-          const relationTableSchema = getTableSchemaById(schema, fieldSchema.relation.refTable.id);
+          const relationTableSchema = tablesListSelectors.getTableById(schema, fieldSchema.relation.refTable.id);
 
           if (!relationTableSchema) {
             throw new SDKError(
@@ -69,10 +73,16 @@ const formatDataAfterQuery = (
 
           if (isListField(fieldSchema)) {
             result[fieldName] = result[fieldName].map((item: any) =>
-              formatDataAfterQuery(relationTableSchema.name, item, schema),
+              formatDataAfterQuery(item, {
+                tableName: relationTableSchema.name,
+                schema,
+              }),
             );
           } else {
-            result[fieldName] = formatDataAfterQuery(relationTableSchema.name, result[fieldName], schema);
+            result[fieldName] = formatDataAfterQuery(result[fieldName], {
+              tableName: relationTableSchema.name,
+              schema,
+            });
           }
         }
       }

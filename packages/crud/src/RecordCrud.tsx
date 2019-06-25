@@ -26,13 +26,13 @@ type RecordCrudProps = {
 const createRecordTag = (tableMeta: TableSchema, mode: CrudModes, options: QueryGeneratorConfig) => {
   switch (mode) {
     case 'create':
-      return createTableRowCreateTag([tableMeta], tableMeta.name, options);
+      return createTableRowCreateTag([tableMeta], tableMeta.id, options);
     case 'createMany':
-      return createTableRowCreateManyTag([tableMeta], tableMeta.name);
+      return createTableRowCreateManyTag([tableMeta], tableMeta.id);
     case 'update':
-      return createTableRowUpdateTag([tableMeta], tableMeta.name, options);
+      return createTableRowUpdateTag([tableMeta], tableMeta.id, options);
     case 'delete':
-      return createTableRowDeleteTag([tableMeta], tableMeta.name);
+      return createTableRowDeleteTag([tableMeta], tableMeta.id);
     default:
       return null;
   }

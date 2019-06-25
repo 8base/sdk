@@ -7,7 +7,7 @@
   resolved "https://registry.yarnpkg.com/@8base/error-codes/-/error-codes-1.0.12.tgz#13856f2e5e8024e1c2ce865606d041a7c85b80e0"
   integrity sha512-uzFatWgdCJJLvnsKm8dFxB4v2nBerSyEFzUtlmSF8Sgu5R7p7i76VOem/KPydlFpToFa5bWl1EUGgvrckgQW9g==
 
-"@8base/schema-name-generator@^0.1.1":
+"@8base/schema-name-generator@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@8base/schema-name-generator/-/schema-name-generator-0.1.5.tgz#99c9d6612d96bcaee997ed40d87acad411ef26af"
   integrity sha512-OHK9BXUkGJo3BUYAipKLcPVlNQ/crYyWcxuqn4FEpnVZyIfHst64vu39Dn3Uu6Xd0DMgOg98YwGCRPWBYBtAtg==

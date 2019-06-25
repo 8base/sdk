@@ -1,8 +1,9 @@
 import * as R from 'ramda';
 
-import * as tableFieldSelectors from '../selectors/tableFieldSelectors';
 import { SYSTEM_TABLES } from '../constants';
 import { TableSchema, QueryGeneratorConfig } from '../types';
+import { tablesListSelectors, tableFieldSelectors } from '../selectors';
+import { SDKError, PACKAGES, ERROR_CODES } from '../errors';
 
 export type CheckedRule = {
   id: string;
@@ -12,16 +13,20 @@ export type CheckedRule = {
 
 const DEFAULT_DEPTH = 1;
 
-const getTableByName = (tablesList: TableSchema[], tableName: string) =>
-  tablesList.find(({ name }) => tableName === name);
-
 export const createQueryString = (
   tablesList: TableSchema[],
-  tableName: string,
+  tableId: string,
   queryObjectConfig: QueryGeneratorConfig = {},
   prevKey: string = '',
 ): string => {
-  const { fields = [] } = getTableByName(tablesList, tableName) || {};
+  const table = tablesListSelectors.getTableById(tablesList, tableId);
+
+  if (!table) {
+    throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.UTILS, `Table with id ${tableId} not found`);
+  }
+
+  const { fields, name: tableName } = table;
+
   const {
     deep = DEFAULT_DEPTH,
     withMeta = true,
@@ -62,9 +67,13 @@ export const createQueryString = (
       const isFile = tableFieldSelectors.isFileField(field);
       const isSmart = tableFieldSelectors.isSmartField(field);
       const isList = tableFieldSelectors.isListField(field);
-      const refTableName = tableFieldSelectors.getRelationTableName(field);
-      const refTable = getTableByName(tablesList, refTableName);
-      const isSettingsRefTable = tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
+      const refTableId = tableFieldSelectors.getRelationTableId(field);
+      const refTable = tablesListSelectors.getTableById(tablesList, refTableId);
+
+      const isSettingsRefTable =
+        tableFieldSelectors.isSystemField(field) &&
+        tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
+
       const currentKeyString = prevKey ? `${prevKey}.${field.name}` : field.name;
       let isNotEmptyRelation = false;
 
@@ -73,7 +82,7 @@ export const createQueryString = (
           _description
         }`;
       } else if (isRelation) {
-        if (deep <= 1 || !refTableName || !refTable) {
+        if (deep <= 1 || !refTableId || !refTable) {
           fieldContent = `{
               id
               _description
@@ -84,7 +93,7 @@ export const createQueryString = (
 
           const innerFields = createQueryString(
             tablesList,
-            refTableName,
+            refTableId,
             {
               deep: deep - 1,
               includeColumns: relationIncludeColumns,

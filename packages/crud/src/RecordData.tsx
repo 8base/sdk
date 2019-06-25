@@ -26,7 +26,7 @@ export class RecordData extends Component<RecordDataProps> {
     return (
       <Query
         {...rest}
-        query={gql(createTableRowQueryTag([tableMeta], tableMeta.name, { permissions: this.context }))}
+        query={gql(createTableRowQueryTag([tableMeta], tableMeta.id, { permissions: this.context }))}
         variables={{ id: recordId }}
       >
         {({ data, ...rest }: QueryResult) =>

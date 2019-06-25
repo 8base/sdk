@@ -97,6 +97,7 @@ export interface IAuthorizable {
 export type QueryGeneratorConfig = {
   deep?: number;
   withMeta?: boolean;
+  withResultData?: boolean;
   relationItemsCount?: number;
   includeColumns?: null | string[];
   permissions?: Object;
