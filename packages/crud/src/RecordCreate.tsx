@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { MutationResult, MutationFn } from 'react-apollo';
-import { TableConsumer } from '@8base/table-schema-provider';
+import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 import { RecordCrud } from './RecordCrud';
 
 interface IChildrenPropObject {
-  tableMetaResult: TableSchema | null;
+  tableSchema: TableSchema | null;
   mutateResult: MutationResult;
 }
 
@@ -25,19 +25,23 @@ type RecordCreateProps = {
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
 export class RecordCreate extends Component<RecordCreateProps> {
-  public renderQuery = (tableMetaResult: TableSchema | null) => {
+  public renderQuery = ({ tableSchema, loading }: ITableConsumerRenderProps) => {
     const { children, ...rest } = this.props;
 
-    if (!tableMetaResult) {
+    if (!tableSchema && !loading) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
     }
 
+    if (!tableSchema) {
+      return null;
+    }
+
     return (
-      <RecordCrud {...rest} tableMeta={tableMetaResult} mode="create">
+      <RecordCrud {...rest} tableSchema={tableSchema} mode="create">
         {(mutateFunction, mutateResult) =>
           children(data => mutateFunction({ data }), {
             mutateResult,
-            tableMetaResult,
+            tableSchema,
           })
         }
       </RecordCrud>

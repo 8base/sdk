@@ -14,7 +14,7 @@ import { PermissionsContext } from '@8base/permissions-provider';
 type CrudModes = 'create' | 'createMany' | 'update' | 'delete';
 
 type RecordCrudProps = {
-  tableMeta: TableSchema;
+  tableSchema: TableSchema;
   mode: CrudModes;
 
   children: (
@@ -23,16 +23,16 @@ type RecordCrudProps = {
   ) => React.ReactNode;
 };
 
-const createRecordTag = (tableMeta: TableSchema, mode: CrudModes, options: QueryGeneratorConfig) => {
+const createRecordTag = (tableSchema: TableSchema, mode: CrudModes, options: QueryGeneratorConfig) => {
   switch (mode) {
     case 'create':
-      return createTableRowCreateTag([tableMeta], tableMeta.id, options);
+      return createTableRowCreateTag([tableSchema], tableSchema.id, options);
     case 'createMany':
-      return createTableRowCreateManyTag([tableMeta], tableMeta.id);
+      return createTableRowCreateManyTag([tableSchema], tableSchema.id);
     case 'update':
-      return createTableRowUpdateTag([tableMeta], tableMeta.id, options);
+      return createTableRowUpdateTag([tableSchema], tableSchema.id, options);
     case 'delete':
-      return createTableRowDeleteTag([tableMeta], tableMeta.id);
+      return createTableRowDeleteTag([tableSchema], tableSchema.id);
     default:
       return null;
   }
@@ -42,8 +42,8 @@ export class RecordCrud extends Component<RecordCrudProps> {
   public static contextType = PermissionsContext;
 
   public render() {
-    const { tableMeta, children, mode, ...rest } = this.props;
-    const mutation = gql(createRecordTag(tableMeta, mode, { permissions: this.context }));
+    const { tableSchema, children, mode, ...rest } = this.props;
+    const mutation = gql(createRecordTag(tableSchema, mode, { permissions: this.context }));
 
     return (
       <Mutation {...rest} mutation={mutation}>

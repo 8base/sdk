@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TableConsumer } from '@8base/table-schema-provider';
+import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
 import { MutationFn, MutationResult, QueryResult } from 'react-apollo';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
@@ -8,7 +8,7 @@ import { RecordData } from './RecordData';
 
 /** Results of the record update queries and mutation */
 interface IChildrenPropObject {
-  tableMetaResult: TableSchema | null;
+  tableSchema: TableSchema | null;
   recordDataResult: QueryResult;
   mutateResult: MutationResult;
 }
@@ -30,22 +30,26 @@ type RecordUpdateProps = {
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
 export class RecordUpdate extends Component<RecordUpdateProps> {
-  public renderQuery = (tableMetaResult: TableSchema | null) => {
+  public renderQuery = ({ tableSchema, loading }: ITableConsumerRenderProps) => {
     const { tableName, tableId, children, recordId, ...rest } = this.props;
 
-    if (!tableMetaResult) {
+    if (!tableSchema && !loading) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
     }
 
+    if (!tableSchema) {
+      return null;
+    }
+
     return (
-      <RecordData tableMeta={tableMetaResult} tableName={tableName} tableId={tableId} recordId={recordId}>
+      <RecordData tableSchema={tableSchema} tableName={tableName} tableId={tableId} recordId={recordId}>
         {recordDataResult => (
-          <RecordCrud {...rest} tableMeta={tableMetaResult} mode="update">
+          <RecordCrud {...rest} tableSchema={tableSchema} mode="update">
             {(mutateFunction, mutateResult) =>
               children(data => mutateFunction({ data, filter: { id: recordId } }), {
                 mutateResult,
                 recordDataResult,
-                tableMetaResult,
+                tableSchema,
               })
             }
           </RecordCrud>

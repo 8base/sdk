@@ -2,17 +2,27 @@ import React from 'react';
 import { TableSchema, tablesListSelectors } from '@8base/utils';
 import { TableSchemaContext, ITableSchemaContext } from './TableSchemaContext';
 
-type TableConsumerProps = {
+export type ITableConsumerRenderProps =
+  | {
+      tableSchema: TableSchema | null;
+      loading: false;
+    }
+  | {
+      tableSchema: TableSchema | void;
+      loading: true;
+    };
+
+export interface ITableConsumerProps {
   id?: string;
   name?: string;
-  children: (tableSchema: TableSchema | null) => React.ReactNode;
-};
+  children: (args: ITableConsumerRenderProps) => React.ReactNode;
+}
 
-class TableConsumer extends React.Component<TableConsumerProps> {
-  public renderWithSchemaResponse = ({ tablesList }: ITableSchemaContext) => {
+class TableConsumer extends React.Component<ITableConsumerProps> {
+  public renderWithSchemaResponse = ({ tablesList, loading }: ITableSchemaContext) => {
     const { id, name, children } = this.props;
 
-    let tableSchema: TableSchema | void | null = null;
+    let tableSchema: TableSchema | void | null;
 
     if (id) {
       tableSchema = tablesListSelectors.getTableById(tablesList, id);
@@ -20,7 +30,9 @@ class TableConsumer extends React.Component<TableConsumerProps> {
       tableSchema = tablesListSelectors.getTableByName(tablesList, name);
     }
 
-    return children(tableSchema || null);
+    return loading
+      ? children({ tableSchema: tableSchema || undefined, loading })
+      : children({ tableSchema: tableSchema || null, loading });
   };
 
   public render() {
