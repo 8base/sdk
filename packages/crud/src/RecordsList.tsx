@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
-import { TableConsumer } from '@8base/table-schema-provider';
+import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
 import { PermissionsContext } from '@8base/permissions-provider';
 import { createTableFilterGraphqlTag, TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
@@ -61,15 +61,19 @@ export class RecordsList extends Component<RecordsListProps> {
     return recordsListData;
   };
 
-  public renderQuery = (tableMetaResult: TableSchema | null) => {
+  public renderQuery = ({ tableSchema, loading }: ITableConsumerRenderProps) => {
     const { children, deep, relationItemsCount, ...rest } = this.props;
 
-    if (!tableMetaResult) {
+    if (!tableSchema && !loading) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
     }
 
+    if (!tableSchema) {
+      return null;
+    }
+
     const query = gql(
-      createTableFilterGraphqlTag([tableMetaResult], tableMetaResult.id, {
+      createTableFilterGraphqlTag([tableSchema], tableSchema.id, {
         deep,
         relationItemsCount,
         tableContentName: 'tableContent',

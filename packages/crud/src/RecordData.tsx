@@ -9,7 +9,7 @@ import { createTableRowQueryTag, TableSchema } from '@8base/utils';
 type RecordDataProps = {
   tableName?: string;
   tableId?: string;
-  tableMeta: TableSchema;
+  tableSchema: TableSchema;
 
   recordId: string;
   variables?: object;
@@ -21,18 +21,18 @@ export class RecordData extends Component<RecordDataProps> {
   public static contextType = PermissionsContext;
 
   public render() {
-    const { tableName, tableId, variables, tableMeta, children, recordId, ...rest } = this.props;
+    const { tableName, tableId, variables, tableSchema, children, recordId, ...rest } = this.props;
 
     return (
       <Query
         {...rest}
-        query={gql(createTableRowQueryTag([tableMeta], tableMeta.id, { permissions: this.context }))}
+        query={gql(createTableRowQueryTag([tableSchema], tableSchema.id, { permissions: this.context }))}
         variables={{ id: recordId }}
       >
         {({ data, ...rest }: QueryResult) =>
           children({
             ...rest,
-            data: R.path([SchemaNameGenerator.getTableItemFieldName(tableMeta.name)], data),
+            data: R.path([SchemaNameGenerator.getTableItemFieldName(tableSchema.name)], data),
           })
         }
       </Query>

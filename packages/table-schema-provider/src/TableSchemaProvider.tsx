@@ -134,7 +134,7 @@ export const TABLES_SCHEMA_QUERY = gql`
 `;
 
 type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
-  children: (props: { loading?: boolean }) => React.ReactNode;
+  children: (props: { loading: boolean }) => React.ReactNode;
 };
 
 /**
@@ -142,13 +142,14 @@ type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
  * @property {Function} children Children of the provider. Could be either react node or function with loading state.
  */
 class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
-  public renderContent = ({ data, loading }: { data?: any; loading?: boolean } = {}) => {
+  public renderContent = ({ data, loading }: { data?: any; loading: boolean } = { loading: false }) => {
     const { children } = this.props;
 
     return (
       <TableSchemaContext.Provider
         value={{
           tablesList: R.pathOr([], ['tablesList', 'items'], data),
+          loading,
         }}
       >
         {children({ loading })}

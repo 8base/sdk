@@ -39,7 +39,7 @@ describe('TableSchemaProvider', () => {
     expect(testConsumerFn).toHaveBeenCalledTimes(1);
     expect(testConsumerFn).toHaveBeenCalledWith({ loading: false });
     expect(testContentFn).toHaveBeenCalledTimes(1);
-    expect(testContentFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[0]);
+    expect(testContentFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[0], loading: false });
   });
 
   it('As a developer, I can skip TableSchemaProvider', () => {
@@ -50,7 +50,7 @@ describe('TableSchemaProvider', () => {
     expect(testConsumerFn).toHaveBeenCalledTimes(1);
     expect(testConsumerFn).toHaveBeenCalledWith({ loading: false });
     expect(testContentFn).toHaveBeenCalledTimes(1);
-    expect(testContentFn).toHaveBeenCalledWith(null);
+    expect(testContentFn).toHaveBeenCalledWith({ tableSchema: null, loading: false });
   });
 });
 
@@ -63,23 +63,23 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, loading: false }}>
         <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
     expect(testRenderFn).toHaveBeenCalledTimes(1);
-    expect(testRenderFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[0]);
+    expect(testRenderFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[0], loading: false });
   });
 
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items }}>
+      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, loading: false }}>
         <TableConsumer id="1">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
 
     expect(testRenderFn).toHaveBeenCalledTimes(1);
-    expect(testRenderFn).toHaveBeenCalledWith(MOCK_TABLES_SCHEMA.items[0]);
+    expect(testRenderFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[0], loading: false });
   });
 });
