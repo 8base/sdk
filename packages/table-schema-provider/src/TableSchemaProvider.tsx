@@ -1,8 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
 import gql from 'graphql-tag';
-import { Query, QueryProps } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { Subtract } from 'utility-types';
+import { TableSchema } from '@8base/utils';
 
 import { TableSchemaContext } from './TableSchemaContext';
 
@@ -133,15 +134,31 @@ export const TABLES_SCHEMA_QUERY = gql`
   ${TABLE_FRAGMENT}
 `;
 
-type TableSchemaProviderProps = Subtract<QueryProps, { query: any }> & {
-  children: (props: { loading: boolean }) => React.ReactNode;
-};
+type TableSchemaProviderProps =
+  | {
+      children: React.ReactNode;
+      tablesList?: TableSchema[];
+    }
+  | {
+      children: (props: any) => React.ReactNode;
+      tablesList?: TableSchema[];
+    };
 
 /**
  * Provider for 8base table schemas
  * @property {Function} children Children of the provider. Could be either react node or function with loading state.
  */
 class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
+  public renderChildren = (args: { loading: boolean }) => {
+    const { children } = this.props;
+
+    if (typeof children === 'function') {
+      return children(args);
+    }
+
+    return children;
+  };
+
   public renderContent = ({ data, loading }: { data?: any; loading: boolean } = { loading: false }) => {
     const { children } = this.props;
 
@@ -152,13 +169,21 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
           loading,
         }}
       >
-        {children({ loading })}
+        {this.renderChildren({ loading })}
       </TableSchemaContext.Provider>
     );
   };
 
   public render() {
-    const { children, ...rest } = this.props;
+    const { children, tablesList, ...rest } = this.props;
+
+    if (tablesList) {
+      return (
+        <TableSchemaContext.Provider value={{ tablesList, loading: false }}>
+          {this.renderChildren({ loading: false })}
+        </TableSchemaContext.Provider>
+      );
+    }
 
     return (
       <Query query={TABLES_SCHEMA_QUERY} {...rest}>

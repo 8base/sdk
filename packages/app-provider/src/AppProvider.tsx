@@ -7,7 +7,9 @@ import { TableSchemaProvider } from '@8base/table-schema-provider';
 
 type AppProviderProps = ApolloContainerPassedProps & {
   authClient?: IAuthClient & IAuthorizable;
-  children: (renderProps: { loading?: boolean }) => React.ReactNode;
+  children:
+    | React.ReactNode
+    | ((renderProps: { loading: boolean }) => React.ReactNode);
 };
 
 /**
@@ -17,8 +19,9 @@ type AppProviderProps = ApolloContainerPassedProps & {
  * @prop {Function} [onRequestSuccess] - The callback which called when request is success.
  * @prop {Function} [onRequestError] - The callback which called when request is fail.
  * @prop {Function} [extendLinks] - Function to extend standart array of the links.
- * @prop {Function} [children] - The render function.
+ * @prop {Function|React.ReactNode} [children] - The render function or React nodes.
  * @prop {Object} [introspectionQueryResultData] - The fragment type for introspection fragments matcher.
+ * @prop {Object} [tablesList] - The schema of the 8base tables.
  */
 const AppProvider = ({
   uri,
@@ -30,6 +33,7 @@ const AppProvider = ({
   autoSignUp,
   authProfileId,
   introspectionQueryResultData,
+  tablesList,
 }: AppProviderProps): any =>
   !!authClient ? (
     <AuthProvider authClient={authClient}>
@@ -43,7 +47,9 @@ const AppProvider = ({
         authProfileId={authProfileId}
         introspectionQueryResultData={introspectionQueryResultData}
       >
-        <TableSchemaProvider>{children}</TableSchemaProvider>
+        <TableSchemaProvider tablesList={tablesList}>
+          {children}
+        </TableSchemaProvider>
       </ApolloContainer>
     </AuthProvider>
   ) : (
@@ -55,7 +61,9 @@ const AppProvider = ({
       onRequestError={onRequestError}
       introspectionQueryResultData={introspectionQueryResultData}
     >
-      <TableSchemaProvider>{children}</TableSchemaProvider>
+      <TableSchemaProvider tablesList={tablesList}>
+        {children}
+      </TableSchemaProvider>
     </ApolloContainer>
   );
 

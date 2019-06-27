@@ -41,17 +41,6 @@ describe('TableSchemaProvider', () => {
     expect(testContentFn).toHaveBeenCalledTimes(1);
     expect(testContentFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[0], loading: false });
   });
-
-  it('As a developer, I can skip TableSchemaProvider', () => {
-    const testRenderer = renderer.create(<TableSchemaProvider skip={true}>{testConsumerFn}</TableSchemaProvider>);
-    const testInstance = testRenderer.root;
-
-    expect(testInstance.findByType(Query).props.skip).toBe(true);
-    expect(testConsumerFn).toHaveBeenCalledTimes(1);
-    expect(testConsumerFn).toHaveBeenCalledWith({ loading: false });
-    expect(testContentFn).toHaveBeenCalledTimes(1);
-    expect(testContentFn).toHaveBeenCalledWith({ tableSchema: null, loading: false });
-  });
 });
 
 describe('TableConsumer', () => {
