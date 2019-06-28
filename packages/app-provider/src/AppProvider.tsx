@@ -34,6 +34,7 @@ const AppProvider = ({
   authProfileId,
   introspectionQueryResultData,
   tablesList,
+  applicationsList,
 }: AppProviderProps): any =>
   !!authClient ? (
     <AuthProvider authClient={authClient}>
@@ -47,7 +48,10 @@ const AppProvider = ({
         authProfileId={authProfileId}
         introspectionQueryResultData={introspectionQueryResultData}
       >
-        <TableSchemaProvider tablesList={tablesList}>
+        <TableSchemaProvider
+          tablesList={tablesList}
+          applicationsList={applicationsList}
+        >
           {children}
         </TableSchemaProvider>
       </ApolloContainer>
@@ -61,7 +65,10 @@ const AppProvider = ({
       onRequestError={onRequestError}
       introspectionQueryResultData={introspectionQueryResultData}
     >
-      <TableSchemaProvider tablesList={tablesList}>
+      <TableSchemaProvider
+        tablesList={tablesList}
+        applicationsList={applicationsList}
+      >
         {children}
       </TableSchemaProvider>
     </ApolloContainer>

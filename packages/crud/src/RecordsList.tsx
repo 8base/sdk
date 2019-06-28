@@ -16,7 +16,6 @@ type RecordsListData = {
 };
 
 type RecordsListProps = {
-  tableName?: string;
   tableId?: string;
   children: (recordsListResult: QueryResult<RecordsListFlattenData>) => React.ReactNode;
   deep?: number;
@@ -26,7 +25,6 @@ type RecordsListProps = {
 /**
  * Component for fetching the table content
  *
- * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {(recordsListResult: object) => React.ReactNode} children - Render prop with result of the query
  */
@@ -36,7 +34,7 @@ export class RecordsList extends Component<RecordsListProps> {
   public isFetchingNewTable: boolean = false;
 
   public componentDidUpdate(prevProps: RecordsListProps) {
-    if (this.props.tableName !== prevProps.tableName || this.props.tableId !== prevProps.tableId) {
+    if (this.props.tableId !== prevProps.tableId) {
       this.startFetchingNewTable();
     }
   }
@@ -51,8 +49,16 @@ export class RecordsList extends Component<RecordsListProps> {
 
   /** this dirty hack needs to avoid passing the old table data after changing the table */
   public getRecordsListData = (recordsListResult: QueryResult<RecordsListData>) => {
-    const recordsListData =
-      this.isFetchingNewTable && recordsListResult.loading ? [] : R.path(['data', 'tableContent'], recordsListResult);
+    let recordsListData: object[] = [];
+
+    if (this.isFetchingNewTable && recordsListResult.loading) {
+      recordsListData = [];
+    } else {
+      recordsListData =
+        R.path(['data', 'tableContent'], recordsListResult) ||
+        R.path(['data', 'appContent', 'tableContent'], recordsListResult) ||
+        [];
+    }
 
     if (this.isFetchingNewTable && !recordsListResult.loading) {
       this.stopFetchingNewTable();
@@ -77,6 +83,7 @@ export class RecordsList extends Component<RecordsListProps> {
         deep,
         relationItemsCount,
         tableContentName: 'tableContent',
+        appContentName: 'appContent',
         permissions: this.context,
       }),
     );
@@ -94,12 +101,8 @@ export class RecordsList extends Component<RecordsListProps> {
   };
 
   public render() {
-    const { tableName, tableId } = this.props;
+    const { tableId } = this.props;
 
-    return (
-      <TableConsumer name={tableName} id={tableId}>
-        {this.renderQuery}
-      </TableConsumer>
-    );
+    return <TableConsumer id={tableId}>{this.renderQuery}</TableConsumer>;
   }
 }

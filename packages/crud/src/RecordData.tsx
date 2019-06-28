@@ -7,7 +7,6 @@ import { PermissionsContext } from '@8base/permissions-provider';
 import { createTableRowQueryTag, TableSchema } from '@8base/utils';
 
 type RecordDataProps = {
-  tableName?: string;
   tableId?: string;
   tableSchema: TableSchema;
 
@@ -21,7 +20,7 @@ export class RecordData extends Component<RecordDataProps> {
   public static contextType = PermissionsContext;
 
   public render() {
-    const { tableName, tableId, variables, tableSchema, children, recordId, ...rest } = this.props;
+    const { tableId, variables, tableSchema, children, recordId, ...rest } = this.props;
 
     return (
       <Query

@@ -9,9 +9,21 @@ import { createQueryString } from './createQueryString';
 
 type QueryTableFilterConfig = {
   tableContentName?: string;
+  appContentName?: string;
 } & QueryGeneratorConfig;
 
 const upperFirst = (str: string) => R.toUpper(R.head(str)) + R.tail(str);
+
+const wrapInAppName = (appName: string, appContentName?: string) => (queryString: string) => {
+  if (!appName) {
+    return queryString;
+  }
+
+  return `
+    ${appContentName ? `${appContentName}: ` : ''}${appName} {
+      ${queryString}
+    }`;
+};
 
 const getTable = (tablesList: TableSchema[], tableId: string) => {
   const table = tablesListSelectors.getTableById(tablesList, tableId);
@@ -29,18 +41,20 @@ export const createTableFilterGraphqlTag = (
   config: QueryTableFilterConfig = {},
 ) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
   return gqlPrettier(`
   query ${upperFirst(table.name)}TableContent(
-    $filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name)}
-    $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name)}]
+    $filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name, appName)}
+    $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name, appName)}]
     $after: String
     $before: String
     $first: Int
     $last: Int
     $skip: Int
   ) {
+  ${wrapInAppName(appName, config.appContentName)(`
   ${config.tableContentName ? `${config.tableContentName}: ` : ''}${SchemaNameGenerator.getTableListFieldName(
     table.name,
   )}(
@@ -58,7 +72,7 @@ export const createTableFilterGraphqlTag = (
         _description
       }
       count
-    }
+    }`)}
   }`);
 };
 
@@ -68,46 +82,55 @@ export const createTableRowCreateTag = (
   config: QueryGeneratorConfig = {},
 ) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
   const { withResultData = true, ...restConfig } = config;
 
   if (hasNonMetaFields) {
     return gqlPrettier(`
-  mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name)}!) {
+  mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name, appName)}!) {
+    ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
-      }
+      }`)}
     }`);
   }
 
   return gqlPrettier(`
   mutation ${upperFirst(table.name)}Create {
+  ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
-      }
+      }`)}
     }`);
 };
 
 export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableId: string) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
 
   if (hasNonMetaFields) {
     return gqlPrettier(`
-  mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(table.name)}]!) {
+  mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(
+      table.name,
+      appName,
+    )}]!) {
+    ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getCreateManyItemFieldName(table.name)}(data: $data) {
           count
-        }
+        }`)}
       }`);
   }
 
   return `
   mutation ${upperFirst(table.name)}CreateMany {
+  ${wrapInAppName(appName)(`
   ${SchemaNameGenerator.getCreateManyItemFieldName(table.name)} {
       count
-    }
+    }`)}
   }`;
 };
 
@@ -117,17 +140,19 @@ export const createTableRowUpdateTag = (
   config: QueryGeneratorConfig = {},
 ) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
   return gqlPrettier(`
     mutation ${upperFirst(table.name)}Update(
-      $data: ${SchemaNameGenerator.getUpdateInputName(table.name)}!, 
-      $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name)}
+      $data: ${SchemaNameGenerator.getUpdateInputName(table.name, appName)}!, 
+      $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name, appName)}
     ) {
+    ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getUpdateItemFieldName(table.name)}(data: $data, filter: $filter) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
-        }
+        }`)}
       }`);
 };
 
@@ -137,26 +162,31 @@ export const createTableRowQueryTag = (
   config: QueryGeneratorConfig = {},
 ) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
   return gqlPrettier(`
     query ${upperFirst(table.name)}Entity($id: ID!) {
+    ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { ...restConfig }) : ''}
-        }
+        }`)}
       }`);
 };
 
 export const createTableRowDeleteTag = (tablesList: TableSchema[], tableId: string) => {
   const table = getTable(tablesList, tableId);
+  const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
 
   return gqlPrettier(`
     mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(
     table.name,
+    appName,
   )}!, $force: Boolean) {
+    ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getDeleteItemFieldName(table.name)}(filter: $filter, force: $force) {
           success
-        }
+        }`)}
       }`);
 };

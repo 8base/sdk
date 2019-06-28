@@ -2,8 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Subtract } from 'utility-types';
-import { TableSchema } from '@8base/utils';
+import { TableSchema, Application } from '@8base/utils';
 
 import { TableSchemaContext } from './TableSchemaContext';
 
@@ -112,6 +111,14 @@ export const TABLE_FRAGMENT = gql`
     id
     name
     displayName
+    application {
+      id
+      name
+      displayName
+      description
+      status
+      appType
+    }
     isSystem
     fields {
       ...TableFieldFragment
@@ -119,6 +126,18 @@ export const TABLE_FRAGMENT = gql`
   }
 
   ${TABLE_FIELD_FRAGMENT}
+`;
+
+export const APPLICATIONS_FRAGMENT = gql`
+  fragment ApplicationFragment on Application {
+    id
+    name
+    displayName
+    description
+    createdAt
+    appType
+    status
+  }
 `;
 
 export const TABLES_SCHEMA_QUERY = gql`
@@ -129,20 +148,31 @@ export const TABLES_SCHEMA_QUERY = gql`
       }
       count
     }
+
+    applicationsList {
+      items {
+        ...ApplicationFragment
+      }
+      count
+    }
   }
 
   ${TABLE_FRAGMENT}
+  ${APPLICATIONS_FRAGMENT}
 `;
 
+type TableSchemaProviderCommonProps = {
+  tablesList?: TableSchema[];
+  applicationsList?: Application[];
+};
+
 type TableSchemaProviderProps =
-  | {
+  | ({
       children: React.ReactNode;
-      tablesList?: TableSchema[];
-    }
-  | {
-      children: (props: any) => React.ReactNode;
-      tablesList?: TableSchema[];
-    };
+    } & TableSchemaProviderCommonProps)
+  | ({
+      children: (props: { loading: boolean }) => React.ReactNode;
+    } & TableSchemaProviderCommonProps);
 
 /**
  * Provider for 8base table schemas
@@ -160,12 +190,11 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
   };
 
   public renderContent = ({ data, loading }: { data?: any; loading: boolean } = { loading: false }) => {
-    const { children } = this.props;
-
     return (
       <TableSchemaContext.Provider
         value={{
           tablesList: R.pathOr([], ['tablesList', 'items'], data),
+          applicationsList: R.pathOr([], ['applicationsList', 'items'], data),
           loading,
         }}
       >
@@ -175,11 +204,17 @@ class TableSchemaProvider extends React.Component<TableSchemaProviderProps> {
   };
 
   public render() {
-    const { children, tablesList, ...rest } = this.props;
+    const { children, tablesList, applicationsList, ...rest } = this.props;
 
     if (tablesList) {
       return (
-        <TableSchemaContext.Provider value={{ tablesList, loading: false }}>
+        <TableSchemaContext.Provider
+          value={{
+            tablesList,
+            applicationsList: applicationsList || [],
+            loading: false,
+          }}
+        >
           {this.renderChildren({ loading: false })}
         </TableSchemaContext.Provider>
       );

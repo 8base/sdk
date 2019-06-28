@@ -11,7 +11,6 @@ interface IChildrenPropObject {
 }
 
 type RecordDeleteProps = {
-  tableName?: string;
   tableId?: string;
 
   children: (
@@ -23,7 +22,6 @@ type RecordDeleteProps = {
 /**
  * Component for deleting the record of the table
  *
- * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {string} recordId - Id of the record
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
@@ -53,12 +51,8 @@ export class RecordDelete extends Component<RecordDeleteProps> {
     );
   };
   public render() {
-    const { tableName, tableId } = this.props;
+    const { tableId } = this.props;
 
-    return (
-      <TableConsumer name={tableName} id={tableId}>
-        {this.renderQuery}
-      </TableConsumer>
-    );
+    return <TableConsumer id={tableId}>{this.renderQuery}</TableConsumer>;
   }
 }

@@ -22,6 +22,7 @@ const enhancer: any = compose(
  * `Form` wrapper based on `Form` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FormProps`](https://github.com/final-form/react-final-form#formprops) props and some extra props for easy working with 8base API.
  * @prop {TableSchema} [tableSchema] - The 8base API table schema.
  * @prop {string} [tableSchemaName] - The name of the 8base API table schema.
+ * @prop {string} [appName] - The name of the 8base API application.
  */
 const Form: React.ComponentType<FormProps> = enhancer(
   class Form extends React.Component<FormProps & WithTableSchemaProps> {
