@@ -125,6 +125,7 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
 "
   mutation TableWithoutUserFieldsCreateMany {
+  
   tableWithoutUserFieldCreateMany {
       count
     }

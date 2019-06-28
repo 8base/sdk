@@ -52,7 +52,10 @@ export class RecordsList extends Component<RecordsListProps> {
   /** this dirty hack needs to avoid passing the old table data after changing the table */
   public getRecordsListData = (recordsListResult: QueryResult<RecordsListData>) => {
     const recordsListData =
-      this.isFetchingNewTable && recordsListResult.loading ? [] : R.path(['data', 'tableContent'], recordsListResult);
+      this.isFetchingNewTable && recordsListResult.loading
+        ? []
+        : R.path(['data', 'tableContent'], recordsListResult) ||
+          R.path(['data', 'appContent', 'tableContent'], recordsListResult);
 
     if (this.isFetchingNewTable && !recordsListResult.loading) {
       this.stopFetchingNewTable();
@@ -77,6 +80,7 @@ export class RecordsList extends Component<RecordsListProps> {
         deep,
         relationItemsCount,
         tableContentName: 'tableContent',
+        appContentName: 'appContent',
         permissions: this.context,
       }),
     );

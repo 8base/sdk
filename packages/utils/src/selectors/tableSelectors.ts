@@ -37,6 +37,11 @@ export const isSystemField = createSelector(
   R.propEq('isSystem', true),
 );
 
+export const isIntegrationTable = createSelector(
+  getTable,
+  ({ application }) => !!application,
+);
+
 export const isRelationField: ParametricSelector<TableSchema, string, boolean> = createSelector(
   getFieldTypeById,
   R.equals(FIELD_TYPE.RELATION),
