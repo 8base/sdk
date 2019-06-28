@@ -1,5 +1,5 @@
 import { ApolloLink } from 'apollo-link';
-import { AuthState } from '@8base/utils';
+import { AuthState, TableSchema } from '@8base/utils';
 
 export type ApolloContainerPassedProps = {
   uri: string;
@@ -12,4 +12,5 @@ export type ApolloContainerPassedProps = {
     options: { getAuthState?: () => Promise<AuthState> },
   ) => ApolloLink[];
   introspectionQueryResultData?: Object;
+  tablesList?: TableSchema[];
 };
