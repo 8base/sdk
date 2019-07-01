@@ -11,7 +11,6 @@ interface IChildrenPropObject {
 }
 
 type RecordCreateManyProps = {
-  tableName?: string;
   tableId?: string;
 
   children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
@@ -20,7 +19,6 @@ type RecordCreateManyProps = {
 /**
  * Component for creating many records of the table
  *
- * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
@@ -49,12 +47,8 @@ export class RecordCreateMany extends Component<RecordCreateManyProps> {
   };
 
   public render() {
-    const { tableName, tableId } = this.props;
+    const { tableId } = this.props;
 
-    return (
-      <TableConsumer name={tableName} id={tableId}>
-        {this.renderQuery}
-      </TableConsumer>
-    );
+    return <TableConsumer id={tableId}>{this.renderQuery}</TableConsumer>;
   }
 }

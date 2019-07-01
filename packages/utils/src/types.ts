@@ -7,6 +7,7 @@ import {
   DATE_FORMATS,
   MUTATION_TYPE,
   SMART_FORMATS,
+  APP_STATUS,
 } from './constants';
 
 export type MutationType = keyof typeof MUTATION_TYPE;
@@ -49,9 +50,21 @@ export type FieldSchema = {
   };
 };
 
+export type Application = {
+  id: string;
+  name: string;
+  displayName: string;
+  description: string;
+  tableCount: number;
+  resolverCount: number;
+  status: keyof typeof APP_STATUS;
+  appType: string;
+};
+
 export type TableSchema = {
   id: string;
   name: string;
+  application: Application;
   displayName?: string;
   isSystem?: boolean;
   fields: FieldSchema[];

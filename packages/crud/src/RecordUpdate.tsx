@@ -14,7 +14,6 @@ interface IChildrenPropObject {
 }
 
 type RecordUpdateProps = {
-  tableName?: string;
   tableId?: string;
   recordId: string;
 
@@ -24,14 +23,13 @@ type RecordUpdateProps = {
 /**
  * Component for updating the record of the table
  *
- * @prop {string} tableName - Name of the table
  * @prop {string} tableId - Id of the table
  * @prop {string} recordId - Id of the record
  * @prop {(Function, ChildrenPropObject) => React.ReactNode} children - Render prop with result of the queries
  */
 export class RecordUpdate extends Component<RecordUpdateProps> {
   public renderQuery = ({ tableSchema, loading }: ITableConsumerRenderProps) => {
-    const { tableName, tableId, children, recordId, ...rest } = this.props;
+    const { tableId, children, recordId, ...rest } = this.props;
 
     if (!tableSchema && !loading) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
@@ -42,7 +40,7 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
     }
 
     return (
-      <RecordData tableSchema={tableSchema} tableName={tableName} tableId={tableId} recordId={recordId}>
+      <RecordData tableSchema={tableSchema} tableId={tableId} recordId={recordId}>
         {recordDataResult => (
           <RecordCrud {...rest} tableSchema={tableSchema} mode="update">
             {(mutateFunction, mutateResult) =>
@@ -59,12 +57,8 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
   };
 
   public render() {
-    const { tableName, tableId } = this.props;
+    const { tableId } = this.props;
 
-    return (
-      <TableConsumer name={tableName} id={tableId}>
-        {this.renderQuery}
-      </TableConsumer>
-    );
+    return <TableConsumer id={tableId}>{this.renderQuery}</TableConsumer>;
   }
 }

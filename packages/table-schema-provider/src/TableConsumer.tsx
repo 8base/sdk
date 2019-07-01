@@ -14,20 +14,21 @@ export type ITableConsumerRenderProps =
 
 export interface ITableConsumerProps {
   id?: string;
+  app?: string;
   name?: string;
   children: (args: ITableConsumerRenderProps) => React.ReactNode;
 }
 
 class TableConsumer extends React.Component<ITableConsumerProps> {
   public renderWithSchemaResponse = ({ tablesList, loading }: ITableSchemaContext) => {
-    const { id, name, children } = this.props;
+    const { id, name, app, children } = this.props;
 
     let tableSchema: TableSchema | void | null;
 
     if (id) {
       tableSchema = tablesListSelectors.getTableById(tablesList, id);
     } else if (name) {
-      tableSchema = tablesListSelectors.getTableByName(tablesList, name);
+      tableSchema = tablesListSelectors.getTableByName(tablesList, name, app);
     }
 
     return loading

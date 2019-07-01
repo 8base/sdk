@@ -2,12 +2,24 @@ import React from 'react';
 import * as renderer from 'react-test-renderer';
 import { TableConsumer, TableSchemaContext, TableSchemaProvider } from '../../src';
 
-const MOCK_TABLES_SCHEMA = {
+const MOCK_TABLES_SCHEMA: any = {
   items: [
     {
       id: '1',
       name: 'tableName',
-      displayName: 'tableName',
+      displayName: 'Table Name',
+      isSystem: false,
+      fields: [],
+      __typename: 'Table',
+    },
+    {
+      id: '2',
+      name: 'tableName',
+      displayName: 'Table Name Application',
+      application: {
+        id: 'APPLICATION_ID',
+        name: 'Salesforce',
+      },
       isSystem: false,
       fields: [],
       __typename: 'Table',
@@ -52,7 +64,9 @@ describe('TableConsumer', () => {
 
   it('As a developer, I can get access to the table schema via TableConsumer by table name.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, loading: false }}>
+      <TableSchemaContext.Provider
+        value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [], loading: false }}
+      >
         <TableConsumer name="tableName">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );
@@ -61,9 +75,26 @@ describe('TableConsumer', () => {
     expect(testRenderFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[0], loading: false });
   });
 
+  it('As a developer, I can get access to the table schema via TableConsumer by table name and application name.', () => {
+    renderer.create(
+      <TableSchemaContext.Provider
+        value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [], loading: false }}
+      >
+        <TableConsumer name="tableName" app="Salesforce">
+          {testRenderFn}
+        </TableConsumer>
+      </TableSchemaContext.Provider>,
+    );
+
+    expect(testRenderFn).toHaveBeenCalledTimes(1);
+    expect(testRenderFn).toHaveBeenCalledWith({ tableSchema: MOCK_TABLES_SCHEMA.items[1], loading: false });
+  });
+
   it('As a developer, I can get access to the table schema via TableConsumer by table id.', () => {
     renderer.create(
-      <TableSchemaContext.Provider value={{ tablesList: MOCK_TABLES_SCHEMA.items, loading: false }}>
+      <TableSchemaContext.Provider
+        value={{ tablesList: MOCK_TABLES_SCHEMA.items, applicationsList: [], loading: false }}
+      >
         <TableConsumer id="1">{testRenderFn}</TableConsumer>
       </TableSchemaContext.Provider>,
     );

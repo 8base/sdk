@@ -8,6 +8,7 @@ import { Schema, TableSchema } from '../types';
 
 type TableSchemaConsumerProps = {
   tableSchemaName: string;
+  appName?: string;
 };
 
 export type WithTableSchemaProps = {
@@ -20,10 +21,10 @@ const withTableSchema = <T extends WithTableSchemaProps & TableSchemaConsumerPro
 ) => {
   return class TableSchemaConsumer extends React.Component<Subtract<T, WithTableSchemaProps>> {
     public renderWithSchema = ({ tablesList }: ITableSchemaContext) => {
-      const { tableSchemaName, ...restProps } = this.props;
+      const { tableSchemaName, appName, ...restProps } = this.props;
 
       if (tablesList && tableSchemaName) {
-        const tableSchema = tablesListSelectors.getTableByName(tablesList, tableSchemaName);
+        const tableSchema = tablesListSelectors.getTableByName(tablesList, tableSchemaName, appName);
 
         if (tableSchema) {
           return <WrappedComponent {...(restProps as T)} tableSchema={tableSchema} schema={tablesList} />;

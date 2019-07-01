@@ -11,7 +11,6 @@ interface IChildrenPropObject {
 }
 
 type RecordCreateProps = {
-  tableName?: string;
   tableId?: string;
 
   children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
@@ -49,12 +48,8 @@ export class RecordCreate extends Component<RecordCreateProps> {
   };
 
   public render() {
-    const { tableName, tableId } = this.props;
+    const { tableId } = this.props;
 
-    return (
-      <TableConsumer name={tableName} id={tableId}>
-        {this.renderQuery}
-      </TableConsumer>
-    );
+    return <TableConsumer id={tableId}>{this.renderQuery}</TableConsumer>;
   }
 }
