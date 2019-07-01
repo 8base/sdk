@@ -20,6 +20,16 @@ export const isRelationField = createSelector(
   R.equals(FIELD_TYPE.RELATION),
 );
 
+export const isMissingRelationField = createSelector(
+  getFieldType,
+  R.equals(FIELD_TYPE.MISSING_RELATION),
+);
+
+export const isOneWayRelationField = createSelector(
+  getFieldType,
+  R.equals(FIELD_TYPE.ONE_WAY_RELATION),
+);
+
 export const isFileField = createSelector(
   getFieldType,
   R.equals(FIELD_TYPE.FILE),
@@ -38,6 +48,11 @@ export const isIdField = createSelector(
 export const isMetaField = createSelector(
   getTableField,
   R.propEq('isMeta', true),
+);
+
+export const isExternalField = createSelector(
+  getTableField,
+  R.propEq('isExternal', true),
 );
 
 export const isListField = createSelector(

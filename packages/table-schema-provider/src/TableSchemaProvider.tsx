@@ -16,6 +16,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
       ...SmartFieldTypesAttributes
+      ...MissingRelationFieldTypeAttributes
     }
   }
 
@@ -36,6 +37,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...FileFieldTypeAttributes
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
+      ...MissingRelationFieldTypeAttributes
     }
     isList
     isRequired
@@ -43,6 +45,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
     defaultValue
     isSystem
     isMeta
+    isExternal
     relation {
       refFieldName
       refFieldDisplayName
@@ -103,6 +106,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
         ...FileFieldTypeAttributes
         ...DateFieldTypeAttributes
         ...SwitchFieldTypeAttributes
+        ...MissingRelationFieldTypeAttributes
       }
     }
   }
@@ -110,6 +114,10 @@ export const TABLE_FIELD_FRAGMENT = gql`
   fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
     format
     listOptions
+  }
+
+  fragment MissingRelationFieldTypeAttributes on MissingRelationFieldTypeAttributes {
+    missingTable
   }
 `;
 

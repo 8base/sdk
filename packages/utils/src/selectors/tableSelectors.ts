@@ -62,6 +62,11 @@ export const isMetaField = createSelector(
   R.propEq('isMeta', true),
 );
 
+export const isExternalField = createSelector(
+  getFieldByIdOrEmpty,
+  R.propEq('isExternal', true),
+);
+
 export const isListField = createSelector(
   getFieldByIdOrEmpty,
   R.propEq('isList', true),

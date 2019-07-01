@@ -11,6 +11,19 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
 }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema for application 1`] = `
+"mutation CommonsCreate($data: SalesforceCommonCreateInput!) {
+  Salesforce {
+    commonCreate(data: $data) {
+      id
+      field1
+      field2
+      field3
+    }
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
 "mutation FilesCreate($data: FileCreateInput!) {
   fileCreate(data: $data) {
@@ -98,6 +111,16 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
 }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema for application 1`] = `
+"mutation CommonsCreateMany($data: [SalesforceCommonCreateManyInput]!) {
+  Salesforce {
+    commonCreateMany(data: $data) {
+      count
+    }
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
 "mutation FilesCreateMany($data: [FileCreateManyInput]!) {
   fileCreateMany(data: $data) {
@@ -140,6 +163,16 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
 }"
 `;
 
+exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema for application 1`] = `
+"mutation CommonsDelete($filter: SalesforceCommonKeyFilter!, $force: Boolean) {
+  Salesforce {
+    commonDelete(filter: $filter, force: $force) {
+      success
+    }
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
 "mutation FilesDelete($filter: FileKeyFilter!, $force: Boolean) {
   fileDelete(filter: $filter, force: $force) {
@@ -171,6 +204,19 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     field1
     field2
     field3
+  }
+}"
+`;
+
+exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema for application 1`] = `
+"mutation CommonsUpdate($data: SalesforceCommonUpdateInput!, $filter: SalesforceCommonKeyFilter) {
+  Salesforce {
+    commonUpdate(data: $data, filter: $filter) {
+      id
+      field1
+      field2
+      field3
+    }
   }
 }"
 `;
@@ -257,6 +303,23 @@ exports[`As a developer, I can generate graphql query for list by table schema s
       _description
     }
     count
+  }
+}"
+`;
+
+exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema for application 1`] = `
+"query CommonsTableContent($filter: SalesforceCommonFilter, $orderBy: [SalesforceCommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  Salesforce {
+    commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+      items {
+        id
+        field1
+        field2
+        field3
+        _description
+      }
+      count
+    }
   }
 }"
 `;
@@ -421,6 +484,19 @@ exports[`As a developer, I can generate graphql query for read entity by table s
 }"
 `;
 
+exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema for application 1`] = `
+"query CommonsEntity($id: ID!) {
+  Salesforce {
+    common(id: $id) {
+      id
+      field1
+      field2
+      field3
+    }
+  }
+}"
+`;
+
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
 "query FilesEntity($id: ID!) {
   file(id: $id) {
@@ -465,65 +541,6 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       }
       count
     }
-  }
-}"
-`;
-
-exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation according permissions 1`] = `
-"query TableSchemaEntity($id: ID!) {
-  tableSchema(id: $id) {
-    id
-    numberanother
-    number
-    numberList
-    meta
-    phone {
-      code
-      number
-    }
-    phones {
-      code
-      number
-    }
-    address {
-      street1
-      street2
-      zip
-      city
-      state
-    }
-    addresses {
-      street1
-      street2
-      zip
-      city
-      state
-    }
-    scalar
-    file {
-      id
-      fileId
-      filename
-      downloadUrl
-      shareUrl
-      meta
-    }
-    fileList {
-      items {
-        id
-        fileId
-        filename
-        downloadUrl
-        shareUrl
-        meta
-      }
-      count
-    }
-    scalarList
-    json
-    jsonList
-    bigInt
-    bigIntList
   }
 }"
 `;

@@ -64,6 +64,8 @@ export const createQueryString = (
     .forEach(field => {
       let fieldContent = field.name;
       const isRelation = tableFieldSelectors.isRelationField(field);
+      const isMissingRelation = tableFieldSelectors.isMissingRelationField(field);
+      const isOneWayRelationField = tableFieldSelectors.isOneWayRelationField(field);
       const isFile = tableFieldSelectors.isFileField(field);
       const isSmart = tableFieldSelectors.isSmartField(field);
       const isList = tableFieldSelectors.isListField(field);
@@ -85,7 +87,11 @@ export const createQueryString = (
         fieldContent = `{
           _description
         }`;
-      } else if (isRelation) {
+      } else if (isMissingRelation) {
+        fieldContent = `{
+          table
+        }`;
+      } else if (isRelation || isOneWayRelationField) {
         if (deep <= 1 || !refTableId || !refTable) {
           fieldContent = `{
               id
