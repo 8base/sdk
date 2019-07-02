@@ -205,6 +205,7 @@ Object {
           },
           "variableDefinitions": Array [
             Object {
+              "directives": Array [],
               "kind": "VariableDefinition",
               "type": Object {
                 "kind": "NonNullType",
@@ -246,7 +247,7 @@ Object {
       "close",
     ],
     "content-length": Array [
-      "1068",
+      "1084",
     ],
     "content-type": Array [
       "application/json",

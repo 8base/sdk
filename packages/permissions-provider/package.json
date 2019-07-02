@@ -13,7 +13,7 @@
     "test": "NPM_ENV=test jest"
   },
   "peerDependencies": {
-    "graphql": "^0.13.0",
+    "graphql": "^14.3.1",
     "react": "^16.3.0",
     "react-apollo": "^2.5.0",
     "react-dom": "^16.3.0"
@@ -31,7 +31,7 @@
     "@types/jest": "^24.0.13",
     "@types/react-test-renderer": "^16.8.1",
     "documentation": "^8.0.0",
-    "graphql": "^0.13.0",
+    "graphql": "^14.3.1",
     "jest": "24",
     "prettier": "^1.15.3",
     "react": "^16.8.6",
