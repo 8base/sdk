@@ -16,7 +16,7 @@
     "@8base/schema-name-generator": "^0.1.5",
     "@8base/utils": "^0.30.0",
     "filestack-js": "^1.14.6",
-    "graphql": "0.13.0",
+    "graphql": "^14.3.1",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
     "node-fetch": "^2.3.0",
