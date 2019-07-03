@@ -74,10 +74,14 @@ export const createQueryString = (
         tableFieldSelectors.isSystemField(field) &&
         tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.SETTINGS;
 
+      const isPermissionsRefTable =
+        tableFieldSelectors.isSystemField(field) &&
+        tableFieldSelectors.getRelationTableName(field) === SYSTEM_TABLES.PERMISSIONS;
+
       const currentKeyString = prevKey ? `${prevKey}.${field.name}` : field.name;
       let isNotEmptyRelation = false;
 
-      if (isSettingsRefTable) {
+      if (isSettingsRefTable || isPermissionsRefTable) {
         fieldContent = `{
           _description
         }`;
