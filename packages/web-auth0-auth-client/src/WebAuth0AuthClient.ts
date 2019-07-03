@@ -132,8 +132,12 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
 
   public getAuthState = async (): Promise<AuthState> => localStorageAccessor.getAuthState();
 
-  public purgeAuthState = async (): Promise<void> => {
+  public purgeAuthState = async ({ withLogout = false, logoutOptions = {} } = {}): Promise<void> => {
     localStorageAccessor.purgeAuthState();
+
+    if (withLogout) {
+      await this.logout(logoutOptions);
+    }
   };
 
   public checkIsAuthorized = async (): Promise<boolean> => {
