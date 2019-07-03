@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@8base/utils": "^0.31.0",
-    "auth0-js": "^9.9.1",
+    "auth0-js": "^9.11.1",
     "ramda": "^0.26.1"
   },
   "devDependencies": {

@@ -56,12 +56,19 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     await this.updateState();
   };
 
-  public purgeAuthState = async (): Promise<void> => {
+  public purgeAuthState = async (
+    options: {
+      withLogout?: boolean;
+      logoutOptions?: object;
+    } = {},
+  ): Promise<void> => {
     const { authClient } = this.props;
 
-    await authClient.purgeAuthState();
+    await authClient.purgeAuthState(options);
 
-    await this.updateState();
+    if (!options.withLogout) {
+      await this.updateState();
+    }
   };
 
   public render() {

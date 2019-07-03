@@ -96,7 +96,7 @@ export type AuthData = {
 export interface IAuthClient {
   getAuthState(): Promise<AuthState>;
   setAuthState(state: AuthState): Promise<void>;
-  purgeAuthState(): Promise<void>;
+  purgeAuthState(options?: { withLogout?: boolean; logoutOptions?: object }): Promise<void>;
   checkIsAuthorized(): Promise<boolean>;
 }
 
