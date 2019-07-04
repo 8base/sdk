@@ -175,12 +175,14 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo(
 
       const pickerOptions = this.collectPickerOptions();
 
-      this.filestack
-        .picker({
-          ...options,
-          ...pickerOptions,
-        })
-        .open();
+      const picker = this.filestack.picker({
+        ...options,
+        ...pickerOptions,
+      });
+
+      await picker.open();
+
+      return picker;
     };
 
     public render() {
