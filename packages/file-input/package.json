@@ -1,6 +1,6 @@
 {
   "name": "@8base/file-input",
-  "version": "0.31.1",
+  "version": "0.31.2",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/file-input#readme",
   "main": "dist/index.js",
