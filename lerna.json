@@ -1,8 +1,14 @@
 {
   "lerna": "3.4.3",
   "packages": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "npmClient": "yarn",
-  "version": "0.31.2"
+  "version": "0.31.2",
+  "command": {
+    "bootstrap": {
+      "scope": "@8base/*"
+    }
+  }
 }

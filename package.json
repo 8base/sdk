@@ -3,7 +3,7 @@
   "scripts": {
     "eslint": "eslint .",
     "postinstall": "lerna bootstrap",
-    "build-packages": "lerna run build",
+    "build-packages": "lerna run build --scope @8base/*",
     "link-packages": "./bin/link-packages.sh",
     "unlink-packages": "./bin/unlink-packages.sh",
     "test": "./bin/test.sh",
