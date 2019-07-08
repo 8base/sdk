@@ -1,5 +1,24 @@
 # `@8base/react-sdk`
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Examples](#examples)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Installation
+```
+npm install --save @8base/react-sdk
+```
+or
+```
+yarn add @8base/react-sdk
+```
+
 ## Getting Started
 
 `@8base/react-sdk` provides tools to use 8base with React.
@@ -47,4 +66,10 @@ function App() {
   );
 }
 ```
+
+## Examples
+
+- [Guest App](https://codesandbox.io/s/github/8base/sdk/tree/master/examples/guest-app)
+- [With Api Token App](https://codesandbox.io/s/github/8base/sdk/tree/master/examples/with-api-token-app)
+- [With Authorization App](https://codesandbox.io/s/github/8base/sdk/tree/master/examples/with-authorization-app)
 
