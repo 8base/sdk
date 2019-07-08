@@ -11,3 +11,7 @@ yarn build-packages
 ```
 yarn bump
 ```
+
+## Documentation
+
+See [@8base/react-sdk documentation](https://github.com/8base/sdk/blob/master/packages/react-sdk/README.md)

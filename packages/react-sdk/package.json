@@ -12,7 +12,8 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "test": "NPM_ENV=test jest"
+    "test": "NPM_ENV=test jest",
+    "doctoc": "doctoc README.md"
   },
   "dependencies": {
     "@8base/apollo-client": "^0.31.2",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
+    "doctoc": "^1.4.0",
     "jest": "24",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"
