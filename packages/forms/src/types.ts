@@ -34,10 +34,10 @@ type FieldProps = {
   validate?: (
     value: any,
     allValues: object,
-    meta: FinalFieldState<any> | null,
+    meta: FinalFieldState | null,
     validateFieldSchema: PreparedValidator,
   ) => any;
-} & FinalFieldProps<any, any>;
+} & FinalFieldProps<any>;
 
 export {
   FieldProps,

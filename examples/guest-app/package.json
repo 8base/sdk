@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "@8base/react-sdk": "^0.31.2",
-    "apollo-client": "^2.6.3",
-    "graphql": "^14.3.1",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",

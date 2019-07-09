@@ -11,14 +11,12 @@
     "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
     "test": "NPM_ENV=test jest"
   },
-  "peerDependencies": {
-    "graphql": "^14.0.0"
-  },
   "dependencies": {
     "@8base/error-codes": "^1.0.12",
     "@8base/utils": "^0.31.2",
     "apollo-link": "1.2.11",
     "apollo-link-error": "^1.1.10",
+    "graphql": "^14.3.1",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.26.1",
     "zen-observable-ts": "^0.8.18"
@@ -26,9 +24,8 @@
   "devDependencies": {
     "@types/graphql": "^14.2.0",
     "@types/jest": "^24.0.13",
-    "graphql": "^14.3.1",
     "documentation": "^8.1.2",
-    "jest": "24.7.1",
+    "jest": "24",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"
   },

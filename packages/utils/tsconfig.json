@@ -4,6 +4,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "paths": {
       "*": [
         "types/*"
