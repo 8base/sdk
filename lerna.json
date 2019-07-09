@@ -6,9 +6,5 @@
   ],
   "npmClient": "yarn",
   "version": "0.31.2",
-  "command": {
-    "bootstrap": {
-      "scope": "@8base/*"
-    }
-  }
+  "useWorkspaces": true
 }

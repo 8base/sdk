@@ -12,7 +12,8 @@
     "docs": "yarn doc src/index.js --section=API"
   },
   "peerDependencies": {
-    "graphql": "^14.3.1",
+    "apollo-client": "^2.6.3",
+    "graphql": "^14.0.0",
     "react": "^16.3.0",
     "react-apollo": "^2.5.0",
     "react-dom": "^16.3.0"
@@ -22,19 +23,18 @@
     "@8base/schema-name-generator": "^0.1.5",
     "@8base/table-schema-provider": "^0.31.2",
     "@8base/utils": "^0.31.2",
-    "apollo-client": "^2.5.1",
-    "graphql-tag": "^2.9.2",
-    "ramda": "^0.26.1",
-    "reselect": "^3.0.1"
+    "graphql-tag": "^2.10.0",
+    "ramda": "^0.26.1"
   },
   "devDependencies": {
     "@types/graphql": "^14.2.0",
+    "apollo-client": "^2.6.3",
     "documentation": "^8.0.0",
     "graphql": "^14.3.1",
-    "jest": "^23.1.0",
+    "jest": "24.7.1",
     "jest-localstorage-mock": "^2.2.0",
     "react": "^16.8.6",
-    "react-apollo": "2.5.2",
+    "react-apollo": "2.5.8",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "typescript": "^3.5.1"
