@@ -14,8 +14,8 @@ const enhacner: any = compose(
 /**
  * `FieldArray` wrapper based on `FieldArray` from the [`react-final-form-arrays`](https://github.com/final-form/react-final-form-arrays). It accepts [`FieldArrayProps`](https://github.com/final-form/react-final-form-arrays#fieldarrayprops) props.
  */
-const FieldArray: React.ComponentType<FieldArrayProps> = enhacner(
-  class FieldArray extends React.Component<FieldArrayProps & WithFieldSchemaProps> {
+const FieldArray: React.ComponentType<FieldArrayProps<any, any>> = enhacner(
+  class FieldArray extends React.Component<FieldArrayProps<any, any> & WithFieldSchemaProps> {
     public collectProps = () => {
       const { fieldSchema, name, isEqual, ...restProps } = this.props;
 

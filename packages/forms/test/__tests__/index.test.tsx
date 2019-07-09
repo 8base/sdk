@@ -190,7 +190,7 @@ describe('As a developer, while I implementet a form,', () => {
   const TestFieldset = jest.fn((props, renderProp) => renderProp(props));
   const TestField = jest.fn(props => <input {...props.input} />);
 
-  const form = renderer.create(
+  const element = (
     <TableSchemaContext.Provider
       value={{ tablesList: [TABLE_SCHEMA, RELATION_TABLE_SCHEMA], applicationsList: [], loading: false }}
     >
@@ -220,8 +220,12 @@ describe('As a developer, while I implementet a form,', () => {
           ))
         }
       </Form>
-    </TableSchemaContext.Provider>,
+    </TableSchemaContext.Provider>
   );
+
+  const form = renderer.create(element);
+
+  form.update(element);
 
   it('Form should be rendered.', () => {
     expect(form.toJSON()).toMatchSnapshot();
