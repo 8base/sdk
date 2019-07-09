@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "0.31.2",
+  "version": "0.32.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/apollo-links#readme",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.12",
-    "@8base/utils": "^0.31.2",
+    "@8base/utils": "^0.32.0",
     "apollo-link": "1.2.11",
     "apollo-link-error": "^1.1.10",
     "graphql-tag": "^2.9.2",
@@ -26,8 +26,8 @@
   "devDependencies": {
     "@types/graphql": "^14.2.0",
     "@types/jest": "^24.0.13",
-    "graphql": "^14.3.1",
     "documentation": "^8.1.2",
+    "graphql": "^14.3.1",
     "jest": "24.7.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"

@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "0.31.2",
+  "version": "0.32.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/auth#readme",
   "main": "dist/index.js",
@@ -20,7 +20,7 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/utils": "^0.31.2",
+    "@8base/utils": "^0.32.0",
     "recompose": "^0.30.0"
   },
   "devDependencies": {
