@@ -1,6 +1,6 @@
 {
   "name": "@8base/forms",
-  "version": "0.32.0",
+  "version": "0.32.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/forms#readme",
   "main": "dist/index.js",
@@ -19,12 +19,12 @@
     "react-dom": "^16.3.0"
   },
   "dependencies": {
-    "@8base/auth": "^0.32.0",
+    "@8base/auth": "^0.32.1",
     "@8base/error-codes": "^1.0.8",
-    "@8base/permissions-provider": "^0.32.0",
-    "@8base/table-schema-provider": "^0.32.0",
-    "@8base/utils": "^0.32.0",
-    "@8base/validate": "^0.32.0",
+    "@8base/permissions-provider": "^0.32.1",
+    "@8base/table-schema-provider": "^0.32.1",
+    "@8base/utils": "^0.32.1",
+    "@8base/validate": "^0.32.1",
     "final-form": "^4.16.1",
     "final-form-arrays": "^1.1.2",
     "graphql-tag": "^2.10.0",
