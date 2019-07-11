@@ -59,7 +59,7 @@ function App() {
           if (loading) {
             return <p>Please wait...</p>;
           }
-          return <Query query={ SAMPLE_QUERY }>...</Query
+          return <Query query={ SAMPLE_QUERY }>...</Query>
         }}
       </AppProvider>
     </div>
