@@ -1,5 +1,6 @@
 export {
   AppProvider,
+  EightBaseAppProvider,
   FragmentsSchemaContainer,
   AuthProvider,
   AuthContext,

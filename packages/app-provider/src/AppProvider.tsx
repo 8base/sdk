@@ -5,7 +5,7 @@ import { ApolloContainer } from './ApolloContainer';
 import { ApolloContainerPassedProps } from './types';
 import { TableSchemaProvider } from '@8base/table-schema-provider';
 
-type AppProviderProps = ApolloContainerPassedProps & {
+export type AppProviderProps = ApolloContainerPassedProps & {
   authClient?: IAuthClient & IAuthorizable;
   children:
     | React.ReactNode
