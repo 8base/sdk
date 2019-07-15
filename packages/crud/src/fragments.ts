@@ -68,6 +68,7 @@ export const TableFieldFragment = gql`
       refTable {
         id
         name
+        displayName
       }
       refFieldIsList
       refFieldIsRequired

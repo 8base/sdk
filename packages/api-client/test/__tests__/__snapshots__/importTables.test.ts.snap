@@ -150,6 +150,7 @@ Array [
       refTable {
         id
         name
+        displayName
       }
       refFieldIsList
       refFieldIsRequired
@@ -225,7 +226,7 @@ Array [
         "close",
       ],
       "content-length": Array [
-        "2338",
+        "2359",
       ],
       "content-type": Array [
         "application/json",

@@ -23,6 +23,11 @@ export const TABLE_FIELD_FRAGMENT = gql`
     id
     name
     displayName
+    table {
+      id
+      name
+      displayName
+    }
     description
     fieldType
     fieldTypeAttributes {
@@ -46,10 +51,12 @@ export const TABLE_FIELD_FRAGMENT = gql`
       refTable {
         id
         name
+        displayName
       }
       refField {
         id
         name
+        displayName
       }
       refFieldIsList
       refFieldIsRequired

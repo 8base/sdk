@@ -25,7 +25,12 @@ export type Format =
 export type FieldSchema = {
   id: string;
   name: string;
-  displayName?: string;
+  displayName: string;
+  table: {
+    id: string;
+    name: string;
+    displayName: string;
+  };
   description?: string;
   fieldType: FieldType;
   fieldTypeAttributes: { [key: string]: any };
@@ -46,6 +51,7 @@ export type FieldSchema = {
     refTable: {
       id: string;
       name: string;
+      displayName: string;
     };
   };
 };

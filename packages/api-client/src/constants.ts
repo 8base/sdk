@@ -68,6 +68,7 @@ export const TABLES_LIST_QUERY = `
       refTable {
         id
         name
+        displayName
       }
       refFieldIsList
       refFieldIsRequired
