@@ -242,6 +242,7 @@ Object {
       refTable {
         id
         name
+        displayName
       }
       refFieldIsList
       refFieldIsRequired
@@ -317,7 +318,7 @@ Object {
       "close",
     ],
     "content-length": Array [
-      "2337",
+      "2358",
     ],
     "content-type": Array [
       "application/json",

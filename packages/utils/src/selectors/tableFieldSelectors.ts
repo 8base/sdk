@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
-import { FieldSchema, Format } from '../types';
+import { FieldSchema } from '../types';
 
 export const getTableField = (tableField: FieldSchema) => tableField;
 
@@ -50,9 +50,34 @@ export const isSystemField = createSelector(
   R.propEq('isSystem', true),
 );
 
+export const getFieldId = createSelector(
+  getTableField,
+  R.prop('id'),
+);
+
 export const getFieldName = createSelector(
   getTableField,
   R.prop('name'),
+);
+
+export const getFieldDisplayName = createSelector(
+  getTableField,
+  R.prop('displayName'),
+);
+
+export const getTableId = createSelector(
+  getTableField,
+  R.path<any>(['table', 'id']),
+);
+
+export const getTableName = createSelector(
+  getTableField,
+  R.path<any>(['table', 'name']),
+);
+
+export const getTableDisplayName = createSelector(
+  getTableField,
+  R.path<any>(['table', 'displayName']),
 );
 
 export const getRelationTableId: ParametricSelector<FieldSchema, void, string> = createSelector(
@@ -63,4 +88,9 @@ export const getRelationTableId: ParametricSelector<FieldSchema, void, string> =
 export const getRelationTableName: ParametricSelector<FieldSchema, void, string> = createSelector(
   getTableField,
   R.path<any>(['relation', 'refTable', 'name']),
+);
+
+export const getRelationTableDisplayName: ParametricSelector<FieldSchema, void, string> = createSelector(
+  getTableField,
+  R.path<any>(['relation', 'refTable', 'displayName']),
 );
