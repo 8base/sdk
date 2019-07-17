@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "eslint": "eslint .",
     "postinstall": "lerna bootstrap",
     "build-packages": "lerna run build --scope @8base/*",
     "link-packages": "./bin/link-packages.sh",
