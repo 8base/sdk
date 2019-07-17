@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as R from 'ramda';
-import { Field as FinalField, FieldProps as FinalFieldProps } from 'react-final-form';
-import { compose, setDisplayName } from 'recompose';
+import { Field as FinalField, FieldProps } from 'react-final-form';
 import createValidate from '@8base/validate';
+import { tableSelectors } from '@8base/utils';
 
-import { withFieldSchema, WithFieldSchemaProps } from './utils';
-import { FieldProps } from './types';
-
-const enhancer: any = compose(
-  withFieldSchema,
-  setDisplayName('Field'),
-);
+import { FormContext } from './FormContext';
+import { getFieldSchemaName } from './utils';
 
 // @ts-ignore
 const hackMultiple = component => ({ tempMultiple, ...props }) =>
@@ -20,36 +15,39 @@ const hackMultiple = component => ({ tempMultiple, ...props }) =>
   });
 
 /**
- * `Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props and some extra props for easy working with 8base API.
- * @prop {FieldSchema} [fieldSchema] - The 8base API field schema.
- * @prop {string} [name] - The name of field, based on the 8base API table schema.
+ * `Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props.
  */
-const Field: React.ComponentType<FinalFieldProps<any, any>> = enhancer(
-  class Field extends React.Component<FieldProps & WithFieldSchemaProps> {
-    public collectProps: any = R.pipe(
-      R.when(R.has('fieldSchema'), ({ validate, ...rest }: any) => ({
-        name: rest.name || rest.fieldSchema.name,
-        validate:
-          typeof validate === 'function'
-            ? (...args: any) => validate(...args, createValidate(rest.fieldSchema))
-            : createValidate(rest.fieldSchema),
-        ...rest,
-      })),
-      R.when(R.propIs(String, 'component'), R.dissoc('fieldSchema')),
-    );
+const Field = (props: FieldProps<any, any>) => {
+  const { tableSchema, loading } = useContext(FormContext);
 
-    public render() {
-      let collectedProps: FieldProps = this.collectProps(this.props);
+  if (tableSchema) {
+    const fieldSchema = tableSelectors.getFieldByName(tableSchema, getFieldSchemaName(props.name));
 
-      // Temp fix, waiting for update https://github.com/final-form/react-final-form/releases/tag/v6.3.1
-      if (typeof collectedProps.component === 'function' && collectedProps.multiple) {
-        collectedProps = R.assoc('tempMultiple', collectedProps.multiple, collectedProps);
-        collectedProps = R.assoc('component', hackMultiple(collectedProps.component), collectedProps);
+    if (fieldSchema) {
+      const fieldValidate = createValidate(fieldSchema);
+
+      // Combine validation functions if needed
+      if (typeof props.validate === 'function') {
+        // @ts-ignore
+        props = R.assoc('validate', (...args: any) => props.validate(...args) || fieldValidate(...args), props);
+      } else {
+        props = R.assoc('validate', fieldValidate, props);
       }
 
-      return <FinalField {...collectedProps} />;
+      // Provide field schema to non basic fields
+      if (!R.propIs(String, 'component', props)) {
+        props = R.assoc('fieldSchema', fieldSchema, props);
+      }
     }
-  },
-);
+  }
+
+  // Temp fix, waiting for update https://github.com/final-form/react-final-form/releases/tag/v6.3.1
+  if (typeof props.component === 'function' && props.multiple) {
+    props = R.assoc('tempMultiple', props.multiple, props);
+    props = R.assoc('component', hackMultiple(props.component), props);
+  }
+
+  return <FinalField {...props} />;
+};
 
 export { Field };
