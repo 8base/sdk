@@ -14,11 +14,14 @@ type RenderableProps = {
 };
 
 type FormContextValue = {
-  tableSchema?: TableSchema;
+  tableSchema?: TableSchema | void;
+  appName?: string;
+  loading?: boolean;
 };
 
 type FormProps = {
   tableSchemaName?: string;
+  appName?: string;
   type?: 'CREATE' | 'UPDATE';
   ignoreNonTableFields?: boolean;
   formatRelationToIds?: boolean;
@@ -30,14 +33,7 @@ type FieldsetProps = {
   tableSchemaName?: string;
 } & RenderableProps;
 
-type FieldProps = {
-  validate?: (
-    value: any,
-    allValues: object,
-    meta: FinalFieldState<any> | null,
-    validateFieldSchema: PreparedValidator,
-  ) => any;
-} & FinalFieldProps<any, any>;
+type FieldProps = FinalFieldProps<any, any>;
 
 export {
   FieldProps,

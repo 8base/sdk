@@ -14,9 +14,9 @@
   "peerDependencies": {
     "apollo-client": "^2.6.3",
     "graphql": "^14.0.0",
-    "react": "^16.3.0",
+    "react": "^16.8.6",
     "react-apollo": "^2.5.0",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.8.6"
   },
   "dependencies": {
     "@8base/auth": "^0.32.2",

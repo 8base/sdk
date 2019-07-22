@@ -1,36 +1,29 @@
-import React from 'react';
-import { compose, setDisplayName } from 'recompose';
+import React, { useContext } from 'react';
+import * as R from 'ramda';
+import { tablesListSelectors, TableSchema } from '@8base/utils';
+import { TableSchemaContext } from '@8base/table-schema-provider';
 
 import { FormContext } from './FormContext';
-import { withTableSchema, renderComponent, WithTableSchemaProps } from './utils';
-import { FieldsetProps, FormContextValue } from './types';
-
-const enhacner: any = compose(
-  withTableSchema,
-  setDisplayName('Fieldset'),
-);
+import { renderComponent } from './utils';
+import { FieldsetProps } from './types';
 
 /**
  * `Fieldset` passes relation table schema to the children fields.
- * @prop {TableSchema} [tableSchema] - The 8base API table schema.
  * @prop {string} [tableSchemaName] - The name of the 8base API table schema. Worked only if you provide schema by `SchemaContext`.
  */
-const Fieldset: React.ComponentType<FieldsetProps> = enhacner(
-  class Fieldset extends React.Component<FieldsetProps & WithTableSchemaProps> {
-    public collectContextValue = (): FormContextValue => {
-      const { tableSchema } = this.props;
+const Fieldset = ({ tableSchemaName, ...props }: FieldsetProps) => {
+  const { appName } = useContext(FormContext);
+  const { tablesList } = useContext(TableSchemaContext);
 
-      return { tableSchema };
-    };
+  let tableSchema: TableSchema | void;
 
-    public render() {
-      const contextValue: FormContextValue = this.collectContextValue();
+  if (tableSchemaName && tablesList) {
+    tableSchema = tablesListSelectors.getTableByName(tablesList, tableSchemaName, appName);
+  }
 
-      const rendered = renderComponent(this.props);
+  props = R.assoc('tableSchema', tableSchema, props);
 
-      return <FormContext.Provider value={contextValue}>{rendered}</FormContext.Provider>;
-    }
-  },
-);
+  return <FormContext.Provider value={{ tableSchema }}>{renderComponent(props)}</FormContext.Provider>;
+};
 
 export { Fieldset };
