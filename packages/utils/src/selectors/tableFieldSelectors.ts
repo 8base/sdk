@@ -3,16 +3,16 @@ import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
 import { FieldSchema } from '../types';
 
-export const getTableField = (tableField: FieldSchema) => tableField;
+export const getTableField = (tableField: FieldSchema | void) => tableField;
 
 export const getFieldType: any = createSelector(
   getTableField,
-  R.prop('fieldType'),
+  R.propOr('', 'fieldType'),
 );
 
 export const getFieldTypesAttributes = createSelector(
   getTableField,
-  R.prop('fieldTypeAttributes'),
+  R.propOr(null, 'fieldTypeAttributes'),
 );
 
 export const isRelationField = createSelector(
@@ -52,17 +52,17 @@ export const isSystemField = createSelector(
 
 export const getFieldId = createSelector(
   getTableField,
-  R.prop('id'),
+  R.propOr('', 'id'),
 );
 
 export const getFieldName = createSelector(
   getTableField,
-  R.prop('name'),
+  fieldSchema => (fieldSchema ? fieldSchema.name : ''),
 );
 
 export const getFieldDisplayName = createSelector(
   getTableField,
-  R.prop('displayName'),
+  R.propOr('', 'displayName'),
 );
 
 export const getTableId = createSelector(

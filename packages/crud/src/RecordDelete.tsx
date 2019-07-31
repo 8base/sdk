@@ -13,10 +13,7 @@ interface IChildrenPropObject {
 type RecordDeleteProps = {
   tableId?: string;
 
-  children: (
-    mutateFunction: MutationFn,
-    result: IChildrenPropObject,
-  ) => React.ReactNode;
+  children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
 };
 
 /**

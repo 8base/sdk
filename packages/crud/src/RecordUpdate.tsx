@@ -16,7 +16,7 @@ interface IChildrenPropObject {
 type RecordUpdateProps = {
   tableId?: string;
   recordId: string;
-  includeColumns?: string[],
+  includeColumns?: string[];
   children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
 };
 
@@ -42,12 +42,7 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
     return (
       <RecordData tableSchema={tableSchema} tableId={tableId} recordId={recordId}>
         {recordDataResult => (
-          <RecordCrud
-            { ...rest }
-            tableSchema={tableSchema}
-            mode="update"
-            includeColumns={includeColumns}
-          >
+          <RecordCrud {...rest} tableSchema={tableSchema} mode="update" includeColumns={includeColumns}>
             {(mutateFunction, mutateResult) =>
               children(mutateFunction, {
                 mutateResult,

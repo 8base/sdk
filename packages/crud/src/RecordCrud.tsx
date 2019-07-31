@@ -18,10 +18,7 @@ type RecordCrudProps = {
   mode: CrudModes;
   includeColumns?: string[];
 
-  children: (
-    mutateFunction: MutationFn,
-    mutateResult: MutationResult,
-  ) => React.ReactNode;
+  children: (mutateFunction: MutationFn, mutateResult: MutationResult) => React.ReactNode;
 };
 
 const createRecordTag = (tableSchema: TableSchema, mode: CrudModes, options: QueryGeneratorConfig) => {
@@ -44,10 +41,12 @@ export class RecordCrud extends Component<RecordCrudProps> {
 
   public render() {
     const { tableSchema, children, mode, includeColumns, ...rest } = this.props;
-    const mutation = gql(createRecordTag(tableSchema, mode, {
-      permissions: this.context,
-      includeColumns: includeColumns || null,
-    }));
+    const mutation = gql(
+      createRecordTag(tableSchema, mode, {
+        permissions: this.context,
+        includeColumns: includeColumns || null,
+      }),
+    );
 
     return (
       <Mutation {...rest} mutation={mutation}>
