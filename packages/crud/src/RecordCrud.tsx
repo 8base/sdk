@@ -16,9 +16,10 @@ type CrudModes = 'create' | 'createMany' | 'update' | 'delete';
 type RecordCrudProps = {
   tableSchema: TableSchema;
   mode: CrudModes;
+  includeColumns?: string[];
 
   children: (
-    mutateFunction: (args: { [key: string]: any }) => Promise<any>,
+    mutateFunction: MutationFn,
     mutateResult: MutationResult,
   ) => React.ReactNode;
 };
@@ -42,13 +43,16 @@ export class RecordCrud extends Component<RecordCrudProps> {
   public static contextType = PermissionsContext;
 
   public render() {
-    const { tableSchema, children, mode, ...rest } = this.props;
-    const mutation = gql(createRecordTag(tableSchema, mode, { permissions: this.context }));
+    const { tableSchema, children, mode, includeColumns, ...rest } = this.props;
+    const mutation = gql(createRecordTag(tableSchema, mode, {
+      permissions: this.context,
+      includeColumns: includeColumns || null,
+    }));
 
     return (
       <Mutation {...rest} mutation={mutation}>
         {(mutateFunction: MutationFn, mutateResult: MutationResult) =>
-          children(variables => mutateFunction({ variables }), mutateResult)
+          children(options => mutateFunction(options), mutateResult)
         }
       </Mutation>
     );

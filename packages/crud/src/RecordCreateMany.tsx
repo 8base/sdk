@@ -37,7 +37,7 @@ export class RecordCreateMany extends Component<RecordCreateManyProps> {
     return (
       <RecordCrud {...rest} tableSchema={tableSchema} mode="createMany">
         {(mutateFunction, mutateResult) =>
-          children(data => mutateFunction({ data }), {
+          children(mutateFunction, {
             mutateResult,
             tableSchema,
           })
