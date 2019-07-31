@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MutationResult } from 'react-apollo';
+import { MutationResult, MutationFn } from 'react-apollo';
 import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
@@ -13,10 +13,7 @@ interface IChildrenPropObject {
 type RecordDeleteProps = {
   tableId?: string;
 
-  children: (
-    mutateFunction: (id: string, force: boolean) => Promise<any>,
-    result: IChildrenPropObject,
-  ) => React.ReactNode;
+  children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
 };
 
 /**
@@ -42,7 +39,7 @@ export class RecordDelete extends Component<RecordDeleteProps> {
     return (
       <RecordCrud {...rest} tableSchema={tableSchema} mode="delete">
         {(mutateFunction, mutateResult) =>
-          children((id: string, force: boolean) => mutateFunction({ filter: { id }, force }), {
+          children(mutateFunction, {
             mutateResult,
             tableSchema,
           })

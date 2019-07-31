@@ -16,7 +16,7 @@ interface IChildrenPropObject {
 type RecordUpdateProps = {
   tableId?: string;
   recordId: string;
-
+  includeColumns?: string[];
   children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
 };
 
@@ -29,7 +29,7 @@ type RecordUpdateProps = {
  */
 export class RecordUpdate extends Component<RecordUpdateProps> {
   public renderQuery = ({ tableSchema, loading }: ITableConsumerRenderProps) => {
-    const { tableId, children, recordId, ...rest } = this.props;
+    const { tableId, children, recordId, includeColumns, ...rest } = this.props;
 
     if (!tableSchema && !loading) {
       throw new SDKError(ERROR_CODES.TABLE_NOT_FOUND, PACKAGES.CRUD, `Table doesn't find`);
@@ -42,9 +42,9 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
     return (
       <RecordData tableSchema={tableSchema} tableId={tableId} recordId={recordId}>
         {recordDataResult => (
-          <RecordCrud {...rest} tableSchema={tableSchema} mode="update">
+          <RecordCrud {...rest} tableSchema={tableSchema} mode="update" includeColumns={includeColumns}>
             {(mutateFunction, mutateResult) =>
-              children(data => mutateFunction({ data, filter: { id: recordId } }), {
+              children(mutateFunction, {
                 mutateResult,
                 recordDataResult,
                 tableSchema,

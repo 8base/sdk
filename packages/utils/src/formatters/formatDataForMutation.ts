@@ -30,7 +30,7 @@ interface IFormatDataForMutationMeta {
 const formatDataForMutation = (
   type: MutationType,
   data: any,
-  { tableName, schema }: IFormatDataForMutationMeta,
+  { tableName, appName, schema }: IFormatDataForMutationMeta,
   options: IOptions = {},
 ) => {
   if (R.not(type in MUTATION_TYPE)) {
@@ -41,7 +41,7 @@ const formatDataForMutation = (
     return data;
   }
 
-  const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
+  const tableSchema = tablesListSelectors.getTableByName(schema, tableName, appName);
 
   if (!tableSchema) {
     throw new SDKError(

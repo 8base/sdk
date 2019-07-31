@@ -38,7 +38,7 @@ export class RecordCreate extends Component<RecordCreateProps> {
     return (
       <RecordCrud {...rest} tableSchema={tableSchema} mode="create">
         {(mutateFunction, mutateResult) =>
-          children(data => mutateFunction({ data }), {
+          children(mutateFunction, {
             mutateResult,
             tableSchema,
           })
