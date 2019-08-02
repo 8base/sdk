@@ -18,7 +18,7 @@ const hackMultiple = component => ({ tempMultiple, ...props }) =>
  * `Field` wrapper based on `Field` from the [`react-final-form`](https://github.com/final-form/react-final-form). That accept [`FieldProps`](https://github.com/final-form/react-final-form#fieldprops) props.
  */
 const Field = (props: FieldProps<any, any>) => {
-  const { tableSchema, loading } = useContext(FormContext);
+  const { tableSchema } = useContext(FormContext);
 
   if (tableSchema) {
     const fieldSchema = tableSelectors.getFieldByName(tableSchema, getFieldSchemaName(props.name));
@@ -28,8 +28,9 @@ const Field = (props: FieldProps<any, any>) => {
 
       // Combine validation functions if needed
       if (typeof props.validate === 'function') {
+        const { validate } = props;
         // @ts-ignore
-        props = R.assoc('validate', (...args: any) => props.validate(...args) || fieldValidate(...args), props);
+        props = R.assoc('validate', (...args: any) => validate(...args) || fieldValidate(...args), props);
       } else {
         props = R.assoc('validate', fieldValidate, props);
       }
