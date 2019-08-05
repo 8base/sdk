@@ -64,6 +64,14 @@ export const TABLE_FIELD_FRAGMENT = gql`
       refFieldIsList
       refFieldIsRequired
     }
+    schemaFeatures {
+      update
+      delete
+    }
+    dataFeatures {
+      create
+      update
+    }
   }
 
   fragment DateFieldTypeAttributes on DateFieldTypeAttributes {
@@ -137,6 +145,28 @@ export const TABLE_FRAGMENT = gql`
     isSystem
     fields {
       ...TableFieldFragment
+    }
+    schemaFeatures {
+      create {
+        DATE
+        FILE
+        JSON
+        NUMBER
+        RELATION
+        SMART
+        SWITCH
+        TEXT
+        UUID
+      }
+      update {
+        displayName
+        name
+      }
+    }
+    dataFeatures {
+      create
+      update
+      delete
     }
   }
 

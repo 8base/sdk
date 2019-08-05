@@ -3,7 +3,7 @@ import { createSelector, ParametricSelector, Selector } from 'reselect';
 import { FIELD_TYPE } from '../constants';
 import { FieldSchema } from '../types';
 
-export const getTableField = (tableField: FieldSchema | void) => tableField;
+export const getTableField = (tableField: FieldSchema | void): FieldSchema => tableField as any;
 
 export const getFieldType: any = createSelector(
   getTableField,
@@ -108,4 +108,14 @@ export const getRelationTableName: ParametricSelector<FieldSchema, void, string>
 export const getRelationTableDisplayName: ParametricSelector<FieldSchema, void, string> = createSelector(
   getTableField,
   R.path<any>(['relation', 'refTable', 'displayName']),
+);
+
+export const getSchemaFeatures = createSelector(
+  getTableField,
+  R.prop('schemaFeatures'),
+);
+
+export const getDataFeatures = createSelector(
+  getTableField,
+  R.prop('dataFeatures'),
 );

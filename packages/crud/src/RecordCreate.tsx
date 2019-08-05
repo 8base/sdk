@@ -12,7 +12,7 @@ interface IChildrenPropObject {
 
 type RecordCreateProps = {
   tableId?: string;
-
+  includeColumns?: string[];
   children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
 };
 
@@ -36,7 +36,7 @@ export class RecordCreate extends Component<RecordCreateProps> {
     }
 
     return (
-      <RecordCrud {...rest} tableSchema={tableSchema} mode="create">
+      <RecordCrud {...rest} tableSchema={tableSchema} mode="create" includeColumns={this.props.includeColumns}>
         {(mutateFunction, mutateResult) =>
           children(mutateFunction, {
             mutateResult,

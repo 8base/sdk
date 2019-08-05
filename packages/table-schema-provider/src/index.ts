@@ -3,3 +3,5 @@ export { TABLES_SCHEMA_QUERY, TABLE_FRAGMENT, TABLE_FIELD_FRAGMENT, TableSchemaP
 export { TableConsumer, ITableConsumerRenderProps } from './TableConsumer';
 export { withTablesList, WithTablesListProps } from './withTablesList';
 export { withApplicationsList } from './withApplicationsList';
+export { Features } from './Features';
+export { useTableSchema } from './useTableSchema';
