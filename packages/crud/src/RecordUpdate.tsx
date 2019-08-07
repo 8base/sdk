@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
-import { MutationFn, MutationResult, QueryResult } from 'react-apollo';
+import { MutationFn, MutationResult } from 'react-apollo';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 import { RecordCrud } from './RecordCrud';
-import { RecordData } from './RecordData';
 
 /** Results of the record update queries and mutation */
 interface IChildrenPropObject {
   tableSchema: TableSchema | null;
-  recordDataResult: QueryResult;
   mutateResult: MutationResult;
 }
 
@@ -40,19 +38,14 @@ export class RecordUpdate extends Component<RecordUpdateProps> {
     }
 
     return (
-      <RecordData tableSchema={tableSchema} tableId={tableId} recordId={recordId}>
-        {recordDataResult => (
-          <RecordCrud {...rest} tableSchema={tableSchema} mode="update" includeColumns={includeColumns}>
-            {(mutateFunction, mutateResult) =>
-              children(mutateFunction, {
-                mutateResult,
-                recordDataResult,
-                tableSchema,
-              })
-            }
-          </RecordCrud>
-        )}
-      </RecordData>
+      <RecordCrud {...rest} tableSchema={tableSchema} mode="update" includeColumns={includeColumns}>
+        {(mutateFunction, mutateResult) =>
+          children(mutateFunction, {
+            mutateResult,
+            tableSchema,
+          })
+        }
+      </RecordCrud>
     );
   };
 
