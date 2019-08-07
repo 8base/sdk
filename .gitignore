@@ -18,3 +18,5 @@ yarn-error.log
 yerna.log
 tsconfig.tsbuildinfo
 package.json.lerna_backup
+.graphqlconfig
+schema.graphql
