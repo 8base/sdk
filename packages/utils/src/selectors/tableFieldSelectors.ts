@@ -50,11 +50,6 @@ export const isMetaField = createSelector(
   R.propEq('isMeta', true),
 );
 
-export const isExternalField = createSelector(
-  getTableField,
-  R.propEq('isExternal', true),
-);
-
 export const isListField = createSelector(
   getTableField,
   R.propEq('isList', true),

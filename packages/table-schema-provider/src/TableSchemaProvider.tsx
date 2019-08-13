@@ -45,7 +45,6 @@ export const TABLE_FIELD_FRAGMENT = gql`
     defaultValue
     isSystem
     isMeta
-    isExternal
     relation {
       refFieldName
       refFieldDisplayName
