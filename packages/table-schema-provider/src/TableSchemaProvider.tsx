@@ -16,6 +16,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
       ...SmartFieldTypesAttributes
+      ...MissingRelationFieldTypeAttributes
     }
   }
 
@@ -36,6 +37,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
       ...FileFieldTypeAttributes
       ...DateFieldTypeAttributes
       ...SwitchFieldTypeAttributes
+      ...MissingRelationFieldTypeAttributes
     }
     isList
     isRequired
@@ -60,6 +62,14 @@ export const TABLE_FIELD_FRAGMENT = gql`
       }
       refFieldIsList
       refFieldIsRequired
+    }
+    schemaFeatures {
+      update
+      delete
+    }
+    dataFeatures {
+      create
+      update
     }
   }
 
@@ -103,6 +113,7 @@ export const TABLE_FIELD_FRAGMENT = gql`
         ...FileFieldTypeAttributes
         ...DateFieldTypeAttributes
         ...SwitchFieldTypeAttributes
+        ...MissingRelationFieldTypeAttributes
       }
     }
   }
@@ -110,6 +121,10 @@ export const TABLE_FIELD_FRAGMENT = gql`
   fragment SwitchFieldTypeAttributes on SwitchFieldTypeAttributes {
     format
     listOptions
+  }
+
+  fragment MissingRelationFieldTypeAttributes on MissingRelationFieldTypeAttributes {
+    missingTable
   }
 `;
 
@@ -129,6 +144,28 @@ export const TABLE_FRAGMENT = gql`
     isSystem
     fields {
       ...TableFieldFragment
+    }
+    schemaFeatures {
+      create {
+        DATE
+        FILE
+        JSON
+        NUMBER
+        RELATION
+        SMART
+        SWITCH
+        TEXT
+        UUID
+      }
+      update {
+        displayName
+        name
+      }
+    }
+    dataFeatures {
+      create
+      update
+      delete
     }
   }
 

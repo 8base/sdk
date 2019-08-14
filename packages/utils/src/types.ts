@@ -54,6 +54,14 @@ export type FieldSchema = {
       displayName: string;
     };
   };
+  schemaFeatures: {
+    update: boolean;
+    delete: boolean;
+  };
+  dataFeatures: {
+    create: boolean;
+    update: boolean;
+  };
 };
 
 export type Application = {
@@ -74,6 +82,28 @@ export type TableSchema = {
   displayName?: string;
   isSystem?: boolean;
   fields: FieldSchema[];
+  schemaFeatures: {
+    create: {
+      DATE: boolean;
+      FILE: boolean;
+      JSON: boolean;
+      NUMBER: boolean;
+      RELATION: boolean;
+      SMART: boolean;
+      SWITCH: boolean;
+      TEXT: boolean;
+      UUID: boolean;
+    };
+    update: {
+      displayName: boolean;
+      name: boolean;
+    };
+  };
+  dataFeatures: {
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+  };
 };
 
 export type Schema = TableSchema[];

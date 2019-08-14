@@ -16,6 +16,8 @@
     "@8base/error-codes": "^1.0.12",
     "@8base/schema-name-generator": "^0.1.5",
     "graphql-prettier": "^1.0.5",
+    "os": "^0.1.1",
+    "prettier": "^1.17.0",
     "ramda": "^0.26.1",
     "reselect": "^4.0.0"
   },

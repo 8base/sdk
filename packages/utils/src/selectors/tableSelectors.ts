@@ -3,7 +3,17 @@ import { createSelector, ParametricSelector } from 'reselect';
 import { FIELD_TYPE, SMART_FORMATS } from '../constants';
 import { TableSchema, FieldSchema } from '../types';
 
-export const getTable = (table: TableSchema) => table;
+export const getTable = (table: TableSchema) => table || {};
+
+export const getTableName = createSelector(
+  getTable,
+  R.prop('name'),
+);
+
+export const getTableId = createSelector(
+  getTable,
+  R.prop('id'),
+);
 
 export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> = (
   { fields }: TableSchema,
@@ -32,6 +42,15 @@ export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = cr
   R.propOr('', 'fieldType'),
 );
 
+export const getTableApplication = createSelector(
+  getTable,
+  R.prop('application'),
+);
+
+export const getTableAppName = createSelector(
+  getTableApplication,
+  R.propOr(null, 'name'),
+);
 export const isSystemField = createSelector(
   getTable,
   R.propEq('isSystem', true),
@@ -127,4 +146,14 @@ export const hasPhoneFields = R.pipe(
     !!fields.find(
       ({ fieldTypeAttributes = {} }) => fieldTypeAttributes && fieldTypeAttributes.format === SMART_FORMATS.PHONE,
     ),
+);
+
+export const getSchemaFeatures = createSelector(
+  getTable,
+  R.prop('schemaFeatures'),
+);
+
+export const getDataFeatures = createSelector(
+  getTable,
+  R.prop('dataFeatures'),
 );

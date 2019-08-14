@@ -4,25 +4,28 @@ import { createSelector, ParametricSelector } from 'reselect';
 
 export const getTableList = (tables?: TableSchema[]) => tables || [];
 
-export const getTableById: ParametricSelector<TableSchema[], string, TableSchema | void> = createSelector(
+export const getTableById: ParametricSelector<TableSchema[], string, TableSchema> = createSelector(
   getTableList,
   (_: any, tableId: string) => tableId,
-  (tables, tableId) => tables && tables.find(({ id }) => id === tableId),
+  (tables, tableId): any => (tables && tables.find(({ id }) => id === tableId)) || {},
 );
 
-export const getTableByName: ParametricSelector<TableSchema[], any, TableSchema | void> = createSelector(
+export const getTableByName: (
+  schema: TableSchema[],
+  tableName: string,
+  appName?: string | null,
+) => TableSchema = createSelector(
   getTableList,
   (_: any, tableName: string) => tableName,
   (_: any, __: any, applicationName: string) => applicationName,
-  (tables, tableName, applicationName) =>
-    tables &&
-    tables
-      .filter(({ application }) =>
-        application && applicationName
-          ? application.name.toLowerCase() === applicationName.toLowerCase()
-          : !applicationName,
-      )
-      .find(({ name }) => name.toLowerCase() === tableName.toLowerCase()),
+  (tables, tableName, appName): any =>
+    (tables &&
+      tables
+        .filter(({ application }) =>
+          application && appName ? application.name.toLowerCase() === appName.toLowerCase() : !appName,
+        )
+        .find(({ name }) => name.toLowerCase() === tableName.toLowerCase())) ||
+    {},
 );
 
 export const getTableApplication: ParametricSelector<TableSchema[], string, Application | void> = createSelector(

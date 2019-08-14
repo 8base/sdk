@@ -8,6 +8,7 @@ import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
 
 interface IFormatDataAfterQueryMeta {
   tableName: string;
+  appName?: string;
   schema: Schema;
 }
 
@@ -20,10 +21,10 @@ interface IFormatDataAfterQueryMeta {
  */
 const formatDataAfterQuery = (
   data: { [key: string]: any },
-  { tableName, schema }: IFormatDataAfterQueryMeta,
+  { tableName, appName, schema }: IFormatDataAfterQueryMeta,
   options: FormatDataAfterQueryOptions = {},
 ) => {
-  const tableSchema = tablesListSelectors.getTableByName(schema, tableName);
+  const tableSchema = tablesListSelectors.getTableByName(schema, tableName, appName);
 
   if (!tableSchema) {
     throw new SDKError(
