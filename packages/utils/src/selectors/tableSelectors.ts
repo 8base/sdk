@@ -10,6 +10,11 @@ export const getTableName = createSelector(
   R.prop('name'),
 );
 
+export const getTableDisplayName = createSelector(
+  getTable,
+  R.prop('displayName'),
+);
+
 export const getTableId = createSelector(
   getTable,
   R.prop('id'),
@@ -51,6 +56,12 @@ export const getTableAppName = createSelector(
   getTableApplication,
   R.propOr(null, 'name'),
 );
+
+export const getTableAppDisplayName = createSelector(
+  getTableApplication,
+  R.propOr(null, 'displayName'),
+);
+
 export const isSystemField = createSelector(
   getTable,
   R.propEq('isSystem', true),
