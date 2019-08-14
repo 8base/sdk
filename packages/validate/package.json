@@ -1,6 +1,6 @@
 {
   "name": "@8base/validate",
-  "version": "0.34.0",
+  "version": "0.35.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/validate#readme",
   "main": "dist/index.js",
@@ -12,7 +12,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^0.34.0",
+    "@8base/utils": "^0.35.0",
     "decimal.js": "^10.1.1",
     "ramda": "^0.26.1"
   },
