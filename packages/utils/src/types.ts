@@ -79,7 +79,7 @@ export type TableSchema = {
   id: string;
   name: string;
   application: Application;
-  displayName?: string;
+  displayName: string;
   isSystem?: boolean;
   fields: FieldSchema[];
   schemaFeatures: {
