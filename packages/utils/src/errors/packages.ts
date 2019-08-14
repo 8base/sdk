@@ -3,7 +3,7 @@ export enum PACKAGES {
   APOLLO_CLIENT = '@8base/apollo-client',
   APOLLO_LINKS = '@8base/apollo-links',
   APP_PROVIDER = '@8base/app-provider',
-  AUTH = '@8base/auth',
+  AUTH = '@8base/react-auth',
   CRUD = '@8base/crud',
   FILE_INPUT = '@8base/file-input',
   FORMS = '@8base/forms',

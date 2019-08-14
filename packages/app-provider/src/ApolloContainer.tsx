@@ -5,7 +5,7 @@ import {
   InMemoryCache,
   IntrospectionFragmentMatcher,
 } from 'apollo-cache-inmemory';
-import { withAuth, WithAuthProps } from '@8base/auth';
+import { withAuth, WithAuthProps } from '@8base/react-auth';
 import { ApolloClient } from '@8base/apollo-client';
 
 import { ApolloContainerPassedProps } from './types';

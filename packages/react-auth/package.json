@@ -1,5 +1,5 @@
 {
-  "name": "@8base/auth",
+  "name": "@8base/react-auth",
   "version": "0.35.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/auth#readme",

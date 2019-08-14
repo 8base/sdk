@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { withAuth, WithAuthProps } from '@8base/auth';
+import { withAuth, WithAuthProps } from '@8base/react-auth';
 
 import { PermissionsContext } from './PermissionsContext';
 import { getPermissions } from './getPermissions';

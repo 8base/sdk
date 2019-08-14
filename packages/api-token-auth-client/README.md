@@ -23,7 +23,7 @@ Create instance of the api token auth client
 ## Usage
 
 ```js
-import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
+import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/react-auth';
 import { ApiTokenAuthClient } form '@8base/api-token-auth-client';
 
   const authClient = new ApiTokenAuthClient({

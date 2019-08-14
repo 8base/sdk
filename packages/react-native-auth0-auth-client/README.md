@@ -25,7 +25,7 @@ Create an instance of the react-native auth0 auth client.
 
 ```js
 ...
-import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
+import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/react-auth';
 import { ReactNativeAuth0AuthClient } form '@8base/react-native-auth0-auth-client';
 
   const authClient = new ReactNativeAuth0AuthClient({

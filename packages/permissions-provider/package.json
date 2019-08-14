@@ -20,7 +20,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@8base/auth": "^0.35.1",
+    "@8base/react-auth": "^0.35.1",
     "graphql-tag": "^2.10.0",
     "ramda": "^0.26.1",
     "recompose": "^0.30.0"
