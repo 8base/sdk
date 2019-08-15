@@ -13,7 +13,6 @@ status=0
 (./bin/run.sh "utils" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "validate" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "react-auth" "test" "yarn test --verbose") || status=1
-(./bin/run.sh "react-native-auth0-auth-client" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "web-auth0-auth-client" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "api-token-auth-client" "test" "yarn test --verbose") || status=1
 (./bin/run.sh "react-sdk" "test" "yarn test --verbose") || status=1
