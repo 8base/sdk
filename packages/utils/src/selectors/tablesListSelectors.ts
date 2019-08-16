@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { TableSchema, FieldSchema, Application } from '../types';
 import { createSelector, ParametricSelector } from 'reselect';
 
@@ -45,12 +45,12 @@ export const getTableApplicationName: ParametricSelector<TableSchema[], string, 
 
 export const getNoSystemTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(R.propEq('isSystem', false)),
+  tablesList => tablesList.filter(({ isSystem }) => !isSystem),
 );
 
 export const getSystemTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(R.propEq('isSystem', true)),
+  tablesList => tablesList.filter(({ isSystem }) => isSystem),
 );
 
 export const hasNoSystemTables: ParametricSelector<TableSchema[], void, boolean> = createSelector(
@@ -58,16 +58,26 @@ export const hasNoSystemTables: ParametricSelector<TableSchema[], void, boolean>
   tables => tables.length > 0,
 );
 
-export const getTablesByApplicationName = createSelector(
-  getTableList,
-  (applicationName: string) => applicationName,
-  (tablesList, applicationName) =>
-    tablesList.filter(({ application }) => application && application.name === applicationName),
-);
-
 export const getUserTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
   tablesList => tablesList.filter(({ isSystem, application }) => !isSystem && !application),
+);
+
+export const getApplicationTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
+  getTableList,
+  tablesList => tablesList.filter(({ application }) => !!application),
+);
+
+export const getTablesByApplicationName = createSelector(
+  getTableList,
+  (_: any, appName: string) => appName,
+  (tablesList, appName) => tablesList.filter(({ application }) => application && application.name === appName),
+);
+
+export const getTablesByApplicationId = createSelector(
+  getTableList,
+  (_: any, appId: string) => appId,
+  (tablesList, appId) => tablesList.filter(({ application }) => application && application.id === appId),
 );
 
 export const hasUserTables: ParametricSelector<TableSchema[], void, boolean> = createSelector(
