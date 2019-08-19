@@ -116,34 +116,22 @@ export type SchemaResponse = {
   count: number;
 };
 
-export type AuthState = {
-  email?: string;
-  userId?: string;
-  workspaceId?: string;
-  refreshToken?: string;
+export interface IAuthState {
   token?: string;
-};
-
-export type AuthData = {
-  state?: object;
-  isEmailVerified: boolean;
-  idToken: string;
-  email: string;
-  idTokenPayload: any;
-};
-
-export interface IAuthClient {
-  getAuthState(): Promise<AuthState>;
-  setAuthState(state: AuthState): Promise<void>;
-  purgeAuthState(options?: { withLogout?: boolean; logoutOptions?: object }): Promise<void>;
-  checkIsAuthorized(): Promise<boolean>;
+  [key: string]: any;
 }
 
-export interface IAuthorizable {
-  authorize(options?: object): Promise<void>;
-  renewToken(options?: object): Promise<AuthData>;
-  changePassword(): Promise<{ email: string }>;
-  logout(options?: object): Promise<void>;
+export interface IAuthClient {
+  getState: () => IAuthState;
+  setState: (state: IAuthState) => void;
+  purgeState: () => void;
+  checkIsAuthorized: () => boolean;
+}
+
+export interface IStorage {
+  getItem: (keyName: string) => string | null;
+  setItem: (keyName: string, keyValue: string) => void;
+  removeItem: (keyName: string) => void;
 }
 
 export type QueryGeneratorConfig = {

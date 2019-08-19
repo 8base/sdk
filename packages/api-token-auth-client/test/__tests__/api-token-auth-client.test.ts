@@ -8,41 +8,39 @@ describe('ApiTokenClient', () => {
   it("Throws an error if apiToken haven't provided", () => {
     expect(() => {
       // @ts-ignore
-      const temp = new ApiTokenAuthClient({});
+      const temp = new ApiTokenAuthClient();
     }).toThrow('apiToken is required');
   });
 
-  const authClient = new ApiTokenAuthClient({
-    apiToken: API_TOKEN,
-  });
+  const authClient = new ApiTokenAuthClient(API_TOKEN);
 
-  it('As a developer, i can get api token by getAuthState', async () => {
-    expect(await authClient.getAuthState()).toEqual({
+  it('As a developer, I can get api token from the state', async () => {
+    expect(authClient.getState()).toEqual({
       token: API_TOKEN,
     });
   });
 
-  it("As a developer, i can't rewrite apiToken state param", async () => {
-    await authClient.setAuthState({
+  it("As a developer, I can't rewrite token in the state", async () => {
+    authClient.setState({
       token: ANOTHER_API_TOKEN,
       workspaceId: WORKSPACE_ID,
     });
 
-    expect(await authClient.getAuthState()).toEqual({
+    expect(authClient.getState()).toEqual({
       token: API_TOKEN,
       workspaceId: WORKSPACE_ID,
     });
   });
 
-  it("As a developer, i can't purge apiToken state param", async () => {
-    await authClient.purgeAuthState();
+  it("As a developer, I can't purge token from the state", async () => {
+    authClient.purgeState();
 
-    expect(await authClient.getAuthState()).toEqual({
+    expect(authClient.getState()).toEqual({
       token: API_TOKEN,
     });
   });
 
   it("ApiTokenClient's instance is always authorized", async () => {
-    expect(await authClient.checkIsAuthorized()).toBe(true);
+    expect(authClient.checkIsAuthorized()).toBe(true);
   });
 });

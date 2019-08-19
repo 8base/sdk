@@ -5,3 +5,4 @@ export * from './verifiers';
 export * from './queryGenerators';
 export * from './errors';
 export * from './types';
+export * from './StorageAPI';
