@@ -134,6 +134,16 @@ export interface IStorage {
   removeItem: (keyName: string) => void;
 }
 
+export type Unsubscribe = () => void;
+
+export type ISubscriber = (state: any) => void;
+
+export interface IPublisher {
+  subscribe: (subscriber: ISubscriber) => Unsubscribe;
+  notify: (state: any) => void;
+  batch: (fn: () => void) => void;
+}
+
 export type QueryGeneratorConfig = {
   deep?: number;
   withMeta?: boolean;
