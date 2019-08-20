@@ -118,7 +118,7 @@ export type SchemaResponse = {
 
 export interface IAuthState {
   token?: string;
-  [key: string]: any;
+  [additionalProperty: string]: any;
 }
 
 export interface IAuthClient {
@@ -126,6 +126,7 @@ export interface IAuthClient {
   setState: (state: IAuthState) => void;
   purgeState: () => void;
   checkIsAuthorized: () => boolean;
+  [additionalProperty: string]: any;
 }
 
 export interface IStorage {

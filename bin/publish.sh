@@ -7,6 +7,7 @@ status=0
 (./bin/try-publish.sh "apollo-links") || status=1
 (./bin/try-publish.sh "app-provider") || status=1
 (./bin/try-publish.sh "react-auth") || status=1
+(./bin/try-publish.sh "auth") || status=1
 (./bin/try-publish.sh "crud") || status=1
 (./bin/try-publish.sh "file-input") || status=1
 (./bin/try-publish.sh "forms") || status=1
