@@ -1,11 +1,4 @@
-import {
-  AppProvider,
-  FragmentsSchemaContainer,
-  AuthProvider,
-  AuthContext,
-  withAuth,
-  withLogout,
-} from '@8base/app-provider';
+import { AppProvider, FragmentsSchemaContainer, AuthProvider, AuthContext, withAuth } from '@8base/app-provider';
 import { ApolloClient, gql, InMemoryCache } from '@8base/apollo-client';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 
@@ -30,10 +23,6 @@ describe('@8base/react-sdk', () => {
 
   it('exports withAuth', () => {
     expect(reactSDK.withAuth).toBe(withAuth);
-  });
-
-  it('exports withLogout', () => {
-    expect(reactSDK.withLogout).toBe(withLogout);
   });
 
   it('exports ApolloClient', () => {

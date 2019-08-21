@@ -1,25 +1,57 @@
-export const SampleAuthClient: any = function() {
-  let authState: any = {};
+import { IAuthClient, IStorage, StorageAPI, IAuthState } from '@8base/utils';
 
-  const purgeAuthState = jest.fn(async () => {
-    authState = {};
-  });
-  const setAuthState = jest.fn(async state => {
-    authState = state;
-  });
-  const getAuthState = jest.fn(async () => {
-    return authState;
-  });
-  const checkIsAuthorized = jest.fn(async () => {
-    return !!authState.token;
+export const authState = {};
+
+export const externalAuth = {
+  login: jest.fn(() => ({ token: 'some-token' })),
+  logout: jest.fn(() => ({ token: null })),
+};
+
+export const authStorage: IStorage = {
+  getItem: key => Reflect.get(authState, key),
+  setItem: (key, value) => {
+    Reflect.set(authState, key, value);
+  },
+  removeItem: key => {
+    Reflect.deleteProperty(authState, key);
+  },
+};
+
+export const DummyAuthClient = (): IAuthClient => {
+  const storageAPI = new StorageAPI<IAuthState>(authStorage, 'auth');
+
+  const getState = jest.fn(() => {
+    return storageAPI.getState();
   });
 
-  // @ts-ignore
-  this.purgeAuthState = purgeAuthState;
-  // @ts-ignore
-  this.setAuthState = setAuthState;
-  // @ts-ignore
-  this.getAuthState = getAuthState;
-  // @ts-ignore
-  this.checkIsAuthorized = checkIsAuthorized;
+  const setState = jest.fn((newState: IAuthState) => {
+    storageAPI.setState(newState);
+  });
+
+  const purgeState = jest.fn(() => {
+    storageAPI.purgeState();
+  });
+
+  const checkIsAuthorized = jest.fn(() => {
+    const state = getState();
+
+    return !!state.token;
+  });
+
+  const login = jest.fn(() => {
+    return externalAuth.login();
+  });
+
+  const logout = jest.fn(() => {
+    return externalAuth.logout();
+  });
+
+  return {
+    getState,
+    setState,
+    purgeState,
+    checkIsAuthorized,
+    login,
+    logout,
+  };
 };

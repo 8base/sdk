@@ -8,11 +8,11 @@ import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
-import { AuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
+import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApolloClientCommon = {
   uri: string;
-  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<AuthState> }) => ApolloLink[];
+  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<IAuthState> }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
   onRequestSuccess?: (options: { operation: Operation; data: any }) => void;
@@ -23,7 +23,7 @@ type ApolloClientOptions = {
   withAuth?: boolean;
   autoSignUp?: boolean;
   authProfileId?: string;
-  getAuthState?: () => Promise<AuthState>;
+  getAuthState?: () => Promise<IAuthState>;
   getRefreshTokenParameters?: Function;
   onAuthSuccess?: Function;
 } & ApolloClientCommon;

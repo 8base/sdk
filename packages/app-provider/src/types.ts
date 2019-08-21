@@ -1,5 +1,5 @@
 import { ApolloLink } from 'apollo-link';
-import { AuthState, TableSchema, Application } from '@8base/utils';
+import { IAuthState, TableSchema, Application } from '@8base/utils';
 
 export type ApolloContainerPassedProps = {
   uri: string;
@@ -9,7 +9,7 @@ export type ApolloContainerPassedProps = {
   onRequestError: (request: { [key: string]: any }) => void;
   extendLinks?: (
     links: ApolloLink[],
-    options: { getAuthState?: () => Promise<AuthState> },
+    options: { getAuthState?: () => Promise<IAuthState> },
   ) => ApolloLink[];
   introspectionQueryResultData?: Object;
   tablesList?: TableSchema[];

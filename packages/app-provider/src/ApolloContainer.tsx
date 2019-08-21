@@ -66,24 +66,25 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
 
     public onIdTokenExpired = async () => {
       const {
-        auth: { setAuthState, renewToken },
+        auth: { authClient },
       } = this.props;
 
-      const { idToken } = await renewToken({});
+      const { idToken } = await authClient.checkSession({});
 
-      await setAuthState({ token: idToken });
+      authClient.setState({ token: idToken });
     };
 
     public onAuthError = async () => {
       const {
-        auth: { purgeAuthState, logout },
+        auth: { authClient },
       } = this.props;
 
-      await purgeAuthState();
+      await this.client.clearStore();
 
-      if (typeof logout === 'function') {
-        await logout();
-      }
+      authClient.batch(() => {
+        authClient.purgeAuthState();
+        authClient.logout();
+      });
     };
 
     public getAuthState = async () => {

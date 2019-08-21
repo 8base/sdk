@@ -1,9 +1,10 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import { getDisplayName } from 'recompose';
+import { getDisplayName } from '@8base/utils';
+import { SubscribableDecorator } from '@8base/auth';
 
 import { AuthProvider, withAuth, WithAuthProps } from '../../src';
-import { SampleAuthClient } from '../utils';
+import { DummyAuthClient } from '../utils';
 
 type StubComponentProps = {
   foo: number;
@@ -23,9 +24,10 @@ const StubComponent = ({ auth: { isAuthorized }, foo }: StubComponentProps) => (
 const EnhancedStubComponent = withAuth(StubComponent);
 
 describe('withAuth', () => {
-  const authClient = new SampleAuthClient();
+  const authClient = DummyAuthClient();
+  const subscribableAuthClient = SubscribableDecorator.decorate(authClient);
   const testRenderer = TestRenderer.create(
-    <AuthProvider authClient={authClient}>
+    <AuthProvider authClient={subscribableAuthClient}>
       <EnhancedStubComponent foo={42} />
     </AuthProvider>,
   );

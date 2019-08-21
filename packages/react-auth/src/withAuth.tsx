@@ -1,6 +1,6 @@
 import React from 'react';
 import { Subtract } from 'utility-types';
-import { wrapDisplayName } from 'recompose';
+import { getDisplayName } from '@8base/utils';
 
 import { AuthContext, AuthContextProps } from './AuthContext';
 
@@ -10,7 +10,7 @@ export type WithAuthProps = {
 
 const withAuth = <T extends WithAuthProps>(WrappedComponent: React.ComponentType<T>) =>
   class WithAuth extends React.Component<Subtract<T, WithAuthProps>> {
-    public static displayName = wrapDisplayName(WrappedComponent, 'withAuth');
+    public static displayName = `withAuth(${getDisplayName<T>(WrappedComponent)})`;
 
     public render() {
       return (

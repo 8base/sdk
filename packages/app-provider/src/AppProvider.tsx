@@ -1,12 +1,12 @@
 import React from 'react';
-import { IAuthClient, IAuthorizable } from '@8base/utils';
+import { ISubscribableAuthClient } from '@8base/auth';
 import { AuthProvider } from '@8base/react-auth';
 import { ApolloContainer } from './ApolloContainer';
 import { ApolloContainerPassedProps } from './types';
 import { TableSchemaProvider } from '@8base/table-schema-provider';
 
 export type AppProviderProps = ApolloContainerPassedProps & {
-  authClient?: IAuthClient & IAuthorizable;
+  authClient?: ISubscribableAuthClient;
   children:
     | React.ReactNode
     | ((renderProps: { loading: boolean }) => React.ReactNode);
