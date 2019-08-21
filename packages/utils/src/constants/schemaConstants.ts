@@ -179,3 +179,9 @@ export const APP_STATUS: {
 export const APP_TYPES = {
   SALESFORCE: 'salesforce',
 };
+
+export const FIELD_KINDS = {
+  USER: 'USER',
+  SYSTEM: 'SYSTEM',
+  EXTERNAL: 'EXTERNAL',
+};

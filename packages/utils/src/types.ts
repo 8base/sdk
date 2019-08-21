@@ -8,11 +8,14 @@ import {
   MUTATION_TYPE,
   SMART_FORMATS,
   APP_STATUS,
+  FIELD_KINDS,
 } from './constants';
 
 export type MutationType = keyof typeof MUTATION_TYPE;
 
 export type FieldType = keyof typeof FIELD_TYPE;
+
+export type FieldKind = keyof typeof FIELD_KINDS;
 
 export type Format =
   | keyof typeof SWITCH_FORMATS

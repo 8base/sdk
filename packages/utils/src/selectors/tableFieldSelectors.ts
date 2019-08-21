@@ -1,7 +1,9 @@
 import * as R from 'ramda';
 import { createSelector, ParametricSelector, Selector } from 'reselect';
-import { FIELD_TYPE } from '../constants';
-import { FieldSchema } from '../types';
+import * as tablesListSelectors from './tablesListSelectors';
+import * as tableSelectors from './tableSelectors';
+import { FIELD_TYPE, FIELD_KINDS } from '../constants';
+import { FieldSchema, TableSchema, FieldKind } from '../types';
 
 export const getTableField = (tableField: FieldSchema | void): FieldSchema => tableField as any;
 
@@ -113,4 +115,27 @@ export const getSchemaFeatures = createSelector(
 export const getDataFeatures = createSelector(
   getTableField,
   R.prop('dataFeatures'),
+);
+
+export const getFieldKind = createSelector(
+  isSystemField,
+  getRelationTableId,
+  (_, tablesSchema: TableSchema[]): TableSchema[] => tablesSchema,
+  (isSystem: boolean, relationTableId: string, tablesSchema: TableSchema[]) => {
+    let kind = FIELD_KINDS.USER;
+
+    if (isSystem) {
+      kind = FIELD_KINDS.SYSTEM;
+    } else if (relationTableId) {
+      const refTable = tablesListSelectors.getTableById(tablesSchema, relationTableId);
+
+      if (tableSelectors.isSystemTable(refTable)) {
+        kind = FIELD_KINDS.SYSTEM;
+      } else if (tableSelectors.isIntegrationTable(refTable)) {
+        kind = FIELD_KINDS.EXTERNAL;
+      }
+    }
+
+    return kind;
+  },
 );
