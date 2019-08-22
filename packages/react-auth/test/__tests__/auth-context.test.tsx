@@ -25,7 +25,7 @@ const StubComponent = ({ auth: { isAuthorized } }: StubComponentProps) => {
 };
 
 describe('AuthContext', () => {
-  it("Throws an error if authCleint isn't decorated with publisher", () => {
+  it("Throws an error if auth client isn't decorated with publisher", () => {
     expect(() => {
       TestRenderer.create(
         // @ts-ignore

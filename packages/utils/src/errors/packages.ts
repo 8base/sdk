@@ -9,7 +9,6 @@ export enum PACKAGES {
   FILE_INPUT = '@8base/file-input',
   FORMS = '@8base/forms',
   PERMISSIONS_PROVIDER = '@8base/permissions-provider',
-  REACT_NATIVE_AUTH0_AUTH_CLIENT = '@8base/react-native-auth0-auth-client',
   TABLE_SCHEMA_PROVIDER = '@8base/table-schema-provider',
   UTILS = '@8base/utils',
   VALIDATE = '@8base/validate',

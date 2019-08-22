@@ -23,7 +23,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
   let mergedLink: any = null;
 
   beforeEach(() => {
-    getAuthState = jest.fn().mockResolvedValue({
+    getAuthState = jest.fn().mockReturnValue({
       email: USER_EMAIL,
     });
 

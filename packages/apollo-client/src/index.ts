@@ -12,7 +12,7 @@ import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApolloClientCommon = {
   uri: string;
-  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => Promise<IAuthState> }) => ApolloLink[];
+  extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => IAuthState }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
   onRequestSuccess?: (options: { operation: Operation; data: any }) => void;
@@ -23,7 +23,7 @@ type ApolloClientOptions = {
   withAuth?: boolean;
   autoSignUp?: boolean;
   authProfileId?: string;
-  getAuthState?: () => Promise<IAuthState>;
+  getAuthState?: () => IAuthState;
   getRefreshTokenParameters?: Function;
   onAuthSuccess?: Function;
 } & ApolloClientCommon;

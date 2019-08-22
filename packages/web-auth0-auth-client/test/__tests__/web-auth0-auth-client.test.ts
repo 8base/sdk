@@ -37,14 +37,12 @@ jest.mock('auth0-js', () => {
 const auth0 = require('auth0-js'); // tslint:disable-line
 
 describe('WebAuth0AuthClient', () => {
-  const authClient = new WebAuth0AuthClient(
-    {
-      clientId: CLIENT_ID,
-      domain: DOMAIN,
-      redirectUri: REDIRECT_URI,
-    },
-    LOGOUT_REDIRECT_URI,
-  );
+  const authClient = new WebAuth0AuthClient({
+    clientId: CLIENT_ID,
+    domain: DOMAIN,
+    redirectUri: REDIRECT_URI,
+    logoutRedirectUri: LOGOUT_REDIRECT_URI,
+  });
 
   it('As a developer, I can authorize by the client', () => {
     authClient.authorize({

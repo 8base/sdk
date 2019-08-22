@@ -1,4 +1,15 @@
-import { IAuthState, IAuthClient, IStorage, SDKError, ERROR_CODES, PACKAGES, StorageAPI } from '@8base/utils';
+import {
+  IAuthState,
+  IAuthClient,
+  IStorage,
+  PACKAGES,
+  StorageAPI,
+  throwIfMissingRequiredParameters,
+} from '@8base/utils';
+
+interface IApiTokenAuthClientOptions {
+  apiToken: string;
+}
 
 /**
  * Creates instacne of the api token auth client
@@ -7,10 +18,14 @@ class ApiTokenAuthClient implements IAuthClient {
   private storageAPI: StorageAPI<IAuthState>;
   private apiToken: string;
 
-  constructor(apiToken: string, storage: IStorage = window.localStorage, storageKey: string = 'auth') {
-    if (!apiToken) {
-      throw new SDKError(ERROR_CODES.MISSING_PARAMETER, PACKAGES.API_TOKEN_AUTH_CLIENT, 'apiToken is required');
-    }
+  constructor(
+    options: IApiTokenAuthClientOptions,
+    storage: IStorage = window.localStorage,
+    storageKey: string = 'auth',
+  ) {
+    throwIfMissingRequiredParameters(['apiToken'], PACKAGES.API_TOKEN_AUTH_CLIENT, options);
+
+    const { apiToken } = options;
 
     this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
     this.apiToken = apiToken;

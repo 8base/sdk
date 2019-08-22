@@ -45,14 +45,12 @@ describe('AppProvider', () => {
     const onRequestSuccess = jest.fn();
     const uri = 'http://8base.com';
 
-    const authClient: any = new WebAuth0AuthClient(
-      {
-        domain: 'qweqwe',
-        clientId: 'asdad',
-        redirectUri: `${window.location.origin}/auth/callback`,
-      },
-      `${window.location.origin}/auth`,
-    );
+    const authClient: any = new WebAuth0AuthClient({
+      domain: 'qweqwe',
+      clientId: 'asdad',
+      redirectUri: `${window.location.origin}/auth/callback`,
+      logoutRedirectUri: `${window.location.origin}/auth`,
+    });
 
     mount(
       <AppProvider
@@ -100,14 +98,12 @@ describe('AppProvider', () => {
     const onRequestSuccess = jest.fn();
     const uri = 'http://8base.com';
 
-    const authClient: any = new WebAuth0AuthClient(
-      {
-        domain: 'qweqwe',
-        clientId: 'asdad',
-        redirectUri: `${window.location.origin}/auth/callback`,
-      },
-      `${window.location.origin}/auth`,
-    );
+    const authClient: any = new WebAuth0AuthClient({
+      domain: 'qweqwe',
+      clientId: 'asdad',
+      redirectUri: `${window.location.origin}/auth/callback`,
+      logoutRedirectUri: `${window.location.origin}/auth`,
+    });
 
     const wrapper = mount(
       <AppProvider

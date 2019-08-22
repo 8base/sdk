@@ -87,7 +87,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       });
     };
 
-    public getAuthState = async () => {
+    public getAuthState = () => {
       const {
         auth: { authState },
       } = this.props;

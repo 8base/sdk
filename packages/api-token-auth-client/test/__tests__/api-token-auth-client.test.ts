@@ -9,10 +9,10 @@ describe('ApiTokenClient', () => {
     expect(() => {
       // @ts-ignore
       const temp = new ApiTokenAuthClient();
-    }).toThrow('apiToken is required');
+    }).toThrow('Missing parameter: apiToken');
   });
 
-  const authClient = new ApiTokenAuthClient(API_TOKEN);
+  const authClient = new ApiTokenAuthClient({ apiToken: API_TOKEN });
 
   it('As a developer, I can get api token from the state', async () => {
     expect(authClient.getState()).toEqual({

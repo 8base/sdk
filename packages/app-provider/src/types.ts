@@ -9,7 +9,7 @@ export type ApolloContainerPassedProps = {
   onRequestError: (request: { [key: string]: any }) => void;
   extendLinks?: (
     links: ApolloLink[],
-    options: { getAuthState?: () => Promise<IAuthState> },
+    options: { getAuthState?: () => IAuthState },
   ) => ApolloLink[];
   introspectionQueryResultData?: Object;
   tablesList?: TableSchema[];

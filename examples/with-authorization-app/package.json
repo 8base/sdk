@@ -3,6 +3,7 @@
   "version": "0.35.1",
   "private": true,
   "dependencies": {
+    "@8base/auth": "^0.35.1",
     "@8base/react-sdk": "^0.35.1",
     "apollo-client": "^2.6.3",
     "graphql": "^14.3.1",

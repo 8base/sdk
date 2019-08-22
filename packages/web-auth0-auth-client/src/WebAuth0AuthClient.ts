@@ -1,8 +1,13 @@
 import * as auth0 from 'auth0-js';
 import * as R from 'ramda';
-import { throwIfMissingRequiredParameters } from '@8base/utils';
-
-import { StorageAPI, PACKAGES, IAuthState, IAuthClient, IStorage } from '@8base/utils';
+import {
+  throwIfMissingRequiredParameters,
+  StorageAPI,
+  PACKAGES,
+  IAuthState,
+  IAuthClient,
+  IStorage,
+} from '@8base/utils';
 
 interface IAuth0Data {
   state?: object;
@@ -20,6 +25,10 @@ interface IAuth0ClientOptions {
   audience?: string;
   responseType?: string;
   responseMode?: string;
+}
+
+interface IWebAuth0AuthClientOptions extends IAuth0ClientOptions {
+  logoutRedirectUri?: string;
 }
 
 const isEmptyOrNil = R.either(R.isNil, R.isEmpty);
@@ -43,26 +52,27 @@ const getState = R.propOr(undefined, 'state');
 class WebAuth0AuthClient implements IAuthClient {
   public auth0: auth0.WebAuth;
 
+  private logoutHasCalled: boolean;
   private logoutRedirectUri?: string;
   private storageAPI: StorageAPI<IAuthState>;
 
   constructor(
-    options: IAuth0ClientOptions,
-    logoutRedirectUri?: string,
+    options: IWebAuth0AuthClientOptions,
     storage: IStorage = window.localStorage,
     storageKey: string = 'auth',
   ) {
     throwIfMissingRequiredParameters(['domain', 'clientId', 'redirectUri'], PACKAGES.WEB_AUTH0_AUTH_CLIENT, options);
 
-    const { domain, clientId, redirectUri } = options;
+    const { logoutRedirectUri, clientId, ...restOptions } = options;
 
+    this.logoutHasCalled = false;
     this.logoutRedirectUri = logoutRedirectUri;
     this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
     this.auth0 = new auth0.WebAuth({
       clientID: clientId,
       responseType: 'token id_token',
       scope: 'openid email profile',
-      ...R.omit(['cliendId'], options),
+      ...restOptions,
     });
   }
 
@@ -85,10 +95,12 @@ class WebAuth0AuthClient implements IAuthClient {
   }
 
   public authorize(options: object = {}): void {
-    // @ts-ignore
-    this.auth0.authorize({
-      ...options,
-    });
+    if (!this.logoutHasCalled) {
+      // @ts-ignore
+      this.auth0.authorize({
+        ...options,
+      });
+    }
   }
 
   public checkSession(options: object = {}): Promise<IAuth0Data> {
@@ -151,6 +163,12 @@ class WebAuth0AuthClient implements IAuthClient {
   }
 
   public logout(options: object = {}): void {
+    window.addEventListener('unload', () => {
+      this.purgeState();
+    });
+
+    this.logoutHasCalled = true;
+
     this.auth0.logout({
       returnTo: this.logoutRedirectUri,
       ...options,
