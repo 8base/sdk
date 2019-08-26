@@ -62,7 +62,7 @@ export const getTableAppDisplayName = createSelector(
   R.propOr(null, 'displayName'),
 );
 
-export const isSystemField = createSelector(
+export const isSystemTable = createSelector(
   getTable,
   R.propEq('isSystem', true),
 );
