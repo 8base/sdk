@@ -19,7 +19,6 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@8base/auth": "^0.35.1",
     "@8base/error-codes": "^1.0.8",
     "@8base/permissions-provider": "^0.35.1",
     "@8base/table-schema-provider": "^0.35.1",

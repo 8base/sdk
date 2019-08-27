@@ -29,7 +29,7 @@ let Auth = ({ auth, client }) => {
   useEffect(() => {
     if (document.location.hash.includes('access_token')) {
       const authorize = async () => {
-        const { idToken, email } = await auth.getAuthorizedData();
+        const { idToken, email } = await auth.authClient.getAuthorizedData();
 
         const context = { headers: { authorization: `Bearer ${idToken}` } };
 
@@ -50,7 +50,7 @@ let Auth = ({ auth, client }) => {
 
         // After succesfull signup store token in local storage
         // After that token will be added to a request headers automatically
-        await auth.setAuthState({
+        auth.authClient.setState({
           token: idToken,
         });
 
@@ -59,7 +59,7 @@ let Auth = ({ auth, client }) => {
 
       authorize();
     } else {
-      auth.authorize();
+      auth.authClient.authorize();
 
       setAuthorizing(false);
     }

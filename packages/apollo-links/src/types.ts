@@ -31,12 +31,12 @@ export type AuthState = {
 };
 
 export type AuthHeadersLinkParameters = {
-  getAuthState: () => Promise<AuthState>;
+  getAuthState: () => AuthState;
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;
 
 export type SignUpLinkParameters = {
-  getAuthState: () => Promise<AuthState>;
+  getAuthState: () => AuthState;
   authProfileId: string;
 };

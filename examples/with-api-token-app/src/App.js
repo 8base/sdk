@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppProvider, gql } from '@8base/react-sdk';
-import { ApiTokenAuthClient } from '@8base/api-token-auth-client';
+import { Auth, AUTH_STRATEGIES } from '@8base/auth';
 import { Query } from 'react-apollo';
 
 // 8base api endpoint
@@ -18,7 +18,10 @@ const DOG_BREEDS_LIST = gql`
   }
 `;
 
-const authClient = new ApiTokenAuthClient({
+const authClient = Auth.createClient({
+  strategy: AUTH_STRATEGIES.API_TOKEN,
+  subscribable: true,
+}, {
   apiToken: API_TOKEN,
 });
 

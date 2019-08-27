@@ -21,6 +21,7 @@
   "dependencies": {
     "@8base/apollo-client": "^0.35.1",
     "@8base/auth": "^0.35.1",
+    "@8base/react-auth": "^0.35.1",
     "@8base/table-schema-provider": "^0.35.1",
     "@8base/utils": "^0.35.1",
     "apollo-cache-inmemory": "^1.5.1",

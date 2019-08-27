@@ -1,16 +1,17 @@
 import React from 'react';
-import { AuthState, IAuthClient, IAuthorizable, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
+import { IAuthState, IAuthClient, SDKError, ERROR_CODES, PACKAGES, Unsubscribe } from '@8base/utils';
+import { ISubscribableAuthClient, SubscribableDecorator } from '@8base/auth';
 
 import { AuthContext } from './AuthContext';
 
 type AuthProviderProps = {
   children: React.ReactNode;
-  authClient: IAuthClient & IAuthorizable;
+  authClient: ISubscribableAuthClient;
 };
 
 type AuthProviderState = {
   isAuthorized: boolean;
-  authState: AuthState;
+  authState: IAuthState;
 };
 
 /**
@@ -19,14 +20,24 @@ type AuthProviderState = {
  * @property {IAuthClient} authClient Instance of the auth client.
  */
 class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState> {
+  private unsubscribe: Unsubscribe | null;
+
   constructor(props: AuthProviderProps) {
     super(props);
 
     if (props.authClient === undefined || props.authClient === null) {
       throw new SDKError(
         ERROR_CODES.MISSING_PARAMETER,
-        PACKAGES.AUTH,
+        PACKAGES.REACT_AUTH,
         'Property authClient in the AuthProvider should be specified',
+      );
+    }
+
+    if (!SubscribableDecorator.hasConflicts(props.authClient)) {
+      throw new SDKError(
+        ERROR_CODES.INVALID_ARGUMENT,
+        PACKAGES.REACT_AUTH,
+        'authClient should has ability to notify about state changes',
       );
     }
 
@@ -34,42 +45,40 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
       authState: {},
       isAuthorized: false,
     };
+
+    this.unsubscribe = null;
   }
 
-  public updateState = async () => {
+  public updateState = () => {
     const { authClient } = this.props;
 
-    const isAuthorized = await authClient.checkIsAuthorized();
-    const authState = await authClient.getAuthState();
+    const authState = authClient.getState();
+    const isAuthorized = authClient.checkIsAuthorized();
 
     this.setState({ isAuthorized, authState });
   };
 
-  public async componentDidMount() {
-    await this.updateState();
+  public componentDidMount() {
+    this.unsubscribe = this.props.authClient.subscribe(() => {
+      this.updateState();
+    });
+
+    this.updateState();
   }
 
-  public setAuthState = async (state: AuthState): Promise<void> => {
-    const { authClient } = this.props;
-
-    await authClient.setAuthState(state);
-    await this.updateState();
-  };
-
-  public purgeAuthState = async (
-    options: {
-      withLogout?: boolean;
-      logoutOptions?: object;
-    } = {},
-  ): Promise<void> => {
-    const { authClient } = this.props;
-
-    await authClient.purgeAuthState(options);
-
-    if (!options.withLogout) {
-      await this.updateState();
+  public componentDidUpdate(prevProps: AuthProviderProps) {
+    if (prevProps.authClient !== this.props.authClient) {
+      this.unsubscribe = this.props.authClient.subscribe(() => {
+        this.updateState();
+      });
     }
-  };
+  }
+
+  public componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
 
   public render() {
     const { children, authClient } = this.props;
@@ -78,11 +87,9 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
     return (
       <AuthContext.Provider
         value={{
-          ...authClient,
+          authClient,
           authState,
           isAuthorized,
-          purgeAuthState: this.purgeAuthState,
-          setAuthState: this.setAuthState,
         }}
       >
         {children}

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { AppProvider, WebAuth0AuthClient, gql, withAuth, withLogout } from '@8base/react-sdk';
+import { AppProvider, gql, withAuth } from '@8base/react-sdk';
+import { Auth, AUTH_STRATEGIES } from '@8base/auth';
 import { compose, withApollo, Query, } from 'react-apollo';
 
 // 8base api endpoint
@@ -31,7 +32,10 @@ const USER_SIGN_UP_MUTATION = gql`
 const REDIRECT_URI = document.location.href.replace(document.location.hash, '');
 
 // Auth0 auth client 
-const authClient = new WebAuth0AuthClient({
+const authClient = Auth.createClient({
+  strategy: AUTH_STRATEGIES.WEB_AUTH0,
+  subscribable: true,
+}, {
   clientId: AUTH0_CLIENT_ID,
   domain: AUTH0_CLIENT_DOMAIN,
   // Don't forget set custom domains in the authentication settings!
@@ -39,24 +43,35 @@ const authClient = new WebAuth0AuthClient({
   logoutRedirectUri: REDIRECT_URI,
 });
 
-const Hello = withLogout(({ logout }) => (
-  <Query query={ CURRENT_USER_QUERY }>
-    { ({ loading, data }) => {
-      if (loading) {
-        return <p>Loading...</p>
-      }
+const Hello = compose(
+  withAuth,
+  withApollo,
+)(({ auth, client }) => {
+  const logout = async () => {
+    await client.clearStore();
 
-      return (
-        <div>
-          <p>Hello {data.user.email}!</p>
-          <button type="button" onClick={ () => logout() }>
-            Logout
-          </button>
-        </div>
-      );
-    } }
-  </Query>
-));
+    auth.authClient.logout();
+  };
+
+  return(
+    <Query query={ CURRENT_USER_QUERY }>
+      { ({ loading, data }) => {
+        if (loading) {
+          return <p>Loading...</p>
+        }
+
+        return (
+          <div>
+            <p>Hello {data.user.email}!</p>
+            <button type="button" onClick={ logout }>
+              Logout
+            </button>
+          </div>
+        );
+      } }
+    </Query>
+  )
+});
 
 
 // withAuth passes authorization state and utilities through auth prop.
@@ -68,12 +83,16 @@ const Authorization = compose(
     return <Hello />;
   }
 
+  const authorize = () => {
+    auth.authClient.authorize();
+  }
+
   // Check if we didn't return from auth0
   if (!document.location.hash.includes('access_token')) {
     return (
       <div>
         <p>Hello guest!</p>
-        <button type="button" onClick={ () => auth.authorize() }>
+        <button type="button" onClick={ authorize }>
           Authorize
         </button>
       </div>
@@ -81,8 +100,8 @@ const Authorization = compose(
   }
 
   useEffect(() => {
-    const authorize = async () => {
-      const { idToken, email } = await auth.getAuthorizedData();
+    const processAuthorizationResult = async () => {
+      const { idToken, email } = await auth.authClient.getAuthorizedData();
 
       const context = { headers: { authorization: `Bearer ${idToken}` } };
 
@@ -103,12 +122,12 @@ const Authorization = compose(
 
       // After succesfull signup store token in local storage
       // After that token will be added to a request headers automatically
-      await auth.setAuthState({
+      auth.authClient.setState({
         token: idToken,
       });
     };
 
-    authorize();
+    processAuthorizationResult();
   });
 
   return <p>Authorizing...</p>

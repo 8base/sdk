@@ -1,6 +1,6 @@
 # 8base Auth
 
-The 8base Auth package contains a provider with authentication state and auth helpers.
+The 8base React Auth package contains a provider with authentication state and auth helpers.
 
 ## AuthProvider
 
@@ -30,7 +30,7 @@ Provides access to the authentication state.
 ## Usage
 
 ```js
-import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
+import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/react-auth';
 import { WebAuth0AuthClient } form '@8base/web-auth0-auth-client';
 
   const authClient = new WebAuth0AuthClient({

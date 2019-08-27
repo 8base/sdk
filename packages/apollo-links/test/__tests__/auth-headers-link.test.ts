@@ -20,12 +20,10 @@ describe("As a developer, I can use 'AuthHeadersLink' to add authorization heade
 
   it('adds authorization headers', () =>
     new Promise((resolve, reject) => {
-      getAuthState.mockReturnValueOnce(
-        Promise.resolve({
-          workspaceId,
-          token,
-        }),
-      );
+      getAuthState.mockReturnValueOnce({
+        workspaceId,
+        token,
+      });
 
       execute(links, { query }).subscribe(
         () => null,
@@ -51,12 +49,10 @@ describe("As a developer, I can use 'AuthHeadersLink' to add authorization heade
     new Promise((resolve, reject) => {
       stubLink.mockClear();
 
-      getAuthState.mockReturnValueOnce(
-        Promise.resolve({
-          workspaceId: '',
-          token: 'some-id-token',
-        }),
-      );
+      getAuthState.mockReturnValueOnce({
+        workspaceId: '',
+        token: 'some-id-token',
+      });
 
       execute(links, { query }).subscribe(
         () => null,

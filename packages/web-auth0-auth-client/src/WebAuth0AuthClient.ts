@@ -1,19 +1,35 @@
 import * as auth0 from 'auth0-js';
 import * as R from 'ramda';
-import { throwIfMissingRequiredParameters } from '@8base/utils';
+import {
+  throwIfMissingRequiredParameters,
+  StorageAPI,
+  PACKAGES,
+  IAuthState,
+  IAuthClient,
+  IStorage,
+} from '@8base/utils';
 
-import { AuthState, AuthData, IAuthClient, IAuthorizable, PACKAGES } from '@8base/utils';
+interface IAuth0Data {
+  state?: object;
+  isEmailVerified: boolean;
+  idToken: string;
+  email: string;
+  idTokenPayload: any;
+}
 
-import * as localStorageAccessor from './localStorageAccessor';
-
-export type WebAuth0AuthClientOptions = {
+interface IAuth0ClientOptions {
   domain: string;
   clientId: string;
   redirectUri: string;
-  logoutRedirectUri: string;
-};
+  scope?: string;
+  audience?: string;
+  responseType?: string;
+  responseMode?: string;
+}
 
-const DEFAULT_8BASE_API_ENDPOINT = 'https://api.8base.com/';
+interface IWebAuth0AuthClientOptions extends IAuth0ClientOptions {
+  logoutRedirectUri?: string;
+}
 
 const isEmptyOrNil = R.either(R.isNil, R.isEmpty);
 
@@ -31,45 +47,64 @@ const getIdTokenPayload = R.propOr(undefined, 'idTokenPayload');
 const getState = R.propOr(undefined, 'state');
 
 /**
- * Create instacne of the web auth0 auth client.
- * @param {string} domain Domain. See auth0 documentation.
- * @param {string} clientId Client id. See auth0 documentation.
- * @param {string} redirectUri Redurect uri. See auth0 documentation.
+ * Creates instacne of the web auth0 auth client.
  */
-class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
+class WebAuth0AuthClient implements IAuthClient {
   public auth0: auth0.WebAuth;
-  public logoutRedirectUri?: string;
 
-  constructor(options: WebAuth0AuthClientOptions) {
-    throwIfMissingRequiredParameters(
-      ['domain', 'clientId', 'redirectUri', 'logoutRedirectUri'],
-      PACKAGES.WEB_AUTH0_AUTH_CLIENT,
-      options,
-    );
+  private logoutHasCalled: boolean;
+  private logoutRedirectUri?: string;
+  private storageAPI: StorageAPI<IAuthState>;
 
-    const { domain, clientId, redirectUri, logoutRedirectUri } = options;
+  constructor(
+    options: IWebAuth0AuthClientOptions,
+    storage: IStorage = window.localStorage,
+    storageKey: string = 'auth',
+  ) {
+    throwIfMissingRequiredParameters(['domain', 'clientId', 'redirectUri'], PACKAGES.WEB_AUTH0_AUTH_CLIENT, options);
 
+    const { logoutRedirectUri, clientId, ...restOptions } = options;
+
+    this.logoutHasCalled = false;
     this.logoutRedirectUri = logoutRedirectUri;
+    this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
     this.auth0 = new auth0.WebAuth({
       clientID: clientId,
-      domain,
-      // @ts-ignore Check typings. WebAuth options has no mustAcceptTerms property!
-      mustAcceptTerms: true,
-      redirectUri,
       responseType: 'token id_token',
       scope: 'openid email profile',
+      ...restOptions,
     });
   }
 
-  public authorize = async (options: object = {}): Promise<void> => {
-    // @ts-ignore
-    this.auth0.authorize({
-      ...options,
-    });
-  };
+  public setState(state: IAuthState): void {
+    this.storageAPI.setState(state);
+  }
 
-  public renewToken = (options: object = {}): Promise<AuthData> =>
-    new Promise((resolve: any, reject) => {
+  public getState(): IAuthState {
+    return this.storageAPI.getState();
+  }
+
+  public purgeState(): void {
+    this.storageAPI.purgeState();
+  }
+
+  public checkIsAuthorized(): boolean {
+    const { token } = this.getState();
+
+    return R.not(isEmptyOrNil(token));
+  }
+
+  public authorize(options: object = {}): void {
+    if (!this.logoutHasCalled) {
+      // @ts-ignore
+      this.auth0.authorize({
+        ...options,
+      });
+    }
+  }
+
+  public checkSession(options: object = {}): Promise<IAuth0Data> {
+    return new Promise((resolve: any, reject) => {
       this.auth0.checkSession(options, (error, result: any) => {
         if (error) {
           reject(error || {});
@@ -85,9 +120,10 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
         });
       });
     });
+  }
 
-  public changePassword = async (): Promise<{ email: string }> => {
-    const { email = '' } = await this.getAuthState();
+  public changePassword(): Promise<{ email: string }> {
+    const { email = '' } = this.getState();
 
     return new Promise((resolve, reject) => {
       this.auth0.changePassword(
@@ -105,9 +141,9 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
         },
       );
     });
-  };
+  }
 
-  public getAuthorizedData = (): Promise<AuthData> => {
+  public getAuthorizedData(): Promise<IAuth0Data> {
     return new Promise((resolve: Function, reject) => {
       this.auth0.parseHash((error, authResult) => {
         if (error) {
@@ -124,34 +160,20 @@ class WebAuth0AuthClient implements IAuthClient, IAuthorizable {
         });
       });
     });
-  };
+  }
 
-  public setAuthState = async (state: AuthState): Promise<void> => {
-    localStorageAccessor.setAuthState(state);
-  };
+  public logout(options: object = {}): void {
+    window.addEventListener('unload', () => {
+      this.purgeState();
+    });
 
-  public getAuthState = async (): Promise<AuthState> => localStorageAccessor.getAuthState();
+    this.logoutHasCalled = true;
 
-  public purgeAuthState = async ({ withLogout = false, logoutOptions = {} } = {}): Promise<void> => {
-    localStorageAccessor.purgeAuthState();
-
-    if (withLogout) {
-      await this.logout(logoutOptions);
-    }
-  };
-
-  public checkIsAuthorized = async (): Promise<boolean> => {
-    const { token } = await this.getAuthState();
-
-    return R.not(isEmptyOrNil(token));
-  };
-
-  public logout = async (options: object = {}): Promise<void> => {
     this.auth0.logout({
       returnTo: this.logoutRedirectUri,
       ...options,
     });
-  };
+  }
 }
 
 export { WebAuth0AuthClient };

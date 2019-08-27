@@ -26,7 +26,7 @@ Create an instance of the web auth0 auth client.
 
 ### Without authentication profile
 ```js
-import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/auth';
+import { AuthContext, AuthProvider, type AuthContextProps } from '@8base/react-auth';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 
   const authClient = new WebAuth0AuthClient({

@@ -40,12 +40,12 @@ describe('WebAuth0AuthClient', () => {
   const authClient = new WebAuth0AuthClient({
     clientId: CLIENT_ID,
     domain: DOMAIN,
-    logoutRedirectUri: LOGOUT_REDIRECT_URI,
     redirectUri: REDIRECT_URI,
+    logoutRedirectUri: LOGOUT_REDIRECT_URI,
   });
 
-  it('As a developer, i can authorize by the client', async () => {
-    await authClient.authorize({
+  it('As a developer, I can authorize by the client', () => {
+    authClient.authorize({
       someProp: 'someValue',
     });
 
@@ -54,7 +54,7 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can get authorized adata', async () => {
+  it('As a developer, I can get authorized data', async () => {
     auth0.parseHash.mockImplementation((callback: any) => {
       callback(null, {
         idToken: ID_TOKEN,
@@ -80,8 +80,8 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can set auth state', async () => {
-    await authClient.setAuthState({
+  it('As a developer, I can set state', () => {
+    authClient.setState({
       token: ID_TOKEN,
     });
 
@@ -90,27 +90,27 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can get auth state', async () => {
-    const authState = await authClient.getAuthState();
+  it('As a developer, I can get state', () => {
+    const authState = authClient.getState();
 
     expect(authState).toEqual({
       token: ID_TOKEN,
     });
   });
 
-  it('As a developer, i can check authorized state', async () => {
-    const isAuthorized = await authClient.checkIsAuthorized();
+  it('As a developer, I can check authorized state', () => {
+    const isAuthorized = authClient.checkIsAuthorized();
 
     expect(isAuthorized).toBe(true);
   });
 
-  it('As a developer, i can rewrite auth state', async () => {
-    await authClient.setAuthState({
+  it('As a developer, I can rewrite state', () => {
+    authClient.setState({
       token: ANOTHER_ID_TOKEN,
       workspaceId: WORKSPACE_ID,
     });
 
-    const authState = await authClient.getAuthState();
+    const authState = authClient.getState();
 
     expect(authState).toEqual({
       token: ANOTHER_ID_TOKEN,
@@ -118,7 +118,7 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can renew token', async () => {
+  it('As a developer, I can check session', async () => {
     auth0.checkSession.mockImplementation((options: any, callback: any) => {
       callback(null, {
         email: EMAIL,
@@ -132,7 +132,7 @@ describe('WebAuth0AuthClient', () => {
       });
     });
 
-    const authData = await authClient.renewToken();
+    const authData = await authClient.checkSession();
 
     expect(authData).toEqual({
       email: EMAIL,
@@ -146,15 +146,15 @@ describe('WebAuth0AuthClient', () => {
     });
   });
 
-  it('As a developer, i can clear authState', async () => {
-    await authClient.purgeAuthState();
+  it('As a developer, I can clear state', () => {
+    authClient.purgeState();
 
-    expect(await authClient.checkIsAuthorized()).toBe(false);
-    expect(await authClient.getAuthState()).toEqual({});
+    expect(authClient.checkIsAuthorized()).toBe(false);
+    expect(authClient.getState()).toEqual({});
   });
 
-  it('As a developer, i can logout', async () => {
-    await authClient.logout();
+  it('As a developer, I can logout', async () => {
+    authClient.logout();
 
     expect(auth0.logout).toHaveBeenCalledWith({
       returnTo: LOGOUT_REDIRECT_URI,

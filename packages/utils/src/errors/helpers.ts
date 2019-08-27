@@ -10,7 +10,7 @@ const stringifyPath = R.ifElse(R.is(String), path => path, R.join('.'));
 export const throwIfMissingRequiredParameters = (
   requiredParameterPaths: Array<string[] | string>,
   packageName: PACKAGES,
-  parameters: {},
+  parameters: {} = {},
 ): void => {
   requiredParameterPaths.forEach(parameterPath => {
     const isMissing = !hasParameter(parameterPath)(parameters);
