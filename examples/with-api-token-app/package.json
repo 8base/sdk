@@ -1,10 +1,10 @@
 {
   "name": "with-api-token-app",
-  "version": "0.35.1",
+  "version": "0.36.0",
   "private": true,
   "dependencies": {
-    "@8base/auth": "^0.35.1",
-    "@8base/react-sdk": "^0.35.1",
+    "@8base/auth": "^0.36.0",
+    "@8base/react-sdk": "^0.36.0",
     "apollo-client": "^2.6.3",
     "graphql": "^14.3.1",
     "react": "^16.8.6",
