@@ -88,7 +88,6 @@ const formatDataForMutation = (
         } else {
           formatedFieldData = R.reject(R.isNil, formatedFieldData);
         }
-
         if (formatedFieldData.length === 0 && type === MUTATION_TYPE.CREATE) {
           return result;
         }
