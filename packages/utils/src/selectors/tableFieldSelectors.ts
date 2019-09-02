@@ -118,14 +118,19 @@ export const getDataFeatures = createSelector(
 );
 
 export const getFieldKind = createSelector(
+  getTableId,
   isSystemField,
   getRelationTableId,
   (_, tablesSchema: TableSchema[]): TableSchema[] => tablesSchema,
-  (isSystem: boolean, relationTableId: string, tablesSchema: TableSchema[]) => {
+  (tableId: string, isSystem: boolean, relationTableId: string, tablesSchema: TableSchema[]) => {
     let kind = FIELD_KINDS.USER;
+
+    const table = tablesListSelectors.getTableById(tablesSchema, tableId);
 
     if (isSystem) {
       kind = FIELD_KINDS.SYSTEM;
+    } else if (tableSelectors.isIntegrationTable(table)) {
+      kind = FIELD_KINDS.EXTERNAL;
     } else if (relationTableId) {
       const refTable = tablesListSelectors.getTableById(tablesSchema, relationTableId);
 
