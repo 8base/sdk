@@ -20,6 +20,10 @@ interface IformatOptimisticResponseMeta {
 const formatFileOptimisticResponse = (recordId: string, requestFieldData: any, fieldSchema: FieldSchema | void) => {
   const isList = tableFieldSelectors.isListField(fieldSchema);
 
+  if (!isList && (R.isNil(requestFieldData) || R.isEmpty(requestFieldData))) {
+    return null;
+  }
+
   const fieldOptimisticResponse = isList
     ? {
         items: [
@@ -91,7 +95,7 @@ const formatOptimisticResponse = (
     );
   }
 
-  const formattedRepose = R.reduce(
+  const formattedResponse = R.reduce(
     (result: { [key: string]: any }, fieldName: string) => {
       const fieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
       const fieldType = tableFieldSelectors.getFieldType(fieldSchema);
@@ -105,7 +109,7 @@ const formatOptimisticResponse = (
 
       const requestFieldData = requestData[fieldName];
 
-      let fieldOptimisticResponse = {};
+      let fieldOptimisticResponse: any = {};
 
       if (fieldType === FIELD_TYPE.FILE) {
         fieldOptimisticResponse = formatFileOptimisticResponse(recordId, requestFieldData, fieldSchema);
@@ -130,7 +134,7 @@ const formatOptimisticResponse = (
     [SchemaNameGenerator.getUpdateItemFieldName(tableName)]: {
       __typename: SchemaNameGenerator.getUpdateInputName(tableName).replace('UpdateInput', ''),
       id: recordId,
-      ...formattedRepose,
+      ...formattedResponse,
     },
   };
 };

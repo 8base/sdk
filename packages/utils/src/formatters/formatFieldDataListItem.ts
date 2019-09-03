@@ -36,6 +36,13 @@ export const formatFieldDataListItem = (
     };
   }
 
+  if (!R.isNil(nextData.length) && nextData.length === 0 && type === MUTATION_TYPE.UPDATE) {
+    return {
+      data: [],
+      type: 'reconnect',
+    };
+  }
+
   if (isRelationField(fieldSchema)) {
     const relationTableSchema = tablesListSelectors.getTableById(schema, fieldSchema.relation.refTable.id);
 
