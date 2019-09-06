@@ -11,4 +11,4 @@ export const hasRefreshTokenExpiredError = R.any(
   R.allPass([R.propEq('code', errorCodes.TokenExpiredErrorCode), R.propEq('message', 'Refresh Token has expired')]),
 );
 
-export const hasUserNotExistError = R.any(R.propEq('code', errorCodes.UserNotExistErrorCode));
+export const hasUserNotFoundError = R.any(R.propEq('code', errorCodes.EntityNotFoundErrorCode));

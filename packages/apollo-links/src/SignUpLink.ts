@@ -2,7 +2,7 @@ import { ApolloLink, Observable, createOperation, Operation, NextLink, FetchResu
 import * as R from 'ramda';
 import { ZenObservable } from 'zen-observable-ts';
 
-import { hasUserNotExistError } from './utils';
+import { hasUserNotFoundError } from './utils';
 import { SignUpLinkParameters, AuthState } from './types';
 import { SIGNUP_MUTATION } from './graphql/mutations';
 
@@ -54,7 +54,7 @@ export class SignUpLink extends ApolloLink {
         error: (error: any) => {
           const batchedErrors = R.pathOr([error], ['response', 'parsed', 'errors'], error);
 
-          if (hasUserNotExistError(batchedErrors)) {
+          if (hasUserNotFoundError(batchedErrors)) {
             handleUserNotExistError();
           } else {
             observer.error(error);
@@ -63,7 +63,7 @@ export class SignUpLink extends ApolloLink {
         next: (data: any) => {
           const errors = data.errors || [];
 
-          if (hasUserNotExistError(errors)) {
+          if (hasUserNotFoundError(errors)) {
             this.fetching = true;
 
             handleUserNotExistError();
