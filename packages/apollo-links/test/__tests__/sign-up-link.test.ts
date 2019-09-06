@@ -51,7 +51,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
         Observable.of({
           errors: [
             {
-              code: errorCodes.UserNotExistErrorCode,
+              code: errorCodes.EntityNotFoundErrorCode,
             },
           ],
         }),
