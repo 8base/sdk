@@ -1,9 +1,9 @@
 {
   "name": "guest-app",
-  "version": "0.36.4",
+  "version": "0.36.5",
   "private": true,
   "dependencies": {
-    "@8base/react-sdk": "^0.36.4",
+    "@8base/react-sdk": "^0.36.5",
     "apollo-client": "^2.6.3",
     "graphql": "^14.3.1",
     "react": "^16.8.6",
