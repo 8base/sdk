@@ -68,7 +68,7 @@ export class SubscriptionLink extends WebSocketLink {
     return authState;
   }
 
-  private connectionCallback(payload?: any) {
+  private connectionCallback(payload: any = {}) {
     if (isIdTokenExpiredError(payload)) {
       this.expired = true;
     } else if (isRefreshTokenExpiredError(payload)) {
