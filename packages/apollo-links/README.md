@@ -40,6 +40,9 @@ Success handler takes the following parameters:
 
 ## Usage
 ```js
+import { ApolloLink } from 'apollo-link';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { getMainDefinition } from 'apollo-utilities';
 import {
   AuthLink,
   FileUploadLink,
@@ -81,6 +84,24 @@ const links = ApolloLink.from([
     onAuthSuccess: authSuccessHandler,
     onAuthError: authErrorHandler,
   }),
+  ApolloLink.split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    new SubscriptionLink({
+      uri: 'wss://api-ws.8base.com',
+      getAuthState: getAuthState,
+      onAuthError: authErrorHandler,
+    }),
+    new BatchHttpLink({
+      uri: 'https://api.8base.com',
+    }),
+  ),
 ])
 
 ```
