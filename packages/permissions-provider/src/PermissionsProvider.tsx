@@ -21,9 +21,15 @@ const USER_PERMISSIONS_QUERY = gql`
   }
 `;
 
-type PermissionsProviderProps = {
-  children: (renderProp: { loading?: boolean }) => React.ReactNode;
-};
+type PermissionsProviderCommonProps = {};
+
+type PermissionsProviderProps =
+  | ({
+      children: React.ReactNode;
+    } & PermissionsProviderCommonProps)
+  | ({
+      children: (props: { loading: boolean }) => React.ReactNode;
+    } & PermissionsProviderCommonProps);
 
 /**
  * Provider for 8base user permissions
@@ -31,16 +37,26 @@ type PermissionsProviderProps = {
  */
 const PermissionsProvider: React.ComponentType<PermissionsProviderProps> = withAuth(
   class PermissionsProvider extends React.Component<WithAuthProps & PermissionsProviderProps> {
+    public renderChildren = (args: { loading: boolean }) => {
+      const { children } = this.props;
+
+      if (typeof children === 'function') {
+        return children(args);
+      }
+
+      return children;
+    };
+
     public renderContent = ({ data, loading }: { data: RequestPermissions; loading: boolean }) => {
       const { children } = this.props;
 
-      if (loading) {
-        return children({ loading });
-      }
-
       const permissions = getPermissions(data);
 
-      return <PermissionsContext.Provider value={permissions}>{children({ loading })}</PermissionsContext.Provider>;
+      return (
+        <PermissionsContext.Provider value={permissions}>
+          {this.renderChildren({ loading })}
+        </PermissionsContext.Provider>
+      );
     };
 
     public render() {
