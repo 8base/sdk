@@ -19,6 +19,13 @@ export type TokenRefreshLinkParameters = {
   onIdTokenExpired?: () => Promise<any>;
 };
 
+export type SubscriptionLinkParameters = {
+  uri: string;
+  getAuthState: () => AuthState;
+  onAuthError?: (error?: {}) => void;
+  onIdTokenExpired?: () => Promise<any>;
+};
+
 export type ErrorLinkParameters = {
   onGraphQLErrors?: (error: GraphQLError[]) => void;
   onNetworkError?: (error: {}) => void;

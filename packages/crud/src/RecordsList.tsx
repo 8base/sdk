@@ -6,7 +6,7 @@ import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-pr
 import { PermissionsContext } from '@8base/permissions-provider';
 import { createTableFilterGraphqlTag, TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
-type RecordsListFlattenData<T = object,> = {
+type RecordsListFlattenData<T = object> = {
   items: T[];
   count: number;
 };
