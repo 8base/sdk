@@ -1,6 +1,6 @@
 {
   "name": "@8base/react-sdk",
-  "version": "0.36.5",
+  "version": "0.36.6",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react-sdk#readme",
   "license": "MIT",
   "main": "dist/index.js",
@@ -16,8 +16,8 @@
     "doctoc": "doctoc README.md"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.36.5",
-    "@8base/app-provider": "^0.36.5"
+    "@8base/apollo-client": "^0.36.6",
+    "@8base/app-provider": "^0.36.6"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",

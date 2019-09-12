@@ -1,6 +1,6 @@
 {
   "name": "@8base/app-provider",
-  "version": "0.36.5",
+  "version": "0.36.6",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/app-provider#readme",
   "main": "dist/index.js",
@@ -19,18 +19,18 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@8base/apollo-client": "^0.36.5",
-    "@8base/auth": "^0.36.5",
+    "@8base/apollo-client": "^0.36.6",
+    "@8base/auth": "^0.36.6",
     "@8base/error-codes": "^1.0.17",
-    "@8base/react-auth": "^0.36.5",
-    "@8base/table-schema-provider": "^0.36.5",
-    "@8base/utils": "^0.36.5",
+    "@8base/react-auth": "^0.36.6",
+    "@8base/table-schema-provider": "^0.36.6",
+    "@8base/utils": "^0.36.6",
     "apollo-cache-inmemory": "^1.5.1",
     "ramda": "^0.26.1",
     "recompose": "0.27.1"
   },
   "devDependencies": {
-    "@8base/web-auth0-auth-client": "^0.36.5",
+    "@8base/web-auth0-auth-client": "^0.36.6",
     "@types/graphql": "^0.13.0",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
