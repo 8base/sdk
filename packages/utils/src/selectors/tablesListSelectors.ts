@@ -7,7 +7,7 @@ export const getTableList = (tables?: TableSchema[]) => tables || [];
 export const getTableById: ParametricSelector<TableSchema[], string, TableSchema> = createSelector(
   getTableList,
   (_: any, tableId: string) => tableId,
-  (tables, tableId): any => (tables && tables.find(({ id }) => id === tableId)) || {},
+  (tables, tableId): any => tables && tables.find(({ id }) => id === tableId),
 );
 
 export const getTableByName: (
@@ -19,13 +19,12 @@ export const getTableByName: (
   (_: any, tableName: string) => tableName,
   (_: any, __: any, applicationName: string) => applicationName,
   (tables, tableName, appName): any =>
-    (tables &&
-      tables
-        .filter(({ application }) =>
-          application && appName ? application.name.toLowerCase() === appName.toLowerCase() : !appName,
-        )
-        .find(({ name }) => name.toLowerCase() === tableName.toLowerCase())) ||
-    {},
+    tables &&
+    tables
+      .filter(({ application }) =>
+        application && appName ? application.name.toLowerCase() === appName.toLowerCase() : !appName,
+      )
+      .find(({ name }) => name.toLowerCase() === tableName.toLowerCase()),
 );
 
 export const getTableApplication: ParametricSelector<TableSchema[], string, Application | void> = createSelector(
