@@ -13,7 +13,7 @@ type RecordDataProps = {
   recordId: string;
   variables?: object;
   skip?: boolean;
-  children: (recordData: QueryResult) => React.ReactNode;
+  children: (recordData: QueryResult) => JSX.Element;
 };
 
 export class RecordData extends Component<RecordDataProps> {

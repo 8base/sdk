@@ -15,7 +15,7 @@
     "apollo-client": "^2.6.3",
     "graphql": "^14.0.0",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.0",
+    "react-apollo": "^3.1.0",
     "react-dom": "^16.8.6"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "graphql-tag": "^2.10.0",
     "prop-types": "^15.6.1",
     "ramda": "^0.26.1",
+    "react-apollo": "^3.1.0",
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.0",
     "recompose": "^0.27.1"
@@ -46,7 +47,7 @@
     "jest": "24.7.1",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
-    "react-apollo": "2.5.8",
+    "react-apollo": "3.1.0",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "ts-jest": "^24.0.2",

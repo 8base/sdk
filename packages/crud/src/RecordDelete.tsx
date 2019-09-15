@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MutationResult, MutationFn } from 'react-apollo';
+import { MutationResult, MutationFunction } from 'react-apollo';
 import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
@@ -13,7 +13,7 @@ interface IChildrenPropObject {
 type RecordDeleteProps = {
   tableId?: string;
 
-  children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
+  children: (mutateFunction: MutationFunction, result: IChildrenPropObject) => JSX.Element;
 };
 
 /**

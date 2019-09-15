@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Mutation, MutationFn, MutationResult } from 'react-apollo';
+import { Mutation, MutationFunction, MutationResult } from 'react-apollo';
 import gql from 'graphql-tag';
 import {
   createTableRowCreateTag,
@@ -18,7 +18,7 @@ type RecordCrudProps = {
   mode: CrudModes;
   includeColumns?: string[];
 
-  children: (mutateFunction: MutationFn, mutateResult: MutationResult) => React.ReactNode;
+  children: (mutateFunction: MutationFunction, mutateResult: MutationResult) => JSX.Element;
 };
 
 const createRecordTag = (tableSchema: TableSchema, mode: CrudModes, options: QueryGeneratorConfig) => {
@@ -50,9 +50,7 @@ export class RecordCrud extends Component<RecordCrudProps> {
 
     return (
       <Mutation {...rest} mutation={mutation}>
-        {(mutateFunction: MutationFn, mutateResult: MutationResult) =>
-          children(options => mutateFunction(options), mutateResult)
-        }
+        {(mutateFunction: MutationFunction, mutateResult: MutationResult) => children(mutateFunction, mutateResult)}
       </Mutation>
     );
   }

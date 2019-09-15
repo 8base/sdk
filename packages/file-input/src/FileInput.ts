@@ -1,5 +1,5 @@
 import React from 'react';
-import { withApollo } from 'react-apollo';
+import { withApollo, WithApolloClient } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import * as filestack from 'filestack-js';
 import gql from 'graphql-tag';
@@ -47,7 +47,8 @@ const FILE_UPLOAD_INFO_QUERY = gql`
 `;
 
 const FileInput: React.ComponentType<FileInputProps> = withApollo(
-  class FileInput extends React.Component<FileInputProps & { client: ApolloClient<any> }, FileInputState> {
+  // @ts-ignore
+  class FileInput extends React.Component<WithApolloClient<FileInputProps>, FileInputState> {
     public static defaultProps = {
       maxFiles: 1,
       value: null,
