@@ -24,19 +24,25 @@ yarn add @8base/react-sdk
 `@8base/react-sdk` provides tools to use 8base with React.
 ```
 import React from 'react';
-import { AppProvider, WebAuth0AuthClient, gql } from '@8base/react-sdk';
+import { AppProvider, gql } from '@8base/react-sdk';
+import { Auth, AUTH_STRATEGIES } from '@8base/auth';
 import { Query } from 'react-apollo';
 
 const URI = "8base API URI',
 
-const AUTH_CLIENT_ID = 'auth0 client ID';
-const AUTH_DOMAIN = 'auth0 client domain';
+const AUTH0_CLIENT_ID = 'auth0 client ID';
+const AUTH0_CLIENT_DOMAIN = 'auth0 client domain';
+const REDIRECT_URI = document.location.href.replace(document.location.hash, '');
 
-const auth0WebClient = new WebAuth0AuthClient({
-  domain: AUTH_DOMAIN,
-  clientId: AUTH_CLIENT_ID,
-  redirectUri: `${window.location.origin}/auth/callback`,
-  logoutRedirectUri: `${window.location.origin}/`
+const authClient = Auth.createClient({
+  strategy: AUTH_STRATEGIES.WEB_AUTH0,
+  subscribable: true,
+}, {
+  clientId: AUTH0_CLIENT_ID,
+  domain: AUTH0_CLIENT_DOMAIN,
+  // Don't forget set custom domains in the authentication settings!
+  redirectUri: REDIRECT_URI,
+  logoutRedirectUri: REDIRECT_URI,
 });
 
 const SAMPLE_QUERY = gql`
@@ -53,7 +59,7 @@ function App() {
     <div className="App">
       <AppProvider
         uri={URI}
-        authClient={auth0WebClient}
+        authClient={authClient}
       >
         {({ loading }) => {
           if (loading) {
