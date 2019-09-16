@@ -1,6 +1,6 @@
 {
   "name": "@8base/permissions-provider",
-  "version": "0.36.6",
+  "version": "0.37.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/permissions-provider#readme",
   "main": "dist/index.js",
@@ -20,7 +20,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@8base/react-auth": "^0.36.6",
+    "@8base/react-auth": "^0.37.0",
     "graphql-tag": "^2.10.0",
     "ramda": "^0.26.1",
     "recompose": "^0.30.0"
