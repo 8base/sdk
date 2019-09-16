@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TableConsumer, ITableConsumerRenderProps } from '@8base/table-schema-provider';
-import { MutationFn, MutationResult } from 'react-apollo';
+import { MutationFunction, MutationResult } from 'react-apollo';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 import { RecordCrud } from './RecordCrud';
@@ -15,7 +15,7 @@ type RecordUpdateProps = {
   tableId?: string;
   recordId: string;
   includeColumns?: string[];
-  children: (mutateFunction: MutationFn, result: IChildrenPropObject) => React.ReactNode;
+  children: (mutateFunction: MutationFunction, result: IChildrenPropObject) => JSX.Element;
 };
 
 /**

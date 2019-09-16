@@ -15,7 +15,7 @@
     "apollo-client": "^2.6.3",
     "graphql": "^14.0.0",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.0",
+    "react-apollo": "^3.1.0",
     "react-dom": "^16.8.6"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "jest": "24.7.1",
     "jest-localstorage-mock": "^2.2.0",
     "react": "^16.8.6",
-    "react-apollo": "2.5.8",
+    "react-apollo": "^3.1.0",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "typescript": "^3.5.1"

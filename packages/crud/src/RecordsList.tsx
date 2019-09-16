@@ -17,7 +17,7 @@ type RecordsListData = {
 
 type RecordsListProps = {
   tableId?: string;
-  children: (recordsListResult: QueryResult<RecordsListFlattenData>) => React.ReactNode;
+  children: (recordsListResult: QueryResult<RecordsListFlattenData>) => JSX.Element;
   deep?: number;
   relationItemsCount?: number;
 };
