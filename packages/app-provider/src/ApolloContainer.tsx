@@ -82,7 +82,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       await this.client.clearStore();
 
       authClient.batch(() => {
-        authClient.purgeAuthState();
+        authClient.purgeState();
         authClient.logout();
       });
     };

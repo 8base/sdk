@@ -47,7 +47,7 @@ import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
     };
 
     const logout = async () => {
-      await auth.purgeAuthState();
+      await auth.purgeState();
       await auth.logout();
     };
 
