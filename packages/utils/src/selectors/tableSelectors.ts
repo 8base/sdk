@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createSelector, ParametricSelector } from 'reselect';
-import { FIELD_TYPE, SMART_FORMATS } from '../constants';
+import { FIELD_TYPE, SMART_FORMATS, TABLE_ORIGIN_TYPES } from '../constants';
 import { TableSchema, FieldSchema } from '../types';
 
 export const getTable = (table: TableSchema) => table || {};
@@ -18,6 +18,16 @@ export const getTableDisplayName = createSelector(
 export const getTableId = createSelector(
   getTable,
   R.prop('id'),
+);
+
+export const getTableOrigin = createSelector(
+  getTable,
+  R.prop('origin'),
+);
+
+export const getTableOriginType = createSelector(
+  getTableOrigin,
+  R.prop('type'),
 );
 
 export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> = (
@@ -167,4 +177,16 @@ export const getSchemaFeatures = createSelector(
 export const getDataFeatures = createSelector(
   getTable,
   R.prop('dataFeatures'),
+);
+
+export const isUserTable = createSelector(
+  isSystemTable,
+  getTableApplication,
+  getTableOriginType,
+  (isSystem, application, originType) => !isSystem && !application && originType === TABLE_ORIGIN_TYPES.LOCAL,
+);
+
+export const isViewTable = createSelector(
+  getTableOriginType,
+  originType => originType === TABLE_ORIGIN_TYPES.VIEW,
 );

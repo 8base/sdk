@@ -9,6 +9,7 @@ import {
   SMART_FORMATS,
   APP_STATUS,
   FIELD_KINDS,
+  TABLE_ORIGIN_TYPES,
 } from './constants';
 
 export type MutationType = keyof typeof MUTATION_TYPE;
@@ -16,6 +17,8 @@ export type MutationType = keyof typeof MUTATION_TYPE;
 export type FieldType = keyof typeof FIELD_TYPE;
 
 export type FieldKind = keyof typeof FIELD_KINDS;
+
+export type TableOriginType = keyof typeof TABLE_ORIGIN_TYPES;
 
 export type Format =
   | keyof typeof SWITCH_FORMATS
@@ -85,6 +88,10 @@ export type TableSchema = {
   displayName: string;
   isSystem?: boolean;
   fields: FieldSchema[];
+  origin: {
+    type: TableOriginType;
+    provider: string;
+  };
   schemaFeatures: {
     create: {
       DATE: boolean;
