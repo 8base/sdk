@@ -1,6 +1,8 @@
 import * as R from 'ramda';
-import { TableSchema, FieldSchema, Application } from '../types';
 import { createSelector, ParametricSelector } from 'reselect';
+
+import { TableSchema, FieldSchema, Application } from '../types';
+import * as tableSelectors from './tableSelectors';
 
 export const getTableList = (tables?: TableSchema[]) => tables || [];
 
@@ -49,7 +51,7 @@ export const getNoSystemTables: ParametricSelector<TableSchema[], void, TableSch
 
 export const getSystemTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(({ isSystem }) => isSystem),
+  tablesList => tablesList.filter(tableSelectors.isSystemTable),
 );
 
 export const hasNoSystemTables: ParametricSelector<TableSchema[], void, boolean> = createSelector(
@@ -59,12 +61,17 @@ export const hasNoSystemTables: ParametricSelector<TableSchema[], void, boolean>
 
 export const getUserTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(({ isSystem, application }) => !isSystem && !application),
+  tablesList => tablesList.filter(tableSelectors.isUserTable),
 );
 
 export const getApplicationTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
   tablesList => tablesList.filter(({ application }) => !!application),
+);
+
+export const getViewTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
+  getTableList,
+  tablesList => tablesList.filter(tableSelectors.isViewTable),
 );
 
 export const getTablesByApplicationName = createSelector(

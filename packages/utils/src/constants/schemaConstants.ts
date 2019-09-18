@@ -185,3 +185,9 @@ export const FIELD_KINDS = {
   SYSTEM: 'SYSTEM',
   EXTERNAL: 'EXTERNAL',
 };
+
+export const TABLE_ORIGIN_TYPES = {
+  LOCAL: 'LOCAL',
+  VIEW: 'VIEW',
+  REMOTE: 'REMOTE',
+};
