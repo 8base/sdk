@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { gql, withAuth } from '@8base/react-sdk';
-import { compose, withApollo } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
+import { compose } from 'recompose'; 
 
 import { AUTH_PROFILE_ID } from '../authClient';
 
@@ -52,6 +53,7 @@ let Auth = ({ auth, client }) => {
         // After that token will be added to a request headers automatically
         auth.authClient.setState({
           token: idToken,
+          workspaceId: 'cjxotvdpv006501l68k94dz80',
         });
 
         setAuthorizing(false);

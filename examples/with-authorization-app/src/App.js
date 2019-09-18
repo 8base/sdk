@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { AppProvider, gql, withAuth } from '@8base/react-sdk';
 import { Auth, AUTH_STRATEGIES } from '@8base/auth';
-import { compose, withApollo, Query, } from 'react-apollo';
+import { withApollo, Query, } from 'react-apollo';
+import { compose } from 'recompose'; 
 
 // 8base api endpoint
 const API_ENDPOINT_URI = 'https://api.8base.com/cjxotvdpv006501l68k94dz80';

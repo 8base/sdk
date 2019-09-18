@@ -6,8 +6,9 @@ import {
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink, Operation } from 'apollo-link';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { AuthLink, SuccessLink, SignUpLink } from '@8base/apollo-links';
+import { AuthLink, SuccessLink, SignUpLink, SubscriptionLink } from '@8base/apollo-links';
 import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
+import { getMainDefinition } from 'apollo-utilities';
 import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApolloClientCommon = {
@@ -21,6 +22,7 @@ type ApolloClientCommon = {
 
 type ApolloClientOptions = {
   withAuth?: boolean;
+  withSubscriptions?: boolean;
   autoSignUp?: boolean;
   authProfileId?: string;
   getAuthState?: () => IAuthState;
@@ -58,6 +60,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
       extendLinks,
       withAuth = true,
       autoSignUp = false,
+      withSubscriptions = false,
       authProfileId,
       ...rest
     } = config;
@@ -71,6 +74,25 @@ class ApolloClient extends OriginalApolloClient<Object> {
     const batchHttpLink = new BatchHttpLink({ uri });
 
     let links: ApolloLink[] = [batchHttpLink];
+
+    if (withSubscriptions && getAuthState) {
+      links = [
+        ApolloLink.split(
+          ({ query }) => {
+            const definition = getMainDefinition(query);
+
+            return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+          },
+          new SubscriptionLink({
+            uri: 'wss://ws.8base.com',
+            getAuthState,
+            onAuthError,
+            onIdTokenExpired,
+          }),
+          batchHttpLink,
+        ),
+      ];
+    }
 
     if (withAuth) {
       const authLink = new AuthLink({

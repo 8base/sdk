@@ -23,13 +23,19 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     public static defaultProps = {
       autoSignUp: false,
       withAuth: true,
+      withSubscriptions: false,
     };
     public client: any;
 
     public createClient = R.memoizeWith(
       R.identity,
       introspectionQueryResultData => {
-        const { withAuth, autoSignUp, authProfileId } = this.props;
+        const {
+          withAuth,
+          withSubscriptions,
+          autoSignUp,
+          authProfileId,
+        } = this.props;
 
         const commonOptions = {
           cache: introspectionQueryResultData
@@ -43,6 +49,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
           onRequestError: this.props.onRequestError,
           onRequestSuccess: this.props.onRequestSuccess,
           uri: this.props.uri,
+          withSubscriptions,
         };
 
         const apolloClientOptions = withAuth
@@ -82,7 +89,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       await this.client.clearStore();
 
       authClient.batch(() => {
-        authClient.purgeAuthState();
+        authClient.purgeState();
         authClient.logout();
       });
     };

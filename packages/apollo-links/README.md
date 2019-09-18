@@ -54,11 +54,9 @@ const successHandler = ({ operation }) => {
 };
 
 const getAuthState = () => ({
-  workspace: '',
+  workspaceId: '',
   email: '',
-  userId: '',
   token: '',
-  refreshToken: '',
 });
 
 const getRefreshTokenParameters = () => ({
