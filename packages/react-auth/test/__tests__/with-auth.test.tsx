@@ -10,7 +10,7 @@ type StubComponentProps = {
   foo: number;
 } & WithAuthProps;
 
-const NotAuthorizedComponent = () => <span>I am not authorider</span>;
+const NotAuthorizedComponent = () => <span>I am not authorized</span>;
 
 const AuthorizedComponent = () => <span>I am authorized</span>;
 
