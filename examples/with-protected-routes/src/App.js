@@ -20,7 +20,7 @@ const renderAppContent = ({ loading }) => {
 };
 
 const App = () => (
-  <AppProvider uri={ API_ENDPOINT_URI } authClient={ authClient }>
+  <AppProvider uri={ API_ENDPOINT_URI } authClient={ authClient } withSubscriptions>
     {renderAppContent}
   </AppProvider>
 );
