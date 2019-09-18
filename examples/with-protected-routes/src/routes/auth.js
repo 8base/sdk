@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { gql, withAuth } from '@8base/react-sdk';
-import { compose, withApollo } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
+import { compose } from 'recompose'; 
 
 import { AUTH_PROFILE_ID } from '../authClient';
 
