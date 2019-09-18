@@ -88,6 +88,7 @@ describe('AppProvider', () => {
         "onRequestSuccess": [MockFunction],
         "uri": "http://8base.com",
         "withAuth": true,
+        "withSubscriptions": false,
       }
     `);
   });
@@ -141,6 +142,7 @@ describe('AppProvider', () => {
         "onRequestSuccess": [MockFunction],
         "uri": "http://8base.com",
         "withAuth": true,
+        "withSubscriptions": false,
       }
     `);
   });
@@ -172,13 +174,14 @@ describe('AppProvider', () => {
     expect(apolloClientProps.withAuth).toBeFalsy();
 
     expect(apolloClientProps).toMatchInlineSnapshot(`
-            Object {
-              "extendLinks": [MockFunction],
-              "onRequestError": [MockFunction],
-              "onRequestSuccess": [MockFunction],
-              "uri": "http://8base.com",
-              "withAuth": false,
-            }
-        `);
+      Object {
+        "extendLinks": [MockFunction],
+        "onRequestError": [MockFunction],
+        "onRequestSuccess": [MockFunction],
+        "uri": "http://8base.com",
+        "withAuth": false,
+        "withSubscriptions": false,
+      }
+    `);
   });
 });

@@ -35,11 +35,13 @@ const AppProvider = ({
   introspectionQueryResultData,
   tablesList,
   applicationsList,
+  withSubscriptions,
 }: AppProviderProps): any =>
   !!authClient ? (
     <AuthProvider authClient={authClient}>
       <ApolloContainer
         withAuth={true}
+        withSubscriptions={withSubscriptions}
         uri={uri}
         extendLinks={extendLinks}
         onRequestSuccess={onRequestSuccess}
@@ -59,6 +61,7 @@ const AppProvider = ({
   ) : (
     <ApolloContainer
       withAuth={false}
+      withSubscriptions={withSubscriptions}
       uri={uri}
       extendLinks={extendLinks}
       onRequestSuccess={onRequestSuccess}
