@@ -1,4 +1,5 @@
 import { WebSocketLink } from 'apollo-link-ws';
+import { IAuthState } from '@8base/utils';
 
 import { isIdTokenExpiredError, isRefreshTokenExpiredError } from './utils';
 
@@ -12,7 +13,7 @@ import { SubscriptionLinkParameters, AuthState } from './types';
  * @param {Function} [options.onIdTokenExpired] - The callback which called when id token is expired.
  */
 export class SubscriptionLink extends WebSocketLink {
-  public getAuthState: () => AuthState;
+  public getAuthState: () => IAuthState;
   public onAuthError?: (error?: {}) => void;
   public onIdTokenExpired?: () => Promise<any>;
 

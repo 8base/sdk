@@ -1,3 +1,5 @@
+import { IAuthState } from '@8base/utils';
+
 export type ErrorObject = {
   code: string;
   message: string;
@@ -21,7 +23,7 @@ export type TokenRefreshLinkParameters = {
 
 export type SubscriptionLinkParameters = {
   uri: string;
-  getAuthState: () => AuthState;
+  getAuthState: () => IAuthState;
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
 };
@@ -38,12 +40,12 @@ export type AuthState = {
 };
 
 export type AuthHeadersLinkParameters = {
-  getAuthState: () => AuthState;
+  getAuthState: () => IAuthState;
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;
 
 export type SignUpLinkParameters = {
-  getAuthState: () => AuthState;
+  getAuthState: () => IAuthState;
   authProfileId: string;
 };
