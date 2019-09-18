@@ -141,6 +141,10 @@ export const TABLE_FRAGMENT = gql`
       status
       appType
     }
+    origin {
+      type
+      provider
+    }
     isSystem
     fields {
       ...TableFieldFragment
