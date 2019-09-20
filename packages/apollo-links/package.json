@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "0.37.1",
+  "version": "0.37.2",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/apollo-links#readme",
   "main": "dist/index.js",
@@ -15,14 +15,14 @@
     "graphql": "^14.0.0"
   },
   "dependencies": {
+    "@8base/apollo-link-ws": "1.0.20",
     "@8base/error-codes": "^1.0.17",
-    "@8base/utils": "^0.37.1",
+    "@8base/subscriptions-transport-ws": "^0.9.16",
+    "@8base/utils": "^0.37.2",
     "apollo-link": "1.2.11",
     "apollo-link-error": "^1.1.10",
-    "@8base/apollo-link-ws": "1.0.20",
     "graphql-tag": "^2.9.2",
     "ramda": "^0.26.1",
-    "@8base/subscriptions-transport-ws": "^0.9.16",
     "zen-observable-ts": "^0.8.18"
   },
   "devDependencies": {
