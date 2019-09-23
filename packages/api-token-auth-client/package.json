@@ -9,8 +9,6 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "doc": "NODE_ENV=test documentation readme",
-    "docs": "yarn doc src/index.js --section=ApiTokenAuthClient",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
@@ -18,7 +16,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
-    "documentation": "^8.0.0",
     "jest": "24.7.1",
     "jest-localstorage-mock": "^2.2.0",
     "prettier": "^1.16.0",

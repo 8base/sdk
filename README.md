@@ -12,6 +12,9 @@ yarn build-packages
 yarn bump
 ```
 
-## Documentation
+## Examples
 
-See [@8base/react-sdk documentation](https://github.com/8base/sdk/blob/master/packages/react-sdk/README.md)
+- [Guest App](https://codesandbox.io/s/github/8base/react-sdk/tree/master/examples/guest-app)
+- [With Api Token App](https://codesandbox.io/s/github/8base/react-sdk/tree/master/examples/with-api-token-app)
+- [With Authorization App](https://codesandbox.io/s/github/8base/react-sdk/tree/master/examples/with-authorization-app)
+- [With Protected Routes](https://codesandbox.io/s/github/8base/react-sdk/tree/master/examples/with-protected-routes)

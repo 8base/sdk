@@ -7,4 +7,3 @@ export * from './errors';
 export * from './types';
 export * from './StorageAPI';
 export * from './Publisher';
-export * from './reactHelpers';

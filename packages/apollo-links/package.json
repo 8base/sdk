@@ -8,7 +8,6 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "docs": "NODE_ENV=test documentation readme src/TokenRefreshLink.js --section=API",
     "test": "NPM_ENV=test jest"
   },
   "peerDependencies": {
@@ -29,7 +28,6 @@
     "@types/graphql": "^14.2.0",
     "@types/jest": "^24.0.13",
     "@types/ws": "^6.0.3",
-    "documentation": "^8.1.2",
     "graphql": "^14.3.1",
     "jest": "24.7.1",
     "ts-jest": "^24.0.2",
