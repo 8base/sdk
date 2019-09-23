@@ -5,3 +5,5 @@ export { withTablesList, WithTablesListProps } from './withTablesList';
 export { withApplicationsList } from './withApplicationsList';
 export { Features } from './Features';
 export { useTableSchema } from './useTableSchema';
+export { useTablesList } from './useTablesList';
+export { useApplicationsList } from './useApplicationsList';

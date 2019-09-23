@@ -1,7 +1,14 @@
 import React from 'react';
 import * as renderer from 'react-test-renderer';
 
-import { IfAllowed, PermissionsProvider, isAllowed, PermissionsContext, withPermissions } from '../../src';
+import {
+  IfAllowed,
+  PermissionsProvider,
+  isAllowed,
+  PermissionsContext,
+  withPermissions,
+  usePermissions,
+} from '../../src';
 
 const mockPermissionsData = {
   user: {
@@ -210,4 +217,27 @@ it('As a developer, I can use `isAllowed` for check field access via context.', 
   const tree = renderer.create(<PermissionsProvider>{() => <TestComponentWrapper />}</PermissionsProvider>);
 
   expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true, UnexistedFieldAllowed = true"');
+});
+
+it('As a developer, I can use usePermissions hook', () => {
+  const TestComponent = () => {
+    const permissions: any = usePermissions();
+
+    const allowed = isAllowed(
+      {
+        resource: 'Users',
+        type: 'data',
+        permission: 'update',
+        field: 'firstName',
+      },
+      permissions,
+    );
+
+    return `Allowed = ${allowed}`;
+  };
+
+  // @ts-ignore
+  const tree = renderer.create(<PermissionsProvider>{() => <TestComponent />}</PermissionsProvider>);
+
+  expect(tree.toJSON()).toMatchInlineSnapshot('"Allowed = true"');
 });
