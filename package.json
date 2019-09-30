@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "build-packages": "lerna run build --scope @8base/*",
+    "build-packages": "lerna run build",
     "link-packages": "./bin/link-packages.sh",
     "unlink-packages": "./bin/unlink-packages.sh",
     "test": "./bin/test.sh",
@@ -10,11 +10,13 @@
     "prettier:base": "prettier --parser typescript --single-quote",
     "prettier:check": "npm run prettier:base -- --list-different \"packages/*/{src,test}/**/*.{ts,tsx}\"",
     "prettier:write": "npm run prettier:base -- --write \"packages/*/{src,test}/**/*.{ts,tsx}\"",
-    "bump": "lerna version --force-publish"
+    "bump": "lerna version --force-publish",
+    "package:new": "hygen package new"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "@types/ramda": "^0.26.9",
+    "hygen": "^4.0.9",
     "lerna": "^3.16.4",
     "prettier": "^1.18.0",
     "rimraf": "^2.6.3",
