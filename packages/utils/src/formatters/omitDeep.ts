@@ -1,11 +1,18 @@
 import * as R from 'ramda';
 
 const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
-  if (!objectForOmitting || !R.is(Object, objectForOmitting)) {
+  if (
+    !objectForOmitting ||
+    !R.is(Object, objectForOmitting) ||
+    typeof objectForOmitting === 'number' ||
+    typeof objectForOmitting === 'string'
+  ) {
     return objectForOmitting;
   }
 
-  const currentLevelOmitedObject = R.omit(omitedProps, objectForOmitting);
+  const currentLevelOmitedObject: any = Array.isArray(objectForOmitting)
+    ? R.map(value => omitDeep(omitedProps, value), objectForOmitting)
+    : R.omit(omitedProps, objectForOmitting);
 
   const omitValue = (value: any): any => {
     if (R.is(Array, value)) {
@@ -16,7 +23,9 @@ const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
     return value;
   };
 
-  const fullOmitedObject = R.mapObjIndexed(omitValue, currentLevelOmitedObject);
+  const fullOmitedObject = Array.isArray(currentLevelOmitedObject)
+    ? R.map(omitValue, currentLevelOmitedObject)
+    : R.mapObjIndexed(omitValue, currentLevelOmitedObject);
 
   return fullOmitedObject;
 };

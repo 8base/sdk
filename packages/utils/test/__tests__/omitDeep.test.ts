@@ -35,4 +35,10 @@ describe('omitDeep', () => {
 
     expect(omitDeep(['__typename'], sourceObject)).toEqual(resultObject);
   });
+
+  it('should not transform array to object', () => {
+    const value = [['123', 555], { a: 1 }];
+
+    expect(omitDeep(['__typename'], value)).toEqual(value);
+  });
 });
