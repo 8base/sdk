@@ -1,5 +1,5 @@
 # 8base SDK - Auth Module
-8base SDK provides an easy way to implement authentication in your client application. Whether you're using 8base Authentication, Auth0, or an OpenID provider, the `Auth` module helps in managing the authentication flow.
+The 8base SDK provides an easy way to implement authentication in your client application. Whether you're using 8base Authentication, Auth0, or an OpenID provider, the `Auth` module helps in managing the authentication flow.
 
 For further information regarding Auth, please [refer to the docs](https://docs.8base.com/development-tools/sdk/auth).
 
