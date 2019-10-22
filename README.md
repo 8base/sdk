@@ -21,9 +21,9 @@ $ yarn add 8base-sdk
 The 8base SDK is a collection of many different 8base module, like `@8base/auth`. Any of these packages can be installed independently if needed. Once the SDK is installed in a projects `node_modules` folder, it can be imported to necessary scripts.
 
 ```javascript
-import 8base from '8base-sdk';
+import eightBase from '8base-sdk';
 // ...or
-var 8base = require('8base-sdk');
+var eightBbase = require('8base-sdk');
 // ...
 ```
 
