@@ -1,5 +1,6 @@
 import { IAuthClient, IStorage, throwIfMissingRequiredParameters, PACKAGES } from '@8base/utils';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
+import { WebOAuthClient } from '@8base/web-oauth-client';
 import { ApiTokenAuthClient } from '@8base/api-token-auth-client';
 
 import { AUTH_STRATEGIES } from './constants';
@@ -20,6 +21,9 @@ const getAuthClientConstructor = (strategy: AUTH_STRATEGIES | string): any => {
     case AUTH_STRATEGIES.WEB_8BASE:
     case AUTH_STRATEGIES.WEB_AUTH0: {
       return WebAuth0AuthClient;
+    }
+    case AUTH_STRATEGIES.WEB_OAUTH: {
+      return WebOAuthClient;
     }
   }
 };
