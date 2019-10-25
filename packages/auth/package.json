@@ -13,6 +13,7 @@
     "@8base/api-token-auth-client": "^1.1.0",
     "@8base/utils": "^1.1.0",
     "@8base/web-auth0-auth-client": "^1.1.0",
+    "@8base/web-oauth-client": "^1.1.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
