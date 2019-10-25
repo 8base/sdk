@@ -128,6 +128,12 @@ export interface IAuthState {
   [additionalProperty: string]: any;
 }
 
+export interface IStorageOptions<T> {
+  storage?: IStorage;
+  storageKey?: string;
+  initialState?: T;
+}
+
 export interface IAuthClient {
   getState: () => IAuthState;
   setState: (state: IAuthState) => void;
@@ -140,6 +146,12 @@ export interface IStorage {
   getItem: (keyName: string) => string | null;
   setItem: (keyName: string, keyValue: string) => void;
   removeItem: (keyName: string) => void;
+}
+
+export interface IStorageAPI<T> {
+  getState(): T;
+  setState(newState: T): void;
+  purgeState(): void;
 }
 
 export type Unsubscribe = () => void;

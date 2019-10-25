@@ -7,6 +7,7 @@ import {
   IAuthState,
   IAuthClient,
   IStorage,
+  IStorageOptions,
 } from '@8base/utils';
 
 interface IAuth0Data {
@@ -53,21 +54,21 @@ class WebAuth0AuthClient implements IAuthClient {
   public auth0: auth0.WebAuth;
 
   private logoutHasCalled: boolean;
-  private logoutRedirectUri?: string;
+  private readonly logoutRedirectUri?: string;
   private storageAPI: StorageAPI<IAuthState>;
 
-  constructor(
-    options: IWebAuth0AuthClientOptions,
-    storage: IStorage = window.localStorage,
-    storageKey: string = 'auth',
-  ) {
+  constructor(options: IWebAuth0AuthClientOptions, storageOptions: IStorageOptions<IAuthState> = {}) {
     throwIfMissingRequiredParameters(['domain', 'clientId', 'redirectUri'], PACKAGES.WEB_AUTH0_AUTH_CLIENT, options);
 
     const { logoutRedirectUri, clientId, ...restOptions } = options;
 
+    this.storageAPI = new StorageAPI<IAuthState>(
+      storageOptions.storage || window.localStorage,
+      storageOptions.storageKey || 'auth',
+      storageOptions.initialState,
+    );
     this.logoutHasCalled = false;
     this.logoutRedirectUri = logoutRedirectUri;
-    this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
     this.auth0 = new auth0.WebAuth({
       clientID: clientId,
       responseType: 'token id_token',

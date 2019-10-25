@@ -24,3 +24,22 @@ export const throwIfMissingRequiredParameters = (
     }
   });
 };
+
+export const showWarningIfDeprecatedParameters = (
+  deprecatedParameterPaths: Array<string[] | string>,
+  packageName: PACKAGES,
+  parameters: {} = {},
+): void => {
+  deprecatedParameterPaths.forEach(parameterPath => {
+    const isExist = hasParameter(parameterPath)(parameters);
+
+    if (isExist) {
+      // tslint:disable-next-line:no-console
+      console.warn(
+        `Deprecated parameter: ${stringifyPath(
+          parameterPath,
+        )}. Please, replace it with appropriate API https://www.npmjs.com/package/${packageName}`,
+      );
+    }
+  });
+};

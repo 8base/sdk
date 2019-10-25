@@ -64,8 +64,10 @@ describe('Auth.createClient', () => {
     const authClient = Auth.createClient(
       {
         strategy: 'api_token',
-        storage: authStorage,
-        storageKey: 'anotherAuth',
+        storageOptions: {
+          storage: authStorage,
+          storageKey: 'anotherAuth',
+        },
       },
       {
         apiToken: 'apiToken',
@@ -83,6 +85,27 @@ describe('Auth.createClient', () => {
         someArgument: 'someArgument',
       }),
     );
+  });
+
+  it('creates AuthClient with initialState', () => {
+    const authClient = Auth.createClient(
+      {
+        strategy: 'web_oauth',
+        storageOptions: {
+          storageKey: 'anotherAuth',
+          initialState: {
+            token: '42',
+          },
+        },
+      },
+      {
+        authorize() {
+          return null;
+        },
+      },
+    );
+
+    expect(localStorage.__STORE__.anotherAuth).toEqual(JSON.stringify({ token: '42' }));
   });
 
   it('creates subscribable AuthClient', () => {

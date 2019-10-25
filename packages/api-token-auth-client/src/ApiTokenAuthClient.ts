@@ -5,6 +5,7 @@ import {
   PACKAGES,
   StorageAPI,
   throwIfMissingRequiredParameters,
+  IStorageOptions,
 } from '@8base/utils';
 
 interface IApiTokenAuthClientOptions {
@@ -16,18 +17,18 @@ interface IApiTokenAuthClientOptions {
  */
 class ApiTokenAuthClient implements IAuthClient {
   private storageAPI: StorageAPI<IAuthState>;
-  private apiToken: string;
+  private readonly apiToken: string;
 
-  constructor(
-    options: IApiTokenAuthClientOptions,
-    storage: IStorage = window.localStorage,
-    storageKey: string = 'auth',
-  ) {
+  constructor(options: IApiTokenAuthClientOptions, storageOptions: IStorageOptions<IAuthState> = {}) {
     throwIfMissingRequiredParameters(['apiToken'], PACKAGES.API_TOKEN_AUTH_CLIENT, options);
 
     const { apiToken } = options;
 
-    this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
+    this.storageAPI = new StorageAPI<IAuthState>(
+      storageOptions.storage || window.localStorage,
+      storageOptions.storageKey || 'auth',
+      storageOptions.initialState,
+    );
     this.apiToken = apiToken;
 
     this.storageAPI.setState({ token: apiToken });
