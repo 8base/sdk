@@ -7,7 +7,7 @@
   "scripts": {
     "build": "../../bin/build-package.sh",
     "watch": "../../bin/watch-package.sh",
-    "test": "NPM_ENV=test jest"
+    "test":  "NPM_ENV=test && jest"
   },
   "dependencies": {
     "@8base/api-token-auth-client": "^1.1.1",

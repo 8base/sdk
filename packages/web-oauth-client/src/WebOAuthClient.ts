@@ -1,7 +1,7 @@
 import {
   IAuthState,
   IAuthClient,
-  IStorage,
+  IStorageOptions,
   PACKAGES,
   StorageAPI,
   throwIfMissingRequiredParameters,
@@ -19,10 +19,15 @@ class WebOAuthClient implements IAuthClient {
   private options: IWebOAuthClientOptions;
   private storageAPI: StorageAPI<IAuthState>;
 
-  constructor(options: IWebOAuthClientOptions, storage: IStorage = window.localStorage, storageKey: string = 'auth') {
+  constructor(options: IWebOAuthClientOptions, storageOptions: IStorageOptions<IAuthState> = {}) {
     throwIfMissingRequiredParameters(['authorize'], PACKAGES.WEB_AUTH0_AUTH_CLIENT, options);
 
-    this.storageAPI = new StorageAPI<IAuthState>(storage, storageKey);
+    this.storageAPI = new StorageAPI<IAuthState>(
+      storageOptions.storage || window.localStorage,
+      storageOptions.storageKey || 'auth',
+      storageOptions.initialState,
+    );
+
     this.options = options;
   }
 
