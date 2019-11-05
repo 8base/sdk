@@ -324,6 +324,18 @@ describe('As developer, I can format for create mutation,', () => {
     );
   });
 
+  it('Data with empty BigInt fields', () => {
+    const data = {
+      bigInt: '',
+      bigIntList: ['999999999999999999999999999999', '', '111111111111111111111111111111'],
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
+      bigInt: null,
+      bigIntList: ['999999999999999999999999999999', '111111111111111111111111111111'],
+    });
+  });
+
   it('should leave non-table fields if option ignoreNonTableFields is false', () => {
     const data = {
       scalar: 'Scalar Value',
