@@ -52,17 +52,19 @@ const formatFieldDataForMutation = (
         nextData = null;
       }
     }
-  } else if (verifiers.isNumberField(fieldSchema) && !verifiers.isBigInt(fieldSchema)) {
+  } else if (verifiers.isNumberField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {
       if (Array.isArray(nextData)) {
         nextData = R.reject(verifiers.isEmptyNumber, nextData);
 
-        nextData = R.map(Number, nextData);
+        if (!verifiers.isBigInt(fieldSchema)) {
+          nextData = R.map(Number, nextData);
+        }
       }
     } else {
       if (verifiers.isEmptyNumber(nextData)) {
         nextData = null;
-      } else {
+      } else if (!verifiers.isBigInt(fieldSchema)) {
         nextData = Number(nextData);
       }
     }
