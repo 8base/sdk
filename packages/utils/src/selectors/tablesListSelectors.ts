@@ -64,9 +64,10 @@ export const getUserTables: ParametricSelector<TableSchema[], void, TableSchema[
   tablesList => tablesList.filter(tableSelectors.isUserTable),
 );
 
-export const getApplicationTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
+export const getApplicationTables: ParametricSelector<TableSchema[], string, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(({ application }) => !!application),
+  (_, appName: string) => appName,
+  (tablesList, appName) => tablesList.filter(({ application }) => application && application.name === appName),
 );
 
 export const getViewTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
