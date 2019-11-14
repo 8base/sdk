@@ -10,7 +10,7 @@ import {
   IStorageOptions,
 } from '@8base/utils';
 
-interface IAuth0Data {
+export interface IAuth0Data {
   state?: object;
   isEmailVerified: boolean;
   idToken: string;
@@ -18,7 +18,7 @@ interface IAuth0Data {
   idTokenPayload: any;
 }
 
-interface IAuth0ClientOptions {
+export interface IAuth0ClientOptions {
   domain: string;
   clientId: string;
   redirectUri: string;
@@ -28,7 +28,7 @@ interface IAuth0ClientOptions {
   responseMode?: string;
 }
 
-interface IWebAuth0AuthClientOptions extends IAuth0ClientOptions {
+export interface IWebAuth0AuthClientOptions extends IAuth0ClientOptions {
   logoutRedirectUri?: string;
 }
 
