@@ -1,1 +1,1 @@
-export { WebAuth0AuthClient } from './WebAuth0AuthClient';
+export * from './WebAuth0AuthClient';
