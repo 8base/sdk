@@ -84,7 +84,7 @@ export type Application = {
 export type TableSchema = {
   id: string;
   name: string;
-  application: Application;
+  application?: Application | null;
   displayName: string;
   isSystem?: boolean;
   fields: FieldSchema[];

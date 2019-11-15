@@ -59,7 +59,7 @@ export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = cr
 
 export const getTableApplication = createSelector(
   getTable,
-  R.prop('application'),
+  R.propOr(null, 'application'),
 );
 
 export const getTableAppName = createSelector(
