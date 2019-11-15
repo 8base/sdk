@@ -29,7 +29,7 @@ export const getTableByName: (
       .find(({ name }) => name.toLowerCase() === tableName.toLowerCase()),
 );
 
-export const getTableApplication: ParametricSelector<TableSchema[], string, Application | void> = createSelector(
+export const getTableApplication: ParametricSelector<TableSchema[], string, Application | void | null> = createSelector(
   getTableById,
   table => table && table.application,
 );
