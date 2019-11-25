@@ -33,6 +33,7 @@ export const createQueryString = (
     relationItemsCount,
     includeColumns,
     permissions = {},
+    filterFields,
   } = queryObjectConfig;
 
   let queryObject = '';
@@ -57,6 +58,10 @@ export const createQueryString = (
         );
 
         shouldIncludeField = fieldAllowed && shouldIncludeField;
+      }
+
+      if (filterFields) {
+        shouldIncludeField = shouldIncludeField && filterFields(field);
       }
 
       return shouldIncludeField;

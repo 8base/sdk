@@ -171,6 +171,7 @@ export type QueryGeneratorConfig = {
   relationItemsCount?: number;
   includeColumns?: null | string[];
   permissions?: Object;
+  filterFields?: (field: FieldSchema) => boolean;
 };
 
 export type FormatDataAfterQueryOptions = {
