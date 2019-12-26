@@ -2,9 +2,9 @@ import * as R from 'ramda';
 
 import { tableSelectors, tablesListSelectors } from '../selectors';
 import { isRelationField, isFileField, isListField, isMetaField } from '../verifiers';
-
-import { TableSchema, Schema, FormatDataAfterQueryOptions } from '../types';
+import { Schema, FormatDataAfterQueryOptions } from '../types';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
+import { UPDATE_META_FIELDS_TO_PRESERVE } from '../constants';
 
 interface IFormatDataAfterQueryMeta {
   tableName: string;
@@ -46,7 +46,7 @@ const formatDataAfterQuery = (
         if (data[fieldName]) {
           result[fieldName] = data[fieldName].items;
         }
-      } else if (!isMetaField(fieldSchema)) {
+      } else if (!isMetaField(fieldSchema) || UPDATE_META_FIELDS_TO_PRESERVE[fieldName]) {
         result = R.assoc(fieldName, data[fieldName], result);
       }
 

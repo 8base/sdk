@@ -166,7 +166,7 @@ export const SYSTEM_TABLES: {
   USERS: 'Users',
 };
 
-export const MUTATION_FILE_FIELDS = ['fileId', 'public', 'filename', 'meta', 'mods'];
+export const MUTATION_FILE_FIELDS = ['id', 'fileId', 'public', 'filename', 'meta', 'mods'];
 
 export const APP_STATUS: {
   ACTIVE: 'ACTIVE';
@@ -190,4 +190,8 @@ export const TABLE_ORIGIN_TYPES = {
   LOCAL: 'LOCAL',
   VIEW: 'VIEW',
   REMOTE: 'REMOTE',
+};
+
+export const UPDATE_META_FIELDS_TO_PRESERVE: { [key: string]: boolean | void } = {
+  id: true,
 };

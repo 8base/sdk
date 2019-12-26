@@ -55,9 +55,18 @@ Object {
         "filename": "Screenshot at авг. 13 15-22-49.png",
       },
     ],
-    "reconnect": Array [
+    "disconnect": Array [
       Object {
-        "id": "1234",
+        "id": "removed-file-1",
+      },
+    ],
+    "update": Array [
+      Object {
+        "data": Object {
+          "fileId": "file-id",
+          "filename": "Screenshot at авг. 13 15-22-49.png",
+          "id": "1234",
+        },
       },
     ],
   },
@@ -67,7 +76,7 @@ Object {
     2,
   ],
   "relation": Object {
-    "create": Object {
+    "update": Object {
       "scalar": "Relation Scalar Value",
     },
   },
@@ -80,11 +89,16 @@ Object {
           },
         },
         "nestedRelationList": Object {
+          "connect": Array [
+            Object {
+              "id": "nested-relation-id",
+            },
+          ],
           "create": Array [
             Object {
-              "scalar": "Relation List Nested Relation List Scalar Value",
+              "scalar": "New Relation List Nested Relation List Scalar Value",
               "scalarList": Array [
-                "Relation List Nested Relation List Scalar List Value",
+                "New Relation List Nested Relation List Scalar List Value",
               ],
             },
           ],
@@ -95,7 +109,200 @@ Object {
         ],
       },
     ],
-    "reconnect": Array [],
+    "disconnect": Array [
+      Object {
+        "id": "removed-relation-list-1",
+      },
+    ],
+    "update": Array [
+      Object {
+        "data": Object {
+          "id": "connect-relation-list-1",
+        },
+      },
+      Object {
+        "data": Object {
+          "id": "relation-list-1",
+          "nestedRelation": Object {
+            "create": Object {
+              "scalar": "New Nested Relation Scalar Value",
+            },
+          },
+          "nestedRelationList": Object {
+            "create": Array [
+              Object {
+                "scalar": "Relation List Nested Relation List Scalar Value",
+                "scalarList": Array [
+                  "Relation List Nested Relation List Scalar List Value",
+                ],
+              },
+            ],
+          },
+          "scalar": "Update Relation List Scalar Value",
+          "scalarList": Array [
+            "Update Relation List Scalar List Value",
+          ],
+        },
+      },
+      Object {
+        "data": Object {
+          "id": "relation-list-2",
+          "nestedRelation": Object {
+            "update": Object {
+              "scalar": "Updated Nested Relation Scalar Value",
+            },
+          },
+          "nestedRelationList": Object {
+            "update": Array [
+              Object {
+                "data": Object {
+                  "id": "nested-relation-2-2",
+                  "scalar": "Relation List Nested Relation List Scalar Value",
+                  "scalarList": Array [
+                    "Relation List Nested Relation List Scalar List Value",
+                  ],
+                },
+              },
+            ],
+          },
+          "scalar": "Update Relation List Scalar Value",
+          "scalarList": Array [
+            "Update Relation List Scalar List Value",
+          ],
+        },
+      },
+    ],
+  },
+  "scalar": "Scalar Value",
+  "scalarList": Array [
+    "Scalar List Value",
+  ],
+}
+`;
+
+exports[`As developer, I can format for update mutation, Compelex data. 2`] = `
+Object {
+  "address": Object {
+    "city": "Kenia Urhahn",
+    "state": "Scottie Swailes",
+    "street1": "Pamelia Quall",
+    "street2": "Lasonya Friedly",
+    "zip": "Timothy Ingleton",
+  },
+  "fileList": Object {
+    "create": Array [
+      Object {
+        "fileId": "file-id",
+        "filename": "Screenshot at авг. 13 15-22-49.png",
+      },
+    ],
+    "update": Array [
+      Object {
+        "data": Object {
+          "fileId": "file-id",
+          "filename": "Screenshot at авг. 13 15-22-49.png",
+          "id": "1234",
+        },
+      },
+    ],
+  },
+  "number": 1,
+  "numberList": Array [
+    1,
+    2,
+  ],
+  "relation": Object {
+    "update": Object {
+      "scalar": "Relation Scalar Value",
+    },
+  },
+  "relationList": Object {
+    "create": Array [
+      Object {
+        "nestedRelation": Object {
+          "connect": Object {
+            "id": "5b32159b66a450c047285628",
+          },
+        },
+        "nestedRelationList": Object {
+          "connect": Array [
+            Object {
+              "id": "nested-relation-id",
+            },
+          ],
+          "create": Array [
+            Object {
+              "scalar": "New Relation List Nested Relation List Scalar Value",
+              "scalarList": Array [
+                "New Relation List Nested Relation List Scalar List Value",
+              ],
+            },
+          ],
+        },
+        "scalar": "Relation List Scalar Value",
+        "scalarList": Array [
+          "Relation List Scalar List Value",
+        ],
+      },
+    ],
+    "update": Array [
+      Object {
+        "data": Object {
+          "id": "connect-relation-list-1",
+        },
+      },
+      Object {
+        "data": Object {
+          "id": "relation-list-1",
+          "nestedRelation": Object {
+            "create": Object {
+              "scalar": "New Nested Relation Scalar Value",
+            },
+          },
+          "nestedRelationList": Object {
+            "create": Array [
+              Object {
+                "scalar": "Relation List Nested Relation List Scalar Value",
+                "scalarList": Array [
+                  "Relation List Nested Relation List Scalar List Value",
+                ],
+              },
+            ],
+          },
+          "scalar": "Update Relation List Scalar Value",
+          "scalarList": Array [
+            "Update Relation List Scalar List Value",
+          ],
+        },
+      },
+      Object {
+        "data": Object {
+          "id": "relation-list-2",
+          "nestedRelation": Object {
+            "update": Object {
+              "scalar": "Updated Nested Relation Scalar Value",
+            },
+          },
+          "nestedRelationList": Object {
+            "update": Array [
+              Object {
+                "data": Object {
+                  "id": "nested-relation-2-2",
+                  "scalar": "Relation List Nested Relation List Scalar Value",
+                  "scalarList": Array [
+                    "Relation List Nested Relation List Scalar List Value",
+                  ],
+                },
+              },
+            ],
+          },
+          "scalar": "Update Relation List Scalar Value",
+          "scalarList": Array [
+            "Update Relation List Scalar List Value",
+          ],
+        },
+      },
+    ],
   },
   "scalar": "Scalar Value",
   "scalarList": Array [

@@ -1,47 +1,65 @@
 import * as R from 'ramda';
 
-import { isRelationField, isFileField } from '../verifiers';
+import { isRelationField, isFileField, isListField } from '../verifiers';
 import { tablesListSelectors } from '../selectors';
 import { MUTATION_TYPE, SYSTEM_TABLES } from '../constants';
 import { formatDataForMutation } from './formatDataForMutation';
 import { SDKError, ERROR_CODES, PACKAGES } from '../errors';
-import { MutationType, FieldSchema, Schema } from '../types';
+import { MutationType, FieldSchema, Schema, FormatDataForMutationOptions } from '../types';
 
 interface IFormatFieldDataListItemMeta {
   fieldSchema: FieldSchema;
   schema: Schema;
+  initialData?: any;
 }
 
 export const formatFieldDataListItem = (
   type: MutationType,
   data: any,
-  { fieldSchema, schema }: IFormatFieldDataListItemMeta,
+  { fieldSchema, schema, initialData }: IFormatFieldDataListItemMeta,
+  options?: FormatDataForMutationOptions,
 ) => {
   let nextData = data;
 
   if (R.isNil(nextData)) {
-    return {
-      data: {},
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
-    };
-  } else if (typeof nextData === 'string') {
+    if (initialData && initialData.id) {
+      return {
+        data: { id: initialData.id },
+        type: 'disconnect',
+      };
+    }
+
+    if (typeof initialData === 'string') {
+      return {
+        data: { id: initialData },
+        type: 'disconnect',
+      };
+    }
+
+    return null;
+  }
+
+  if (typeof nextData === 'string') {
     return {
       data: { id: nextData },
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
-    };
-  } else if (typeof nextData.id === 'string') {
-    return {
-      data: { id: nextData.id },
-      type: type === MUTATION_TYPE.CREATE ? 'connect' : 'reconnect',
+      type: 'connect',
     };
   }
 
-  if (!R.isNil(nextData.length) && nextData.length === 0 && type === MUTATION_TYPE.UPDATE) {
+  if (typeof nextData.id === 'string' && type === MUTATION_TYPE.CREATE) {
     return {
-      data: [],
-      type: 'reconnect',
+      data: { id: nextData.id },
+      type: 'connect',
     };
   }
+
+  // TODO: is it valid case?
+  if (!R.isNil(nextData.length) && nextData.length === 0 && type === MUTATION_TYPE.UPDATE) {
+    return null;
+  }
+
+  const shouldUpdate = type === MUTATION_TYPE.UPDATE && typeof nextData.id === 'string';
+  const nextFormatDataForMutationType = shouldUpdate ? MUTATION_TYPE.UPDATE : MUTATION_TYPE.CREATE;
 
   if (isRelationField(fieldSchema)) {
     const relationTableSchema = tablesListSelectors.getTableById(schema, fieldSchema.relation.refTable.id);
@@ -54,21 +72,33 @@ export const formatFieldDataListItem = (
       );
     }
 
-    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, nextData, {
-      tableName: relationTableSchema.name,
-      schema,
-    });
+    nextData = formatDataForMutation(
+      nextFormatDataForMutationType,
+      nextData,
+      {
+        tableName: relationTableSchema.name,
+        schema,
+        initialData,
+      },
+      options,
+    );
   }
 
   if (isFileField(fieldSchema)) {
-    nextData = formatDataForMutation(MUTATION_TYPE.CREATE, nextData, {
-      tableName: SYSTEM_TABLES.FILES,
-      schema,
-    });
+    nextData = formatDataForMutation(
+      nextFormatDataForMutationType,
+      nextData,
+      {
+        tableName: SYSTEM_TABLES.FILES,
+        schema,
+        initialData,
+      },
+      options,
+    );
   }
 
   return {
-    data: nextData,
-    type: 'create',
+    data: shouldUpdate ? (isListField(fieldSchema) ? { data: nextData } : R.dissoc('id', nextData)) : nextData,
+    type: shouldUpdate ? 'update' : 'create',
   };
 };
