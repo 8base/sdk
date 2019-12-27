@@ -177,3 +177,9 @@ export type QueryGeneratorConfig = {
 export type FormatDataAfterQueryOptions = {
   formatRelationToIds?: boolean;
 };
+
+export type FormatDataForMutationOptions = {
+  skip?: boolean | ((...args: any[]) => boolean);
+  mutate?: (...args: any[]) => any;
+  ignoreNonTableFields?: boolean;
+};

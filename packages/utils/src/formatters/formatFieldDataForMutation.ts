@@ -1,10 +1,9 @@
 import * as R from 'ramda';
 
 import * as verifiers from '../verifiers';
+import { MutationType, FieldSchema, Schema, FormatDataForMutationOptions } from '../types';
 import { formatFieldDataList } from './formatFieldDataList';
 import { formatFieldData } from './formatFieldData';
-
-import { MutationType, FieldSchema, Schema } from '../types';
 
 const formatJSON = (data: any) => {
   if (typeof data === 'string' && data.length === 0) {
@@ -17,20 +16,22 @@ const formatJSON = (data: any) => {
 interface IFormatFieldDataForMutationMeta {
   fieldSchema: FieldSchema;
   schema: Schema;
+  initialData?: any;
 }
 
 const formatFieldDataForMutation = (
   type: MutationType,
   data: any,
-  { fieldSchema, schema }: IFormatFieldDataForMutationMeta,
+  { fieldSchema, schema, initialData }: IFormatFieldDataForMutationMeta,
+  options?: FormatDataForMutationOptions,
 ) => {
   let nextData = data;
 
   if (verifiers.isFileField(fieldSchema) || verifiers.isRelationField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {
-      nextData = formatFieldDataList(type, data, { fieldSchema, schema });
+      nextData = formatFieldDataList(type, data, { fieldSchema, schema, initialData }, options);
     } else {
-      nextData = formatFieldData(type, data, { fieldSchema, schema });
+      nextData = formatFieldData(type, data, { fieldSchema, schema, initialData }, options);
     }
   } else if (verifiers.isAddressField(fieldSchema)) {
     if (verifiers.isListField(fieldSchema)) {

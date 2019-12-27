@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 import { formatDataForMutation, MUTATION_TYPE } from '../../src';
 import { SCHEMA } from '../__fixtures__';
 
@@ -69,9 +71,7 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      relation: {
-        connect: {},
-      },
+      relation: null,
     });
   });
 
@@ -81,9 +81,7 @@ describe('As developer, I can format for create mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.CREATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      file: {
-        connect: {},
-      },
+      file: null,
     });
   });
 
@@ -401,7 +399,25 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       relation: {
-        reconnect: { id: '5b32159b66a4500f96285626' },
+        connect: { id: '5b32159b66a4500f96285626' },
+      },
+    });
+  });
+
+  it('Data with removed relation reference.', () => {
+    const initialData = {
+      relation: '5b32159b66a4500f96285626',
+    };
+
+    const data = {
+      relation: undefined,
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
+      relation: {
+        disconnect: { id: '5b32159b66a4500f96285626' },
       },
     });
   });
@@ -414,7 +430,24 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
+    const initialData = {
+      relation: {
+        id: 'removed-relation-1',
+      },
+    };
+
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
+      relation: {
+        create: {
+          scalar: 'Relation Scalar Value',
+          scalarList: ['Relation Scalar List Value'],
+        },
+      },
+    });
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
       relation: {
         create: {
           scalar: 'Relation Scalar Value',
@@ -433,11 +466,27 @@ describe('As developer, I can format for update mutation,', () => {
       },
     };
 
+    const initialData = {
+      relation: {
+        id: 'removed-relation-1',
+        scalar: 'Relation Scalar Value',
+        scalarList: ['Relation Scalar List Value'],
+      },
+    };
+
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       relation: {
-        reconnect: {
-          id: 'id',
-        },
+        update: R.dissoc('id', data.relation),
+      },
+    });
+
+    // TODO: For now, it will update despite ids are different in `data` and `initialData`.
+    // We probably should connect instead of update in that case.
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
+      relation: {
+        update: R.dissoc('id', data.relation),
       },
     });
   });
@@ -448,9 +497,7 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      relation: {
-        reconnect: {},
-      },
+      relation: null,
     });
   });
 
@@ -460,9 +507,7 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      file: {
-        reconnect: {},
-      },
+      file: null,
     });
   });
 
@@ -492,6 +537,7 @@ describe('As developer, I can format for update mutation,', () => {
       id: '5b32159b66a4500f96285626',
       fileId: 'file-id',
       filename: 'Screenshot at авг. 13 15-22-49.png',
+      downloadUrl: 'downloadUrl',
     };
 
     const data = {
@@ -500,7 +546,7 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       file: {
-        reconnect: { id: file.id },
+        update: R.omit(['id', 'downloadUrl'], file),
       },
     });
   });
@@ -512,7 +558,7 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       file: {
-        reconnect: { id: '5b32159b66a4500f96285626' },
+        connect: { id: '5b32159b66a4500f96285626' },
       },
     });
   });
@@ -524,7 +570,7 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       fileList: {
-        reconnect: [{ id: '5b32159b66a4500f96285626' }],
+        connect: [{ id: '5b32159b66a4500f96285626' }],
       },
     });
   });
@@ -536,7 +582,26 @@ describe('As developer, I can format for update mutation,', () => {
 
     expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
       relationList: {
-        reconnect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
+        connect: [{ id: '5b32159b66a450c047285628' }, { id: '5b32159b66a450fae928562a' }],
+      },
+    });
+  });
+
+  it('Data with removed relation list reference.', () => {
+    const initialData = {
+      relationList: ['5b32159b66a450c047285628', '5b32159b66a450fae928562a'],
+    };
+
+    const data = {
+      relationList: ['5b32159b66a450c047285628'],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
+      relationList: {
+        connect: [{ id: '5b32159b66a450c047285628' }],
+        disconnect: [{ id: '5b32159b66a450fae928562a' }],
       },
     });
   });
@@ -559,8 +624,94 @@ describe('As developer, I can format for update mutation,', () => {
             scalarList: ['Relation List Scalar List Value'],
           },
         ],
-        reconnect: [],
       },
+    });
+  });
+
+  it('Data with new and existing relations.', () => {
+    const data = {
+      relationList: [
+        'inline-relation-01',
+        {
+          id: 'update-relation-01',
+          scalar: 'Update relation scalar value',
+          scalarList: ['Update relation scalar list value'],
+        },
+        {
+          scalar: 'New relation scalar value',
+          scalarList: ['New relation scalar list value'],
+        },
+        {
+          id: 'connect-relation-01',
+        },
+      ],
+    };
+
+    const initialData = {
+      relationList: [
+        {
+          id: 'update-relation-01',
+          scalar: 'Update relation scalar value',
+          scalarList: ['Update relation scalar list value'],
+        },
+        {
+          id: 'removed-relation-01',
+          scalar: 'Removed relation scalar value',
+          scalarList: ['Removed relation scalar list value'],
+        },
+      ],
+    };
+
+    const expectedRelationListWithoutDisconnect = {
+      connect: [
+        {
+          id: 'inline-relation-01',
+        },
+      ],
+      update: [
+        {
+          data: {
+            id: 'update-relation-01',
+            scalar: 'Update relation scalar value',
+            scalarList: ['Update relation scalar list value'],
+          },
+        },
+        // TODO: For now, it will update despite there no such id in `initialData`.
+        // We probably should connect instead of update in that case.
+        {
+          data: {
+            id: 'connect-relation-01',
+          },
+        },
+      ],
+      create: [
+        {
+          scalar: 'New relation scalar value',
+          scalarList: ['New relation scalar list value'],
+        },
+      ],
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+        initialData,
+      }),
+    ).toEqual({
+      relationList: {
+        ...expectedRelationListWithoutDisconnect,
+        disconnect: [{ id: 'removed-relation-01' }],
+      },
+    });
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
+    ).toEqual({
+      relationList: expectedRelationListWithoutDisconnect,
     });
   });
 
@@ -569,10 +720,13 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: null,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      relationList: {
-        reconnect: [],
-      },
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
+    ).toEqual({
+      relationList: {},
     });
   });
 
@@ -581,10 +735,13 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: [],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
-      relationList: {
-        reconnect: [],
-      },
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
+    ).toEqual({
+      relationList: {},
     });
   });
 
@@ -599,13 +756,16 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
+    const expectedUpdateData = data.relationList.map(item => ({ data: item }));
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
+    ).toEqual({
       relationList: {
-        reconnect: [
-          {
-            id: data.relationList[0].id,
-          },
-        ],
+        update: expectedUpdateData,
       },
     });
   });
@@ -625,13 +785,14 @@ describe('As developer, I can format for update mutation,', () => {
       fileList,
     };
 
-    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
+    ).toEqual({
       fileList: {
-        reconnect: [
-          {
-            id: fileList[0].id,
-          },
-        ],
+        update: [{ data: fileList[0] }],
       },
     });
   });
@@ -712,6 +873,68 @@ describe('As developer, I can format for update mutation,', () => {
   });
 
   it('Compelex data.', () => {
+    const initialData = {
+      meta: 'initial meta',
+      number: 0,
+      numberList: [],
+      address: {
+        street1: 'Initial Pamelia Quall',
+        street2: 'Initial Lasonya Friedly',
+        zip: 'Initial Timothy Ingleton',
+        city: 'Initial Kenia Urhahn',
+        state: 'Initial Scottie Swailes',
+      },
+      scalar: 'Initial Scalar Value',
+      scalarList: ['Removed Scalar Value', 'Scalar List Value'],
+      relation: {
+        id: 'relation-1',
+        scalar: 'Initial Relation Scalar Value',
+      },
+      fileList: [
+        {
+          id: '1234',
+          fileId: 'file-id',
+          filename: 'Initial Screenshot at авг. 13 15-22-49.png',
+          nonFileField: 'non file field',
+        },
+        {
+          id: 'removed-file-1',
+          fileId: 'file-id',
+          filename: 'Initial Screenshot at авг. 13 15-22-49.png',
+        },
+      ],
+      relationList: [
+        {
+          id: 'relation-list-1',
+          scalar: 'Initial Relation List Scalar Value',
+          scalarList: ['Initial Relation List Scalar List Value'],
+        },
+        {
+          id: 'relation-list-2',
+          scalar: 'Initial Relation List Scalar Value',
+          scalarList: ['Initial Relation List Scalar List Value'],
+          nestedRelation: {
+            id: 'nested-relation-2-1',
+            scalar: 'Initial Nested Relation Scalar Value',
+          },
+          nestedRelationList: [
+            {
+              id: 'nested-relation-2-2',
+              scalar: 'Initial Relation List Nested Relation List Scalar Value',
+              scalarList: ['Initial Relation List Nested Relation List Scalar List Value'],
+            },
+          ],
+        },
+        {
+          id: 'removed-relation-list-1',
+          scalar: 'Initial Relation List Scalar Value',
+          scalarList: ['Initial Relation List Scalar List Value'],
+        },
+      ],
+      _description: 'Description',
+      __typename: 'Address',
+    };
+
     const data = {
       meta: 'meta',
       number: 1,
@@ -726,6 +949,7 @@ describe('As developer, I can format for update mutation,', () => {
       scalar: 'Scalar Value',
       scalarList: ['Scalar List Value'],
       relation: {
+        id: 'relation-1',
         scalar: 'Relation Scalar Value',
       },
       fileList: [
@@ -744,13 +968,51 @@ describe('As developer, I can format for update mutation,', () => {
       ],
       relationList: [
         {
+          id: 'connect-relation-list-1',
+        },
+        {
+          id: 'relation-list-1',
+          scalar: 'Update Relation List Scalar Value',
+          scalarList: ['Update Relation List Scalar List Value'],
+          nestedRelation: {
+            scalar: 'New Nested Relation Scalar Value',
+          },
+          nestedRelationList: [
+            {
+              scalar: 'Relation List Nested Relation List Scalar Value',
+              scalarList: ['Relation List Nested Relation List Scalar List Value'],
+            },
+          ],
+        },
+        {
+          id: 'relation-list-2',
+          scalar: 'Update Relation List Scalar Value',
+          scalarList: ['Update Relation List Scalar List Value'],
+          nestedRelation: {
+            id: 'nested-relation-2-1',
+            scalar: 'Updated Nested Relation Scalar Value',
+          },
+          nestedRelationList: [
+            {
+              id: 'nested-relation-2-2',
+              scalar: 'Relation List Nested Relation List Scalar Value',
+              scalarList: ['Relation List Nested Relation List Scalar List Value'],
+            },
+          ],
+        },
+        {
           scalar: 'Relation List Scalar Value',
           scalarList: ['Relation List Scalar List Value'],
           nestedRelation: '5b32159b66a450c047285628',
           nestedRelationList: [
             {
+              id: 'nested-relation-id',
               scalar: 'Relation List Nested Relation List Scalar Value',
               scalarList: ['Relation List Nested Relation List Scalar List Value'],
+            },
+            {
+              scalar: 'New Relation List Nested Relation List Scalar Value',
+              scalarList: ['New Relation List Nested Relation List Scalar List Value'],
             },
           ],
         },
@@ -760,7 +1022,18 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(
-      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA }),
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+        initialData,
+      }),
+    ).toMatchSnapshot();
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
+        tableName: 'tableSchema',
+        schema: SCHEMA,
+      }),
     ).toMatchSnapshot();
   });
 

@@ -941,12 +941,13 @@ export const SCHEMA: any[] = [
     fields: [
       {
         id: '5cc0849dfe73ad48a46103b0',
-        isSystem: true,
         name: 'id',
         displayName: 'ID',
         fieldType: 'ID',
+        isSystem: true,
         isRequired: true,
         isUnique: true,
+        isMeta: true,
         defaultValue: null,
         relation: null,
       },
