@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -10,10 +10,10 @@
     "test": "NPM_ENV=test && jest"
   },
   "dependencies": {
-    "@8base/api-token-auth-client": "^1.1.5",
-    "@8base/utils": "^1.1.5",
-    "@8base/web-auth0-auth-client": "^1.1.5",
-    "@8base/web-oauth-client": "^1.1.5",
+    "@8base/api-token-auth-client": "^1.2.0",
+    "@8base/utils": "^1.2.0",
+    "@8base/web-auth0-auth-client": "^1.2.0",
+    "@8base/web-oauth-client": "^1.2.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
