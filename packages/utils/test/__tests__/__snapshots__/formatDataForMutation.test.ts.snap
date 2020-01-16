@@ -77,7 +77,7 @@ Object {
   ],
   "relation": Object {
     "update": Object {
-      "scalar": "Relation Scalar Value",
+      "scalar": null,
     },
   },
   "relationList": Object {
@@ -138,7 +138,7 @@ Object {
               },
             ],
           },
-          "scalar": "Update Relation List Scalar Value",
+          "scalar": null,
           "scalarList": Array [
             "Update Relation List Scalar List Value",
           ],
@@ -149,7 +149,7 @@ Object {
           "id": "relation-list-2",
           "nestedRelation": Object {
             "update": Object {
-              "scalar": "Updated Nested Relation Scalar Value",
+              "scalar": null,
             },
           },
           "nestedRelationList": Object {
@@ -173,7 +173,7 @@ Object {
       },
     ],
   },
-  "scalar": "Scalar Value",
+  "scalar": null,
   "scalarList": Array [
     "Scalar List Value",
   ],
@@ -213,7 +213,7 @@ Object {
   ],
   "relation": Object {
     "update": Object {
-      "scalar": "Relation Scalar Value",
+      "scalar": undefined,
     },
   },
   "relationList": Object {
@@ -269,7 +269,7 @@ Object {
               },
             ],
           },
-          "scalar": "Update Relation List Scalar Value",
+          "scalar": null,
           "scalarList": Array [
             "Update Relation List Scalar List Value",
           ],
@@ -280,7 +280,7 @@ Object {
           "id": "relation-list-2",
           "nestedRelation": Object {
             "update": Object {
-              "scalar": "Updated Nested Relation Scalar Value",
+              "scalar": null,
             },
           },
           "nestedRelationList": Object {
@@ -304,7 +304,6 @@ Object {
       },
     ],
   },
-  "scalar": "Scalar Value",
   "scalarList": Array [
     "Scalar List Value",
   ],

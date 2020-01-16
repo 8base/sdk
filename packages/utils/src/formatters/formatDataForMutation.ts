@@ -23,6 +23,10 @@ const shouldPreserveMetaField = ({ type, fieldName }: { type: MutationType; fiel
   return type !== MUTATION_TYPE.UPDATE ? false : UPDATE_META_FIELDS_TO_PRESERVE[fieldName];
 };
 
+const isFieldRemoved = ({ initialValue, value }: { initialValue: any; value: any }) => {
+  return !R.isNil(initialValue) && R.isNil(value);
+};
+
 /**
  * Formats entity data for create or update mutation based on passed schema.
  * @param {MutationType} type - The type of the mutation.
@@ -57,6 +61,11 @@ const formatDataForMutation = (
 
   options = R.mergeDeepRight(DEFAULT_OPTIONS, options);
 
+  const dataKeys = R.pipe(
+    R.mergeRight(data),
+    R.keys,
+  )(initialData);
+
   const formatedData = R.reduce(
     (result: { [key: string]: any }, fieldName: string) => {
       if (
@@ -86,8 +95,11 @@ const formatDataForMutation = (
         return result;
       }
 
-      let formatedFieldData = data[fieldName];
       const initialFieldData = R.path([fieldName], initialData);
+
+      let formatedFieldData = isFieldRemoved({ initialValue: initialFieldData, value: data[fieldName] })
+        ? null
+        : data[fieldName];
 
       if ((isFileField(fieldSchema) || isRelationField(fieldSchema)) && isListField(fieldSchema)) {
         if (R.isNil(formatedFieldData)) {
@@ -121,7 +133,7 @@ const formatDataForMutation = (
       };
     },
     {},
-    R.keys(data) as string[],
+    dataKeys,
   );
 
   return omitDeep(['_description', '__typename'], formatedData);

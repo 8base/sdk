@@ -422,6 +422,105 @@ describe('As developer, I can format for update mutation,', () => {
     });
   });
 
+  it('Data with removed scalar value', () => {
+    const initialData = {
+      scalar: 'Scalar Value',
+    };
+
+    // Without initial data
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, { scalar: undefined }, { tableName: 'tableSchema', schema: SCHEMA }),
+    ).toEqual({
+      scalar: undefined,
+    });
+
+    // With initial data and scalar is undefined
+    expect(
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        { scalar: undefined },
+        { tableName: 'tableSchema', schema: SCHEMA, initialData },
+      ),
+    ).toEqual({
+      scalar: null,
+    });
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, {}, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
+      scalar: null,
+    });
+
+    // With initial data and scalar is null
+    expect(
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        { scalar: null },
+        { tableName: 'tableSchema', schema: SCHEMA, initialData },
+      ),
+    ).toEqual({
+      scalar: null,
+    });
+
+    // With initial data and scalar is empty string
+    expect(
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        { scalar: '' },
+        { tableName: 'tableSchema', schema: SCHEMA, initialData },
+      ),
+    ).toEqual({
+      scalar: '',
+    });
+
+    // With initial data and scalar is false
+    expect(
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        { scalar: false },
+        { tableName: 'tableSchema', schema: SCHEMA, initialData },
+      ),
+    ).toEqual({
+      scalar: false,
+    });
+
+    // With initial data and scalar is zero
+    expect(
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        { scalar: 0 },
+        { tableName: 'tableSchema', schema: SCHEMA, initialData },
+      ),
+    ).toEqual({
+      scalar: 0,
+    });
+  });
+
+  it('Data with removed scalar value in nested structure', () => {
+    const initialData = {
+      relation: {
+        id: 'relation-1',
+        scalar: 'Scalar Value',
+      },
+    };
+
+    const data = {
+      relation: {
+        id: 'relation-1',
+      },
+    };
+
+    expect(
+      formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
+    ).toEqual({
+      relation: {
+        update: {
+          scalar: null,
+        },
+      },
+    });
+  });
+
   it('Data with relation.', () => {
     const data = {
       relation: {
@@ -884,11 +983,11 @@ describe('As developer, I can format for update mutation,', () => {
         city: 'Initial Kenia Urhahn',
         state: 'Initial Scottie Swailes',
       },
-      scalar: 'Initial Scalar Value',
+      scalar: 'Removed Scalar Value',
       scalarList: ['Removed Scalar Value', 'Scalar List Value'],
       relation: {
         id: 'relation-1',
-        scalar: 'Initial Relation Scalar Value',
+        scalar: 'Removed Relation Scalar Value',
       },
       fileList: [
         {
@@ -906,7 +1005,7 @@ describe('As developer, I can format for update mutation,', () => {
       relationList: [
         {
           id: 'relation-list-1',
-          scalar: 'Initial Relation List Scalar Value',
+          scalar: 'Removed Relation List Scalar Value',
           scalarList: ['Initial Relation List Scalar List Value'],
         },
         {
@@ -915,7 +1014,7 @@ describe('As developer, I can format for update mutation,', () => {
           scalarList: ['Initial Relation List Scalar List Value'],
           nestedRelation: {
             id: 'nested-relation-2-1',
-            scalar: 'Initial Nested Relation Scalar Value',
+            scalar: 'Removed Nested Relation Scalar Value',
           },
           nestedRelationList: [
             {
@@ -946,11 +1045,10 @@ describe('As developer, I can format for update mutation,', () => {
         city: 'Kenia Urhahn',
         state: 'Scottie Swailes',
       },
-      scalar: 'Scalar Value',
       scalarList: ['Scalar List Value'],
       relation: {
         id: 'relation-1',
-        scalar: 'Relation Scalar Value',
+        scalar: undefined,
       },
       fileList: [
         {
@@ -972,7 +1070,7 @@ describe('As developer, I can format for update mutation,', () => {
         },
         {
           id: 'relation-list-1',
-          scalar: 'Update Relation List Scalar Value',
+          scalar: null,
           scalarList: ['Update Relation List Scalar List Value'],
           nestedRelation: {
             scalar: 'New Nested Relation Scalar Value',
@@ -990,7 +1088,7 @@ describe('As developer, I can format for update mutation,', () => {
           scalarList: ['Update Relation List Scalar List Value'],
           nestedRelation: {
             id: 'nested-relation-2-1',
-            scalar: 'Updated Nested Relation Scalar Value',
+            scalar: null,
           },
           nestedRelationList: [
             {
