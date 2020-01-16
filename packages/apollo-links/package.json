@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/apollo-links#readme",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "@8base/apollo-link-ws": "1.0.20",
     "@8base/error-codes": "^1.0.17",
     "@8base/subscriptions-transport-ws": "^0.9.16",
-    "@8base/utils": "^1.2.0",
+    "@8base/utils": "^1.2.1",
     "apollo-link": "1.2.11",
     "apollo-link-error": "^1.1.10",
     "graphql-tag": "^2.9.2",
