@@ -83,10 +83,15 @@ export const createTableRowCreateTag = (
 ) => {
   const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
-  const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
+
+  const hasCreatableFields = R.pipe(
+    R.propOr([], 'fields'),
+    R.any(R.pathEq(['dataFeatures', 'create'], true)),
+  )(table);
+
   const { withResultData = true, ...restConfig } = config;
 
-  if (hasNonMetaFields) {
+  if (hasCreatableFields) {
     return gqlPrettier(`
   mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name, appName)}!) {
     ${wrapInAppName(appName)(`
@@ -110,9 +115,13 @@ export const createTableRowCreateTag = (
 export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableId: string) => {
   const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
-  const hasNonMetaFields = tableSelectors.hasNonMetaFields(table);
 
-  if (hasNonMetaFields) {
+  const hasCreatableFields = R.pipe(
+    R.propOr([], 'fields'),
+    R.any(R.pathEq(['dataFeatures', 'create'], true)),
+  )(table);
+
+  if (hasCreatableFields) {
     return gqlPrettier(`
   mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(
       table.name,

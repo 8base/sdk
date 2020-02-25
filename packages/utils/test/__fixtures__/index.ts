@@ -6,9 +6,9 @@ export const COMMON_SALESFORCE_TABLE_SCHEMA: any = {
     name: 'Salesforce',
   },
   fields: [
-    { name: 'field1', id: '1', isMeta: false, isSystem: false },
-    { name: 'field2', id: '2', isMeta: false, isSystem: false },
-    { name: 'field3', id: '3', isMeta: false, isSystem: false },
+    { name: 'field1', id: '1', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
+    { name: 'field2', id: '2', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
+    { name: 'field3', id: '3', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
   ],
 };
 
@@ -16,9 +16,9 @@ export const COMMON_TABLE_SCHEMA: any = {
   id: 'COMMONS_ID',
   name: 'commons',
   fields: [
-    { name: 'field1', id: '1', isMeta: false, isSystem: false },
-    { name: 'field2', id: '2', isMeta: false, isSystem: false },
-    { name: 'field3', id: '3', isMeta: false, isSystem: false },
+    { name: 'field1', id: '1', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
+    { name: 'field2', id: '2', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
+    { name: 'field3', id: '3', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false },
   ],
 };
 
@@ -26,10 +26,25 @@ export const TABLE_SCHEMA_WITH_RELATION: any = {
   id: 'RELATION_ID',
   name: 'Relation',
   fields: [
-    { name: 'field1', isMeta: false, isSystem: false, id: '1', fieldType: 'RELATION' },
-    { name: 'field2', isMeta: false, isSystem: false, id: '2' },
-    { name: 'field3', isMeta: false, isSystem: false, id: '3' },
-    { name: 'field4', isMeta: false, isSystem: false, id: '4', fieldType: 'RELATION', isList: true },
+    {
+      name: 'field1',
+      isMeta: false,
+      dataFeatures: { create: true, update: true },
+      isSystem: false,
+      id: '1',
+      fieldType: 'RELATION',
+    },
+    { name: 'field2', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false, id: '2' },
+    { name: 'field3', isMeta: false, dataFeatures: { create: true, update: true }, isSystem: false, id: '3' },
+    {
+      name: 'field4',
+      isMeta: false,
+      dataFeatures: { create: true, update: true },
+      isSystem: false,
+      id: '4',
+      fieldType: 'RELATION',
+      isList: true,
+    },
   ],
 };
 
@@ -54,6 +69,7 @@ export const TABLE_SCHEMA_WITH_FILES: any = {
       defaultValue: null,
       isSystem: false,
       isMeta: false,
+      dataFeatures: { create: true, update: true },
       relation: null,
     },
     {
@@ -73,6 +89,7 @@ export const TABLE_SCHEMA_WITH_FILES: any = {
       defaultValue: null,
       isSystem: false,
       isMeta: false,
+      dataFeatures: { create: true, update: true },
       relation: null,
     },
   ],
@@ -95,6 +112,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -113,6 +131,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -131,6 +150,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -146,6 +166,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: {
         id: '5bac9e032cb410d7643279c9',
         refFieldName: null,
@@ -203,6 +224,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: false,
       isMeta: false,
+      dataFeatures: { create: true, update: true },
       relation: null,
     },
     {
@@ -287,6 +309,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: false,
       isMeta: false,
+      dataFeatures: { create: true, update: true },
       relation: null,
     },
     {
@@ -332,6 +355,7 @@ export const TABLE_SCHEMA_WITH_SMART_FIELDS: any = {
       defaultValue: null,
       isSystem: false,
       isMeta: false,
+      dataFeatures: { create: true, update: true },
       relation: null,
     },
   ],
@@ -354,6 +378,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -372,6 +397,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -390,6 +416,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: null,
     },
     {
@@ -405,6 +432,7 @@ export const TABLE_SCHEMA_WITHOUT_USER_FIELDS: any = {
       defaultValue: null,
       isSystem: true,
       isMeta: true,
+      dataFeatures: { create: false, update: false },
       relation: {
         id: '5bac9e032cb410d7643279c9',
         refFieldName: null,
@@ -447,6 +475,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -467,6 +496,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -487,6 +517,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -499,6 +530,7 @@ export const SCHEMA: any[] = [
           fieldSize: 100,
         },
         isMeta: true,
+        dataFeatures: { create: false, update: false },
         isList: false,
         isRequired: false,
         isUnique: false,
@@ -547,6 +579,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -591,6 +624,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -674,6 +708,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -757,6 +792,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -790,6 +826,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -808,6 +845,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -881,6 +919,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -895,6 +934,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -912,6 +952,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
       {
@@ -929,6 +970,7 @@ export const SCHEMA: any[] = [
         defaultValue: null,
         isSystem: false,
         isMeta: false,
+        dataFeatures: { create: true, update: true },
         relation: null,
       },
     ],
@@ -948,6 +990,7 @@ export const SCHEMA: any[] = [
         isRequired: true,
         isUnique: true,
         isMeta: true,
+        dataFeatures: { create: false, update: false },
         defaultValue: null,
         relation: null,
       },
