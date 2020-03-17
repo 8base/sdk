@@ -48,6 +48,7 @@ export const createTableFilterGraphqlTag = (
   query ${upperFirst(table.name)}TableContent(
     $filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name, appName)}
     $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name, appName)}]
+    $sort: [${SchemaNameGenerator.getSortInputTypeName(table.name, appName)}!]
     $after: String
     $before: String
     $first: Int
@@ -60,6 +61,7 @@ export const createTableFilterGraphqlTag = (
   )}(
       filter: $filter
       orderBy: $orderBy
+      sort: $sort
       after: $after
       before: $before
       first: $first
