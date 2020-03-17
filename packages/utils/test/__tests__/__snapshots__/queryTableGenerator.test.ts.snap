@@ -293,8 +293,8 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
-"query CommonsTableContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query CommonsTableContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $sort: [CommonSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  commonsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       field1
@@ -308,9 +308,9 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema for application 1`] = `
-"query CommonsTableContent($filter: SalesforceCommonFilter, $orderBy: [SalesforceCommonOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+"query CommonsTableContent($filter: SalesforceCommonFilter, $orderBy: [SalesforceCommonOrderBy], $sort: [SalesforceCommonSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
   Salesforce {
-    commonsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    commonsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
       items {
         id
         field1
@@ -325,8 +325,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
-"query FilesTableContent($filter: FileFilter, $orderBy: [FileOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  filesList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query FilesTableContent($filter: FileFilter, $orderBy: [FileOrderBy], $sort: [FileSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  filesList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       file {
@@ -356,8 +356,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
-"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $sort: [RelationSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  relationsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       field1 {
@@ -381,8 +381,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with smart fields 1`] = `
-"query SmartFieldsTableContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  smartFieldsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query SmartFieldsTableContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $sort: [SmartFieldSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  smartFieldsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       createdAt
@@ -414,8 +414,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with some relation count 1`] = `
-"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  relationsList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $sort: [RelationSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  relationsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       field1 {
@@ -439,8 +439,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate query string  1`] = `
-"query TableSchemaTableContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  tableSchemasList(filter: $filter, orderBy: $orderBy, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query TableSchemaTableContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $sort: [TableSchemaSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+  tableSchemasList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
     items {
       id
       number
