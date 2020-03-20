@@ -10,7 +10,14 @@ const formatJSON = (data: any) => {
     return null;
   }
 
-  return JSON.parse(data);
+  let formattedData = data;
+
+  try {
+    formattedData = JSON.parse(data);
+    // tslint:disable-next-line
+  } catch (e) {}
+
+  return formattedData;
 };
 
 interface IFormatFieldDataForMutationMeta {
