@@ -774,11 +774,17 @@ describe('As developer, I can format for update mutation,', () => {
             scalar: 'Update relation scalar value',
             scalarList: ['Update relation scalar list value'],
           },
+          filter: {
+            id: 'update-relation-01',
+          },
         },
         // TODO: For now, it will update despite there no such id in `initialData`.
         // We probably should connect instead of update in that case.
         {
           data: {
+            id: 'connect-relation-01',
+          },
+          filter: {
             id: 'connect-relation-01',
           },
         },
@@ -855,7 +861,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    const expectedUpdateData = data.relationList.map(item => ({ data: item }));
+    const expectedUpdateData = data.relationList.map(item => ({ data: item, filter: { id: item.id } }));
 
     expect(
       formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
@@ -891,7 +897,7 @@ describe('As developer, I can format for update mutation,', () => {
       }),
     ).toEqual({
       fileList: {
-        update: [{ data: fileList[0] }],
+        update: [{ data: fileList[0], filter: { id: fileList[0].id } }],
       },
     });
   });

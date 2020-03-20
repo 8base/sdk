@@ -97,8 +97,15 @@ export const formatFieldDataListItem = (
     );
   }
 
+  if (shouldUpdate) {
+    return {
+      type: 'update',
+      data: isListField(fieldSchema) ? { data: nextData, filter: { id: data.id } } : R.dissoc('id', nextData),
+    };
+  }
+
   return {
-    data: shouldUpdate ? (isListField(fieldSchema) ? { data: nextData } : R.dissoc('id', nextData)) : nextData,
-    type: shouldUpdate ? 'update' : 'create',
+    data: nextData,
+    type: 'create',
   };
 };
