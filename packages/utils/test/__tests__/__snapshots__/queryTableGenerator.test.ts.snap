@@ -588,6 +588,21 @@ Array [
       },
       "isList": false,
     },
+    "name": "untouchable",
+    "title": "Untouchable",
+  },
+  Object {
+    "meta": Object {
+      "fieldType": "NUMBER",
+      "fieldTypeAttributes": Object {
+        "currency": null,
+        "format": "NUMBER",
+        "maxValue": null,
+        "minValue": null,
+        "precision": 0,
+      },
+      "isList": false,
+    },
     "name": "numberanother",
     "title": "Numberanother",
   },

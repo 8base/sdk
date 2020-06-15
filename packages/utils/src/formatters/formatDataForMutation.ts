@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-import { MUTATION_TYPE, MUTATION_FILE_FIELDS, UPDATE_META_FIELDS_TO_PRESERVE } from '../constants';
+import { MUTATION_TYPE, MUTATION_FILE_FIELDS, UPDATE_META_FIELDS_TO_PRESERVE, FIELD_TYPE } from '../constants';
 import { tableSelectors, tablesListSelectors } from '../selectors';
 import { isMetaField, isFileField, isRelationField, isListField, isFilesTable } from '../verifiers';
 import { formatFieldDataForMutation } from './formatFieldDataForMutation';
@@ -88,6 +88,13 @@ const formatDataForMutation = (
       }
 
       if (typeof skip === 'function' && skip(data[fieldName], fieldSchema)) {
+        return result;
+      }
+
+      if (
+        fieldSchema.fieldType !== FIELD_TYPE.ID &&
+        !R.pathOr(true, ['dataFeatures', type.toLowerCase()], fieldSchema)
+      ) {
         return result;
       }
 
