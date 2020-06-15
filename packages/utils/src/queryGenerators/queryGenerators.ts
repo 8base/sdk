@@ -100,6 +100,7 @@ export const createTableRowCreateTag = (
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+        _description
       }`)}
     }`);
   }
@@ -110,6 +111,7 @@ export const createTableRowCreateTag = (
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
         id
         ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+        _description
       }`)}
     }`);
 };
@@ -163,6 +165,7 @@ export const createTableRowUpdateTag = (
       ${SchemaNameGenerator.getUpdateItemFieldName(table.name)}(data: $data, filter: $filter) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+          _description
         }`)}
       }`);
 };
@@ -182,6 +185,7 @@ export const createTableRowQueryTag = (
       ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
           id
           ${withResultData ? createQueryString(tablesList, tableId, { ...restConfig }) : ''}
+          _description
         }`)}
       }`);
 };
