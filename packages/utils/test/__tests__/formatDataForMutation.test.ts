@@ -4,6 +4,14 @@ import { formatDataForMutation, MUTATION_TYPE } from '../../src';
 import { SCHEMA } from '../__fixtures__';
 
 describe('As developer, I can format for create mutation,', () => {
+  it('Untouchabled data.', () => {
+    const data = {
+      untouchable: 10,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.CREATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({});
+  });
+
   it('Flat data.', () => {
     const data = {
       scalar: 'Scalar Value',
@@ -381,6 +389,14 @@ describe('As developer, I can format for create mutation,', () => {
 });
 
 describe('As developer, I can format for update mutation,', () => {
+  it('Untouchabled data.', () => {
+    const data = {
+      untouchable: 10,
+    };
+
+    expect(formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA })).toEqual({});
+  });
+
   it('Flat data.', () => {
     const data = {
       scalar: 'Scalar Value',

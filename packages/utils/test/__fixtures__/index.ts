@@ -458,6 +458,27 @@ export const SCHEMA: any[] = [
     isSystem: false,
     fields: [
       {
+        name: 'untouchable',
+        displayName: 'untouchable',
+        description: null,
+        fieldType: 'NUMBER',
+        fieldTypeAttributes: {
+          format: 'NUMBER',
+          precision: 0,
+          currency: null,
+          minValue: null,
+          maxValue: null,
+        },
+        isList: false,
+        isRequired: false,
+        isUnique: false,
+        defaultValue: null,
+        isSystem: false,
+        isMeta: false,
+        dataFeatures: { create: false, update: false },
+        relation: null,
+      },
+      {
         name: 'numberanother',
         displayName: 'number',
         description: null,
