@@ -103,6 +103,7 @@ export type TableSchema = {
       SWITCH: boolean;
       TEXT: boolean;
       UUID: boolean;
+      GEO: boolean;
     };
     update: {
       displayName: boolean;

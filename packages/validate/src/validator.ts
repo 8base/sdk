@@ -275,6 +275,7 @@ export const validatorFacade: ValidatorFacade = R.pipe(
       [R.propEq('fieldType', FIELD_TYPE.RELATION), getRelationFieldValidators],
       [R.propEq('fieldType', FIELD_TYPE.SMART), getSmartFieldValidators],
       [R.propEq('fieldType', FIELD_TYPE.JSON), getJSONFieldValidators],
+      [R.propEq('fieldType', FIELD_TYPE.GEO), () => [() => undefined]],
       [
         R.T,
         field => {

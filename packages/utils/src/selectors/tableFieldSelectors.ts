@@ -47,6 +47,11 @@ export const isIdField = createSelector(
   R.equals(FIELD_TYPE.ID),
 );
 
+export const isGeoField = createSelector(
+  getFieldType,
+  R.equals(FIELD_TYPE.GEO),
+);
+
 export const isMetaField = createSelector(
   getTableField,
   R.propEq('isMeta', true),
