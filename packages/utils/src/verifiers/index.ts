@@ -11,3 +11,4 @@ export { isMetaField } from './isMetaField';
 export { isNumberField } from './isNumberField';
 export { isPhoneField } from './isPhoneField';
 export { isRelationField } from './isRelationField';
+export { isGeoField } from './isGeoField';

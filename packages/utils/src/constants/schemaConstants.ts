@@ -10,6 +10,7 @@ export const FIELD_TYPE: {
   SMART: 'SMART';
   SWITCH: 'SWITCH';
   TEXT: 'TEXT';
+  GEO: 'GEO';
 } = {
   DATE: 'DATE',
   FILE: 'FILE',
@@ -22,6 +23,7 @@ export const FIELD_TYPE: {
   SMART: 'SMART',
   SWITCH: 'SWITCH',
   TEXT: 'TEXT',
+  GEO: 'GEO',
 };
 
 export const SWITCH_FORMATS: {
@@ -144,6 +146,18 @@ export const MUTATION_TYPE: {
 } = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
+};
+
+export const GEO_FORMATS: {
+  GEOMETRY: 'GEOMETRY';
+  POINT: 'POINT';
+  LINESTRING: 'LINESTRING';
+  POLYGON: 'POLYGON';
+} = {
+  GEOMETRY: 'GEOMETRY',
+  POINT: 'POINT',
+  LINESTRING: 'LINESTRING',
+  POLYGON: 'POLYGON',
 };
 
 export const SYSTEM_TABLES: {

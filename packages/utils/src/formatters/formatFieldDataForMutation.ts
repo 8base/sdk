@@ -82,6 +82,12 @@ const formatFieldDataForMutation = (
     } else {
       nextData = formatJSON(nextData);
     }
+  } else if (verifiers.isGeoField(fieldSchema) && Array.isArray(nextData)) {
+    if (verifiers.isListField(fieldSchema)) {
+      nextData = R.map(R.map(Number), nextData);
+    } else {
+      nextData = R.map(Number, nextData);
+    }
   }
 
   return nextData;

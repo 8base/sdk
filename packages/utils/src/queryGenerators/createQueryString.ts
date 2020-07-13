@@ -72,6 +72,7 @@ export const createQueryString = (
       const isMissingRelation = tableFieldSelectors.isMissingRelationField(field);
       const isOneWayRelationField = tableFieldSelectors.isOneWayRelationField(field);
       const isFile = tableFieldSelectors.isFileField(field);
+      const isGeo = tableFieldSelectors.isGeoField(field);
       const isSmart = tableFieldSelectors.isSmartField(field);
       const isList = tableFieldSelectors.isListField(field);
       const refTableId = tableFieldSelectors.getRelationTableId(field);
@@ -133,6 +134,12 @@ export const createQueryString = (
           downloadUrl
           shareUrl
           meta
+        }`;
+      } else if (isGeo) {
+        fieldContent = `{
+          type
+          coordinates
+          bbox
         }`;
       } else if (isSmart) {
         fieldContent = `{${field.fieldTypeAttributes.innerFields.reduce((accum: string, { name }: { name: string }) => {
