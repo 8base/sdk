@@ -1,4 +1,5 @@
 import { IAuthState } from '@8base/utils';
+import { Operation } from 'apollo-link';
 
 export type ErrorObject = {
   code: string;
@@ -40,7 +41,7 @@ export type AuthState = {
 };
 
 export type AuthHeadersLinkParameters = {
-  getAuthState: () => IAuthState;
+  getAuthState: (options?: { operation: Operation }) => IAuthState;
 };
 
 export type AuthLinkParameters = TokenRefreshLinkParameters & AuthHeadersLinkParameters;

@@ -7,7 +7,7 @@ const assocWhenNotEmpty = (key: string, value?: string | null) =>
   R.when(R.always(R.complement(R.either(R.isNil, R.isEmpty))(value)), R.assoc(key, value));
 
 export class AuthHeadersLink extends ApolloLink {
-  public getAuthState: () => AuthState;
+  public getAuthState: (options?: { operation: Operation }) => AuthState;
 
   constructor({ getAuthState }: AuthHeadersLinkParameters) {
     super();
@@ -17,7 +17,7 @@ export class AuthHeadersLink extends ApolloLink {
 
   public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
     return new Observable(observer => {
-      const { token, workspaceId } = this.getAuthState();
+      const { token, workspaceId } = this.getAuthState({ operation });
 
       operation.setContext(
         R.over(
