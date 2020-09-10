@@ -1,0 +1,31 @@
+name: checks
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build packages
+        run: yarn build-packages
+
+      - name: Run linter
+        run: yarn lint
+
+      - name: Run prettier
+        run: yarn prettier:check
+
+      - name: Run tests
+        run: yarn test

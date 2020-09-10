@@ -3,7 +3,7 @@ import { IAuthState } from '@8base/utils';
 
 import { isIdTokenExpiredError, isRefreshTokenExpiredError } from './utils';
 
-import { SubscriptionLinkParameters, AuthState } from './types';
+import { SubscriptionLinkParameters } from './types';
 
 /**
  * Subscription Link

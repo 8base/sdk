@@ -13,7 +13,7 @@ import { SIGNUP_MUTATION } from './graphql/mutations';
  * @param {String} options.authProfileId - Auth Profile Id copied from 8base authentication page.
  */
 export class SignUpLink extends ApolloLink {
-  public getAuthState: () => AuthState;
+  public getAuthState: (options?: { operation: Operation }) => AuthState;
   public authProfileId: string;
   public signUpPromise: Promise<undefined> | null;
   public fetching: boolean;
@@ -78,7 +78,7 @@ export class SignUpLink extends ApolloLink {
   }
 
   public async sendSignUp(operation: Operation, forward: NextLink) {
-    const { email } = this.getAuthState();
+    const { email } = this.getAuthState({ operation });
 
     if (this.signUpPromise === null) {
       this.signUpPromise = new Promise((resolve, reject) => {
