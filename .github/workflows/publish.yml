@@ -1,0 +1,33 @@
+name: publish
+
+on:
+  release:
+    types: [created]
+
+env:
+  NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build packages
+        run: yarn build-packages
+
+      - name: Run linter
+        run: yarn lint
+
+      - name: Run prettier
+        run: yarn prettier:check
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Publish
+        run: sh ./bin/publish.sh

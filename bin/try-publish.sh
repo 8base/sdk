@@ -18,9 +18,9 @@ fi
 
 if [ "$published" != "$version" ]; then
   echo "Try to publish $version version of the $name package."
-  echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
   npm publish --access public; if [ "$?" != "0" ]; then status=1; fi
-else 
+else
   echo "Current version of the package already published to the NPM."
 fi
 
