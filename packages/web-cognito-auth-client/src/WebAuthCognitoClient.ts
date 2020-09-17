@@ -10,9 +10,8 @@ import {
 import qs from 'qs';
 import jwtDecode from 'jwt-decode';
 
-
 export interface ICognitoIdTokenData {
-  name:  string;
+  name: string;
   family_name: string;
   email: string;
 }
@@ -22,8 +21,6 @@ export interface ICognitoParseResult {
   id_token: string;
   access_token: string;
 }
-
-
 
 export interface ICognitoData {
   state?: object;
@@ -91,13 +88,16 @@ class WebCognitoAuthClient implements IAuthClient {
   }
 
   public authorize(options: object = {}): void {
-    const link = `${this.domain}/oauth2/authorize?${qs.stringify({
-      client_id: this.clientId,
-      response_type: 'token',
-      redirect_uri: this.redirectUri,
-    }, {
-      encode: false,
-    })}`;
+    const link = `${this.domain}/oauth2/authorize?${qs.stringify(
+      {
+        client_id: this.clientId,
+        response_type: 'token',
+        redirect_uri: this.redirectUri,
+      },
+      {
+        encode: false,
+      },
+    )}`;
 
     window.location.replace(link);
 
@@ -130,7 +130,7 @@ class WebCognitoAuthClient implements IAuthClient {
       firstName: jwtResult.name,
       lastName: jwtResult.family_name,
       email: jwtResult.email,
-    }
+    };
   }
 
   public logout(options: object = {}): void {

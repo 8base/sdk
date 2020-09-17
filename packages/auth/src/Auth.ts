@@ -36,7 +36,7 @@ const getAuthClientConstructor = (strategy: AUTH_STRATEGIES | string): any => {
       return WebOAuthClient;
     }
     case AUTH_STRATEGIES.WEB_COGNITO: {
-      return WebCognitoAuthClient
+      return WebCognitoAuthClient;
     }
   }
 };

@@ -7,6 +7,9 @@ const REDIRECT_URI = 'https://test.com/auth';
 const LOGOUT_REDIRECT_URI = 'https://test.com/logout';
 const CLIENT_ID = 'some client id';
 const EMAIL = 'test@test.com';
+const FIRST_NAME = 'test';
+const LAST_NAME = 'testov';
+const AVATAR = 'avatar url';
 const WORKSPACE_ID = 'some workspace id';
 
 jest.mock('auth0-js', () => {
@@ -32,6 +35,17 @@ jest.mock('auth0-js', () => {
     logout,
     parseHash,
   };
+});
+
+jest.mock('jwt-decode', () => {
+  const decode = () => ({
+    email: EMAIL,
+    given_name: FIRST_NAME,
+    family_name: LAST_NAME,
+    picture: AVATAR,
+  });
+
+  return decode;
 });
 
 const auth0 = require('auth0-js'); // tslint:disable-line
@@ -71,6 +85,9 @@ describe('WebAuth0AuthClient', () => {
     expect(authData).toEqual({
       email: EMAIL,
       idToken: ID_TOKEN,
+      firstName: FIRST_NAME,
+      lastName: LAST_NAME,
+      avatar: AVATAR,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,
@@ -137,6 +154,9 @@ describe('WebAuth0AuthClient', () => {
     expect(authData).toEqual({
       email: EMAIL,
       idToken: ANOTHER_ID_TOKEN,
+      firstName: FIRST_NAME,
+      lastName: LAST_NAME,
+      avatar: AVATAR,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,

@@ -9,6 +9,7 @@ import {
   IStorage,
   IStorageOptions,
 } from '@8base/utils';
+import jwtDecode from 'jwt-decode';
 
 export interface IAuth0Data {
   state?: object;
@@ -16,6 +17,21 @@ export interface IAuth0Data {
   idToken: string;
   email: string;
   idTokenPayload: any;
+  firstName?: string;
+  lastName?: string;
+  avatar?: string;
+}
+
+export interface IAuth0IdTokenData {
+  given_name: string;
+  family_name: string;
+  nickname: string;
+  name: string;
+  picture: string;
+  updated_at: string;
+  email: string;
+  email_verified: boolean;
+  iss: string;
 }
 
 export interface IAuth0ClientOptions {
@@ -112,9 +128,15 @@ class WebAuth0AuthClient implements IAuthClient {
           return;
         }
 
+        const idToken = (getIdToken(result) as string) || '';
+        const jwtResult: IAuth0IdTokenData = jwtDecode(idToken) || {};
+
         resolve({
+          idToken,
+          firstName: jwtResult.given_name,
+          lastName: jwtResult.family_name,
+          avatar: jwtResult.picture,
           email: getEmail(result),
-          idToken: getIdToken(result),
           idTokenPayload: getIdTokenPayload(result),
           isEmailVerified: isEmailVerified(result),
           state: getState(result),
@@ -152,9 +174,15 @@ class WebAuth0AuthClient implements IAuthClient {
           return;
         }
 
+        const idToken = (getIdToken(authResult) as string) || '';
+        const jwtResult: IAuth0IdTokenData = jwtDecode(idToken) || {};
+
         resolve({
+          idToken,
+          firstName: jwtResult.given_name,
+          lastName: jwtResult.family_name,
+          avatar: jwtResult.picture,
           email: getEmail(authResult),
-          idToken: getIdToken(authResult),
           idTokenPayload: getIdTokenPayload(authResult),
           isEmailVerified: isEmailVerified(authResult),
           state: getState(authResult),
