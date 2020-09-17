@@ -6,6 +6,7 @@ import {
   PACKAGES,
 } from '@8base/utils';
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
+import { WebCognitoAuthClient } from '@8base/web-cognito-auth-client';
 import { WebOAuthClient } from '@8base/web-oauth-client';
 import { ApiTokenAuthClient } from '@8base/api-token-auth-client';
 
@@ -33,6 +34,9 @@ const getAuthClientConstructor = (strategy: AUTH_STRATEGIES | string): any => {
     }
     case AUTH_STRATEGIES.WEB_OAUTH: {
       return WebOAuthClient;
+    }
+    case AUTH_STRATEGIES.WEB_COGNITO: {
+      return WebCognitoAuthClient
     }
   }
 };
