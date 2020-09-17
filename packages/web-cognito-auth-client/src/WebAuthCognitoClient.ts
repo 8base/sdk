@@ -41,7 +41,7 @@ export interface IWebCognitoAuthClientOptions {
 const isEmptyOrNil = R.either(R.isNil, R.isEmpty);
 
 /**
- * Creates instacne of the web Cognito auth client.
+ * Creates instance of the web Cognito auth client.
  */
 class WebCognitoAuthClient implements IAuthClient {
   private logoutHasCalled: boolean;
@@ -100,16 +100,6 @@ class WebCognitoAuthClient implements IAuthClient {
     )}`;
 
     window.location.replace(link);
-
-    /*
-    window.location.replace(`${this.domain}/oauth2/authorize?${qs.stringify({
-      client_id: this.clientId,
-      response_type: 'token',
-      redirect_uri: this.redirectUri,
-    }, {
-      encode: false,
-    })}`);
-    */
   }
 
   public checkSession(options: object = {}) {
