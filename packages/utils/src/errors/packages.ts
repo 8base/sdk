@@ -14,4 +14,5 @@ export enum PACKAGES {
   VALIDATE = '@8base/validate',
   API_TOKEN_AUTH_CLIENT = '@8base/api-token-auth-client',
   WEB_AUTH0_AUTH_CLIENT = '@8base/web-auth0-auth-client',
+  WEB_COGNITO_AUTH_CLIENT = '@8base/web-cognito-auth-client',
 }
