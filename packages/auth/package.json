@@ -13,6 +13,7 @@
     "@8base/api-token-auth-client": "^1.3.1",
     "@8base/utils": "^1.3.1",
     "@8base/web-auth0-auth-client": "^1.3.1",
+    "@8base/web-cognito-auth-client": "^1.3.1",
     "@8base/web-oauth-client": "^1.3.1",
     "ramda": "^0.26.1"
   },
