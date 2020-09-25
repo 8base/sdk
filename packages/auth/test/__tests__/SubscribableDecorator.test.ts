@@ -46,6 +46,12 @@ class DummyAuthClient implements IAuthClient {
     return !!state.token;
   }
 
+  public getTokenInfo() {
+    return {
+      email: 'some@email.com',
+    };
+  }
+
   public login() {
     return this.externalAuth.login();
   }

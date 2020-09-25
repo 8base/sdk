@@ -87,7 +87,7 @@ describe('WebAuth0AuthClient', () => {
       idToken: ID_TOKEN,
       firstName: FIRST_NAME,
       lastName: LAST_NAME,
-      avatar: AVATAR,
+      picture: AVATAR,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,
@@ -156,7 +156,7 @@ describe('WebAuth0AuthClient', () => {
       idToken: ANOTHER_ID_TOKEN,
       firstName: FIRST_NAME,
       lastName: LAST_NAME,
-      avatar: AVATAR,
+      picture: AVATAR,
       idTokenPayload: {
         email: EMAIL,
         email_verified: true,

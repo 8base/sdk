@@ -6,6 +6,7 @@ import {
   StorageAPI,
   throwIfMissingRequiredParameters,
 } from '@8base/utils';
+import jwtDecode from 'jwt-decode';
 
 interface IWebOAuthClientOptions {
   authorize: (this: WebOAuthClient, ...rest: any) => any | Promise<any>;
@@ -47,6 +48,16 @@ class WebOAuthClient implements IAuthClient {
     const { token } = this.getState();
 
     return token !== '' && token !== null && token !== undefined;
+  }
+
+  public getTokenInfo() {
+    const { token } = this.getState();
+
+    if (!token) {
+      return undefined;
+    }
+
+    return jwtDecode(token) || undefined;
   }
 
   public authorize(...args: any) {

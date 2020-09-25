@@ -7,6 +7,7 @@ import {
   throwIfMissingRequiredParameters,
   IStorageOptions,
 } from '@8base/utils';
+import jwtDecode from 'jwt-decode';
 
 interface IApiTokenAuthClientOptions {
   apiToken: string;
@@ -39,6 +40,14 @@ class ApiTokenAuthClient implements IAuthClient {
       ...this.storageAPI.getState(),
       token: this.apiToken,
     };
+  }
+
+  public getTokenInfo() {
+    if (!this.apiToken) {
+      return undefined;
+    }
+
+    return jwtDecode(this.apiToken) || undefined;
   }
 
   public setState(state: IAuthState): void {
