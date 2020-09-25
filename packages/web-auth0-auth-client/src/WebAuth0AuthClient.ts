@@ -101,8 +101,28 @@ class WebAuth0AuthClient implements IAuthClient {
     return this.storageAPI.getState();
   }
 
+  public getTokenInfo() {
+    const { token } = this.storageAPI.getState();
+
+    if (!token) {
+      return undefined;
+    }
+
+    try {
+      return (jwtDecode(token || '') as IAuth0IdTokenData) || undefined;
+    } catch (err) {
+      return undefined;
+    }
+  }
+
   public purgeState(): void {
     this.storageAPI.purgeState();
+  }
+
+  public checkIsEmailVerified() {
+    const tokenResult = this.getTokenInfo();
+
+    return tokenResult && tokenResult.email_verified;
   }
 
   public checkIsAuthorized(): boolean {
@@ -135,7 +155,7 @@ class WebAuth0AuthClient implements IAuthClient {
           idToken,
           firstName: jwtResult.given_name,
           lastName: jwtResult.family_name,
-          avatar: jwtResult.picture,
+          picture: jwtResult.picture,
           email: getEmail(result),
           idTokenPayload: getIdTokenPayload(result),
           isEmailVerified: isEmailVerified(result),
@@ -181,7 +201,7 @@ class WebAuth0AuthClient implements IAuthClient {
           idToken,
           firstName: jwtResult.given_name,
           lastName: jwtResult.family_name,
-          avatar: jwtResult.picture,
+          picture: jwtResult.picture,
           email: getEmail(authResult),
           idTokenPayload: getIdTokenPayload(authResult),
           isEmailVerified: isEmailVerified(authResult),

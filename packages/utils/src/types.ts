@@ -140,6 +140,8 @@ export interface IAuthClient {
   setState: (state: IAuthState) => void;
   purgeState: () => void;
   checkIsAuthorized: () => boolean;
+  checkIsEmailVerified?: () => boolean | void;
+  getTokenInfo: () => any;
   [additionalProperty: string]: any;
 }
 

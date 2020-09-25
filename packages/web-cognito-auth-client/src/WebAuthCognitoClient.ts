@@ -123,6 +123,16 @@ class WebCognitoAuthClient implements IAuthClient {
     };
   }
 
+  public getTokenInfo() {
+    const { token } = this.getState();
+
+    if (!token) {
+      return undefined;
+    }
+
+    return (jwtDecode(token) as ICognitoIdTokenData) || undefined;
+  }
+
   public logout(options: object = {}): void {
     window.addEventListener('unload', () => {
       this.purgeState();
