@@ -164,20 +164,28 @@ export const SYSTEM_TABLES: {
   API_TOKENS: 'ApiTokens';
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables';
   FILES: 'Files';
-  INVITATIONS: 'Invitations';
+  TEAM_INVITATIONS: 'TeamInvitations';
   PERMISSIONS: 'Permissions';
   ROLES: 'Roles';
   SETTINGS: 'Settings';
   USERS: 'Users';
+  CI_CD_MIGRATIONS: 'CiCdMigrations';
+  AUTHENTICATION_PROFILES: 'AuthenticationProfiles';
+  AUTHENTICATION_SETTINGS: 'AuthenticationSettings';
+  TEAM_MEMBERS: 'TeamMembers';
 } = {
   API_TOKENS: 'ApiTokens',
   ENVIRONMENT_VARIABLES: 'EnvironmentVariables',
   FILES: 'Files',
-  INVITATIONS: 'Invitations',
+  TEAM_INVITATIONS: 'TeamInvitations',
   PERMISSIONS: 'Permissions',
   ROLES: 'Roles',
   SETTINGS: 'Settings',
   USERS: 'Users',
+  CI_CD_MIGRATIONS: 'CiCdMigrations',
+  AUTHENTICATION_PROFILES: 'AuthenticationProfiles',
+  AUTHENTICATION_SETTINGS: 'AuthenticationSettings',
+  TEAM_MEMBERS: 'TeamMembers',
 };
 
 export const MUTATION_FILE_FIELDS = ['id', 'fileId', 'public', 'filename', 'meta', 'mods'];
