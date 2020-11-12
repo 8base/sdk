@@ -37,29 +37,31 @@ export type FieldSchema = {
     name: string;
     displayName: string;
   };
-  description?: string;
-  fieldType: FieldType;
-  fieldTypeAttributes: { [key: string]: any };
+  description?: string | null;
+  fieldType: FieldType | string;
+  fieldTypeAttributes: {
+    [key: string]: any;
+  } | null;
   isSystem: boolean;
   isList: boolean;
   isMeta: boolean;
   isRequired: boolean;
-  isUnique?: boolean;
+  isUnique?: boolean | null;
   defaultValue: any;
   relation: {
-    id: string;
-    relationTableName: string;
-    relationFieldName: string;
-    refFieldName: string;
-    refFieldDisplayName: string;
-    refFieldIsList: boolean;
-    refFieldIsRequired: boolean;
+    id?: string;
+    relationTableName: string | null;
+    relationFieldName: string | null;
+    refFieldName: string | null;
+    refFieldDisplayName: string | null;
+    refFieldIsList: boolean | null;
+    refFieldIsRequired: boolean | null;
     refTable: {
       id: string;
       name: string;
       displayName: string;
     };
-  };
+  } | null;
   schemaFeatures: {
     update: boolean;
     delete: boolean;
@@ -89,7 +91,7 @@ export type TableSchema = {
   isSystem?: boolean;
   fields: FieldSchema[];
   origin: {
-    type: TableOriginType;
+    type: TableOriginType | string;
     provider: string;
   };
   schemaFeatures: {
