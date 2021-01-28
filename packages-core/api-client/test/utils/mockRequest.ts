@@ -7,7 +7,7 @@ function mockRequest(
 ): Promise<any> {
   let requestBody: any = null;
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     nock(endpoint)
       .post('/', (body: any) => {
         requestBody = body;

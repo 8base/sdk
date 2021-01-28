@@ -21,7 +21,7 @@ export const createQueryColumnsList = (
   const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 
   const transformedList = fields
-    .filter(field => {
+    .filter((field) => {
       const isMeta = tableFieldSelectors.isMetaField(field);
       const isIdField = tableFieldSelectors.isIdField(field);
 
@@ -31,7 +31,7 @@ export const createQueryColumnsList = (
 
       return withMeta ? true : !isMeta;
     })
-    .map(field => {
+    .map((field) => {
       const fieldName = tableFieldSelectors.getFieldName(field);
       const fieldType = tableFieldSelectors.getFieldType(field);
       const fieldTypeAttributes = tableFieldSelectors.getFieldTypesAttributes(field);

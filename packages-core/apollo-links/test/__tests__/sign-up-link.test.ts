@@ -31,7 +31,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
       authProfileId: AUTH_PROFILE_ID,
     });
 
-    stubRequestHandler = jest.fn(operation =>
+    stubRequestHandler = jest.fn((operation) =>
       Observable.of({
         data: {
           sample: {
@@ -67,7 +67,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
 
     return new Promise((resolve, reject) => {
       execute(mergedLink, { query: DYNO_QUERY }).subscribe(
-        data => {
+        (data) => {
           expect(data).toEqual({
             data: {
               sample: {
@@ -118,7 +118,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
 
     return new Promise((resolve, reject) => {
       execute(mergedLink, { query: DYNO_QUERY }).subscribe(
-        data => {
+        (data) => {
           expect(data).toEqual({
             errors: [
               {

@@ -193,7 +193,7 @@ describe('should call onChange when file is uploaded', () => {
     const onChange = jest.fn();
 
     const onUploadDone: any = (value: any) =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         setTimeout(() => {
           resolve({ ...value, id: 'id', downloadUrl: 'downloadUrl' });
         }, 50);

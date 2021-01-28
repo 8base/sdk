@@ -1,4 +1,4 @@
-import { WebSocketLink } from "@apollo/client/link/ws";
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { IAuthState } from '@8base/utils';
 
 import { isIdTokenExpiredError, isRefreshTokenExpiredError } from './utils';

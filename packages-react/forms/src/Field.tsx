@@ -8,7 +8,7 @@ import { FormContext } from './FormContext';
 import { getFieldSchemaName } from './utils';
 
 // @ts-ignore
-const hackMultiple = component => ({ tempMultiple, ...props }) =>
+const hackMultiple = (component) => ({ tempMultiple, ...props }) =>
   React.createElement(component, {
     ...props,
     multiple: tempMultiple,

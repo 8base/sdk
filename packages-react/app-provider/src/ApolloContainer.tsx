@@ -27,7 +27,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
     public createClient = R.memoizeWith(
       // @ts-ignore-next-line
       R.identity,
-      introspectionQueryResultData => {
+      (introspectionQueryResultData) => {
         const {
           withAuth,
           withSubscriptions,

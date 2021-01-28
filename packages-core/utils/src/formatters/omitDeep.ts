@@ -11,7 +11,7 @@ const omitDeep = (omitedProps: string[], objectForOmitting?: any) => {
   }
 
   const currentLevelOmitedObject: any = Array.isArray(objectForOmitting)
-    ? R.map(value => omitDeep(omitedProps, value), objectForOmitting)
+    ? R.map((value) => omitDeep(omitedProps, value), objectForOmitting)
     : R.omit(omitedProps, objectForOmitting);
 
   const omitValue = (value: any): any => {

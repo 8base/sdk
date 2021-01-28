@@ -1,13 +1,7 @@
 import React from 'react';
 import * as renderer from 'react-test-renderer';
 
-import {
-  IfAllowed,
-  PermissionsProvider,
-  isAllowed,
-  withPermissions,
-  usePermissions,
-} from '../../src';
+import { IfAllowed, PermissionsProvider, isAllowed, withPermissions, usePermissions } from '../../src';
 
 const mockPermissionsData = {
   teamMember: {
@@ -97,7 +91,12 @@ it('As a developer, I can use `IfAllowed` component for conditional rendering ba
   const testContentRenderFn = jest.fn(() => null);
 
   const testRenderFn = jest.fn(() => (
-    <IfAllowed permissions={[['data', 'Users', 'create'], ['data', 'Users', 'update']]}>
+    <IfAllowed
+      permissions={[
+        ['data', 'Users', 'create'],
+        ['data', 'Users', 'update'],
+      ]}
+    >
       {testContentRenderFn}
     </IfAllowed>
   ));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MutationFunction, MutationResult, gql } from '@apollo/client';
 // TODO: apollo Mutation component is deprecated
-import { Mutation } from '@apollo/client/react/components'
+import { Mutation } from '@apollo/client/react/components';
 import {
   createTableRowCreateTag,
   createTableRowCreateManyTag,

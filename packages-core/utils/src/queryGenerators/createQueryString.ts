@@ -39,7 +39,7 @@ export const createQueryString = (
   let queryObject = '';
 
   fields
-    .filter(field => {
+    .filter((field) => {
       const isMeta = tableFieldSelectors.isMetaField(field);
       const isRelation = tableFieldSelectors.isRelationField(field);
 
@@ -66,7 +66,7 @@ export const createQueryString = (
 
       return shouldIncludeField;
     })
-    .forEach(field => {
+    .forEach((field) => {
       let fieldContent = field.name;
       const isRelation = tableFieldSelectors.isRelationField(field);
       const isMissingRelation = tableFieldSelectors.isMissingRelationField(field);

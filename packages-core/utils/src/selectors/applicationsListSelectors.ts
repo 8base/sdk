@@ -7,19 +7,23 @@ export const getApplicationsList: ParametricSelector<Application[], any, Applica
   applicationsList: Application[],
 ) => applicationsList || [];
 
-export const getApplications: ParametricSelector<Application[], any, Application[]> = createSelector(
-  getApplicationsList,
-  applications => applications.filter(({ name }) => name !== null),
-);
+export const getApplications: ParametricSelector<
+  Application[],
+  any,
+  Application[]
+> = createSelector(getApplicationsList, (applications) => applications.filter(({ name }) => name !== null));
 
-export const getActiveApplications: ParametricSelector<Application[], any, Application[]> = createSelector(
-  getApplications,
-  applications => applications.filter(({ status }) => status === APP_STATUS.ACTIVE),
+export const getActiveApplications: ParametricSelector<
+  Application[],
+  any,
+  Application[]
+> = createSelector(getApplications, (applications) =>
+  applications.filter(({ status }) => status === APP_STATUS.ACTIVE),
 );
 
 export const hasConnectedApplications: ParametricSelector<Application[], any, boolean> = createSelector(
   getActiveApplications,
-  applications => applications.length > 0,
+  (applications) => applications.length > 0,
 );
 
 export const getApplication: ParametricSelector<Application[], any, Application | void> = createSelector(

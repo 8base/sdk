@@ -173,7 +173,7 @@ class WebAuth0AuthClient implements IAuthClient {
           connection: 'Username-Password-Authentication',
           email,
         },
-        error => {
+        (error) => {
           if (error) {
             reject(error || {});
             return;

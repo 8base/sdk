@@ -877,7 +877,7 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
-    const expectedUpdateData = data.relationList.map(item => ({ data: item, filter: { id: item.id } }));
+    const expectedUpdateData = data.relationList.map((item) => ({ data: item, filter: { id: item.id } }));
 
     expect(
       formatDataForMutation(MUTATION_TYPE.UPDATE, data, {

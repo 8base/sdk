@@ -89,7 +89,7 @@ const Form = ({
   // @ts-ignore
   props = R.evolve(
     {
-      onSubmit: onSubmit => async (data: any, ...rest: any) => {
+      onSubmit: (onSubmit) => async (data: any, ...rest: any) => {
         let result = null;
         let formattedData = data;
 

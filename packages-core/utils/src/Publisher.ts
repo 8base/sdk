@@ -32,7 +32,7 @@ export class Publisher<T> implements IPublisher {
       return;
     }
 
-    this.subscribers.forEach(subscriber => {
+    this.subscribers.forEach((subscriber) => {
       subscriber(state);
     });
   }

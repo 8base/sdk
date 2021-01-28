@@ -17,11 +17,11 @@ export class SuccessLink extends ApolloLink {
   }
 
   public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       forward(operation).subscribe({
         complete: (...args) => observer.complete(...args),
         error: (...args) => observer.error(...args),
-        next: data => {
+        next: (data) => {
           if (not(has('errors', data))) {
             this.successHandler({ operation, data });
           }

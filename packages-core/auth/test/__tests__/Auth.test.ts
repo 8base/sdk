@@ -7,11 +7,11 @@ import { Auth } from '../../src';
 const authState = {};
 
 const authStorage: IStorage = {
-  getItem: jest.fn(key => Reflect.get(authState, key)),
+  getItem: jest.fn((key) => Reflect.get(authState, key)),
   setItem: jest.fn((key, value) => {
     Reflect.set(authState, key, value);
   }),
-  removeItem: jest.fn(key => {
+  removeItem: jest.fn((key) => {
     Reflect.deleteProperty(authState, key);
   }),
 };

@@ -15,7 +15,7 @@ const withAuth = <T extends WithAuthProps>(WrappedComponent: React.ComponentType
     public render() {
       return (
         <AuthContext.Consumer>
-          {auth => <WrappedComponent {...(this.props as T)} auth={auth || {}} />}
+          {(auth) => <WrappedComponent {...(this.props as T)} auth={auth || {}} />}
         </AuthContext.Consumer>
       );
     }

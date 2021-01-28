@@ -31,47 +31,48 @@ export const getTableByName: (
 
 export const getTableApplication: ParametricSelector<TableSchema[], string, Application | void | null> = createSelector(
   getTableById,
-  table => table && table.application,
+  (table) => table && table.application,
 );
 
 export const getTableFields: ParametricSelector<TableSchema[], string, FieldSchema[]> = createSelector(
   getTableById,
-  table => (table ? table.fields : []),
+  (table) => (table ? table.fields : []),
 );
 
-export const getTableApplicationName: ParametricSelector<TableSchema[], string, string> = createSelector(
-  getTableApplication,
-  table => (table ? table.name : ''),
-);
+export const getTableApplicationName: ParametricSelector<
+  TableSchema[],
+  string,
+  string
+> = createSelector(getTableApplication, (table) => (table ? table.name : ''));
 
 export const getNoSystemTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(({ isSystem }) => !isSystem),
+  (tablesList) => tablesList.filter(({ isSystem }) => !isSystem),
 );
 
 export const getSystemTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(tableSelectors.isSystemTable),
+  (tablesList) => tablesList.filter(tableSelectors.isSystemTable),
 );
 
 export const hasNoSystemTables: ParametricSelector<TableSchema[], void, boolean> = createSelector(
   getNoSystemTables,
-  tables => tables.length > 0,
+  (tables) => tables.length > 0,
 );
 
 export const getUserTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(tableSelectors.isUserTable),
+  (tablesList) => tablesList.filter(tableSelectors.isUserTable),
 );
 
 export const getApplicationTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(({ application }) => !!application),
+  (tablesList) => tablesList.filter(({ application }) => !!application),
 );
 
 export const getViewTables: ParametricSelector<TableSchema[], void, TableSchema[]> = createSelector(
   getTableList,
-  tablesList => tablesList.filter(tableSelectors.isViewTable),
+  (tablesList) => tablesList.filter(tableSelectors.isViewTable),
 );
 
 export const getTablesByApplicationName = createSelector(
@@ -88,5 +89,5 @@ export const getTablesByApplicationId = createSelector(
 
 export const hasUserTables: ParametricSelector<TableSchema[], void, boolean> = createSelector(
   getUserTables,
-  tables => tables.length > 0,
+  (tables) => tables.length > 0,
 );

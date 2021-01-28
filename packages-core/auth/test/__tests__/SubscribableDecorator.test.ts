@@ -10,11 +10,11 @@ const externalAuth = {
 };
 
 const authStorage: IStorage = {
-  getItem: key => Reflect.get(authState, key),
+  getItem: (key) => Reflect.get(authState, key),
   setItem: (key, value) => {
     Reflect.set(authState, key, value);
   },
-  removeItem: key => {
+  removeItem: (key) => {
     Reflect.deleteProperty(authState, key);
   },
 };

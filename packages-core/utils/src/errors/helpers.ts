@@ -5,16 +5,16 @@ import { PACKAGES } from './packages';
 
 const hasParameter = R.ifElse(R.is(String), R.has, R.hasPath);
 
-const stringifyPath = R.ifElse(R.is(String), path => path, R.join('.'));
+const stringifyPath = R.ifElse(R.is(String), (path) => path, R.join('.'));
 
-type ParameterPathType = string[] | string
+type ParameterPathType = string[] | string;
 
 export const throwIfMissingRequiredParameters = (
   requiredParameterPaths: ParameterPathType[],
   packageName: PACKAGES,
   parameters: {} = {},
 ): void => {
-  requiredParameterPaths.forEach(parameterPath => {
+  requiredParameterPaths.forEach((parameterPath) => {
     const isMissing = !hasParameter(parameterPath)(parameters);
 
     if (isMissing) {
@@ -32,7 +32,7 @@ export const showWarningIfDeprecatedParameters = (
   packageName: PACKAGES,
   parameters: {} = {},
 ): void => {
-  deprecatedParameterPaths.forEach(parameterPath => {
+  deprecatedParameterPaths.forEach((parameterPath) => {
     const isExist = hasParameter(parameterPath)(parameters);
 
     if (isExist) {

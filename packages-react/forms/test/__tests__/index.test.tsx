@@ -170,12 +170,12 @@ let mockCreateValidate: any = null;
 
 jest.mock('@8base/validate', () => {
   return {
-    createValidate: (...args: any) => mockCreateValidate(...args)
+    createValidate: (...args: any) => mockCreateValidate(...args),
   };
 });
 
 describe('As a developer, while I implementet a form,', () => {
-  mockCreateValidate = jest.fn(fieldSchema => () => fieldSchema.name);
+  mockCreateValidate = jest.fn((fieldSchema) => () => fieldSchema.name);
 
   const INITIAL_VALUES = {
     scalar: 'Scalar Value',
@@ -192,28 +192,30 @@ describe('As a developer, while I implementet a form,', () => {
 
   const TestForm = jest.fn((props, renderProp) => renderProp(props));
   const TestFieldset = jest.fn((props, renderProp) => renderProp(props));
-  const TestField = jest.fn(props => <input {...props.input} />);
+  const TestField = jest.fn((props) => <input {...props.input} />);
 
   const element = (
     <TableSchemaContext.Provider
       value={{ tablesList: [TABLE_SCHEMA, RELATION_TABLE_SCHEMA], applicationsList: [], loading: false }}
     >
       <Form tableSchemaName="tableSchema" initialValues={INITIAL_VALUES} onSubmit={jest.fn()}>
-        {renderProps =>
+        {(renderProps) =>
           TestForm(renderProps, ({ handleSubmit }: any) => (
             <form onSubmit={handleSubmit}>
               <Field name="scalar" component={TestField} />
               <FieldArray name="scalarList">
-                {({ fields }) => fields.map(name => <Field key={name} name={name} component={TestField} />)}
+                {({ fields }) => fields.map((name) => <Field key={name} name={name} component={TestField} />)}
               </FieldArray>
               <Fieldset tableSchemaName="relationTableSchema">
-                {renderProps => TestFieldset(renderProps, () => <Field name="relation.scalar" component={TestField} />)}
+                {(renderProps) =>
+                  TestFieldset(renderProps, () => <Field name="relation.scalar" component={TestField} />)
+                }
               </Fieldset>
               <FieldArray name="relationList">
                 {({ fields }) =>
-                  fields.map(name => (
+                  fields.map((name) => (
                     <Fieldset tableSchemaName="relationTableSchema" key={name}>
-                      {renderProps =>
+                      {(renderProps) =>
                         TestFieldset(renderProps, () => <Field name={`${name}.scalar`} component={TestField} />)
                       }
                     </Fieldset>

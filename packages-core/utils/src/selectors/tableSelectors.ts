@@ -5,42 +5,20 @@ import { TableSchema, FieldSchema } from '../types';
 
 export const getTable = (table: TableSchema) => table || {};
 
-export const getTableName = createSelector(
-  getTable,
-  R.prop('name'),
-);
+export const getTableName = createSelector(getTable, R.prop('name'));
 
-export const getTableDisplayName = createSelector(
-  getTable,
-  R.prop('displayName'),
-);
+export const getTableDisplayName = createSelector(getTable, R.prop('displayName'));
 
-export const getTableId = createSelector(
-  getTable,
-  R.prop('id'),
-);
+export const getTableId = createSelector(getTable, R.prop('id'));
 
-export const getTableOrigin = createSelector(
-  getTable,
-  R.prop('origin'),
-);
+export const getTableOrigin = createSelector(getTable, R.prop('origin'));
 
-export const getTableOriginType = createSelector(
-  getTableOrigin,
-  R.prop('type'),
-);
+export const getTableOriginType = createSelector(getTableOrigin, R.prop('type'));
 
 export const getFieldById: ParametricSelector<TableSchema, string, FieldSchema | void> = (
   { fields }: TableSchema,
   fieldId: string,
-) =>
-  R.find(
-    R.pipe(
-      R.prop('id'),
-      R.equals(fieldId),
-    ),
-    fields,
-  );
+) => R.find(R.pipe(R.prop('id'), R.equals(fieldId)), fields);
 
 export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema | void> = (
   tableSchema: TableSchema,
@@ -49,7 +27,7 @@ export const getFieldByName: ParametricSelector<TableSchema, string, FieldSchema
 
 const getFieldByIdOrEmpty: ParametricSelector<TableSchema, string, FieldSchema | {}> = createSelector(
   getFieldById,
-  field => field || {},
+  (field) => field || {},
 );
 
 export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = createSelector(
@@ -57,70 +35,37 @@ export const getFieldTypeById: ParametricSelector<TableSchema, string, any> = cr
   R.propOr('', 'fieldType'),
 );
 
-export const getTableApplication = createSelector(
-  getTable,
-  R.propOr(null, 'application'),
-);
+export const getTableApplication = createSelector(getTable, R.propOr(null, 'application'));
 
-export const getTableAppName = createSelector(
-  getTableApplication,
-  R.propOr(null, 'name'),
-);
+export const getTableAppName = createSelector(getTableApplication, R.propOr(null, 'name'));
 
-export const getTableAppDisplayName = createSelector(
-  getTableApplication,
-  R.propOr(null, 'displayName'),
-);
+export const getTableAppDisplayName = createSelector(getTableApplication, R.propOr(null, 'displayName'));
 
-export const isSystemTable = createSelector(
-  getTable,
-  R.propEq<string>('isSystem', true),
-);
+export const isSystemTable = createSelector(getTable, R.propEq<string>('isSystem', true));
 
-export const isIntegrationTable = createSelector(
-  getTable,
-  ({ application }) => !!application,
-);
+export const isIntegrationTable = createSelector(getTable, ({ application }) => !!application);
 
 export const isRelationField: ParametricSelector<TableSchema, string, boolean> = createSelector(
   getFieldTypeById,
   R.equals(FIELD_TYPE.RELATION),
 );
 
-export const isFileField = createSelector(
-  getFieldTypeById,
-  R.equals(FIELD_TYPE.FILE),
-);
+export const isFileField = createSelector(getFieldTypeById, R.equals(FIELD_TYPE.FILE));
 
-export const isSmartField = createSelector(
-  getFieldTypeById,
-  R.equals(FIELD_TYPE.SMART),
-);
+export const isSmartField = createSelector(getFieldTypeById, R.equals(FIELD_TYPE.SMART));
 
-export const isMetaField = createSelector(
-  getFieldByIdOrEmpty,
-  R.propEq<string>('isMeta', true),
-);
+export const isMetaField = createSelector(getFieldByIdOrEmpty, R.propEq<string>('isMeta', true));
 
-export const isListField = createSelector(
-  getFieldByIdOrEmpty,
-  R.propEq<string>('isList', true),
-);
+export const isListField = createSelector(getFieldByIdOrEmpty, R.propEq<string>('isList', true));
 
-export const getFieldNameById = createSelector(
-  getFieldByIdOrEmpty,
-  R.propOr('', 'name'),
-);
+export const getFieldNameById = createSelector(getFieldByIdOrEmpty, R.propOr('', 'name'));
 
 export const hasNonMetaFields: (schema?: TableSchema) => boolean = R.pipe(
   R.propOr([], 'fields'),
   R.any(R.propEq('isMeta', false)),
 );
 
-export const hasListFields = R.pipe(
-  getTable,
-  ({ fields }: TableSchema) => !!fields.find(({ isList }) => isList),
-);
+export const hasListFields = R.pipe(getTable, ({ fields }: TableSchema) => !!fields.find(({ isList }) => isList));
 
 export const hasRelationFields = R.pipe(
   getTable,
@@ -169,15 +114,9 @@ export const hasPhoneFields = R.pipe(
     ),
 );
 
-export const getSchemaFeatures = createSelector(
-  getTable,
-  R.prop('schemaFeatures'),
-);
+export const getSchemaFeatures = createSelector(getTable, R.prop('schemaFeatures'));
 
-export const getDataFeatures = createSelector(
-  getTable,
-  R.prop('dataFeatures'),
-);
+export const getDataFeatures = createSelector(getTable, R.prop('dataFeatures'));
 
 export const isUserTable = createSelector(
   isSystemTable,
@@ -186,7 +125,4 @@ export const isUserTable = createSelector(
   (isSystem, application, originType) => !isSystem && !application && originType === TABLE_ORIGIN_TYPES.LOCAL,
 );
 
-export const isViewTable = createSelector(
-  getTableOriginType,
-  originType => originType === TABLE_ORIGIN_TYPES.VIEW,
-);
+export const isViewTable = createSelector(getTableOriginType, (originType) => originType === TABLE_ORIGIN_TYPES.VIEW);

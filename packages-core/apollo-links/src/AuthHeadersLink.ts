@@ -16,7 +16,7 @@ export class AuthHeadersLink extends ApolloLink {
   }
 
   public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       const { token, workspaceId } = this.getAuthState({ operation });
 
       operation.setContext(

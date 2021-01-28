@@ -62,7 +62,7 @@ const fetchFragmentsSchema = async (uri: string): Promise<Object | null> => {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
   })
-    .then(result => result.json())
+    .then((result) => result.json())
     .catch(() => ({ data: null }));
 
   if (R.isNil(result.data)) {

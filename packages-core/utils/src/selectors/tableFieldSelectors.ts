@@ -7,80 +7,35 @@ import { FieldSchema, TableSchema, FieldKind } from '../types';
 
 export const getTableField = (tableField: FieldSchema | void): FieldSchema => tableField as any;
 
-export const getFieldType: any = createSelector(
-  getTableField,
-  R.propOr('', 'fieldType'),
-);
+export const getFieldType: any = createSelector(getTableField, R.propOr('', 'fieldType'));
 
-export const getFieldTypesAttributes = createSelector(
-  getTableField,
-  R.propOr(null, 'fieldTypeAttributes'),
-);
+export const getFieldTypesAttributes = createSelector(getTableField, R.propOr(null, 'fieldTypeAttributes'));
 
-export const isRelationField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.RELATION),
-);
+export const isRelationField = createSelector(getFieldType, R.equals(FIELD_TYPE.RELATION));
 
-export const isMissingRelationField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.MISSING_RELATION),
-);
+export const isMissingRelationField = createSelector(getFieldType, R.equals(FIELD_TYPE.MISSING_RELATION));
 
-export const isOneWayRelationField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.ONE_WAY_RELATION),
-);
+export const isOneWayRelationField = createSelector(getFieldType, R.equals(FIELD_TYPE.ONE_WAY_RELATION));
 
-export const isFileField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.FILE),
-);
+export const isFileField = createSelector(getFieldType, R.equals(FIELD_TYPE.FILE));
 
-export const isSmartField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.SMART),
-);
+export const isSmartField = createSelector(getFieldType, R.equals(FIELD_TYPE.SMART));
 
-export const isIdField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.ID),
-);
+export const isIdField = createSelector(getFieldType, R.equals(FIELD_TYPE.ID));
 
-export const isGeoField = createSelector(
-  getFieldType,
-  R.equals(FIELD_TYPE.GEO),
-);
+export const isGeoField = createSelector(getFieldType, R.equals(FIELD_TYPE.GEO));
 
-export const isMetaField = createSelector(
-  getTableField,
-  R.propEq('isMeta', true),
-);
+export const isMetaField = createSelector(getTableField, R.propEq('isMeta', true));
 
-export const isListField = createSelector(
-  getTableField,
-  R.propEq('isList', true),
-);
+export const isListField = createSelector(getTableField, R.propEq('isList', true));
 
-export const isSystemField = createSelector(
-  getTableField,
-  R.propEq('isSystem', true),
-);
+export const isSystemField = createSelector(getTableField, R.propEq('isSystem', true));
 
-export const getFieldId = createSelector(
-  getTableField,
-  R.propOr('', 'id'),
-);
+export const getFieldId = createSelector(getTableField, R.propOr('', 'id'));
 
-export const getFieldName = createSelector(
-  getTableField,
-  fieldSchema => (fieldSchema ? fieldSchema.name : ''),
-);
+export const getFieldName = createSelector(getTableField, (fieldSchema) => (fieldSchema ? fieldSchema.name : ''));
 
-export const getFieldDisplayName = createSelector(
-  getTableField,
-  R.propOr('', 'displayName'),
-);
+export const getFieldDisplayName = createSelector(getTableField, R.propOr('', 'displayName'));
 
 export const getTableId = createSelector(
   getTableField,
@@ -112,15 +67,9 @@ export const getRelationTableDisplayName: ParametricSelector<FieldSchema, void, 
   R.path<any>(['relation', 'refTable', 'displayName']),
 );
 
-export const getSchemaFeatures = createSelector(
-  getTableField,
-  R.prop('schemaFeatures'),
-);
+export const getSchemaFeatures = createSelector(getTableField, R.prop('schemaFeatures'));
 
-export const getDataFeatures = createSelector(
-  getTableField,
-  R.prop('dataFeatures'),
-);
+export const getDataFeatures = createSelector(getTableField, R.prop('dataFeatures'));
 
 export const getFieldKind = createSelector(
   getTableId,

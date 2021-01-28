@@ -15,11 +15,11 @@ jest.mock('../../src/FragmentsSchemaContainer', () => ({
 
 jest.mock('@8base-react/auth', () => ({
   AuthProvider: jest.fn(({ children }) => <div>{children}</div>),
-  withAuth: jest.fn(Component => (props: any) => <Component {...props} />),
+  withAuth: jest.fn((Component) => (props: any) => <Component {...props} />),
 }));
 
 jest.mock('@8base/apollo-client', () => {
-  const { ApolloClient, InMemoryCache, ApolloLink  } = require('@apollo/client');
+  const { ApolloClient, InMemoryCache, ApolloLink } = require('@apollo/client');
 
   return {
     ApolloClient: jest.fn(
@@ -123,10 +123,8 @@ describe('AppProvider', () => {
     } = (ApolloClient as any).mock.calls[0][0];
 
     expect(AuthProvider).toHaveBeenCalled();
-    const authClientProps = wrapper
-      .root
-      .findByType(AuthProvider)
-      .props.authClient;
+    const authClientProps = wrapper.root.findByType(AuthProvider).props
+      .authClient;
 
     expect(authClientProps).toEqual(authClient);
 

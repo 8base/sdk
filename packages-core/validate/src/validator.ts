@@ -23,30 +23,12 @@ const FLOAT_MAX_VALUE = Number.MAX_VALUE;
 const FLOAT_MIN_VALUE = -Number.MAX_VALUE;
 
 const getFieldTypeAttributes: (obj: Field) => Record<any, any> = R.prop('fieldTypeAttributes');
-const getMinValueFromAttributes: (obj: Field) => number = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('minValue'),
-);
-const getMaxValueFromAttributes: (obj: Field) => number = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('maxValue'),
-);
-const getMaxPrecisionFromAttributes: (obj: Field) => number = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('precision'),
-);
-const isBigIntFromAttributes: (obj: Field) => boolean = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('isBigInt'),
-);
-const getMaxFieldSizeFromAttributes: (obj: Field) => number = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('fieldSize'),
-);
-const getFormatFromAttributes: (obj: Field) => Format = R.pipe(
-  getFieldTypeAttributes,
-  R.prop('format'),
-);
+const getMinValueFromAttributes: (obj: Field) => number = R.pipe(getFieldTypeAttributes, R.prop('minValue'));
+const getMaxValueFromAttributes: (obj: Field) => number = R.pipe(getFieldTypeAttributes, R.prop('maxValue'));
+const getMaxPrecisionFromAttributes: (obj: Field) => number = R.pipe(getFieldTypeAttributes, R.prop('precision'));
+const isBigIntFromAttributes: (obj: Field) => boolean = R.pipe(getFieldTypeAttributes, R.prop('isBigInt'));
+const getMaxFieldSizeFromAttributes: (obj: Field) => number = R.pipe(getFieldTypeAttributes, R.prop('fieldSize'));
+const getFormatFromAttributes: (obj: Field) => Format = R.pipe(getFieldTypeAttributes, R.prop('format'));
 
 const getMinValue = (field: Field): number => {
   const minValue = getMinValueFromAttributes(field);
@@ -89,14 +71,17 @@ const checkRequired: PreparedValidator = R.ifElse(
 
 const checkIsNumber: PreparedValidator = R.ifElse(
   R.pipe(
-    R.cond([[R.isNil, R.always(0)], [R.T, Number]]),
+    R.cond([
+      [R.isNil, R.always(0)],
+      [R.T, Number],
+    ]),
     R.complement(Number.isNaN),
   ),
   R.always(undefined),
   R.always(VALIDATION_ERROR.NOT_A_NUMBER()),
 );
 
-const checkIsJson: PreparedValidator = value => {
+const checkIsJson: PreparedValidator = (value) => {
   if (typeof value === 'string' && value.length > 0) {
     try {
       JSON.parse(value);
@@ -111,7 +96,7 @@ const checkIsJson: PreparedValidator = value => {
 // TODO: replace ternary operator by R.ifElse
 // when https://github.com/flowtype/flow-typed/issues/2411
 // will be resolved.
-const checkMaxPrecision: Validator<number> = maxPrecision => (value: any) => {
+const checkMaxPrecision: Validator<number> = (maxPrecision) => (value: any) => {
   if (isEmpty(value)) {
     return undefined;
   }
@@ -124,44 +109,29 @@ const checkMaxPrecision: Validator<number> = maxPrecision => (value: any) => {
   return precision <= maxPrecision ? undefined : VALIDATION_ERROR.MAX_PRECISION(maxPrecision);
 };
 
-const checkMinValue: Validator<number> = minValue =>
+const checkMinValue: Validator<number> = (minValue) =>
   R.ifElse(
     R.cond<string | null, boolean>([
       [isEmpty, R.T],
-      [
-        R.T,
-        R.pipe(
-          Number,
-          R.lte(minValue),
-        ),
-      ],
+      [R.T, R.pipe(Number, R.lte(minValue))],
     ]),
     R.always(undefined),
     R.always(VALIDATION_ERROR.MIN_VALUE(minValue)),
   );
 
-const checkMaxValue: Validator<number> = maxValue =>
+const checkMaxValue: Validator<number> = (maxValue) =>
   R.ifElse(
     R.cond<string | null, boolean>([
       [isEmpty, R.T],
-      [
-        R.T,
-        R.pipe(
-          Number,
-          R.gte(maxValue),
-        ),
-      ],
+      [R.T, R.pipe(Number, R.gte(maxValue))],
     ]),
     R.always(undefined),
     R.always(VALIDATION_ERROR.MAX_VALUE(maxValue)),
   );
 
-const checkMaxFieldSize: Validator<number> = maxFieldSize =>
+const checkMaxFieldSize: Validator<number> = (maxFieldSize) =>
   R.ifElse(
-    R.pipe(
-      R.propOr(0, 'length'),
-      R.gte(maxFieldSize),
-    ),
+    R.pipe(R.propOr(0, 'length'), R.gte(maxFieldSize)),
     R.always(undefined),
     R.always(VALIDATION_ERROR.MAX_FIELD_SIZE(maxFieldSize)),
   );
@@ -179,7 +149,7 @@ const checkFormat: Validator<Format> = (format: Format) => (value: any) => {
 
 type ValidatorsGetter<T> = (field: T) => PreparedValidator[];
 
-const getCommonValidators: ValidatorsGetter<Field> = field => {
+const getCommonValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
   if (field.isRequired) {
@@ -189,7 +159,7 @@ const getCommonValidators: ValidatorsGetter<Field> = field => {
   return validators;
 };
 
-const getNumberFieldValidators: ValidatorsGetter<Field> = field => {
+const getNumberFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [checkIsNumber];
 
   const maxPrecision = getMaxPrecisionFromAttributes(field);
@@ -212,7 +182,7 @@ const getNumberFieldValidators: ValidatorsGetter<Field> = field => {
   return validators;
 };
 
-const getTextFieldValidators: ValidatorsGetter<Field> = field => {
+const getTextFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
   const maxFieldSize = getMaxFieldSizeFromAttributes(field);
@@ -229,7 +199,7 @@ const getTextFieldValidators: ValidatorsGetter<Field> = field => {
   return validators;
 };
 
-const getDateFieldValidators: ValidatorsGetter<Field> = field => {
+const getDateFieldValidators: ValidatorsGetter<Field> = (field) => {
   const validators = [];
 
   const format = getFormatFromAttributes(field);
@@ -253,7 +223,7 @@ const getJSONFieldValidators: ValidatorsGetter<Field> = () => [checkIsJson];
 
 type ValidatorsProcesser = (validators: PreparedValidator[]) => PreparedValidator;
 
-const processValidators: ValidatorsProcesser = validators =>
+const processValidators: ValidatorsProcesser = (validators) =>
   R.converge((...values: ValidatorResult[]) => R.find(R.is(String))(values), validators);
 
 export type ValidatorFacade = (field: Field) => PreparedValidator;
@@ -278,7 +248,7 @@ export const validatorFacade: ValidatorFacade = R.pipe(
       [R.propEq('fieldType', FIELD_TYPE.GEO), () => [() => undefined]],
       [
         R.T,
-        field => {
+        (field) => {
           throw new SDKError(
             ERROR_CODES.UNSUPPORTED_FIELD_TYPE,
             PACKAGES.VALIDATE,

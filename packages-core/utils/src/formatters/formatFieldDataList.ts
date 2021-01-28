@@ -55,7 +55,7 @@ export const formatFieldDataList = (
     (data: any) => bindDataWithInitialData(data, initialData),
     // // @ts-ignore
     // data => console.log('binded data', data) || data,
-    R.map(item =>
+    R.map((item) =>
       formatFieldDataListItem(
         type,
         item.data,

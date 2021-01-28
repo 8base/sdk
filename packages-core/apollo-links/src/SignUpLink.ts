@@ -29,7 +29,7 @@ export class SignUpLink extends ApolloLink {
   }
 
   public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       let subscription: ZenObservable.Subscription | null = null;
 
       const handleUserNotExistError = () => {
@@ -41,7 +41,7 @@ export class SignUpLink extends ApolloLink {
 
             subscription = forward(operation).subscribe(subscriber);
           })
-          .catch(error => {
+          .catch((error) => {
             observer.error(error);
           });
       };
@@ -99,7 +99,7 @@ export class SignUpLink extends ApolloLink {
             this.fetching = false;
           },
           error: reject,
-          next: data => {
+          next: (data) => {
             if (R.path(['data', 'userSignUp', 'id'], data)) {
               resolve(undefined);
             } else {

@@ -55,7 +55,10 @@ export const createTableFilterGraphqlTag = (
     $last: Int
     $skip: Int
   ) {
-  ${wrapInAppName(appName, config.appContentName)(`
+  ${wrapInAppName(
+    appName,
+    config.appContentName,
+  )(`
   ${config.tableContentName ? `${config.tableContentName}: ` : ''}${SchemaNameGenerator.getTableListFieldName(
     table.name,
   )}(
@@ -86,10 +89,7 @@ export const createTableRowCreateTag = (
   const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
 
-  const hasCreatableFields = R.pipe(
-    R.propOr([], 'fields'),
-    R.any(R.pathEq(['dataFeatures', 'create'], true)),
-  )(table);
+  const hasCreatableFields = R.pipe(R.propOr([], 'fields'), R.any(R.pathEq(['dataFeatures', 'create'], true)))(table);
 
   const { withResultData = true, ...restConfig } = config;
 
@@ -120,10 +120,7 @@ export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableId: 
   const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
 
-  const hasCreatableFields = R.pipe(
-    R.propOr([], 'fields'),
-    R.any(R.pathEq(['dataFeatures', 'create'], true)),
-  )(table);
+  const hasCreatableFields = R.pipe(R.propOr([], 'fields'), R.any(R.pathEq(['dataFeatures', 'create'], true)))(table);
 
   if (hasCreatableFields) {
     return gqlPrettier(`

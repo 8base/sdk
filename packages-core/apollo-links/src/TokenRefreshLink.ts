@@ -24,7 +24,7 @@ export class TokenRefreshLink extends ApolloLink {
   }
 
   public request(operation: Operation, forward: NextLink): Observable<FetchResult> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       let subscription: any = null;
       let handling = false;
 
@@ -41,7 +41,7 @@ export class TokenRefreshLink extends ApolloLink {
 
             subscription = observable.subscribe(subscriber);
           })
-          .catch(err => {
+          .catch((err) => {
             this.handleAuthFailed(err);
 
             handling = false;

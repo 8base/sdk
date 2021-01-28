@@ -61,7 +61,7 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
 
     return new Promise((resolve, reject) =>
       execute(link, { query: DYNO_QUERY }).subscribe(
-        data => {
+        (data) => {
           expect(data).toEqual({
             data: {
               sample: {

@@ -53,9 +53,11 @@ const uploadFiles = async (record: any, tableSchema: TableSchema, filestackClien
           for (let j = 0; j < record[fieldName].length; j++) {
             nextRecord = R.assocPath(
               [fieldName, j, 'fileId'],
-              (await filestackClient.storeURL(record[fieldName][j].url, {
-                path,
-              })).handle,
+              (
+                await filestackClient.storeURL(record[fieldName][j].url, {
+                  path,
+                })
+              ).handle,
               nextRecord,
             );
             nextRecord = R.dissocPath([fieldName, j, 'url'], nextRecord);
@@ -65,9 +67,11 @@ const uploadFiles = async (record: any, tableSchema: TableSchema, filestackClien
         if (record[fieldName]) {
           nextRecord = R.assocPath(
             [fieldName, 'fileId'],
-            (await filestackClient.storeURL(record[fieldName].url, {
-              path,
-            })).handle,
+            (
+              await filestackClient.storeURL(record[fieldName].url, {
+                path,
+              })
+            ).handle,
             nextRecord,
           );
           nextRecord = R.dissocPath([fieldName, 'url'], nextRecord);
