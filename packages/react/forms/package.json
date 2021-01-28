@@ -1,0 +1,73 @@
+{
+  "name": "@8base-react/forms",
+  "version": "1.6.2",
+  "repository": "https://github.com/8base/sdk",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages-react/forms#readme",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "../../../bin/build-package.sh",
+    "watch": "../../../bin/watch-package.sh",
+    "test": "NPM_ENV=test jest"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "dependencies": {
+    "@8base-react/permissions-provider": "^1.6.2",
+    "@8base-react/table-schema-provider": "^1.6.2",
+    "@8base/error-codes": "^1.0.22",
+    "@8base/utils": "^1.4.0",
+    "@8base/validate": "^1.4.0",
+    "final-form": "^4.20.1",
+    "final-form-arrays": "^3.0.2",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.27.1",
+    "react-final-form": "^6.5.2",
+    "react-final-form-arrays": "^3.1.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
+    "@types/ramda": "^0.27.36",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-test-renderer": "^17.0.0",
+    "jest": "26.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "<rootDir>/test/tsconfig.json"
+      }
+    },
+    "setupFiles": [
+      "<rootDir>/test/jest.setup.ts"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**",
+      "!<rootDir>/**/__tests__/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ]
+  },
+  "license": "MIT"
+}

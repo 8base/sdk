@@ -9,7 +9,7 @@ status=0
 
 echo -e "\033[0;33mStarting \"${title}\" for \"${package}\"\033[0m\n"
 
-cd ./packages-$scope/$package
+cd ./packages/$scope/$package
 
 eval "${cmd}; if [ \"\$?\" != \"0\" ]; then status=1; fi"
 

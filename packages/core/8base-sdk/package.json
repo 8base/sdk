@@ -1,9 +1,6 @@
----
-to: packages/<%= name %>/package.json
----
 {
-  "name": "@8base/<%= name %>",
-  "version": "<%= version %>",
+  "name": "8base-sdk",
+  "version": "1.4.1",
   "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -12,17 +9,23 @@ to: packages/<%= name %>/package.json
     "watch": "../../../bin/watch-package.sh",
     "test": "NPM_ENV=test jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@8base/apollo-client": "^1.4.1",
+    "@8base/apollo-links": "^1.4.1",
+    "@8base/auth": "^1.4.1",
+    "@8base/utils": "^1.4.1",
+    "@8base/validate": "^1.4.1"
+  },
   "devDependencies": {
-    "jest": "24.7.1",
-    "jest-localstorage-mock": "^2.2.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1"
+    "jest": "26.6.3",
+    "jest-localstorage-mock": "^2.4.6",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
   },
   "jest": {
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.json"
+        "tsconfig": "<rootDir>/tsconfig.json"
       }
     },
     "setupFiles": [
