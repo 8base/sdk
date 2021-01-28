@@ -6,10 +6,10 @@
     "link-packages": "./bin/link-packages.sh",
     "unlink-packages": "./bin/unlink-packages.sh",
     "test": "./bin/test.sh",
-    "lint": "tslint packages/*/{src,test}/{.,**}/*.{ts,tsx}",
+    "lint": "tslint packages*/*/{src,test}/{.,**}/*.{ts,tsx}",
     "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier:check": "npm run prettier:base -- --list-different \"packages/*/{src,test}/**/*.{ts,tsx}\"",
-    "prettier:write": "npm run prettier:base -- --write \"packages/*/{src,test}/**/*.{ts,tsx}\"",
+    "prettier:check": "npm run prettier:base -- --list-different \"packages*/*/{src,test}/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"packages*/*/{src,test}/**/*.{ts,tsx}\"",
     "bump": "lerna version --force-publish",
     "package:new": "hygen package new"
   },
@@ -27,6 +27,6 @@
   },
   "version": "0.0.0",
   "workspaces": [
-    "packages/*"
+    "packages-core/*"
   ]
 }
