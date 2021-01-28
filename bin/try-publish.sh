@@ -1,12 +1,13 @@
 #!/bin/bash
 
-package=$1
+scope=$1
+package=$2
 
 status=0
 
 echo -e "\033[0;33mStarting try to publish for \"${package}\"\033[0m\n"
 
-cd ./packages-react/$package
+cd ./packages-$scope/$package
 
 name=$(cat package.json | grep name | head -n 1 | cut -d'"' -f 4)
 version=$(cat package.json | grep version | head -n 1 | cut -d'"' -f 4)
