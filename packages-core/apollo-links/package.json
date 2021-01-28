@@ -2,7 +2,7 @@
   "name": "@8base/apollo-links",
   "version": "1.4.1",
   "repository": "https://github.com/8base/sdk",
-  "homepage": "https://github.com/8base/sdk/tree/master/packages/apollo-links#readme",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages-core/apollo-links#readme",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {

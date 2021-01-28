@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "diagnostics": true,
+    "module": "commonjs",
+    "target": "ES2016",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2016",
+      "esnext.asynciterable",
+      "es2016.array.include",
+      "dom"
+    ]
+  }
+}

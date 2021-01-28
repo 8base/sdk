@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, while I implementet a form, Form should be rendered. 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    name="scalar"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    value="Scalar Value"
+  />
+  <input
+    name="scalarList[0]"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    value="Scalar List Value"
+  />
+  <input
+    name="relation.scalar"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    value="Relation Scalar Value"
+  />
+  <input
+    name="relationList[0].scalar"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    value="Relation List Scalar Value"
+  />
+</form>
+`;

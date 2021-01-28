@@ -3,6 +3,7 @@
   "version": "1.4.1",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages-core/web-cognito-auth-client",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {

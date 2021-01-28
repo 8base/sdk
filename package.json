@@ -27,6 +27,7 @@
   },
   "version": "0.0.0",
   "workspaces": [
-    "packages-core/*"
+    "packages-core/*",
+    "packages-react/*"
   ]
 }
