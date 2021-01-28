@@ -1,5 +1,5 @@
 import { not, has } from 'ramda';
-import { ApolloLink, Observable, Operation, NextLink, FetchResult } from 'apollo-link';
+import { ApolloLink, Observable, Operation, NextLink, FetchResult } from '@apollo/client';
 
 type SuccessHandler = (options: { operation: Operation; data: any }) => void;
 

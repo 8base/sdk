@@ -67,7 +67,7 @@ export const formatFieldDataList = (
         options,
       ),
     ),
-    R.filter((item: any) => Boolean(item)),
-    R.groupBy(R.prop('type')),
+    R.filter((item) => Boolean(item)),
+    R.groupBy<any>(R.prop('type')),
     R.mapObjIndexed(R.map(R.prop('data'))),
   )(data);

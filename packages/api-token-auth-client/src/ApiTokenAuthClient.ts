@@ -1,7 +1,6 @@
 import {
   IAuthState,
   IAuthClient,
-  IStorage,
   PACKAGES,
   StorageAPI,
   throwIfMissingRequiredParameters,

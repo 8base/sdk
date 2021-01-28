@@ -1,5 +1,4 @@
-import { ApolloLink, execute, Observable, Operation, RequestHandler } from 'apollo-link';
-import gql from 'graphql-tag';
+import { ApolloLink, execute, Observable, gql } from '@apollo/client';
 import errorCodes from '@8base/error-codes';
 
 import { SignUpLink } from '../../src';
@@ -100,7 +99,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
             query: DYNO_QUERY,
           });
 
-          resolve();
+          resolve(undefined);
         },
       );
     });
@@ -137,7 +136,7 @@ describe('As a developer, I can use sign up link to register new users.', () => 
             query: DYNO_QUERY,
           });
 
-          resolve();
+          resolve(undefined);
         },
       );
     });

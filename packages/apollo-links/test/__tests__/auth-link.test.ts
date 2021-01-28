@@ -1,5 +1,4 @@
-import { Observable, execute, ApolloLink, DocumentNode, Operation } from 'apollo-link';
-import gql from 'graphql-tag';
+import { Observable, execute, ApolloLink, DocumentNode, Operation, gql } from '@apollo/client';
 
 import { AuthLink } from '../../src/AuthLink';
 
@@ -41,7 +40,7 @@ describe("As a developer, I can use 'AuthLink' to send authorized requests and r
             },
           });
 
-          resolve();
+          resolve(undefined);
         },
       );
     }));

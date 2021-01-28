@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { ApolloLink, Operation, NextLink, Observable, FetchResult } from 'apollo-link';
+import { ApolloLink, Operation, NextLink, Observable, FetchResult } from '@apollo/client';
 
 import { AuthHeadersLinkParameters, AuthState } from './types';
 
@@ -21,7 +21,7 @@ export class AuthHeadersLink extends ApolloLink {
 
       operation.setContext(
         R.over(
-          R.lensProp('headers'),
+          R.lensProp<string, any>('headers'),
           R.pipe(
             assocWhenNotEmpty('authorization', token ? `Bearer ${token}` : null),
             assocWhenNotEmpty('workspace', workspaceId),

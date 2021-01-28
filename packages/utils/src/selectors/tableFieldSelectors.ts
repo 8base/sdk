@@ -126,7 +126,7 @@ export const getFieldKind = createSelector(
   getTableId,
   isSystemField,
   getRelationTableId,
-  (_, tablesSchema: TableSchema[]): TableSchema[] => tablesSchema,
+  (_: any, tablesSchema: TableSchema[]): TableSchema[] => tablesSchema,
   (tableId: string, isSystem: boolean, relationTableId: string, tablesSchema: TableSchema[]) => {
     let kind = FIELD_KINDS.USER;
 

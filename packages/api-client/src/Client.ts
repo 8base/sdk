@@ -123,8 +123,7 @@ class Client {
    * @param variables - The variables that will be used when executing the query.
    * @returns {Promise}
    */
-  public request(query: string | DocumentNode, variables: object = {}) {
-    // @ts-ignore. Check how it works with query as DocumentNode
+  public request(query: string | DocumentNode, variables: object = {}): Promise<any> {
     return this.gqlc.request(query, variables).catch(this.handleRequestErrors);
   }
 

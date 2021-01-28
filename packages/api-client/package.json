@@ -12,31 +12,32 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@8base/error-codes": "^1.0.17",
-    "@8base/schema-name-generator": "^0.1.5",
+    "@8base/error-codes": "^1.0.22",
+    "@8base/schema-name-generator": "^0.1.23",
     "@8base/utils": "^1.4.1",
-    "filestack-js": "^1.14.6",
-    "graphql": "^14.3.1",
-    "graphql-request": "^1.8.2",
-    "graphql-tag": "^2.9.2",
-    "node-fetch": "^2.3.0",
-    "ramda": "^0.26.1"
+    "filestack-js": "^3.21.1",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "graphql-tag": "^2.11.0",
+    "node-fetch": "^2.6.1",
+    "ramda": "^0.27.1"
   },
   "devDependencies": {
-    "@types/graphql": "^14.2.0",
-    "@types/jest": "^24.0.13",
-    "@types/nock": "^10.0.3",
-    "documentation": "^8.0.0",
-    "jest": "24.7.1",
-    "nock": "^9.3.3",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1",
-    "yargs": "^12.0.1"
+    "@types/graphql": "^14.5.0",
+    "@types/jest": "^26.0.20",
+    "@types/nock": "^11.1.0",
+    "@types/ramda": "^0.27.36",
+    "documentation": "^13.1.1",
+    "jest": "26.6.3",
+    "nock": "^13.0.6",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3",
+    "yargs": "^16.2.0"
   },
   "jest": {
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/test/tsconfig.json"
+        "tsconfig": "<rootDir>/test/tsconfig.json"
       }
     },
     "setupFiles": [

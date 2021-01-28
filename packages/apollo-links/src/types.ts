@@ -1,5 +1,5 @@
 import { IAuthState } from '@8base/utils';
-import { Operation } from 'apollo-link';
+import { Operation } from '@apollo/client';
 
 export type ErrorObject = {
   code: string;

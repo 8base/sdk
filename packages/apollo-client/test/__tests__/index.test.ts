@@ -1,10 +1,6 @@
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink } from '@apollo/client';
 import { AuthLink, SignUpLink } from '@8base/apollo-links';
 import { ApolloClient } from '../../src';
-
-jest.mock('apollo-client', () => ({
-  ApolloClient: jest.fn(args => args),
-}));
 
 jest.mock('@8base/apollo-links', () => {
   return {

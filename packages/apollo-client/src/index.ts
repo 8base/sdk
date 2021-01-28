@@ -2,13 +2,14 @@ import gql from 'graphql-tag';
 import {
   ApolloClientOptions as OriginalApolloClientOptions,
   ApolloClient as OriginalApolloClient,
-} from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink, Operation } from 'apollo-link';
-import { BatchHttpLink } from 'apollo-link-batch-http';
+  InMemoryCache,
+  ApolloLink,
+  Operation,
+} from '@apollo/client';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { AuthLink, SuccessLink, SignUpLink, SubscriptionLink } from '@8base/apollo-links';
-import { onError as createErrorLink, ErrorHandler } from 'apollo-link-error';
-import { getMainDefinition } from 'apollo-utilities';
+import { onError as createErrorLink, ErrorHandler } from '@apollo/client/link/error';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApolloClientCommon = {

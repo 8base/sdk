@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { ApolloLink, Observable, Operation, NextLink, FetchResult } from 'apollo-link';
+import { ApolloLink, Observable, Operation, NextLink, FetchResult } from '@apollo/client';
 
 import { hasIdTokenExpiredError, hasRefreshTokenExpiredError, hasTokenInvalidError } from './utils';
 

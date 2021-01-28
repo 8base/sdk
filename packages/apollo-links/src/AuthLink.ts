@@ -1,4 +1,4 @@
-import { ApolloLink, Operation, NextLink, Observable, FetchResult } from 'apollo-link';
+import { ApolloLink, Operation, NextLink, Observable, FetchResult } from '@apollo/client';
 
 import { AuthHeadersLink } from './AuthHeadersLink';
 import { TokenRefreshLink } from './TokenRefreshLink';

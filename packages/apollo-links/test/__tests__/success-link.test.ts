@@ -1,4 +1,4 @@
-import { ApolloLink, Observable, execute } from 'apollo-link';
+import { ApolloLink, Observable, execute } from '@apollo/client';
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
 

@@ -1,4 +1,4 @@
-import { ApolloLink, execute, Observable } from 'apollo-link';
+import { ApolloLink, execute, Observable } from '@apollo/client';
 import { TokenRefreshLink } from '../../src';
 import gql from 'graphql-tag';
 import errorCodes from '@8base/error-codes';
@@ -75,7 +75,7 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
           expect(onIdTokenExpired).toHaveBeenCalledTimes(1);
           expect(stub).toHaveBeenCalledTimes(2);
 
-          resolve();
+          resolve(undefined);
         },
       ),
     );
@@ -93,7 +93,7 @@ describe('As a developer, I can use token refresh link for auto-refresh authenti
           expect(onAuthError).toHaveBeenCalledTimes(1);
           expect(stub).toHaveBeenCalledTimes(1);
 
-          resolve();
+          resolve(undefined);
         },
       ),
     );

@@ -74,7 +74,7 @@ export const getTableAppDisplayName = createSelector(
 
 export const isSystemTable = createSelector(
   getTable,
-  R.propEq('isSystem', true),
+  R.propEq<string>('isSystem', true),
 );
 
 export const isIntegrationTable = createSelector(
@@ -99,12 +99,12 @@ export const isSmartField = createSelector(
 
 export const isMetaField = createSelector(
   getFieldByIdOrEmpty,
-  R.propEq('isMeta', true),
+  R.propEq<string>('isMeta', true),
 );
 
 export const isListField = createSelector(
   getFieldByIdOrEmpty,
-  R.propEq('isList', true),
+  R.propEq<string>('isList', true),
 );
 
 export const getFieldNameById = createSelector(

@@ -6,7 +6,6 @@ import {
   PACKAGES,
   IAuthState,
   IAuthClient,
-  IStorage,
   IStorageOptions,
 } from '@8base/utils';
 import jwtDecode from 'jwt-decode';
@@ -51,7 +50,7 @@ export interface IWebAuth0AuthClientOptions extends IAuth0ClientOptions {
 const isEmptyOrNil = R.either(R.isNil, R.isEmpty);
 
 const isEmailVerified = R.pipe(
-  R.pathOr(undefined, ['idTokenPayload', 'email_verified']),
+  R.pathOr<boolean>(false, ['idTokenPayload', 'email_verified']),
   R.equals(true),
 );
 

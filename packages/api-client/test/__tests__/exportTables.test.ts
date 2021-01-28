@@ -24,6 +24,5 @@ it('As a developer, I can export schema of the user tables.', async () => {
   const schemaTables = await exportTables(client.request.bind(client));
 
   expect(schemaTables).toMatchSnapshot();
-
   expect(await mock).toMatchSnapshot();
 });

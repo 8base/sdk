@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const SIGNUP_MUTATION = gql`
   mutation UserSignUpMutation($user: UserCreateInput!, $authProfileId: ID) {

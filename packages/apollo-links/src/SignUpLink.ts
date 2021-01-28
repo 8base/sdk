@@ -1,4 +1,5 @@
-import { ApolloLink, Observable, createOperation, Operation, NextLink, FetchResult } from 'apollo-link';
+import { ApolloLink, Observable, Operation, NextLink, FetchResult } from '@apollo/client';
+import { createOperation } from '@apollo/client/link/utils';
 import * as R from 'ramda';
 import { ZenObservable } from 'zen-observable-ts';
 
@@ -100,7 +101,7 @@ export class SignUpLink extends ApolloLink {
           error: reject,
           next: data => {
             if (R.path(['data', 'userSignUp', 'id'], data)) {
-              resolve();
+              resolve(undefined);
             } else {
               reject(data);
             }

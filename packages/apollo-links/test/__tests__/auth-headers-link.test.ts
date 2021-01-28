@@ -1,5 +1,4 @@
-import { Observable, execute, ApolloLink, DocumentNode, Operation } from 'apollo-link';
-import gql from 'graphql-tag';
+import { Observable, execute, ApolloLink, DocumentNode, Operation, gql } from '@apollo/client';
 
 import { AuthHeadersLink } from '../../src/AuthHeadersLink';
 
@@ -40,7 +39,7 @@ describe("As a developer, I can use 'AuthHeadersLink' to add authorization heade
             },
           });
 
-          resolve();
+          resolve(undefined);
         },
       );
     }));
@@ -68,7 +67,7 @@ describe("As a developer, I can use 'AuthHeadersLink' to add authorization heade
             },
           });
 
-          resolve();
+          resolve(undefined);
         },
       );
     }));

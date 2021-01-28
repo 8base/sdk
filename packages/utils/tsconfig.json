@@ -4,6 +4,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "*": [
         "types/*"
