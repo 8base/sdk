@@ -16,7 +16,7 @@ export const createQueryColumnsList = (
   tableId: string,
   config: CreateQueryColumnsListConfig = {},
   prevKey: string = '',
-): Array<{ name: string; title: string; meta: object }> => {
+): { name: string; title: string; meta: object }[] => {
   const { fields = [] } = tablesListSelectors.getTableById(tablesList, tableId) || {};
   const { deep = 1, withMeta = true, flatten = true, includeColumns } = config;
 

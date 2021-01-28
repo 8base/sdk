@@ -7,8 +7,10 @@ const hasParameter = R.ifElse(R.is(String), R.has, R.hasPath);
 
 const stringifyPath = R.ifElse(R.is(String), path => path, R.join('.'));
 
+type ParameterPathType = string[] | string
+
 export const throwIfMissingRequiredParameters = (
-  requiredParameterPaths: Array<string[] | string>,
+  requiredParameterPaths: ParameterPathType[],
   packageName: PACKAGES,
   parameters: {} = {},
 ): void => {
@@ -26,7 +28,7 @@ export const throwIfMissingRequiredParameters = (
 };
 
 export const showWarningIfDeprecatedParameters = (
-  deprecatedParameterPaths: Array<string[] | string>,
+  deprecatedParameterPaths: ParameterPathType[],
   packageName: PACKAGES,
   parameters: {} = {},
 ): void => {
