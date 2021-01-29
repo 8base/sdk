@@ -1,6 +1,6 @@
 {
   "name": "@8base/utils",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-core/utils#readme",
   "main": "dist/index.js",
