@@ -8,8 +8,8 @@ to: packages/<%= name %>/package.json
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "../../bin/build-package.sh",
-    "watch": "../../bin/watch-package.sh",
+    "build": "../../../bin/build-package.sh",
+    "watch": "../../../bin/watch-package.sh",
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {},

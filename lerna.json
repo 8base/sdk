@@ -1,7 +1,8 @@
 {
-  "lerna": "3.16.4",
+  "lerna": "3.22.1",
   "packages": [
-    "packages/*"
+    "packages/core/*",
+    "packages/react/*"
   ],
   "npmClient": "yarn",
   "version": "1.4.1",

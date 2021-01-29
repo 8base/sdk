@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`As a developer, I can create client and send request with variables. 1`] = `
+Object {
+  "query": "query { companyName }",
+  "variables": Object {
+    "variable": 2,
+  },
+}
+`;
+
+exports[`As a developer, I can create client and send request. 1`] = `
+Object {
+  "query": "query { companyName }",
+  "variables": Object {},
+}
+`;
+
+exports[`As a developer, I can create client, set API credentials and send request. 1`] = `
+Object {
+  "body": Object {
+    "query": "query { companyName }",
+    "variables": Object {},
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "authorization": Array [
+      "Bearer idToken",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "48",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
+    ],
+  },
+}
+`;
+
+exports[`As a developer, I can send queries with graphql tag. 1`] = `
+Object {
+  "body": Object {
+    "query": "{
+  companyName
+}
+",
+    "variables": Object {},
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "48",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+  },
+}
+`;
+
+exports[`When client receive network errors, it should throw that error. 1`] = `[Error: GraphQL Error (Code: 502): {"response":{"foo":"bar","status":502},"request":{"query":"{\\n  companyName\\n}\\n","variables":{}}}]`;
+
+exports[`When client receive other errors, it should throw that error. 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    Object {
+      "code": "InvalidTokenError",
+    },
+  ],
+  "status": 502,
+}
+`;
+
+exports[`When client receive refresh token expired error, it should throw cant refresh token error. 1`] = `[Error: Can't refresh token.]`;
+
+exports[`When client receive token expired error, it should refresh token and repeat my request. 1`] = `
+Object {
+  "body": Object {
+    "query": "mutation UserRefreshToken($refreshToken: String!) {
+  userRefreshToken(data: {refreshToken: $refreshToken}) {
+    refreshToken
+    idToken
+  }
+}
+",
+    "variables": Object {},
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "178",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
+    ],
+  },
+}
+`;
+
+exports[`When client receive token expired error, it should refresh token and repeat my request. 2`] = `
+Object {
+  "body": Object {
+    "query": "query { companyName }",
+    "variables": Object {},
+  },
+  "headers": Object {
+    "accept": Array [
+      "*/*",
+    ],
+    "accept-encoding": Array [
+      "gzip,deflate",
+    ],
+    "authorization": Array [
+      "Bearer newIdToken",
+    ],
+    "connection": Array [
+      "close",
+    ],
+    "content-length": Array [
+      "48",
+    ],
+    "content-type": Array [
+      "application/json",
+    ],
+    "host": "api.test.8base.com",
+    "user-agent": Array [
+      "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)",
+    ],
+    "workspace": Array [
+      "workspaceId",
+    ],
+  },
+}
+`;
