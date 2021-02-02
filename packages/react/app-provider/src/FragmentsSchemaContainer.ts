@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { PossibleTypesMap } from '@apollo/client';
 
 type FragmentsSchemaContainerProps = {
   uri: string;
@@ -69,13 +70,17 @@ const fetchFragmentsSchema = async (uri: string): Promise<Object | null> => {
     return null;
   }
 
-  const filteredData = result.data.__schema.types.filter(
-    (type: any) => type.possibleTypes !== null,
-  );
+  const possibleTypes: PossibleTypesMap = {};
 
-  result.data.__schema.types = filteredData;
+  result.data.__schema?.types?.forEach((supertype: any) => {
+    if (supertype.possibleTypes) {
+      possibleTypes[supertype.name] = supertype.possibleTypes.map(
+        (subtype: any) => subtype.name,
+      );
+    }
+  });
 
-  return result.data;
+  return possibleTypes;
 };
 
 export { FragmentsSchemaContainer };
