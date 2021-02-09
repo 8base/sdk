@@ -1,6 +1,6 @@
 {
   "name": "@8base/web-oauth-client",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-core/web-auth0-auth-client#readme",
@@ -12,7 +12,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^2.0.0",
+    "@8base/utils": "^2.0.1",
     "jwt-decode": "^3.1.2"
   },
   "devDependencies": {
