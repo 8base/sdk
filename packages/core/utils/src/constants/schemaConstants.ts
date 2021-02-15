@@ -87,6 +87,8 @@ export const SWITCH_VALUES: {
 };
 
 export const TEXT_FORMATS: {
+  HTML: 'HTML';
+  MARKDOWN: 'MARKDOWN';
   EIN: 'EIN';
   EMAIL: 'EMAIL';
   NAME: 'NAME';
@@ -94,6 +96,8 @@ export const TEXT_FORMATS: {
   SSN: 'SSN';
   UNFORMATTED: 'UNFORMATTED';
 } = {
+  HTML: 'HTML',
+  MARKDOWN: 'MARKDOWN',
   EIN: 'EIN',
   EMAIL: 'EMAIL',
   NAME: 'NAME',
