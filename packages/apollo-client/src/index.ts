@@ -13,6 +13,7 @@ import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type ApolloClientCommon = {
   uri: string;
+  subscriptionUri?: string;
   extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => IAuthState }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
@@ -50,6 +51,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
   constructor(config: ApolloClientOptions) {
     const {
       uri,
+      subscriptionUri,
       getAuthState,
       getRefreshTokenParameters,
       onAuthSuccess,
@@ -84,7 +86,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
             return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
           },
           new SubscriptionLink({
-            uri: 'wss://ws.8base.com',
+            uri: subscriptionUri || 'wss://ws.8base.com',
             getAuthState,
             onAuthError,
             onIdTokenExpired,
