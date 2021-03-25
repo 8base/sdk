@@ -134,6 +134,7 @@ export const createQueryString = (
           downloadUrl
           shareUrl
           meta
+          public
         }`;
       } else if (isGeo) {
         fieldContent = `{
