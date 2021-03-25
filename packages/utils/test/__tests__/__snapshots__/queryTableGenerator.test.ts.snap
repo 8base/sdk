@@ -37,6 +37,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
       downloadUrl
       shareUrl
       meta
+      public
     }
     fileList {
       items {
@@ -46,6 +47,7 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
         downloadUrl
         shareUrl
         meta
+        public
       }
       count
     }
@@ -240,6 +242,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
       downloadUrl
       shareUrl
       meta
+      public
     }
     fileList {
       items {
@@ -249,6 +252,7 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
         downloadUrl
         shareUrl
         meta
+        public
       }
       count
     }
@@ -347,6 +351,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
         downloadUrl
         shareUrl
         meta
+        public
       }
       fileList {
         items {
@@ -356,6 +361,7 @@ exports[`As a developer, I can generate graphql query for list by table schema s
           downloadUrl
           shareUrl
           meta
+          public
         }
         count
       }
@@ -522,6 +528,7 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       downloadUrl
       shareUrl
       meta
+      public
     }
     fileList {
       items {
@@ -531,6 +538,7 @@ exports[`As a developer, I can generate graphql query for read entity by table s
         downloadUrl
         shareUrl
         meta
+        public
       }
       count
     }
