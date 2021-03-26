@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-client",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-core/api-client#readme",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.22",
     "@8base/schema-name-generator": "^0.1.23",
-    "@8base/utils": "^2.0.1",
+    "@8base/utils": "^2.0.2",
     "filestack-js": "^3.21.1",
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",

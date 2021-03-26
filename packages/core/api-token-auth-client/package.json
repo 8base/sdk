@@ -1,6 +1,6 @@
 {
   "name": "@8base/api-token-auth-client",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-core/api-token-auth-client#readme",
@@ -12,7 +12,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^2.0.1",
+    "@8base/utils": "^2.0.2",
     "jwt-decode": "^3.1.2"
   },
   "devDependencies": {

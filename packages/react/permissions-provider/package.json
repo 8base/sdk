@@ -1,6 +1,6 @@
 {
   "name": "@8base-react/permissions-provider",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-react/permissions-provider#readme",
   "main": "dist/index.js",
@@ -18,7 +18,7 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@8base-react/auth": "^2.0.1",
+    "@8base-react/auth": "^2.0.2",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
