@@ -3,6 +3,7 @@
 exports[`should call onChange when file is uploaded for input with custom on upload handler 1`] = `
 Array [
   Object {
+    "fetchPolicy": "network-only",
     "query": Object {
       "definitions": Array [
         Object {
@@ -93,6 +94,7 @@ Array [
 exports[`should call onChange when file is uploaded for multiple files input 1`] = `
 Array [
   Object {
+    "fetchPolicy": "network-only",
     "query": Object {
       "definitions": Array [
         Object {
@@ -183,6 +185,7 @@ Array [
 exports[`should call onChange when file is uploaded for single file input 1`] = `
 Array [
   Object {
+    "fetchPolicy": "network-only",
     "query": Object {
       "definitions": Array [
         Object {
@@ -273,6 +276,7 @@ Array [
 exports[`should call onChange when file is uploaded for single file input with public modifier 1`] = `
 Array [
   Object {
+    "fetchPolicy": "network-only",
     "query": Object {
       "definitions": Array [
         Object {
