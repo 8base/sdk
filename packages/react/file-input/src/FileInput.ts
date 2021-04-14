@@ -23,6 +23,7 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
       maxFiles: 1,
       value: null,
       sessionCache: false,
+      fetchPolicy: 'network-only',
     };
 
     public static getDerivedStateFromProps(props: FileInputProps, state: FileInputState) {
@@ -63,7 +64,7 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
       let response = null;
 
       try {
-        response = await client.query({ query: FILE_UPLOAD_INFO_QUERY, fetchPolicy: 'network-only' });
+        response = await client.query({ query: FILE_UPLOAD_INFO_QUERY, fetchPolicy: this.props.fetchPolicy });
       } catch (e) {
         this.setState({ error: e });
 

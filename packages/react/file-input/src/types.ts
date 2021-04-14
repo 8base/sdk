@@ -1,3 +1,5 @@
+import { FetchPolicy } from '@apollo/client';
+
 export type FileValue = {
   fileId: string;
   filename: string;
@@ -19,6 +21,7 @@ export type FileInputProps = {
     error: object | null;
   }) => React.ReactNode;
   public?: boolean;
+  fetchPolicy?: FetchPolicy;
   maxFiles?: number;
   sessionCache?: boolean;
   onUploadDone?: (value: FileInputValue, originalFile?: OriginalFileInputValue) => Promise<FileInputValue>;
