@@ -23,7 +23,6 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
       maxFiles: 1,
       value: null,
       sessionCache: false,
-      fetchPolicy: 'network-only',
     };
 
     public static getDerivedStateFromProps(props: FileInputProps, state: FileInputState) {
