@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-links",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages-core/apollo-links#readme",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.22",
-    "@8base/utils": "^2.0.2",
+    "@8base/utils": "^2.1.0",
     "ramda": "^0.27.1",
     "subscriptions-transport-ws": "^0.9.18",
     "zen-observable-ts": "^0.8.21"
