@@ -42,9 +42,12 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
       );
     }
 
+    const authState = props.authClient.getState();
+    const isAuthorized = props.authClient.checkIsAuthorized();
+
     this.state = {
-      authState: {},
-      isAuthorized: false,
+      authState,
+      isAuthorized,
     };
 
     this.unsubscribe = null;
