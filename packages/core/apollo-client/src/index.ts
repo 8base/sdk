@@ -1,4 +1,4 @@
-import { AuthLink, SuccessLink, SignUpLink, SubscriptionLink } from '@8base/apollo-links';
+import { AuthLink, SuccessLink, SignUpLink, SubscriptionLink, isSubscriptionRequest } from '@8base/apollo-links';
 import { IAuthState, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 import {
   ApolloClientOptions as OriginalApolloClientOptions,
@@ -9,7 +9,6 @@ import {
 } from '@apollo/client';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError as createErrorLink, ErrorHandler } from '@apollo/client/link/error';
-import { getMainDefinition } from '@apollo/client/utilities';
 import gql from 'graphql-tag';
 
 type ApolloClientCommon = {
@@ -79,11 +78,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
     if (withSubscriptions && getAuthState) {
       links = [
         ApolloLink.split(
-          ({ query }) => {
-            const definition = getMainDefinition(query);
-
-            return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-          },
+          isSubscriptionRequest,
           new SubscriptionLink({
             uri: 'wss://ws.8base.com',
             getAuthState,
