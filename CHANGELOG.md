@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/8base/sdk/compare/v2.1.0...v2.2.0) (2021-04-30)
+
+
+### Bug Fixes
+
+* **react:** fix initial auth state ([3575bc4](https://github.com/8base/sdk/commit/3575bc4f242d58ce2914d385fd5592e39668709e))
+
+
+### Features
+
+* move subscription check to the helper ([5b1bab9](https://github.com/8base/sdk/commit/5b1bab9a8ae752a1f8c08723ddbd0d09d18a6ec8))
+
+
+
+
+
 # [2.1.0](https://github.com/8base/sdk/compare/v2.0.2...v2.1.0) (2021-04-14)
 
 
