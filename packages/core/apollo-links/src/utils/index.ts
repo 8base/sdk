@@ -21,8 +21,8 @@ export const hasRefreshTokenExpiredError = R.any(isRefreshTokenExpiredError);
 
 export const hasUserNotFoundError = R.any(R.propEq('code', errorCodes.EntityNotFoundErrorCode));
 
-export const isSubscriptionRequest = ({ query }: { query: DocumentNode}) => {
+export const isSubscriptionRequest = ({ query }: { query: DocumentNode }) => {
   const definition = getMainDefinition(query);
 
   return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-}
+};

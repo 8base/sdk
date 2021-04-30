@@ -42,8 +42,8 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
       );
     }
 
-    const authState = props.authClient.getState();
-    const isAuthorized = props.authClient.checkIsAuthorized();
+    const authState = props.authClient.getState() ?? {};
+    const isAuthorized = props.authClient.checkIsAuthorized() ?? false;
 
     this.state = {
       authState,
