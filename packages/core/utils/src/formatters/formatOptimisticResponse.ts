@@ -56,6 +56,7 @@ const formatFileOptimisticResponse = (recordId: string, requestFieldData: any, f
         downloadUrl: requestFieldData.downloadUrl,
         fileId: requestFieldData.fileId,
         filename: requestFieldData.filename,
+        public: requestFieldData.public,
       };
 
   return fieldOptimisticResponse;
