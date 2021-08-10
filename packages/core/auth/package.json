@@ -2,7 +2,7 @@
   "name": "@8base/auth",
   "version": "2.2.0",
   "repository": "https://github.com/8base/sdk",
-  "homepage": "https://github.com/8base/sdk/tree/master/packages-core/auth#readme",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/core/auth",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {

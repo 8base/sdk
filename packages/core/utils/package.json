@@ -2,7 +2,7 @@
   "name": "@8base/utils",
   "version": "2.2.0",
   "repository": "https://github.com/8base/sdk",
-  "homepage": "https://github.com/8base/sdk/tree/master/packages-core/utils#readme",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/core/utils",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -2,7 +2,7 @@
   "name": "@8base-react/permissions-provider",
   "version": "2.2.0",
   "repository": "https://github.com/8base/sdk",
-  "homepage": "https://github.com/8base/sdk/tree/master/packages-react/permissions-provider#readme",
+  "homepage": "https://github.com/8base/sdk/tree/master/packages/react/permissions-provider",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
