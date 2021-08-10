@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/8base/sdk/compare/v2.2.0...v2.3.0) (2021-08-10)
+
+
+### Bug Fixes
+
+* add public field to file optimistic response ([e931ce8](https://github.com/8base/sdk/commit/e931ce8))
+
+
+### Features
+
+* **core-auth:** add auth ([ef571b4](https://github.com/8base/sdk/commit/ef571b4))
+
+
+
+
+
 # [2.2.0](https://github.com/8base/sdk/compare/v2.1.0...v2.2.0) (2021-04-30)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@8base-react/utils",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/utils",
   "main": "dist/index.js",
