@@ -29,12 +29,14 @@ const getAuthClientConstructor = (strategy: AUTH_STRATEGIES | string): any => {
       return ApiTokenAuthClient;
     }
     case AUTH_STRATEGIES.WEB_8BASE:
+    case AUTH_STRATEGIES.WEB_8BASE_AUTH0:
     case AUTH_STRATEGIES.WEB_AUTH0: {
       return WebAuth0AuthClient;
     }
     case AUTH_STRATEGIES.WEB_OAUTH: {
       return WebOAuthClient;
     }
+    case AUTH_STRATEGIES.WEB_8BASE_COGNITO:
     case AUTH_STRATEGIES.WEB_COGNITO: {
       return WebCognitoAuthClient;
     }
