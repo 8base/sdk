@@ -19,7 +19,12 @@ export const isRefreshTokenExpiredError = R.allPass([
 
 export const hasRefreshTokenExpiredError = R.any(isRefreshTokenExpiredError);
 
-export const hasUserNotFoundError = R.any(R.propEq('code', errorCodes.EntityNotFoundErrorCode));
+export const hasUserNotFoundError = R.any(
+  R.or(
+    R.propEq('code', errorCodes.EntityNotFoundErrorCode),
+    R.propEq('code', errorCodes.UserNotFoundErrorCode)
+  )
+);
 
 export const isSubscriptionRequest = ({ query }: { query: DocumentNode }) => {
   const definition = getMainDefinition(query);
