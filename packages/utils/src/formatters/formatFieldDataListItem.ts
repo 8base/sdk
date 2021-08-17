@@ -11,12 +11,13 @@ interface IFormatFieldDataListItemMeta {
   fieldSchema: FieldSchema;
   schema: Schema;
   initialData?: any;
+  initialListData?: any;
 }
 
 export const formatFieldDataListItem = (
   type: MutationType,
   data: any,
-  { fieldSchema, schema, initialData }: IFormatFieldDataListItemMeta,
+  { fieldSchema, schema, initialData, initialListData }: IFormatFieldDataListItemMeta,
   options?: FormatDataForMutationOptions,
 ) => {
   let nextData = data;
@@ -40,6 +41,10 @@ export const formatFieldDataListItem = (
   }
 
   if (typeof nextData === 'string') {
+    if (Array.isArray(initialListData) && initialListData.includes(nextData)) {
+      return null;
+    }
+
     return {
       data: { id: nextData },
       type: 'connect',
