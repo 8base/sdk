@@ -63,6 +63,7 @@ export const formatFieldDataList = (
           fieldSchema,
           schema,
           initialData: item.initialData,
+          initialListData: initialData,
         },
         options,
       ),
