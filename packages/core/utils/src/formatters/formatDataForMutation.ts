@@ -131,6 +131,14 @@ const formatDataForMutation = (
         formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);
       }
 
+      if (typeof formatedFieldData === 'string' && formatedFieldData === initialFieldData) {
+        return result;
+      }
+
+      if (Array.isArray(formatedFieldData) && R.equals(formatedFieldData, initialFieldData)) {
+        return result;
+      }
+
       return {
         ...result,
         [fieldName]: formatedFieldData,

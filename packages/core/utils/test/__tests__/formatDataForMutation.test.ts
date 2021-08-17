@@ -576,7 +576,7 @@ describe('As developer, I can format for update mutation,', () => {
     const data = {
       relation: {
         id: 'id',
-        scalar: 'Relation Scalar Value',
+        scalar: 'New Relation Scalar Value',
         scalarList: ['Relation Scalar List Value'],
       },
     };
@@ -601,7 +601,9 @@ describe('As developer, I can format for update mutation,', () => {
       formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
     ).toEqual({
       relation: {
-        update: R.dissoc('id', data.relation),
+        update: {
+          scalar: data.relation.scalar,
+        },
       },
     });
   });
@@ -715,7 +717,6 @@ describe('As developer, I can format for update mutation,', () => {
       formatDataForMutation(MUTATION_TYPE.UPDATE, data, { tableName: 'tableSchema', schema: SCHEMA, initialData }),
     ).toEqual({
       relationList: {
-        connect: [{ id: '5b32159b66a450c047285628' }],
         disconnect: [{ id: '5b32159b66a450fae928562a' }],
       },
     });
@@ -749,8 +750,8 @@ describe('As developer, I can format for update mutation,', () => {
         'inline-relation-01',
         {
           id: 'update-relation-01',
-          scalar: 'Update relation scalar value',
-          scalarList: ['Update relation scalar list value'],
+          scalar: 'New Update relation scalar value',
+          scalarList: ['Update relation scalar list value', 'New Update relation scalar list value'],
         },
         {
           scalar: 'New relation scalar value',
@@ -777,6 +778,41 @@ describe('As developer, I can format for update mutation,', () => {
       ],
     };
 
+    const expectedRelationListWithoutDisconnectWithInitial = {
+      connect: [
+        {
+          id: 'inline-relation-01',
+        },
+      ],
+      update: [
+        {
+          data: {
+            scalar: 'New Update relation scalar value',
+            scalarList: ['Update relation scalar list value', 'New Update relation scalar list value'],
+          },
+          filter: {
+            id: 'update-relation-01',
+          },
+        },
+        // TODO: For now, it will update despite there no such id in `initialData`.
+        // We probably should connect instead of update in that case.
+        {
+          data: {
+            id: 'connect-relation-01',
+          },
+          filter: {
+            id: 'connect-relation-01',
+          },
+        },
+      ],
+      create: [
+        {
+          scalar: 'New relation scalar value',
+          scalarList: ['New relation scalar list value'],
+        },
+      ],
+    };
+
     const expectedRelationListWithoutDisconnect = {
       connect: [
         {
@@ -787,8 +823,8 @@ describe('As developer, I can format for update mutation,', () => {
         {
           data: {
             id: 'update-relation-01',
-            scalar: 'Update relation scalar value',
-            scalarList: ['Update relation scalar list value'],
+            scalar: 'New Update relation scalar value',
+            scalarList: ['Update relation scalar list value', 'New Update relation scalar list value'],
           },
           filter: {
             id: 'update-relation-01',
@@ -821,7 +857,7 @@ describe('As developer, I can format for update mutation,', () => {
       }),
     ).toEqual({
       relationList: {
-        ...expectedRelationListWithoutDisconnect,
+        ...expectedRelationListWithoutDisconnectWithInitial,
         disconnect: [{ id: 'removed-relation-01' }],
       },
     });
