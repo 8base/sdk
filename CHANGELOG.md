@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/8base/sdk/compare/v2.3.0...v2.4.0) (2021-08-17)
+
+
+### Bug Fixes
+
+* **utils:** rid redundant data at formatDataForMutations ([1e6b60b](https://github.com/8base/sdk/commit/1e6b60b0a22a75aee22f247401323dc87340775d))
+
+
+
+
+
 # [2.3.0](https://github.com/8base/sdk/compare/v2.2.0...v2.3.0) (2021-08-10)
 
 
