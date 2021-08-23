@@ -10,6 +10,7 @@ status=0
 (./bin/try-publish.sh "core" "validate") || status=1
 (./bin/try-publish.sh "core" "api-token-auth-client") || status=1
 (./bin/try-publish.sh "core" "web-auth0-auth-client") || status=1
+(./bin/try-publish.sh "core" "web-native-auth-client") || status=1
 (./bin/try-publish.sh "core" "web-cognito-auth-client") || status=1
 (./bin/try-publish.sh "core" "web-oauth-client") || status=1
 (./bin/try-publish.sh "core" "8base-sdk") || status=1
