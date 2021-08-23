@@ -1,6 +1,6 @@
 {
   "name": "@8base/web-native-auth-client",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/web-native-auth-client",

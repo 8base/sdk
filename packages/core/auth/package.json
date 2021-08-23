@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/auth",
   "main": "dist/index.js",
@@ -14,8 +14,8 @@
     "@8base/api-token-auth-client": "^2.5.0",
     "@8base/utils": "^2.5.0",
     "@8base/web-auth0-auth-client": "^2.5.0",
-    "@8base/web-native-auth-client": "^2.5.0",
     "@8base/web-cognito-auth-client": "^2.5.0",
+    "@8base/web-native-auth-client": "^2.5.1",
     "@8base/web-oauth-client": "^2.5.0",
     "ramda": "^0.27.1"
   },
