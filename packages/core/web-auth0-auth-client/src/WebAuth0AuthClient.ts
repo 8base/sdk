@@ -63,7 +63,7 @@ const getIdTokenPayload = R.propOr(undefined, 'idTokenPayload');
 const getState = R.propOr(undefined, 'state');
 
 /**
- * Creates instacne of the web auth0 auth client.
+ * Creates instance of the web auth0 auth client.
  */
 class WebAuth0AuthClient implements IAuthClient {
   public auth0: auth0.WebAuth;

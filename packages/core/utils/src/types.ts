@@ -124,10 +124,9 @@ export type SchemaResponse = {
   count: number;
 };
 
-export interface IAuthState {
+export type IAuthState<T extends Record<string, any> = Record<string, any>> = T & {
   token?: string;
-  [additionalProperty: string]: any;
-}
+};
 
 export interface IStorageOptions<T> {
   storage?: IStorage;
@@ -135,9 +134,9 @@ export interface IStorageOptions<T> {
   initialState?: T;
 }
 
-export interface IAuthClient {
-  getState: () => IAuthState;
-  setState: (state: IAuthState) => void;
+export interface IAuthClient<S extends IAuthState = IAuthState> {
+  getState: () => S;
+  setState: (state: S) => void;
   purgeState: () => void;
   checkIsAuthorized: () => boolean;
   checkIsEmailVerified?: () => boolean | void;
