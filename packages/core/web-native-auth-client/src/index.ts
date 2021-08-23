@@ -1,1 +1,1 @@
-export * from './WebNativeAuthClient';
+export { WebNativeAuthClient } from './WebNativeAuthClient';
