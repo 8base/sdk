@@ -1,6 +1,6 @@
 {
   "name": "8base-react-sdk",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/8base-react-sdk",
   "main": "dist/index.js",
@@ -18,14 +18,14 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@8base-react/app-provider": "^2.4.0",
-    "@8base-react/auth": "^2.4.0",
-    "@8base-react/crud": "^2.4.0",
-    "@8base-react/file-input": "^2.3.0",
-    "@8base-react/forms": "^2.4.0",
-    "@8base-react/permissions-provider": "^2.4.0",
-    "@8base-react/table-schema-provider": "^2.4.0",
-    "@8base-react/utils": "^2.3.0",
+    "@8base-react/app-provider": "^2.5.0",
+    "@8base-react/auth": "^2.5.0",
+    "@8base-react/crud": "^2.5.0",
+    "@8base-react/file-input": "^2.5.0",
+    "@8base-react/forms": "^2.5.0",
+    "@8base-react/permissions-provider": "^2.5.0",
+    "@8base-react/table-schema-provider": "^2.5.0",
+    "@8base-react/utils": "^2.5.0",
     "graphql-tag": "^2.10.1"
   },
   "devDependencies": {

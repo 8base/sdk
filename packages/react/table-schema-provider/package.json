@@ -1,6 +1,6 @@
 {
   "name": "@8base-react/table-schema-provider",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/table-schema-provider",
   "main": "dist/index.js",
@@ -18,8 +18,8 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@8base-react/utils": "^2.3.0",
-    "@8base/utils": "^2.4.0",
+    "@8base-react/utils": "^2.5.0",
+    "@8base/utils": "^2.5.0",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
