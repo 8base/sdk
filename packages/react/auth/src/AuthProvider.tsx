@@ -74,9 +74,15 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
 
   public componentDidUpdate(prevProps: AuthProviderProps) {
     if (prevProps.authClient !== this.props.authClient) {
+      if (this.unsubscribe) {
+        this.unsubscribe();
+      }
+
       this.unsubscribe = this.props.authClient.subscribe(() => {
         this.updateState();
       });
+
+      this.updateState();
     }
   }
 
