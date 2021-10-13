@@ -603,6 +603,7 @@ describe('As developer, I can format for update mutation,', () => {
       relation: {
         update: {
           scalar: data.relation.scalar,
+          scalarList: data.relation.scalarList,
         },
       },
     });
