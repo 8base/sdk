@@ -135,9 +135,10 @@ const formatDataForMutation = (
         return result;
       }
 
-      if (Array.isArray(formatedFieldData) && R.equals(formatedFieldData, initialFieldData)) {
-        return result;
-      }
+      // TODO: need to discuss with core team how to handle case when filed `isList` and have `Default Value`
+      // if (Array.isArray(formatedFieldData) && R.equals(formatedFieldData, initialFieldData)) {
+      //   return result;
+      // }
 
       return {
         ...result,
