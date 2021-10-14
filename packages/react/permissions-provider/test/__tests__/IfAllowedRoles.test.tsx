@@ -4,18 +4,20 @@ import * as renderer from 'react-test-renderer';
 import { PermissionsProvider, IfAllowedRoles } from '../../src';
 
 const mockPermissionsData = {
-  teamMember: {
-    roles: {
-      items: [
-        {
-          id: '1',
-          name: 'Admin',
-        },
-        {
-          id: '2',
-          name: 'Support',
-        },
-      ],
+  system: {
+    environmentMember: {
+      roles: {
+        items: [
+          {
+            id: '1',
+            name: 'Admin',
+          },
+          {
+            id: '2',
+            name: 'Support',
+          },
+        ],
+      },
     },
   },
 };
