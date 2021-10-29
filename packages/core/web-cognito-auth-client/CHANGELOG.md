@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.4](https://github.com/8base/sdk/compare/v2.6.3...v2.6.4) (2021-10-29)
+
+**Note:** Version bump only for package @8base/web-cognito-auth-client
+
+
+
+
+
 ## [2.6.3](https://github.com/8base/sdk/compare/v2.6.2...v2.6.3) (2021-10-29)
 
 **Note:** Version bump only for package @8base/web-cognito-auth-client
