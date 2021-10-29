@@ -1,6 +1,6 @@
 {
   "name": "8base-sdk",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -10,11 +10,11 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/apollo-client": "^2.6.0",
-    "@8base/apollo-links": "^2.6.0",
-    "@8base/auth": "^2.6.0",
-    "@8base/utils": "^2.6.0",
-    "@8base/validate": "^2.6.0"
+    "@8base/apollo-client": "^2.6.1",
+    "@8base/apollo-links": "^2.6.1",
+    "@8base/auth": "^2.6.1",
+    "@8base/utils": "^2.6.1",
+    "@8base/validate": "^2.6.1"
   },
   "devDependencies": {
     "jest": "26.6.3",
