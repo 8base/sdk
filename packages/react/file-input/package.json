@@ -1,6 +1,6 @@
 {
   "name": "@8base-react/file-input",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/file-input",
   "main": "dist/index.js",
