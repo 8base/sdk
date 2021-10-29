@@ -19,13 +19,13 @@ fi
 
 if [ "$published" != "$version" ]; then
   echo "Try to publish $version version of the $name package."
-  if [ "$scope" != "react" ]; then
-    echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN_ORG}" > .npmrc
+  if [ "$scope" != "core" ]; then
+    echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
   else
     if [ "$name" != "8base-sdk" ]; then
-      echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN_ORG}" > .npmrc
-    else
       echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
+    else
+      echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN_ORG}" > .npmrc
     fi
   fi
 
