@@ -23,9 +23,9 @@ if [ "$published" != "$version" ]; then
     echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
   else
     if [ "$name" != "8base-sdk" ]; then
-      echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
-    else
       echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN_ORG}" > .npmrc
+    else
+      echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
     fi
   fi
 
