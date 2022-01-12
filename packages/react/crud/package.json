@@ -21,7 +21,7 @@
     "@8base-react/table-schema-provider": "^2.6.5",
     "@8base/schema-name-generator": "^0.1.23",
     "@8base/utils": "^2.6.5",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.2"
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
