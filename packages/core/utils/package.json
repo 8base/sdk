@@ -16,7 +16,7 @@
     "@8base/schema-name-generator": "^0.1.23",
     "graphql-prettier": "^1.0.6",
     "prettier": "^2.2.1",
-    "ramda": "^0.27.1",
+    "ramda": "^0.27.2",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
