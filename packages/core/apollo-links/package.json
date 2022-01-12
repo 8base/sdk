@@ -17,7 +17,7 @@
   "dependencies": {
     "@8base/error-codes": "^1.0.22",
     "@8base/utils": "^2.6.5",
-    "ramda": "^0.27.1",
+    "ramda": "^0.27.2",
     "subscriptions-transport-ws": "^0.9.18",
     "zen-observable-ts": "^0.8.21"
   },
