@@ -13,7 +13,7 @@
   "dependencies": {
     "@8base/utils": "^2.6.5",
     "decimal.js": "^10.2.1",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
