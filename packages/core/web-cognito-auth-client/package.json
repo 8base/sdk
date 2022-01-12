@@ -15,7 +15,7 @@
     "@8base/utils": "^2.6.5",
     "jwt-decode": "^3.1.2",
     "qs": "^6.9.6",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
