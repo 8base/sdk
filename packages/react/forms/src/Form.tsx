@@ -29,6 +29,7 @@ const Form = ({
   appName,
   formatRelationToIds,
   ignoreNonTableFields,
+  ignorePristineValues,
   beforeFormatDataForMutation,
   afterFormatDataForMutation,
   beforeFormatQueryData,
@@ -110,6 +111,7 @@ const Form = ({
                   },
                   {
                     ignoreNonTableFields,
+                    ignorePristineValues,
                     skip: permissions && skipData,
                   },
                 )
@@ -163,6 +165,7 @@ const Form = ({
 
 Form.defaultProps = {
   ignoreNonTableFields: true,
+  ignorePristineValues: false,
   mutators: {},
 };
 

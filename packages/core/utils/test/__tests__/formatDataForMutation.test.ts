@@ -851,11 +851,16 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(
-      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
-        tableName: 'tableSchema',
-        schema: SCHEMA,
-        initialData,
-      }),
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        data,
+        {
+          tableName: 'tableSchema',
+          schema: SCHEMA,
+          initialData,
+        },
+        { ignorePristineValues: true },
+      ),
     ).toEqual({
       relationList: {
         ...expectedRelationListWithoutDisconnectWithInitial,
@@ -1179,11 +1184,16 @@ describe('As developer, I can format for update mutation,', () => {
     };
 
     expect(
-      formatDataForMutation(MUTATION_TYPE.UPDATE, data, {
-        tableName: 'tableSchema',
-        schema: SCHEMA,
-        initialData,
-      }),
+      formatDataForMutation(
+        MUTATION_TYPE.UPDATE,
+        data,
+        {
+          tableName: 'tableSchema',
+          schema: SCHEMA,
+          initialData,
+        },
+        { ignorePristineValues: true },
+      ),
     ).toMatchSnapshot();
 
     expect(

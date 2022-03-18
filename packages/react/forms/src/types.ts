@@ -20,6 +20,7 @@ type FormProps<FormValues = any> = {
   appName?: string;
   type?: 'CREATE' | 'UPDATE';
   ignoreNonTableFields?: boolean;
+  ignorePristineValues?: boolean;
   formatRelationToIds?: boolean;
   permissions?: any;
   onSuccess?: (result: any, form: FormApi) => void;
