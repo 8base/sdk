@@ -855,7 +855,7 @@ describe('As developer, I can format for update mutation,', () => {
         tableName: 'tableSchema',
         schema: SCHEMA,
         initialData,
-      }),
+      }, { ignorePristineValues: true }),
     ).toEqual({
       relationList: {
         ...expectedRelationListWithoutDisconnectWithInitial,
@@ -1183,7 +1183,7 @@ describe('As developer, I can format for update mutation,', () => {
         tableName: 'tableSchema',
         schema: SCHEMA,
         initialData,
-      }),
+      }, { ignorePristineValues: true }),
     ).toMatchSnapshot();
 
     expect(
