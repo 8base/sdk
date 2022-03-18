@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.6](https://github.com/8base/sdk/compare/v2.6.5...v2.6.6) (2022-03-18)
+
+
+### Bug Fixes
+
+* **form:** ignore pristine values at format data mutation ([4e0250e](https://github.com/8base/sdk/commit/4e0250e00faf1c54bad9881650476fa458554443))
+
+
+
+
+
 ## [2.6.5](https://github.com/8base/sdk/compare/v2.6.4...v2.6.5) (2021-10-29)
 
 **Note:** Version bump only for package @8base-react/forms

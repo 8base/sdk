@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.6](https://github.com/8base/sdk/compare/v2.6.5...v2.6.6) (2022-03-18)
+
+
+### Bug Fixes
+
+* **utils:** ignore pristine values at format data mutation ([21625c6](https://github.com/8base/sdk/commit/21625c687069903436a69451b4e214e9b3332ed4))
+
+
+
+
+
 ## [2.6.5](https://github.com/8base/sdk/compare/v2.6.4...v2.6.5) (2021-10-29)
 
 **Note:** Version bump only for package @8base/utils
