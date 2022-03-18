@@ -8,13 +8,21 @@
 
 #### Table of Contents
 
--   [Field](#field)
-    -   [Properties](#properties)
--   [FieldArray](#fieldarray)
--   [Fieldset](#fieldset)
-    -   [Properties](#properties-1)
--   [Form](#form)
-    -   [Properties](#properties-2)
+- [8base Forms](#8base-forms)
+  - [API](#api)
+      - [Table of Contents](#table-of-contents)
+    - [Field](#field)
+      - [Properties](#properties)
+    - [FieldArray](#fieldarray)
+    - [Fieldset](#fieldset)
+      - [Properties](#properties-1)
+    - [Form](#form)
+      - [Properties](#properties-2)
+  - [Examples](#examples)
+    - [Basic Form](#basic-form)
+    - [Form with FieldArray](#form-with-fieldarray)
+    - [Multiple Forms with TableSchemaProvider](#multiple-forms-with-tableschemaprovider)
+    - [Complex form](#complex-form)
 
 ### Field
 
@@ -54,6 +62,7 @@
 
 -   `tableSchema` **TableSchema?** The 8base API table schema.
 -   `tableSchemaName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The name of the 8base API table schema. This prop only works if `SchemaContext` is provided.
+-   `ignorePristineValues` - This flag allow you to optimize initial data, for example if you don't send mutation with data which has not changed
 
 ## Examples
 
