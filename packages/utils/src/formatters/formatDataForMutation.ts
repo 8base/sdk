@@ -62,7 +62,10 @@ const formatDataForMutation = (
 
   options = R.mergeDeepRight(DEFAULT_OPTIONS, options);
 
-  const dataKeys = R.pipe<any, any, any>(R.mergeRight(data), R.keys)(initialData);
+  const dataKeys = R.pipe<any, any, any>(
+    R.mergeRight(data),
+    R.keys,
+  )(initialData);
 
   const formatedData = R.reduce(
     (result: { [key: string]: any }, fieldName: string) => {
