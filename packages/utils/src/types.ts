@@ -185,5 +185,4 @@ export type FormatDataForMutationOptions = {
   skip?: boolean | ((...args: any[]) => boolean);
   mutate?: (...args: any[]) => any;
   ignoreNonTableFields?: boolean;
-  ignorePristineValues?: boolean;
 };
