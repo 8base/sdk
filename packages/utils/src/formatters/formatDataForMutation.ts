@@ -17,6 +17,7 @@ interface IFormatDataForMutationMeta {
 
 const DEFAULT_OPTIONS: Partial<FormatDataForMutationOptions> = {
   ignoreNonTableFields: true,
+  ignorePristineValues: false,
 };
 
 const shouldPreserveMetaField = ({ type, fieldName }: { type: MutationType; fieldName: string }) => {
@@ -61,10 +62,7 @@ const formatDataForMutation = (
 
   options = R.mergeDeepRight(DEFAULT_OPTIONS, options);
 
-  const dataKeys = R.pipe(
-    R.mergeRight(data),
-    R.keys,
-  )(initialData);
+  const dataKeys = R.pipe<any, any, any>(R.mergeRight(data), R.keys)(initialData);
 
   const formatedData = R.reduce(
     (result: { [key: string]: any }, fieldName: string) => {
@@ -77,7 +75,7 @@ const formatDataForMutation = (
       }
 
       const fieldSchema = tableSelectors.getFieldByName(tableSchema, fieldName);
-      const { skip, mutate, ignoreNonTableFields } = options;
+      const { skip, mutate, ignoreNonTableFields, ignorePristineValues } = options;
 
       if (!fieldSchema) {
         if (ignoreNonTableFields) {
@@ -134,14 +132,16 @@ const formatDataForMutation = (
         formatedFieldData = mutate(formatedFieldData, data[fieldName], fieldSchema);
       }
 
-      if (typeof formatedFieldData === 'string' && formatedFieldData === initialFieldData) {
-        return result;
-      }
+      if (ignorePristineValues) {
+        if (typeof formatedFieldData === 'string' && formatedFieldData === initialFieldData) {
+          return result;
+        }
 
-      // TODO: need to discuss with core team how to handle case when filed `isList` and have `Default Value`
-      // if (Array.isArray(formatedFieldData) && R.equals(formatedFieldData, initialFieldData)) {
-      //   return result;
-      // }
+        // TODO: need to discuss with core team how to handle case when filed `isList` and have `Default Value`
+        // if (Array.isArray(formatedFieldData) && R.equals(formatedFieldData, initialFieldData)) {
+        //   return result;
+        // }
+      }
 
       return {
         ...result,
