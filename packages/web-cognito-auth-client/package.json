@@ -1,6 +1,6 @@
 {
   "name": "@8base/web-cognito-auth-client",
-  "version": "1.6.2",
+  "version": "1.6.1",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^1.6.2",
+    "@8base/utils": "^1.6.1",
     "jwt-decode": "^3.0.0-beta.2",
     "qs": "^6.9.4",
     "ramda": "^0.26.1"
