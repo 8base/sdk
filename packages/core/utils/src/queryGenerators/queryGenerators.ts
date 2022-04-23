@@ -1,9 +1,9 @@
 import * as R from 'ramda';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
 import { tablesListSelectors } from '../selectors';
-import gqlPrettier from 'graphql-prettier';
 import * as tableSelectors from '../selectors/tableSelectors';
 import { TableSchema, QueryGeneratorConfig } from '../types';
+import { gqlPrettify } from '../formatters';
 import { SDKError, PACKAGES, ERROR_CODES } from '../errors';
 import { createQueryString } from './createQueryString';
 
@@ -44,7 +44,7 @@ export const createTableFilterGraphqlTag = (
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
-  return gqlPrettier(`
+  return gqlPrettify(`
   query ${upperFirst(table.name)}TableContent(
     $filter: ${SchemaNameGenerator.getFilterInputTypeName(table.name, appName)}
     $orderBy: [${SchemaNameGenerator.getOrderByInputTypeName(table.name, appName)}]
@@ -94,7 +94,7 @@ export const createTableRowCreateTag = (
   const { withResultData = true, ...restConfig } = config;
 
   if (hasCreatableFields) {
-    return gqlPrettier(`
+    return gqlPrettify(`
   mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name, appName)}!) {
     ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
@@ -105,7 +105,7 @@ export const createTableRowCreateTag = (
     }`);
   }
 
-  return gqlPrettier(`
+  return gqlPrettify(`
   mutation ${upperFirst(table.name)}Create {
   ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
@@ -123,7 +123,7 @@ export const createTableRowCreateManyTag = (tablesList: TableSchema[], tableId: 
   const hasCreatableFields = R.pipe(R.propOr([], 'fields'), R.any(R.pathEq(['dataFeatures', 'create'], true)))(table);
 
   if (hasCreatableFields) {
-    return gqlPrettier(`
+    return gqlPrettify(`
   mutation ${upperFirst(table.name)}CreateMany($data: [${SchemaNameGenerator.getCreateManyInputName(
       table.name,
       appName,
@@ -153,9 +153,9 @@ export const createTableRowUpdateTag = (
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
-  return gqlPrettier(`
+  return gqlPrettify(`
     mutation ${upperFirst(table.name)}Update(
-      $data: ${SchemaNameGenerator.getUpdateInputName(table.name, appName)}!, 
+      $data: ${SchemaNameGenerator.getUpdateInputName(table.name, appName)}!,
       $filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(table.name, appName)}
     ) {
     ${wrapInAppName(appName)(`
@@ -176,7 +176,7 @@ export const createTableRowQueryTag = (
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
   const { withResultData = true, ...restConfig } = config;
 
-  return gqlPrettier(`
+  return gqlPrettify(`
     query ${upperFirst(table.name)}Entity($id: ID!) {
     ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
@@ -191,7 +191,7 @@ export const createTableRowDeleteTag = (tablesList: TableSchema[], tableId: stri
   const table = getTable(tablesList, tableId);
   const appName = tablesListSelectors.getTableApplicationName(tablesList, tableId);
 
-  return gqlPrettier(`
+  return gqlPrettify(`
     mutation ${upperFirst(table.name)}Delete($filter: ${SchemaNameGenerator.getKeyFilterInputTypeName(
     table.name,
     appName,
