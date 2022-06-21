@@ -121,8 +121,7 @@ export const createQueryString = (
           isNotEmptyRelation = !R.isEmpty(innerFields);
 
           fieldContent = `{
-            id
-            ${innerFields}
+            id${innerFields}
             _description
           }`;
         }
@@ -162,7 +161,15 @@ export const createQueryString = (
         if (!!relationItemsCount && isList && isRelation) {
           queryObject += `\n${field.name}(first: ${relationItemsCount}) ${fieldContent}`;
         } else {
-          queryObject += `\n${field.name} ${fieldContent}`;
+          if (field.name === fieldContent) {
+            // skip double id
+            if (field.name !== 'id') {
+              queryObject += `\n${field.name}`;
+            }
+          } else {
+            queryObject += `\n${field.name}
+             ${fieldContent}`;
+          }
         }
       }
     });

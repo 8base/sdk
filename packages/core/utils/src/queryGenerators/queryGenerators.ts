@@ -72,8 +72,7 @@ export const createTableFilterGraphqlTag = (
       skip: $skip
     ) {
       items {
-        id
-        ${withResultData ? createQueryString(tablesList, table.id, { ...restConfig }) : ''}
+        id${withResultData ? createQueryString(tablesList, table.id, { ...restConfig }) : ''}
         _description
       }
       count
@@ -98,8 +97,7 @@ export const createTableRowCreateTag = (
   mutation ${upperFirst(table.name)}Create($data: ${SchemaNameGenerator.getCreateInputName(table.name, appName)}!) {
     ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)}(data: $data) {
-        id
-        ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+        id${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
         _description
       }`)}
     }`);
@@ -109,8 +107,7 @@ export const createTableRowCreateTag = (
   mutation ${upperFirst(table.name)}Create {
   ${wrapInAppName(appName)(`
     ${SchemaNameGenerator.getCreateItemFieldName(table.name)} {
-        id
-        ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+        id${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
         _description
       }`)}
     }`);
@@ -160,8 +157,7 @@ export const createTableRowUpdateTag = (
     ) {
     ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getUpdateItemFieldName(table.name)}(data: $data, filter: $filter) {
-          id
-          ${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
+          id${withResultData ? createQueryString(tablesList, tableId, { withMeta: false, ...restConfig }) : ''}
           _description
         }`)}
       }`);
@@ -180,8 +176,7 @@ export const createTableRowQueryTag = (
     query ${upperFirst(table.name)}Entity($id: ID!) {
     ${wrapInAppName(appName)(`
       ${SchemaNameGenerator.getTableItemFieldName(table.name)}(id: $id) {
-          id
-          ${withResultData ? createQueryString(tablesList, tableId, { ...restConfig }) : ''}
+          id${withResultData ? createQueryString(tablesList, tableId, { ...restConfig }) : ''}
           _description
         }`)}
       }`);

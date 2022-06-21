@@ -114,7 +114,7 @@ describe('As a developer, I can generate graphql mutation for create entity by t
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
+  it('should generate graphql tag for create mutation by table schema without user fields', () => {
     const tag = createTableRowCreateTag([fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS], 'TABLE_WITHOUT_USER_FIELDS_ID');
 
     expect(tag).toMatchSnapshot();
@@ -152,7 +152,7 @@ describe('As a developer, I can generate graphql mutation for create many entiti
     expect(tag).toMatchSnapshot();
   });
 
-  it('should generate graphql tag for create mutation by table schema with smart fields', () => {
+  it('should generate graphql tag for create mutation by table schema without user fields', () => {
     const tag = createTableRowCreateManyTag(
       [fixtures.TABLE_SCHEMA_WITHOUT_USER_FIELDS],
       'TABLE_WITHOUT_USER_FIELDS_ID',

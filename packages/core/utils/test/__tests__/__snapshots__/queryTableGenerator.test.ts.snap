@@ -9,7 +9,8 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
     field3
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema for application 1`] = `
@@ -23,7 +24,8 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
       _description
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
@@ -53,7 +55,8 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
@@ -75,7 +78,8 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
@@ -99,16 +103,18 @@ exports[`As a developer, I can generate graphql mutation for create entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
-exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
+exports[`As a developer, I can generate graphql mutation for create entity by table schema should generate graphql tag for create mutation by table schema without user fields 1`] = `
 "mutation TableWithoutUserFieldsCreate {
   tableWithoutUserFieldCreate {
     id
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by common table schema  1`] = `
@@ -116,7 +122,8 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
   commonCreateMany(data: $data) {
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema for application 1`] = `
@@ -126,7 +133,8 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
       count
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with files 1`] = `
@@ -134,7 +142,8 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
   fileCreateMany(data: $data) {
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with relation 1`] = `
@@ -142,7 +151,8 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
   relationCreateMany(data: $data) {
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 1`] = `
@@ -150,10 +160,11 @@ exports[`As a developer, I can generate graphql mutation for create many entitie
   smartFieldCreateMany(data: $data) {
     count
   }
-}"
+}
+"
 `;
 
-exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema with smart fields 2`] = `
+exports[`As a developer, I can generate graphql mutation for create many entities by table schema should generate graphql tag for create mutation by table schema without user fields 1`] = `
 "
   mutation TableWithoutUserFieldsCreateMany {
   
@@ -168,7 +179,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
   commonDelete(filter: $filter, force: $force) {
     success
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema for application 1`] = `
@@ -178,7 +190,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
       success
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with files 1`] = `
@@ -186,7 +199,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
   fileDelete(filter: $filter, force: $force) {
     success
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with relation 1`] = `
@@ -194,7 +208,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
   relationDelete(filter: $filter, force: $force) {
     success
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for delete entity by table schema should generate graphql tag for delete mutation by table schema with smart fields 1`] = `
@@ -202,7 +217,8 @@ exports[`As a developer, I can generate graphql mutation for delete entity by ta
   smartFieldDelete(filter: $filter, force: $force) {
     success
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by common table schema  1`] = `
@@ -214,11 +230,15 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     field3
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema for application 1`] = `
-"mutation CommonsUpdate($data: SalesforceCommonUpdateInput!, $filter: SalesforceCommonKeyFilter) {
+"mutation CommonsUpdate(
+  $data: SalesforceCommonUpdateInput!
+  $filter: SalesforceCommonKeyFilter
+) {
   Salesforce {
     commonUpdate(data: $data, filter: $filter) {
       id
@@ -228,7 +248,8 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
       _description
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with files 1`] = `
@@ -258,11 +279,15 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with relation 1`] = `
-"mutation RelationUpdate($data: RelationUpdateInput!, $filter: RelationKeyFilter) {
+"mutation RelationUpdate(
+  $data: RelationUpdateInput!
+  $filter: RelationKeyFilter
+) {
   relationUpdate(data: $data, filter: $filter) {
     id
     field1 {
@@ -280,11 +305,15 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql mutation for update entity by table schema should generate graphql tag for update mutation by table schema with smart fields 1`] = `
-"mutation SmartFieldsUpdate($data: SmartFieldUpdateInput!, $filter: SmartFieldKeyFilter) {
+"mutation SmartFieldsUpdate(
+  $data: SmartFieldUpdateInput!
+  $filter: SmartFieldKeyFilter
+) {
   smartFieldUpdate(data: $data, filter: $filter) {
     id
     phone {
@@ -304,12 +333,31 @@ exports[`As a developer, I can generate graphql mutation for update entity by ta
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by common table schema  1`] = `
-"query CommonsTableContent($filter: CommonFilter, $orderBy: [CommonOrderBy], $sort: [CommonSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  commonsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query CommonsTableContent(
+  $filter: CommonFilter
+  $orderBy: [CommonOrderBy]
+  $sort: [CommonSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  commonsList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       field1
@@ -319,13 +367,32 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema for application 1`] = `
-"query CommonsTableContent($filter: SalesforceCommonFilter, $orderBy: [SalesforceCommonOrderBy], $sort: [SalesforceCommonSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
+"query CommonsTableContent(
+  $filter: SalesforceCommonFilter
+  $orderBy: [SalesforceCommonOrderBy]
+  $sort: [SalesforceCommonSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
   Salesforce {
-    commonsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+    commonsList(
+      filter: $filter
+      orderBy: $orderBy
+      sort: $sort
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      skip: $skip
+    ) {
       items {
         id
         field1
@@ -336,12 +403,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
       count
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with files 1`] = `
-"query FilesTableContent($filter: FileFilter, $orderBy: [FileOrderBy], $sort: [FileSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  filesList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query FilesTableContent(
+  $filter: FileFilter
+  $orderBy: [FileOrderBy]
+  $sort: [FileSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  filesList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       file {
@@ -369,12 +455,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with relation 1`] = `
-"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $sort: [RelationSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  relationsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query RelationTableContent(
+  $filter: RelationFilter
+  $orderBy: [RelationOrderBy]
+  $sort: [RelationSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  relationsList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       field1 {
@@ -394,12 +499,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with smart fields 1`] = `
-"query SmartFieldsTableContent($filter: SmartFieldFilter, $orderBy: [SmartFieldOrderBy], $sort: [SmartFieldSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  smartFieldsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query SmartFieldsTableContent(
+  $filter: SmartFieldFilter
+  $orderBy: [SmartFieldOrderBy]
+  $sort: [SmartFieldSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  smartFieldsList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       createdAt
@@ -427,12 +551,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate graphql tag for the table content by table schema with some relation count 1`] = `
-"query RelationTableContent($filter: RelationFilter, $orderBy: [RelationOrderBy], $sort: [RelationSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  relationsList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query RelationTableContent(
+  $filter: RelationFilter
+  $orderBy: [RelationOrderBy]
+  $sort: [RelationSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  relationsList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       field1 {
@@ -452,12 +595,31 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for list by table schema should generate query string  1`] = `
-"query TableSchemaTableContent($filter: TableSchemaFilter, $orderBy: [TableSchemaOrderBy], $sort: [TableSchemaSort!], $after: String, $before: String, $first: Int, $last: Int, $skip: Int) {
-  tableSchemasList(filter: $filter, orderBy: $orderBy, sort: $sort, after: $after, before: $before, first: $first, last: $last, skip: $skip) {
+"query TableSchemaTableContent(
+  $filter: TableSchemaFilter
+  $orderBy: [TableSchemaOrderBy]
+  $sort: [TableSchemaSort!]
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $skip: Int
+) {
+  tableSchemasList(
+    filter: $filter
+    orderBy: $orderBy
+    sort: $sort
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    skip: $skip
+  ) {
     items {
       id
       number
@@ -477,7 +639,8 @@ exports[`As a developer, I can generate graphql query for list by table schema s
     }
     count
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema  1`] = `
@@ -489,7 +652,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
     field3
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by common table schema according permissions 1`] = `
@@ -500,7 +664,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
     field3
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema for application 1`] = `
@@ -514,7 +679,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
       _description
     }
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with files 1`] = `
@@ -544,7 +710,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with relation 1`] = `
@@ -566,7 +733,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate graphql query for read entity by table schema should generate graphql tag for row query by table schema with smart fields 1`] = `
@@ -596,7 +764,8 @@ exports[`As a developer, I can generate graphql query for read entity by table s
     }
     _description
   }
-}"
+}
+"
 `;
 
 exports[`As a developer, I can generate table columns  by table schema should generate table columns list  1`] = `
