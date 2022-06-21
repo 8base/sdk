@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "diagnostics": true,
-    "module": "commonjs",
-    "target": "ES2016",
+    "module": "es2015",
+    "target": "es2015",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
