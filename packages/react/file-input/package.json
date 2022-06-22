@@ -3,9 +3,9 @@
   "version": "2.6.6",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/file-input",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "types": "dist/mjs/index.d.ts",
+  "module": "dist/mjs/index.js",
   "scripts": {
     "build": "../../../bin/build-package.sh",
     "watch": "../../../bin/watch-package.sh",

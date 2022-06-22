@@ -5,8 +5,9 @@ to: packages/<%= name %>/package.json
   "name": "@8base/<%= name %>",
   "version": "<%= version %>",
   "repository": "https://github.com/8base/sdk",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "types": "dist/mjs/index.d.ts",
+  "module": "dist/mjs/index.js",
   "scripts": {
     "build": "../../../bin/build-package.sh",
     "watch": "../../../bin/watch-package.sh",

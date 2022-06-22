@@ -5,4 +5,5 @@ echo "Starting \"build\" for \"${PWD##*/}\""
 echo "$(tput setaf 7)"
 
 rimraf dist
-yarn tsc
+tsc --outDir ./dist/mjs
+tsc --module commonjs --outDir ./dist/cjs
