@@ -3,7 +3,7 @@ import TestRenderer from 'react-test-renderer';
 
 import { WebAuth0AuthClient } from '@8base/web-auth0-auth-client';
 import { ApolloClient } from '@8base/apollo-client';
-import { AuthProvider } from '@8base-react/auth';
+import { AuthProvider } from '@8base/react-auth';
 
 import { AppProvider } from '../../src';
 
@@ -13,7 +13,7 @@ jest.mock('../../src/FragmentsSchemaContainer', () => ({
   ),
 }));
 
-jest.mock('@8base-react/auth', () => ({
+jest.mock('@8base/react-auth', () => ({
   AuthProvider: jest.fn(({ children }) => <div>{children}</div>),
   withAuth: jest.fn((Component) => (props: any) => <Component {...props} />),
 }));

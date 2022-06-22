@@ -4,7 +4,7 @@ import { QueryResult, gql } from '@apollo/client';
 // TODO: apollo Query component is deprecated
 import { Query } from '@apollo/client/react/components';
 import { SchemaNameGenerator } from '@8base/schema-name-generator';
-import { PermissionsContext } from '@8base-react/permissions-provider';
+import { PermissionsContext } from '@8base/react-permissions-provider';
 import { createTableRowQueryTag, TableSchema, tableSelectors } from '@8base/utils';
 
 type RecordDataProps = {

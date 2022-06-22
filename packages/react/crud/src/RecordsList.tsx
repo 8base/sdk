@@ -3,8 +3,8 @@ import * as R from 'ramda';
 import { QueryResult, gql } from '@apollo/client';
 // TODO: apollo Query component is deprecated
 import { Query } from '@apollo/client/react/components';
-import { TableConsumer, ITableConsumerRenderProps } from '@8base-react/table-schema-provider';
-import { PermissionsContext } from '@8base-react/permissions-provider';
+import { TableConsumer, ITableConsumerRenderProps } from '@8base/react-table-schema-provider';
+import { PermissionsContext } from '@8base/react-permissions-provider';
 import { createTableFilterGraphqlTag, TableSchema, FieldSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 
 type RecordsListFlattenData<T = object> = {

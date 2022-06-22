@@ -1,7 +1,7 @@
 import React from 'react';
 import { ISubscribableAuthClient } from '@8base/auth';
-import { AuthProvider } from '@8base-react/auth';
-import { TableSchemaProvider } from '@8base-react/table-schema-provider';
+import { AuthProvider } from '@8base/react-auth';
+import { TableSchemaProvider } from '@8base/react-table-schema-provider';
 import { ApolloError } from '@apollo/client';
 import { Optional } from 'utility-types';
 

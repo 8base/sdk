@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { gql } from '@apollo/client';
 // TODO: apollo Query component is deprecated
 import { Query } from '@apollo/client/react/components';
-import { withAuth, WithAuthProps } from '@8base-react/auth';
+import { withAuth, WithAuthProps } from '@8base/react-auth';
 
 import { PermissionsContext } from './PermissionsContext';
 import { getPermissions, getRoles } from './utils';

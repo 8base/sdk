@@ -1,6 +1,6 @@
 import React from 'react';
 import { Application } from '@8base/utils';
-import { getDisplayName } from '@8base-react/utils';
+import { getDisplayName } from '@8base/react-utils';
 import { Subtract } from 'utility-types';
 
 import { TableSchemaContext, ITableSchemaContext } from './TableSchemaContext';

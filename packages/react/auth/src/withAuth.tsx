@@ -1,6 +1,6 @@
 import React from 'react';
 import { Subtract } from 'utility-types';
-import { getDisplayName } from '@8base-react/utils';
+import { getDisplayName } from '@8base/react-utils';
 
 import { AuthContext, AuthContextProps } from './AuthContext';
 

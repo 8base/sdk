@@ -1,5 +1,5 @@
 {
-  "name": "8base-react-sdk",
+  "name": "@8base/sdk-react",
   "version": "2.6.6",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/8base-react-sdk",
@@ -18,14 +18,14 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@8base-react/app-provider": "^2.6.6",
-    "@8base-react/auth": "^2.6.6",
-    "@8base-react/crud": "^2.6.6",
-    "@8base-react/file-input": "^2.6.6",
-    "@8base-react/forms": "^2.6.6",
-    "@8base-react/permissions-provider": "^2.6.6",
-    "@8base-react/table-schema-provider": "^2.6.6",
-    "@8base-react/utils": "^2.6.6",
+    "@8base/react-app-provider": "^2.6.6",
+    "@8base/react-auth": "^2.6.6",
+    "@8base/react-crud": "^2.6.6",
+    "@8base/react-file-input": "^2.6.6",
+    "@8base/react-forms": "^2.6.6",
+    "@8base/react-permissions-provider": "^2.6.6",
+    "@8base/react-table-schema-provider": "^2.6.6",
+    "@8base/react-utils": "^2.6.6",
     "graphql-tag": "^2.10.1"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
       "!<rootDir>/**/__tests__/**"
     ],
     "moduleNameMapper": {
-      "8base-sdk": "<rootDir>/../../core/8base-sdk/src/index.ts",
+      "@8base/sdk-core": "<rootDir>/../../core/8base-sdk/src/index.ts",
       "@8base/api-client": "<rootDir>/../../core/api-client/src/index.ts",
       "@8base/api-token-auth-client": "<rootDir>/../../core/api-token-auth-client/src/index.ts",
       "@8base/apollo-client": "<rootDir>/../../core/apollo-client/src/index.ts",
@@ -60,17 +60,17 @@
       "@8base/web-cognito-auth-client": "<rootDir>/../../core/web-cognito-auth-client/src/index.ts",
       "@8base/web-native-auth-client": "<rootDir>/../../core/web-native-auth-client/src/index.ts",
       "@8base/web-oauth-client": "<rootDir>/../../core/web-oauth-client/src/index.ts",
-      "8base-react-sdk": "<rootDir>/../../react/8base-react-sdk/src/index.ts",
-      "@8base-react/app-provider": "<rootDir>/../../react/app-provider/src/index.ts",
-      "@8base-react/auth": "<rootDir>/../../react/auth/src/index.ts",
-      "@8base-react/crud": "<rootDir>/../../react/crud/src/index.ts",
-      "@8base-react/file-input": "<rootDir>/../../react/file-input/src/index.ts",
-      "@8base-react/forms": "<rootDir>/../../react/forms/src/index.ts",
-      "@8base-react/permissions-provider": "<rootDir>/../../react/permissions-provider/src/index.ts",
-      "@8base-react/table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
-      "@8base-react/utils": "<rootDir>/../../react/utils/src/index.ts"
+      "@8bas/sdk-react": "<rootDir>/../../react/8base-react-sdk/src/index.ts",
+      "@8base/react-app-provider": "<rootDir>/../../react/app-provider/src/index.ts",
+      "@8base/react-auth": "<rootDir>/../../react/auth/src/index.ts",
+      "@8base/react-crud": "<rootDir>/../../react/crud/src/index.ts",
+      "@8base/react-file-input": "<rootDir>/../../react/file-input/src/index.ts",
+      "@8base/react-forms": "<rootDir>/../../react/forms/src/index.ts",
+      "@8base/react-permissions-provider": "<rootDir>/../../react/permissions-provider/src/index.ts",
+      "@8base/react-table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
+      "@8base/react-utils": "<rootDir>/../../react/utils/src/index.ts"
     },
-    "moduleFileExtensions":  [
+    "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",

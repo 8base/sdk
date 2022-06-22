@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { ApolloProvider, InMemoryCache } from '@apollo/client';
-import { withAuth, WithAuthProps } from '@8base-react/auth';
+import { withAuth, WithAuthProps } from '@8base/react-auth';
 import { ApolloClient } from '@8base/apollo-client';
 
 import { ApolloContainerPassedProps } from './types';

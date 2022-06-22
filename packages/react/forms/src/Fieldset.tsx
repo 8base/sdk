@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import * as R from 'ramda';
 import { tablesListSelectors, TableSchema } from '@8base/utils';
-import { TableSchemaContext } from '@8base-react/table-schema-provider';
+import { TableSchemaContext } from '@8base/react-table-schema-provider';
 
 import { FormContext } from './FormContext';
 import { renderComponent } from './utils';

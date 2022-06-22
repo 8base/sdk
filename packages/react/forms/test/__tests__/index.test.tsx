@@ -1,6 +1,6 @@
 import React from 'react';
 import * as renderer from 'react-test-renderer';
-import { TableSchemaContext } from '@8base-react/table-schema-provider';
+import { TableSchemaContext } from '@8base/react-table-schema-provider';
 
 import { Form, Field, Fieldset, FieldArray } from '../../src';
 

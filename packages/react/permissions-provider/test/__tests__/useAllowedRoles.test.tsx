@@ -20,7 +20,7 @@ const mockPermissionsData = {
   },
 };
 
-jest.mock('@8base-react/auth', () => ({
+jest.mock('@8base/react-auth', () => ({
   withAuth: (Component: any) => (props: any) => (
     <Component {...props} auth={{ isAuthorized: true, authState: { workspaceId: 'some-workspace-id' } }} />
   ),

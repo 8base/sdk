@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TableConsumer, ITableConsumerRenderProps } from '@8base-react/table-schema-provider';
+import { TableConsumer, ITableConsumerRenderProps } from '@8base/react-table-schema-provider';
 import { MutationFunction, MutationResult } from '@apollo/client';
 import { TableSchema, SDKError, ERROR_CODES, PACKAGES } from '@8base/utils';
 

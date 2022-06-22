@@ -34,7 +34,7 @@
       "!<rootDir>/**/__tests__/**"
     ],
     "moduleNameMapper": {
-      "8base-sdk": "<rootDir>/../../core/8base-sdk/src/index.ts",
+      "@8base/sdk-core": "<rootDir>/../../core/8base-sdk/src/index.ts",
       "@8base/api-client": "<rootDir>/../../core/api-client/src/index.ts",
       "@8base/api-token-auth-client": "<rootDir>/../../core/api-token-auth-client/src/index.ts",
       "@8base/apollo-client": "<rootDir>/../../core/apollo-client/src/index.ts",
@@ -46,15 +46,15 @@
       "@8base/web-cognito-auth-client": "<rootDir>/../../core/web-cognito-auth-client/src/index.ts",
       "@8base/web-native-auth-client": "<rootDir>/../../core/web-native-auth-client/src/index.ts",
       "@8base/web-oauth-client": "<rootDir>/../../core/web-oauth-client/src/index.ts",
-      "8base-react-sdk": "<rootDir>/../../react/8base-react-sdk/src/index.ts",
-      "@8base-react/app-provider": "<rootDir>/../../react/app-provider/src/index.ts",
-      "@8base-react/auth": "<rootDir>/../../react/auth/src/index.ts",
-      "@8base-react/crud": "<rootDir>/../../react/crud/src/index.ts",
-      "@8base-react/file-input": "<rootDir>/../../react/file-input/src/index.ts",
-      "@8base-react/forms": "<rootDir>/../../react/forms/src/index.ts",
-      "@8base-react/permissions-provider": "<rootDir>/../../react/permissions-provider/src/index.ts",
-      "@8base-react/table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
-      "@8base-react/utils": "<rootDir>/../../react/utils/src/index.ts"
+      "@8base/sdk-react": "<rootDir>/../../react/8base-react-sdk/src/index.ts",
+      "@8base/react-app-provider": "<rootDir>/../../react/app-provider/src/index.ts",
+      "@8base/react-auth": "<rootDir>/../../react/auth/src/index.ts",
+      "@8base/react-crud": "<rootDir>/../../react/crud/src/index.ts",
+      "@8base/react-file-input": "<rootDir>/../../react/file-input/src/index.ts",
+      "@8base/react-forms": "<rootDir>/../../react/forms/src/index.ts",
+      "@8base/react-permissions-provider": "<rootDir>/../../react/permissions-provider/src/index.ts",
+      "@8base/react-table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
+      "@8base/react-utils": "<rootDir>/../../react/utils/src/index.ts"
     },
     "moduleFileExtensions":  [
       "ts",
