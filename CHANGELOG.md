@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-beta.0](https://github.com/8base/sdk/compare/v2.6.6...v3.0.0-beta.0) (2022-06-22)
+
+
+### Features
+
+* **utils:** gqlPrettify function ([73bea83](https://github.com/8base/sdk/commit/73bea833b00285a39e7d4de0d115c4dee5f1e6ee))
+* **utils:** replace gqlPrettier with gqlPrettify ([d4df857](https://github.com/8base/sdk/commit/d4df8572e5045e76507e1c439b59cdd5121ad470))
+
+
+
+
+
 ## [2.6.6](https://github.com/8base/sdk/compare/v2.6.5...v2.6.6) (2022-03-18)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@8base/utils",
-  "version": "2.6.6",
+  "version": "3.0.0-beta.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/utils",
   "main": "dist/cjs/index.js",
@@ -62,7 +62,7 @@
       "@8base/react-table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
       "@8base/react-utils": "<rootDir>/../../react/utils/src/index.ts"
     },
-    "moduleFileExtensions":  [
+    "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",

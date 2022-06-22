@@ -1,6 +1,6 @@
 {
   "name": "@8base/web-cognito-auth-client",
-  "version": "2.6.6",
+  "version": "3.0.0-beta.0",
   "author": "8base",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/web-cognito-auth-client",
@@ -13,7 +13,7 @@
     "test": "NPM_ENV=test jest"
   },
   "dependencies": {
-    "@8base/utils": "^2.6.6",
+    "@8base/utils": "^3.0.0-beta.0",
     "jwt-decode": "^3.1.2",
     "qs": "^6.9.6",
     "ramda": "^0.27.1"
@@ -66,7 +66,7 @@
       "@8base/react-table-schema-provider": "<rootDir>/../../react/table-schema-provider/src/index.ts",
       "@8base/react-utils": "<rootDir>/../../react/utils/src/index.ts"
     },
-    "moduleFileExtensions":  [
+    "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",

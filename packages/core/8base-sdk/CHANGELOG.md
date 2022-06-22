@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-beta.0](https://github.com/8base/sdk/compare/v2.6.6...v3.0.0-beta.0) (2022-06-22)
+
+**Note:** Version bump only for package @8base/sdk-core
+
+
+
+
+
 ## [2.6.6](https://github.com/8base/sdk/compare/v2.6.5...v2.6.6) (2022-03-18)
 
 **Note:** Version bump only for package 8base-sdk
