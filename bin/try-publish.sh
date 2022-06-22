@@ -2,6 +2,7 @@
 
 scope=$1
 package=$2
+beta=$3
 
 status=0
 
@@ -29,7 +30,13 @@ if [ "$published" != "$version" ]; then
     fi
   fi
 
-  npm publish --access public; if [ "$?" != "0" ]; then status=1; fi
+    if [ "$beta" != "beta" ]; then
+      npm publish --access public;
+    else
+      npm publish --tag beta --access public;
+    fi
+
+  if [ "$?" != "0" ]; then status=1; fi
 else
   echo "Current version of the package already published to the NPM."
 fi

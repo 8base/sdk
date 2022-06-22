@@ -14,6 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       - name: Install Dependencies
         run: yarn --frozen-lockfile
@@ -30,5 +33,10 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Publish beta
+        if: github.event.release.prerelease != false
+        run: sh ./bin/publish.sh beta
+
       - name: Publish
+        if: github.event.release.prerelease != true
         run: sh ./bin/publish.sh
