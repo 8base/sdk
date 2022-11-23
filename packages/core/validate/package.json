@@ -14,7 +14,7 @@
   "dependencies": {
     "@8base/utils": "^3.0.0-beta.0",
     "decimal.js": "^10.2.1",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
