@@ -86,6 +86,7 @@ describe('AppProvider', () => {
         "onRequestSuccess": [MockFunction],
         "uri": "http://8base.com",
         "withAuth": true,
+        "withBatching": true,
         "withSubscriptions": false,
       }
     `);
@@ -143,6 +144,7 @@ describe('AppProvider', () => {
         "onRequestSuccess": [MockFunction],
         "uri": "http://8base.com",
         "withAuth": true,
+        "withBatching": true,
         "withSubscriptions": false,
       }
     `);
@@ -181,6 +183,7 @@ describe('AppProvider', () => {
         "onRequestSuccess": [MockFunction],
         "uri": "http://8base.com",
         "withAuth": false,
+        "withBatching": true,
         "withSubscriptions": false,
       }
     `);
