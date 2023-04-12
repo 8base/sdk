@@ -20,6 +20,7 @@ export type AppProviderProps = ApolloContainerPassedProps & {
 
 type PrefilledApolloContainerProps =
   | 'withSubscriptions'
+  | 'withBatching'
   | 'uri'
   | 'extendLinks'
   | 'onRequestSuccess'
@@ -53,6 +54,7 @@ const AppProvider = ({
   tablesList,
   applicationsList,
   withSubscriptions,
+  withBatching,
   cacheOptions,
 }: AppProviderProps): any => {
   const renderApolloContainer = (
@@ -63,6 +65,7 @@ const AppProvider = ({
   ) => (
     <ApolloContainer
       withSubscriptions={withSubscriptions}
+      withBatching={withBatching}
       uri={uri}
       extendLinks={extendLinks}
       onRequestSuccess={onRequestSuccess}

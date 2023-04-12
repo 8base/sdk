@@ -5,6 +5,7 @@ export type ApolloContainerPassedProps = {
   uri: string;
   autoSignUp?: boolean;
   withSubscriptions?: boolean;
+  withBatching?: boolean;
   authProfileId?: string;
   onRequestSuccess: (request: { [key: string]: any }) => void;
   onRequestError: (request: { [key: string]: any }) => void;
