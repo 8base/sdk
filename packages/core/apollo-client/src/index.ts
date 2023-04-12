@@ -6,6 +6,7 @@ import {
   InMemoryCache,
   ApolloLink,
   Operation,
+  HttpLink,
 } from '@apollo/client';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError as createErrorLink, ErrorHandler } from '@apollo/client/link/error';
@@ -23,6 +24,7 @@ type ApolloClientCommon = {
 type ApolloClientOptions = {
   withAuth?: boolean;
   withSubscriptions?: boolean;
+  withBatching?: boolean;
   autoSignUp?: boolean;
   authProfileId?: string;
   getAuthState?: () => IAuthState;
@@ -61,6 +63,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
       withAuth = true,
       autoSignUp = false,
       withSubscriptions = false,
+      withBatching = true,
       authProfileId,
       ...rest
     } = config;
@@ -71,9 +74,13 @@ class ApolloClient extends OriginalApolloClient<Object> {
       cache = new InMemoryCache();
     }
 
-    const batchHttpLink = new BatchHttpLink({ uri });
+    let httpLink: ApolloLink = new HttpLink({ uri });
 
-    let links: ApolloLink[] = [batchHttpLink];
+    if (withBatching) {
+      httpLink = new BatchHttpLink({ uri })
+    }
+
+    let links: ApolloLink[] = [httpLink];
 
     if (withSubscriptions && getAuthState) {
       links = [
@@ -85,7 +92,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
             onAuthError,
             onIdTokenExpired,
           }),
-          batchHttpLink,
+          httpLink,
         ),
       ];
     }
