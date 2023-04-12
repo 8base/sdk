@@ -77,7 +77,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
     let httpLink: ApolloLink = new HttpLink({ uri });
 
     if (withBatching) {
-      httpLink = new BatchHttpLink({ uri })
+      httpLink = new BatchHttpLink({ uri });
     }
 
     let links: ApolloLink[] = [httpLink];
