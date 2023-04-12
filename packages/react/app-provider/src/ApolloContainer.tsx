@@ -20,6 +20,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
       autoSignUp: false,
       withAuth: true,
       withSubscriptions: false,
+      withBatching: true,
       cacheOptions: {},
     };
     public client: any;
@@ -31,6 +32,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
         const {
           withAuth,
           withSubscriptions,
+          withBatching,
           autoSignUp,
           authProfileId,
           cacheOptions,
@@ -48,6 +50,7 @@ const ApolloContainer: React.ComponentType<ApolloContainerProps> = withAuth(
           onRequestSuccess: this.props.onRequestSuccess,
           uri: this.props.uri,
           withSubscriptions,
+          withBatching,
         };
 
         const apolloClientOptions = withAuth
