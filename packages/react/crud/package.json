@@ -1,6 +1,6 @@
 {
   "name": "@8base/react-crud",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/crud",
   "main": "dist/cjs/index.js",
@@ -17,10 +17,10 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@8base/react-permissions-provider": "^3.0.0-beta.0",
-    "@8base/react-table-schema-provider": "^3.0.0-beta.0",
+    "@8base/react-permissions-provider": "^3.0.0-beta.1",
+    "@8base/react-table-schema-provider": "^3.0.0-beta.1",
     "@8base/schema-name-generator": "^0.1.23",
-    "@8base/utils": "^3.0.0-beta.0",
+    "@8base/utils": "^3.0.0-beta.1",
     "ramda": "^0.27.1"
   },
   "devDependencies": {

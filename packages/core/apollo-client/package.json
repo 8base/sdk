@@ -1,6 +1,6 @@
 {
   "name": "@8base/apollo-client",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/apollo-client",
   "main": "dist/cjs/index.js",
@@ -16,8 +16,8 @@
     "graphql": "^15.5.0"
   },
   "dependencies": {
-    "@8base/apollo-links": "^3.0.0-beta.0",
-    "@8base/utils": "^3.0.0-beta.0"
+    "@8base/apollo-links": "^3.0.0-beta.1",
+    "@8base/utils": "^3.0.0-beta.1"
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
