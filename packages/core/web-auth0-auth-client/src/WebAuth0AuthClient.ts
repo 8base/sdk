@@ -194,18 +194,21 @@ class WebAuth0AuthClient implements IAuthClient {
         }
 
         const idToken = (getIdToken(authResult) as string) || '';
-        const jwtResult: IAuth0IdTokenData = jwtDecode(idToken) || {};
 
-        resolve({
-          idToken,
-          firstName: jwtResult.given_name,
-          lastName: jwtResult.family_name,
-          picture: jwtResult.picture,
-          email: getEmail(authResult),
-          idTokenPayload: getIdTokenPayload(authResult),
-          isEmailVerified: isEmailVerified(authResult),
-          state: getState(authResult),
-        });
+        if (idToken) {
+          const jwtResult: IAuth0IdTokenData = jwtDecode(idToken) || {};
+
+          resolve({
+            idToken,
+            firstName: jwtResult.given_name,
+            lastName: jwtResult.family_name,
+            picture: jwtResult.picture,
+            email: getEmail(authResult),
+            idTokenPayload: getIdTokenPayload(authResult),
+            isEmailVerified: isEmailVerified(authResult),
+            state: getState(authResult),
+          });
+        }
       });
     });
   }
