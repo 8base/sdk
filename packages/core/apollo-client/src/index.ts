@@ -14,6 +14,7 @@ import gql from 'graphql-tag';
 
 type ApolloClientCommon = {
   uri: string;
+  subscriptionUri?: string;
   extendLinks?: (links: ApolloLink[], options: { getAuthState?: () => IAuthState }) => ApolloLink[];
   onAuthError?: (error?: {}) => void;
   onIdTokenExpired?: () => Promise<any>;
@@ -37,6 +38,7 @@ type ApolloClientOptions = {
  *
  * @param {Object} config - The Apollo Client config.
  * @param {string} config.uri Endpoint of the GraphQl server.
+ * @param {string} config.subscriptionUri Endpoint of the GraphQl websocket server.
  * @param {Function} config.getAuthState - The function which are using to get auth state.
  * @param {Function} config.getRefreshTokenParameters - The function which are using for get refresh token parameters.
  * @param {Function} config.onAuthSuccess - The callback which called when attempt to refresh authentication is success.
@@ -52,6 +54,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
   constructor(config: ApolloClientOptions) {
     const {
       uri,
+      subscriptionUri,
       getAuthState,
       getRefreshTokenParameters,
       onAuthSuccess,
@@ -87,7 +90,7 @@ class ApolloClient extends OriginalApolloClient<Object> {
         ApolloLink.split(
           isSubscriptionRequest,
           new SubscriptionLink({
-            uri: 'wss://ws.8base.com',
+            uri: subscriptionUri || 'wss://ws.8base.com',
             getAuthState,
             onAuthError,
             onIdTokenExpired,
