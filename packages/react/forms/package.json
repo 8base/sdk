@@ -1,6 +1,6 @@
 {
   "name": "@8base/react-forms",
-  "version": "3.0.0-beta.3",
+  "version": "3.1.0-beta.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/forms",
   "main": "dist/cjs/index.js",
@@ -12,15 +12,15 @@
     "test": "NPM_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": ">=17.0.1",
+    "react-dom": ">=17.0.1"
   },
   "dependencies": {
     "@8base/error-codes": "^1.0.22",
-    "@8base/react-permissions-provider": "^3.0.0-beta.3",
-    "@8base/react-table-schema-provider": "^3.0.0-beta.3",
-    "@8base/utils": "^3.0.0-beta.3",
-    "@8base/validate": "^3.0.0-beta.3",
+    "@8base/react-permissions-provider": "^3.1.0-beta.0",
+    "@8base/react-table-schema-provider": "^3.1.0-beta.0",
+    "@8base/utils": "^3.1.0-beta.0",
+    "@8base/validate": "^3.1.0-beta.0",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
     "prop-types": "^15.7.2",

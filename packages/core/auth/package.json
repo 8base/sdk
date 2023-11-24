@@ -1,6 +1,6 @@
 {
   "name": "@8base/auth",
-  "version": "3.0.0-beta.3",
+  "version": "3.1.0-beta.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/core/auth",
   "main": "dist/cjs/index.js",
@@ -12,12 +12,12 @@
     "test": "NPM_ENV=test && jest"
   },
   "dependencies": {
-    "@8base/api-token-auth-client": "^3.0.0-beta.3",
-    "@8base/utils": "^3.0.0-beta.3",
-    "@8base/web-auth0-auth-client": "^3.0.0-beta.3",
-    "@8base/web-cognito-auth-client": "^3.0.0-beta.3",
-    "@8base/web-native-auth-client": "^3.0.0-beta.3",
-    "@8base/web-oauth-client": "^3.0.0-beta.3",
+    "@8base/api-token-auth-client": "^3.1.0-beta.0",
+    "@8base/utils": "^3.1.0-beta.0",
+    "@8base/web-auth0-auth-client": "^3.1.0-beta.0",
+    "@8base/web-cognito-auth-client": "^3.1.0-beta.0",
+    "@8base/web-native-auth-client": "^3.1.0-beta.0",
+    "@8base/web-oauth-client": "^3.1.0-beta.0",
     "ramda": "^0.27.1"
   },
   "devDependencies": {

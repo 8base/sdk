@@ -1,6 +1,6 @@
 {
   "name": "@8base/react-auth",
-  "version": "3.0.0-beta.3",
+  "version": "3.1.0-beta.0",
   "repository": "https://github.com/8base/sdk",
   "homepage": "https://github.com/8base/sdk/tree/master/packages/react/auth",
   "main": "dist/cjs/index.js",
@@ -12,13 +12,13 @@
     "test": "NPM_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": ">=17.0.1",
+    "react-dom": ">=17.0.1"
   },
   "dependencies": {
-    "@8base/auth": "^3.0.0-beta.3",
-    "@8base/react-utils": "^3.0.0-beta.3",
-    "@8base/utils": "^3.0.0-beta.3"
+    "@8base/auth": "^3.1.0-beta.0",
+    "@8base/react-utils": "^3.1.0-beta.0",
+    "@8base/utils": "^3.1.0-beta.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
