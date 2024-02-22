@@ -1,8 +1,6 @@
 name: publish
 
-on:
-  release:
-    types: [created]
+on: workflow_dispatch
 
 env:
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
