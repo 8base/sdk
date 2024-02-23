@@ -67,7 +67,7 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
       try {
         response = await client.query({ query: FILE_UPLOAD_INFO_QUERY, fetchPolicy: this.props.fetchPolicy });
       } catch (e) {
-        this.setState({ error: e as Error});
+        this.setState({ error: e as Error });
 
         return;
       }
@@ -179,9 +179,9 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
 
       const { error, value, originalFile, isModalOpen } = this.state;
 
-      if(useFilestack){
+      if (useFilestack) {
         return children({ pick: this.pick, value, originalFile, error });
-      }else{
+      } else {
         return (
           <>
             {children({ openModal: this.openModal, value, originalFile, error })}
@@ -251,10 +251,8 @@ const FileInput: React.ComponentType<FileInputProps> = withApollo<FileInputProps
               </div>
             )}
           </>
-        )
+        );
       }
-
-      
     }
   },
 );

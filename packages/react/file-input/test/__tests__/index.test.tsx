@@ -59,7 +59,11 @@ describe('should call onChange when file is uploaded', () => {
     const renderFileInputView: any = jest.fn(() => null);
     const onChange: any = jest.fn();
 
-    renderer.create(<FileInput useFilestack onChange={onChange}>{renderFileInputView}</FileInput>);
+    renderer.create(
+      <FileInput useFilestack onChange={onChange}>
+        {renderFileInputView}
+      </FileInput>,
+    );
 
     expect(renderFileInputView).toHaveBeenCalledTimes(1);
 
@@ -255,7 +259,11 @@ describe('FileInput', () => {
   it("doesn't allow to rewrite maxFiles and onUploadDone options", async () => {
     const renderFileInputView: any = jest.fn(() => null);
 
-    renderer.create(<FileInput useFilestack maxFiles={3}>{renderFileInputView}</FileInput>);
+    renderer.create(
+      <FileInput useFilestack maxFiles={3}>
+        {renderFileInputView}
+      </FileInput>,
+    );
 
     await renderFileInputView.mock.calls[0][0].pick({
       accept: ['image/*'],

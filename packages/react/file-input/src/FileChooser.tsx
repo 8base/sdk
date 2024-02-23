@@ -112,7 +112,7 @@ const FileChooser: React.FC<IFileChooserProps> = ({
         }
       } catch (error) {
         setError(error as Error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     };
@@ -122,14 +122,14 @@ const FileChooser: React.FC<IFileChooserProps> = ({
 
   const onDrop = (acceptedFiles: File[]) => {
     if (maxFiles && maxFiles > 1) {
-      setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     } else {
       setFiles([acceptedFiles[0]]);
     }
   };
 
   const removeFile = (index: number) => {
-    setFiles(prevFiles => {
+    setFiles((prevFiles) => {
       const updatedFiles = [...prevFiles];
       updatedFiles.splice(index, 1);
       return updatedFiles;
@@ -149,7 +149,7 @@ const FileChooser: React.FC<IFileChooserProps> = ({
 
     const formdata = new FormData();
 
-    files.forEach(file => {
+    files.forEach((file) => {
       formdata.append('files', file, file.name);
     });
 
@@ -184,7 +184,7 @@ const FileChooser: React.FC<IFileChooserProps> = ({
   const handleUpload = async () => {
     setUploadProgress(1);
     let value = await uploadToS3(files);
-    const originalFile = files.map(item => item);
+    const originalFile = files.map((item) => item);
     if (maxFiles === 1) {
       value = value[0];
     }
