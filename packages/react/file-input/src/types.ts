@@ -15,7 +15,8 @@ export type OriginalFileInputValue = File | File[];
 export type FileInputProps = {
   onChange?: (value: FileInputValue, originalFile: OriginalFileInputValue) => void;
   children: (args: {
-    pick: (options: {}) => Promise<void>;
+    pick?: (options: {}) => Promise<void>;
+    openModal?: () => void;
     value: FileInputValue | null;
     originalFile: OriginalFileInputValue | null;
     error: object | null;
@@ -24,6 +25,10 @@ export type FileInputProps = {
   fetchPolicy?: FetchPolicy;
   maxFiles?: number;
   sessionCache?: boolean;
+  useFilestack?: boolean;
+  workspace?: string;
+  apiKey?: string;
+  uploadHost?: string;
   onUploadDone?: (value: FileInputValue, originalFile?: OriginalFileInputValue) => Promise<FileInputValue>;
   value?: FileInputValue | null;
 };
@@ -33,4 +38,5 @@ export type FileInputState = {
   error: object | null;
   value: FileInputValue | null;
   originalFile: OriginalFileInputValue | null;
+  isModalOpen: boolean | false;
 };
